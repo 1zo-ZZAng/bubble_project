@@ -19,6 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -44,4 +45,17 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bno", referencedColumnName = "no")
     private Board board;
+
+    // ------------------------------------------------------------------
+
+    // 댓글 이미지
+    private String filename; // 첨부파일명
+
+    @Lob
+    @ToString.Exclude
+    private byte[] filedata; // 첨부파일 데이터
+    
+    private String filetype; // 첨부파일 타입
+
+    private BigInteger filesize; // 첨부파일 크기
 }
