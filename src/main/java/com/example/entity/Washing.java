@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import java.math.BigInteger;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
