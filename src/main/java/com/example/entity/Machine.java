@@ -33,7 +33,7 @@ public class Machine {
 
     private BigInteger price; // 가격
 
-    //외래키 생성
+    //외래키 생성 - 업체
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wid", referencedColumnName = "id")  //소문자로 해뒀는데 문제있을경우 대문자로 바꿔야함 기억하자고
     private Washing washing;
