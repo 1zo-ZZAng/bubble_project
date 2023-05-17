@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.handler.CustomLogoutSuccessHandler;
-import com.example.handler.LoginSuccessHandler;
+import com.example.handler.CustomLoginSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class SecurityConfig {
             .loginProcessingUrl("/loginaction.bubble")  //action은
             .usernameParameter("id") //input type name="id"
             .passwordParameter("password") //input type name="password"
-            .successHandler(new LoginSuccessHandler())
+            .successHandler(new CustomLoginSuccessHandler())
             // .defaultSuccessUrl("/home.bubble") //로그인 성공시 이동할 페이지
             .permitAll();
 
