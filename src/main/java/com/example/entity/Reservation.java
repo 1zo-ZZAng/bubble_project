@@ -14,8 +14,8 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 @Table(name = "RESERVATION")
 @SequenceGenerator(name = "SEQ_RESERVATION_NO", sequenceName = "SEQ_RESERVATION_NO", initialValue = 1, allocationSize = 1) 
 public class Reservation {
