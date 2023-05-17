@@ -31,7 +31,7 @@ public class HomeController {
     //127.0.0.1:9090/bubble_bumul/403page.bubble
     @GetMapping(value="/403page.bubble")
     public String PageGET(){
-     return "/error/403page";
+    return "/error/403page";
     }
 
     
