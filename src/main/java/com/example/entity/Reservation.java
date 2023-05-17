@@ -15,11 +15,11 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "RESERVATION")
-@SequenceGenerator(name = "SEQ_MACHINE_NO", sequenceName = "SEQ_MACHINE_NO", initialValue = 1, allocationSize = 1) 
+@SequenceGenerator(name = "SEQ_RESERVATION_NO", sequenceName = "SEQ_RESERVATION_NO", initialValue = 1, allocationSize = 1) 
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MACHINE_NO") //시퀀스
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RESERVATION_NO") //시퀀스
     private String no; //예약 번호(시퀀스)
 
     private Date rdate; //사용날짜
