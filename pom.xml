@@ -9,14 +9,35 @@
       <relativePath/> <!-- lookup parent from repository -->
    </parent>
    <groupId>com.example</groupId>
-   <artifactId>boot_20230428</artifactId>
+   <artifactId>bubble_project</artifactId>
    <version>0.0.1-SNAPSHOT</version>
-   <name>boot_20230428</name>
+   <name>bubble_project</name>
    <description>Demo project for Spring Boot</description>
    <properties>
       <java.version>11</java.version>
    </properties>
    <dependencies>
+
+
+      <!--토큰 발행-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
@@ -29,9 +50,9 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>io.jsonwebtoken</groupId>
-		    <artifactId>jjwt</artifactId>
-		    <version>0.9.1</version>
+         <groupId>io.jsonwebtoken</groupId>
+         <artifactId>jjwt</artifactId>
+         <version>0.9.1</version>
 		</dependency>
 		
 		<dependency>
