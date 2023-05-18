@@ -15,7 +15,7 @@ import com.example.service.jpa.WashingService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -75,6 +75,8 @@ public class WashingController {
         }
     }
 
+    
+
     /* ---------------------------------------------- */
 
     //로그인
@@ -97,10 +99,18 @@ public class WashingController {
 
             Washing obj = wRepository.findById(washing.getId()).orElse(null);
 
-            if(bcpe.matches(washing.getPassword(), obj.getPassword())){
-                log.info("로그인 => {}",obj.toString());
+            if(obj != null){
 
-            }
+                if(bcpe.matches(washing.getPassword(), obj.getPassword())){
+                    log.info("로그인 => {}",obj.toString());
+    
+                    
+    
+                }
+
+            } 
+            
+            
 
             return "redirect:/washing/home.bubble";
             
@@ -117,6 +127,23 @@ public class WashingController {
     public String logoutPOST() {
         httpSession.invalidate(); // 세션의 정보를 다 지움.
         return "redirect:/home.bubble";
+    }
+    
+
+    /* ---------------------------------------------- */
+
+    //정보 수정
+    @GetMapping(value="/update.bubble")
+    public String updateGET(@ModelAttribute Washing washing) {
+        try {
+            
+            
+
+            return "/washing/update";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        }
     }
     
 
