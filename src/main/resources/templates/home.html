@@ -1,32 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel='stylesheet' th:href="@{/css/layout.css}" />
+     <!--jQuery 추가-->
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
+
+
 </head>
+
+<header th:replace="~{/fragments/header.html :: header}"></header>
 <body>
-    <h3>홈화면 수정 필요</h3>
-<hr/>
-<div th:if="${user == null}">
-    <a th:href="@{/customer/join.bubble}">고객회원가입</a>
-    <a th:href="@{/login.bubble}">고객로그인</a>
-</div>
 
+    
+    
+    <div class="maincontainer">
+        <div class="main-info">
 
-<div th:if="${user != null}">
-    <p th:text="${user.username}"></p>
-    <p th:text="${user.authorities[0]}"></p>
-    <a th:href="@{/customer/home.bubble}">고객 홈페이지</a>
-    <form th:action="@{/logout.bubble}" method="post">
-        <input type="submit" value="로그아웃">
-    </form>
-</div>
+        </div>
+        <div class="find-washing">
 
+        </div>
+        <div class="reserve-info">
+
+        </div>
+    </div>
 
 
 
+    
 </body>
+
+<footer th:replace="~{/fragments/footer.html :: footer}"></footer>
 </html>

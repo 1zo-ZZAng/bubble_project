@@ -1,0 +1,195 @@
+/*General Styling*/
+
+html, body {margin: 0px; padding: 0px;}
+
+header {
+    font-family: 'Open Sans', Futura,     Helvetica, Arial, sans-serif;
+    position:relative;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    color: #1363DF;
+    background-color: #CCF2F4;
+}
+
+
+.container {
+  display: block;
+  height: 150px;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.container>p {
+  font-size: 22px;
+  text-transform: uppercase;
+  margin-top: 40px;
+}
+
+[href] {
+    color: #CCF2F4;
+    text-decoration: none;
+    font-size: inherit;
+}
+
+
+/* 메뉴바 */
+
+.modal-body {
+    width: 100%;
+    background-color: #1363DF;
+    height: 100px;
+}
+
+.navigation {
+    display: flex;
+}
+
+.nav ul li a:hover{
+    text-decoration: none;
+    color: #1C3879;
+}
+
+.nav ul li a{
+    padding:1em;
+    margin-top: 100px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size:3vw;
+    letter-spacing: -0.08em;
+}
+
+.nav ul li{
+    display: inline-block;
+    font-size: 3em;
+}
+
+.nav ul{
+    clear: both;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    /* padding-top: 20px; */
+    padding-left: 0px;
+}
+
+/*반응형 웹*/
+/* Portrait Tablet to Landscape and Desktop */
+@container (min-width:768px) and (max-width:979px) {
+
+    .nav ul li{
+        display: block;
+        height: 45px;
+    }
+
+    .nav ul {
+        clear: both;
+        width: 100%;
+        text-align: center;
+        padding: 0;
+    }
+
+    .nav ul li a {
+        padding: 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 6vw;
+        letter-spacing: -0.05em;
+    }
+
+    .modal-body nav{
+
+    }
+}
+
+/* Landscape-Phone to Portrait Tablet*/
+@media (max-width:767px) {
+  
+    .nav ul li{
+        display: block;
+        height:38px;
+    }
+
+    .nav ul {
+        clear: both;
+        width: 100%;
+        text-align: center;
+        padding: 0;
+    }
+
+    .nav ul li a {
+        padding: 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 6vw;
+        letter-spacing: -0.05em;
+    }
+}
+  
+  /*Landscape-Phone Downwards*/
+  @media (max-width: 480px) {
+
+        .nav ul li{
+            display: block;
+            height:38px;
+        }
+
+        .nav ul {
+            clear: both;
+            width: 100%;
+            text-align: center;
+            padding: 0;
+        }
+
+        .nav ul li a {
+            padding: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 10vw;
+            letter-spacing: -0.05em;
+        }
+  }
+
+/* main */
+.maincontainer{
+    padding: 300px;
+}
+
+
+
+/* footer */
+footer{
+    background-color: #CCF2F4;
+    color:  rgb(9, 0, 63);
+}
+
+footer > hr{
+   background-color: rgb(9, 0, 63);
+   height: 1px;
+   border: 0px;
+}
+
+.footer{
+    padding-top: 40px;
+    margin-left: 35px;
+    
+}
+
+footer > ul{
+    list-style: none;
+    height: 7px;
+
+
+  }
+  
+footer > ul > li {
+    float: left;
+    /* position: relative; */
+    margin-top: 15px;
+    margin-right: 20px;
+    
+}
