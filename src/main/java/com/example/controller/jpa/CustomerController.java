@@ -35,6 +35,6 @@ public class CustomerController {
         // log.info("Customer join => {}", customer.toString());
         cRepository.save(customer);
 
-        return "redirect:/home.bubble";
+        return "redirect:/customer/login.bubble";
     }
 }
