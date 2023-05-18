@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="fragment-header">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>버블버물</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+  
+    <link rel='stylesheet' type='text/css' media='screen'
+        href="../static/css/header.css">
+  
+    <!--jQuery 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    
+
+</head>
+
+<!-- font -->
+<style> 
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+</style>
+
+
+<body>
+    <header th:fragment="header">
+    <div class=container>
+        <h1>LOGO</h1>
+        <p>Coin , Laundry , Reserve !</p>
+    </div>
+    <div class="navigation">
+        <div class="modal-body nav">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="reserve.bubble">Reserve</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="mypage.bubble">mypage</a></li>
+                <li>
+                    <c:if test="${sessionScope.cid eq null}">
+                         <a href="login.bubble">Login</a>
+                    </c:if>
+                    
+                    <!-- <c:if test="${sessionScope.cid ne null}">
+                        <a href="#" onclick="logoutAction()">logout</a>
+                    </c:if> -->
+                </li>
+            </ul>
+        </div>
+    </div>
+        
+    </header>
+       
+</body>
+
+</html>
