@@ -8,5 +8,18 @@
 </head>
 <body>
     
+    <h3>회원가입</h3>
+    <form th:action="@{/washing/join.bubble}" method="post">
+        아이디 <input type="text" name="id" /><br /> 
+        비밀번호 <input type="text" name="password"/><br />
+        사업자번호 <input type="text" name="wnumber" /><br /> 
+        이메일 <input type="text" name="email" /><br /> 
+        주소 <input type="text" name="address" /><br /> 
+        대표자명 <input type="text" name="ceo" /><br /> 
+        업체명 <input type="text" name="name" /><br />
+        전화번호 <input type="text" name="phone"  /><br />
+        <input type="submit" value="회원가입"/>
+    </form>
+
 </body>
 </html>
