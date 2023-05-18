@@ -18,18 +18,7 @@ public class HomeController {
     //임포트 shift + alt + o
      //127.0.0.1:9090/bubble_bumul/home.bubble
     @GetMapping(value = {"/home.bubble", "/"}) 
-<<<<<<< HEAD
-    public String homeGET(Model model) {  
-
-        // if(user != null){
-        //     System.out.println(user.toString());
-        // }
-        // //request.setAttribute("key", "value")
-        // model.addAttribute("user", user);
-
-=======
     public String homeGET() {  
->>>>>>> 여우정
 
         return "home";
     }

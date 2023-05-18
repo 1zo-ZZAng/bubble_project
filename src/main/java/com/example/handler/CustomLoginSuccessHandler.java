@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,8 +23,13 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         String role = authentication.getAuthorities().toArray()[0].toString();
         log.info("LoginSuccessHandler => {}", role);
 
+        // 여기서 이전 페이지 정보를 가져옴
+        HttpSession httpSession = request.getSession();
+        String backUrl = (String) httpSession.getAttribute("url");
+
+        // 필요시 이전 페이지로 이동함
         if (role.equals("ROLE_CUSTOMER")) { // 권한이 고객
-            response.sendRedirect(request.getContextPath() + "/customer/home.bubble");
+            response.sendRedirect(request.getContextPath() + "/home.bubble");
         }
         else if (role.equals("ROLE_WASHING")) { // 권한이 판매자
             response.sendRedirect(request.getContextPath() + "/washing/home.bubble");
