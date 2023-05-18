@@ -32,6 +32,7 @@ public class Customer {
     private String detailaddress; // 고객 상세 주소 (고객이 입력하는 주소)
     private String extraaddress; // 고객 참고 주소 (건물이름)
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth; // 고객 생년월일
 
     // 등록일
@@ -41,7 +42,7 @@ public class Customer {
     private Date regdate; 
     
     // 고객 등급 (0 : 탈퇴 / 1 : 세탁 초보 / 2 : 세탁 프로 / 3 : 세탁 요정)
-    private BigInteger grade; 
+    private BigInteger grade = BigInteger.valueOf(1); 
 
-    private String role; // 권한 (CUSTOMER)
+    private String role = "CUSTOMER"; // 권한 (CUSTOMER)
 }

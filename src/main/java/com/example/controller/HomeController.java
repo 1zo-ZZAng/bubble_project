@@ -18,9 +18,12 @@ public class HomeController {
     //임포트 shift + alt + o
      //127.0.0.1:9090/bubble_bumul/home.bubble
     @GetMapping(value = {"/home.bubble", "/"}) 
-    public String homeGET(Model model) {  
+    public String homeGET() {  
+
         return "home";
     }
+
+
 
     //127.0.0.1:9090/bubble_bumul/403page.bubble
     @GetMapping(value="/403page.bubble")

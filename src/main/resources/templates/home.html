@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUBBLE BUMUL</title>
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel='stylesheet' th:href="@{/css/layout.css}" />
+     <!--jQuery 추가-->
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
+
+
 </head>
+
+<header th:replace="~{/fragments/header.html :: header}"></header>
 <body>
-    버블버물 홈 화면
+
+    
+    
+    <div class="maincontainer">
+        <div class="main-info">
+
+        </div>
+        <div class="find-washing">
+
+        </div>
+        <div class="reserve-info">
+
+        </div>
+    </div>
+
+
+
+    
 </body>
+
+<footer th:replace="~{/fragments/footer.html :: footer}"></footer>
 </html>
