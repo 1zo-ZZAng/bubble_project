@@ -113,8 +113,8 @@ public class SecurityConfig {
         // 로그인, 로그아웃, 권한 설정 ...
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/loginaction.bubble") // action은? => login.html
+            .loginPage("/admin/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())
