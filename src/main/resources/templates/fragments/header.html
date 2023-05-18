@@ -12,7 +12,7 @@
 
   
     <link rel='stylesheet' type='text/css' media='screen'
-        href="../static/css/header.css">
+        href="/src/main/resources/static/css/layout.css">
   
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -27,34 +27,33 @@
 </style>
 
 
-<body>
     <header th:fragment="header">
-    <div class=container>
-        <h1>LOGO</h1>
-        <p>Coin , Laundry , Reserve !</p>
-    </div>
-    <div class="navigation">
-        <div class="modal-body nav">
-            <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="reserve.bubble">Reserve</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="mypage.bubble">mypage</a></li>
-                <li>
-                    <c:if test="${sessionScope.cid eq null}">
-                         <a href="login.bubble">Login</a>
-                    </c:if>
-                    
-                    <!-- <c:if test="${sessionScope.cid ne null}">
-                        <a href="#" onclick="logoutAction()">logout</a>
-                    </c:if> -->
-                </li>
-            </ul>
+        <div>
+            <div class=container>
+                <h1>LOGO</h1>
+                <p>Coin , Laundry , Reserve !</p>
+            </div>
+            <div class="navigation">
+                <div class="modal-body nav">
+                    <ul>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="reserve.bubble">Reserve</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="mypage.bubble">mypage</a></li>
+                        <li>
+                            <c:if test="${sessionScope.cid eq null}">
+                                <a href="login.bubble">Login</a>
+                            </c:if>
+                            
+                            <!-- <c:if test="${sessionScope.cid ne null}">
+                                <a href="#" onclick="logoutAction()">logout</a>
+                            </c:if> -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-        
     </header>
-       
-</body>
+
 
 </html>
