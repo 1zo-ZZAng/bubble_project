@@ -1,5 +1,6 @@
 package com.example.bubble_project;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.PropertySource;
 					}) // 컨트롤러, 서비스 위치, 시큐리티환경, 레스트컨트롤러 설정
 @EntityScan(basePackages = {"com.example.entity"}) // 엔티티 위치
 // @EnableJpaRepositories(basePackages = {"com.example.repository"}) // 저장소 위치
+
 public class BubbleProjectApplication {
 
 	public static void main(String[] args) {

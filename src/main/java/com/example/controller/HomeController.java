@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/* 고객 홈페이지 컨트롤러 */
 
 @Controller
 public class HomeController {
@@ -20,11 +19,14 @@ public class HomeController {
      //127.0.0.1:9090/bubble_bumul/home.bubble
     @GetMapping(value = {"/home.bubble", "/"}) 
     public String homeGET(Model model) {  
+
         // if(user != null){
         //     System.out.println(user.toString());
         // }
         // //request.setAttribute("key", "value")
         // model.addAttribute("user", user);
+
+
         return "home";
     }
 
@@ -33,7 +35,7 @@ public class HomeController {
     //127.0.0.1:9090/bubble_bumul/403page.bubble
     @GetMapping(value="/403page.bubble")
     public String PageGET(){
-     return "/error/403page";
+    return "/error/403page";
     }
 
     
