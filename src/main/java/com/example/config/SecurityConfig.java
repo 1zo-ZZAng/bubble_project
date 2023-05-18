@@ -97,8 +97,11 @@ public class SecurityConfig {
         // 권한 설정
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
+            .antMatchers("/customer/login.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
+            .antMatchers("/washing/login.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
+            .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
             .antMatchers("/washing", "/washing/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
             .antMatchers("/customer", "/customer/*").hasAnyAuthority("ROLE_CUSTOMER")

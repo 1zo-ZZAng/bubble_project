@@ -14,7 +14,6 @@ import com.example.repository.AdminRepository;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j

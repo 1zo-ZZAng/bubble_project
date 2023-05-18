@@ -102,7 +102,7 @@ public class WashingController {
             if(obj != null){
 
                 if(bcpe.matches(washing.getPassword(), obj.getPassword())){
-                    log.info("로그인 => {}",obj.toString());
+                    
     
                     
     
@@ -119,16 +119,6 @@ public class WashingController {
             return "redirect:/washing/login.bubble";
         }
     }
-
-    /* ---------------------------------------------- */
-
-    //로그아웃
-    @PostMapping(value="/logout.buble")
-    public String logoutPOST() {
-        httpSession.invalidate(); // 세션의 정보를 다 지움.
-        return "redirect:/home.bubble";
-    }
-    
 
     /* ---------------------------------------------- */
 
