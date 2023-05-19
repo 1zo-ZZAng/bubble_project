@@ -97,8 +97,11 @@ public class SecurityConfig {
         // 권한 설정
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
+            .antMatchers("/customer/login.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
+            .antMatchers("/washing/login.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
+            .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
             .antMatchers("/washing", "/washing/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
             .antMatchers("/customer", "/customer/*").hasAnyAuthority("ROLE_CUSTOMER")
@@ -110,8 +113,8 @@ public class SecurityConfig {
         // 로그인, 로그아웃, 권한 설정 ...
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/loginaction.bubble") // action은? => login.html
+            .loginPage("/admin/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())

@@ -49,7 +49,7 @@ public class AdminController {
             e.printStackTrace();
             return "redirect:/admin/join.bubble";
         }
-       
+
 
     }
 
