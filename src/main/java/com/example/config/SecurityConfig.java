@@ -7,11 +7,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-// import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.handler.CustomLoginFailHandler;
 import com.example.handler.CustomLoginSuccessHandler;
 import com.example.handler.CustomLogoutSuccessHandler;
 import com.example.service.SecurityServiceImpl1;
@@ -34,6 +34,8 @@ public class SecurityConfig {
     
     // Admin 테이블과 연동되는 서비스
     final SecurityServiceImpl3 adminTableService; 
+
+
     
     @Bean
     @Order(value = 1)
@@ -53,7 +55,9 @@ public class SecurityConfig {
             .loginProcessingUrl("/customer/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler()) //로그인 성공시
+            .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
+            // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -80,7 +84,9 @@ public class SecurityConfig {
             .loginProcessingUrl("/washing/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler()) //로그인 성공시
+            .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
+            // .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -117,7 +123,9 @@ public class SecurityConfig {
             .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .successHandler(new CustomLoginSuccessHandler())
+            
+            .successHandler(new CustomLoginSuccessHandler()) //로그인 성공시
+            .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
             // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();
         

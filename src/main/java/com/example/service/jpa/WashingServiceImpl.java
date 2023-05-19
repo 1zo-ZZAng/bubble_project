@@ -21,9 +21,13 @@ public class WashingServiceImpl implements WashingService {
     public int washingIDCheck(String id) {
         try {
 
-            wRepository.countById(id);
+            int ret = wRepository.countById(id);
 
-            return 1;
+            if(ret == 0){
+                return 0;
+            }else{
+                return 1;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

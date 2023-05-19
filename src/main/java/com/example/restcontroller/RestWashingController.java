@@ -28,15 +28,18 @@ public class RestWashingController {
 
 
     //아이디 중복 확인
-    //127.0.0.1:9090/bubble_bumul/api/washing/idchkeck.json?id=아이디
+    //127.0.0.1:8282/bubble_bumul/api/washing/idcheck.json?id=아이디
     @GetMapping(value="/idcheck.json")
     public Map<String, Object> idcheckGET(@RequestParam(name = "id") String id) {
+
         Map<String, Object> retMap = new HashMap<>();
 
         try {
 
+            log.info("아이디 => {}", id );
+
             retMap.put("status", 200);
-            retMap.put("washing", wService.washingIDCheck(id));
+            retMap.put("washing", wService.washingIDCheck(id) );
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,8 +48,11 @@ public class RestWashingController {
         }
         return retMap;
     }
+
+    /* ------------------------------------------------------------- */
     
-    
+
+
 
     
 }

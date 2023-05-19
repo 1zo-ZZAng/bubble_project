@@ -9,11 +9,23 @@
 <body>
 
     <h3>업체 홈</h3>
-    <a th:href="@{/washing/login.bubble}"><button>로그인</button></a>
-    <form th:action="@{/logout.bubble}">
-        <input type="submit" value="로그아웃">
-    </form>
-    <a th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+    
+    <!--로그아웃 / 미가입 상태--> <!--가지진 않겠지만 혹시모르니 넣어뒀음-->
+    <div th:if="${user == null}">
+        <a th:href="@{/washing/login.bubble}"><button>로그인</button></a>
+        <a th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+    </div>
+
+    <!--로그인 됐을 때-->
+    <div th:if="${user != null}">
+        <p th:text="${user.username}"></p>
+    
+        <form th:action="@{/logout.bubble}" method="post">
+            <input type="submit" value="로그아웃">
+        </form>
+
+        <a th:href="@{/washing/mypage.bubble?(id=${user.username})}"><button>마이페이지</button></a>
+    </div>
     
 </body>
 </html>

@@ -2,12 +2,16 @@ package com.example.controller.jpa;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
@@ -15,6 +19,8 @@ import com.example.service.jpa.WashingService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -35,8 +41,16 @@ public class WashingController {
 
     //홈화면
     @GetMapping(value="/home.bubble")
-    public String homeGET() {
-        return "/washing/home";
+    public String homeGET(@AuthenticationPrincipal User user, Model model) {
+
+        try {
+            model.addAttribute("user", user);
+            return "/washing/home";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/home.bubble";
+        }
+        
     }
     
 
@@ -81,10 +95,16 @@ public class WashingController {
 
     //로그인
     @GetMapping(value = "/login.bubble")
-    public String loginGET(){
+    public String loginGET(@RequestParam(value = "error", required = false)String error, 
+                            @RequestParam(value = "exception", required = false)String exception,  //exception에 메시지를 담아서 사용자에게 전달하기 위해 model객체를 이용해서 사용자에게 전달
+                            Model model){
 
         try {
-            return "washing/login";
+
+            model.addAttribute("error", error);
+            model.addAttribute("exception", exception); 
+
+            return "/washing/login";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,48 +113,41 @@ public class WashingController {
 
     }
 
-    @PostMapping(value = "/login.bubble")
-    public String loginPOST(@ModelAttribute Washing washing){
-        try {
 
-            Washing obj = wRepository.findById(washing.getId()).orElse(null);
 
-            if(obj != null){
-
-                if(bcpe.matches(washing.getPassword(), obj.getPassword())){
-                    
-    
-                    
-    
-                }
-
-            } 
-            
-            
-
-            return "redirect:/washing/home.bubble";
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/washing/login.bubble";
-        }
-    }
 
     /* ---------------------------------------------- */
 
-    //정보 수정
-    @GetMapping(value="/update.bubble")
-    public String updateGET(@ModelAttribute Washing washing) {
+    //마이페이지
+    @GetMapping(value="/mypage.bubble")
+    public String updateGET(@RequestParam(name = "id") String id, Model model) {
         try {
-            
-            
 
-            return "/washing/update";
+            Washing obj = wRepository.findById(id).orElse(null);
+
+            model.addAttribute("washing", obj);
+
+            return "/washing/mypage";
+
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/washing/home.bubble";
         }
     }
+
+    @PostMapping(value="/mypage.bubble")
+    public String updatePOST() {
+        
+        try {
+            
+            return "redirect:/washing/home.bubble";
+
+        } catch (Exception e) {
+            
+            return "redirect:/washing/mypage.bubble"; //여기 수정해야함
+        }
+    }
+    
     
 
     
