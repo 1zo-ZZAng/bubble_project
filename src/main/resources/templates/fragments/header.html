@@ -37,17 +37,20 @@
                 <div class="modal-body nav">
                     <ul>
                         <li><a href="#">HOME</a></li>
-                        <li><a href="reserve.bubble">Reserve</a></li>
+                        <li><a th:href="@{/customer/reserve.bubble}">Reserve</a></li>
                         <li><a href="#">Contact</a></li>
-                        <li><a href="mypage.bubble">mypage</a></li>
                         <li>
-                            <c:if test="${sessionScope.cid eq null}">
-                                <a href="login.bubble">Login</a>
-                            </c:if>
-                            
-                            <!-- <c:if test="${sessionScope.cid ne null}">
-                                <a href="#" onclick="logoutAction()">logout</a>
-                            </c:if> -->
+                            <div th:if="${user != null}">
+                                <a th:href="@{/customer/mypage.bubble}">mypage</a>
+                                
+                                <form th:action="@{/logout.bubble}" method="post">
+                                    <input type="submit" value="로그아웃">
+                                </form>
+                            </div>
+                            <div th:if="${user == null}">
+                                <a th:href="@{/customer/login.bubble}">login</a>
+                                <a th:href="@{/customer/join.bubble}">join</a>
+                            </div>
                         </li>
                     </ul>
                 </div>

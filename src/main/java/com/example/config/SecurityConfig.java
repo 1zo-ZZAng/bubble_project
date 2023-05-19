@@ -53,7 +53,8 @@ public class SecurityConfig {
             .loginProcessingUrl("/customer/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler())
+            // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -80,7 +81,8 @@ public class SecurityConfig {
             .loginProcessingUrl("/washing/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler())
+            // .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -113,8 +115,8 @@ public class SecurityConfig {
         // 로그인, 로그아웃, 권한 설정 ...
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/admin/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
+            .loginPage("/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())
