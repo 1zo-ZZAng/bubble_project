@@ -8,10 +8,11 @@
 </head>
 <body>
     <h3>사업자 등록정보 조회(admin)</h3>
-    <form th:action="@{/admin/business.bubble}" method="post">
-        <input type="text" name="id" /> <br/>
-        <input type="text" name="password" /> <br/>
-        <input type="submit" value="로그인" />
+    <form th:action="@{/washing/business.bubble}" method="post">
+        <input type="number" name="bno" /> <br/>
+        <input type="number" name="bdate" /> <br/>
+        <input type="text" name="bname" /> <br/>
+        <input type="submit" value="조회" />
     </form>
 </body>
 </html>
