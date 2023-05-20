@@ -21,11 +21,14 @@
             <tr>
                 <td>비밀번호 <input type="password" id="password" name="password" class="form-control"  /></td>
             </tr>
+
+            <!--로그인 실패시 뜸 -->
             <tr>
                 <td th:if="${param.error}">
                     <p th:text="${exception}" class="alert alert-danger"></p>
                 </td>
             </tr>
+            
             <tr>
                 <td><input type="submit" value="로그인"  /></td>
                 

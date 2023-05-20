@@ -16,9 +16,9 @@
     <form th:action="@{/washing/join.bubble}" method="post">
         <table class="container" width=" 400px">
             <tr>
-                <td><label class="form-label"> 아이디 </label></td>
-                <td><input type="text" id="id" name="id" placeholder="아이디를 입력해주세요" class="form-control"  onkeyup="ajaxIDCheck(this)"></td>
-                <td><input type="button" value="중복확인"  ></td>
+                <td><label for="id"> 아이디 </label></td>
+                <td><input type="text" id="id" name="id" placeholder="아이디를 입력해주세요" class="form-control"></td>
+                <td><input type="button" value="중복확인" onclick="ajaxIDCheck(this)" ></td>
             </tr>
 
             <tr>
@@ -81,31 +81,32 @@
 
             async function ajaxIDCheck(e) {
 
-                console.log(e.value);
+                console.log(e.value); //잘 먹혔는지 확인용
 
                 if (e.value.length > 0) {
                     // rest api 호출
                     const url = [[@{/api/washing/idcheck.json}]] + `?id=${e.value}`;
-
-                    console.log(url);
-
                     const headers = {"Content-Type":"application/json"};
                     const {data} = await axios.get(url, {headers});
                     
                     if (data.ret === 1) {
                         // 사용 불가
                         idcheck = 0;
-                        document.getElementById("id").innerText = '사용불가';
+                        alert('사용불가');
+                        e.focus();
+                        // document.getElementById("id").innerText = '사용불가';
                     }
                     else if (data.ret === 0) {
                         // 사용 가능
                         idcheck = 1;
-                        document.getElementById("id").innerText = '사용가능';
+                        alert('사용가능');
+                        //document.getElementById("id").innerText = '사용가능';
                     }
                 }
 
                 else{
-                    document.getElementById("id").innerText = '아이디를 입력해주세요';
+                    alert('아이디를 입력해주세요');
+                    //document.getElementById("id").innerText = '아이디를 입력해주세요';
                     e.focus();
                 }
                 

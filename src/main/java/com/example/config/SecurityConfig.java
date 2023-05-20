@@ -56,7 +56,8 @@ public class SecurityConfig {
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler()) //로그인 성공시
-            .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
+            .failureHandler(null)
+            // .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
             // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
@@ -125,7 +126,8 @@ public class SecurityConfig {
             .passwordParameter("password") // 암호의 name값은? => login.html
             
             .successHandler(new CustomLoginSuccessHandler()) //로그인 성공시
-            .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
+            .failureHandler(null)
+            // .failureHandler(new CustomLoginFailHandler())   //로그인 실패시
             // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();
         
