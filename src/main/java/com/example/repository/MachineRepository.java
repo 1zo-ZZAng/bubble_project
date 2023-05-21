@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.Machine;
 
 @Repository
-public class MachineRepository extends JpaRepository<Machine, BigInteger> {
+public interface MachineRepository extends JpaRepository<Machine, BigInteger> {
 
     
     

@@ -238,6 +238,22 @@ public class WashingController {
             return "redirect:/washing/machineinsert.bubble";
         }
     }
+
+    /* ---------------------------------------------- */
+
+    //기기수정
+    @GetMapping(value="/machineupdate.bubble")
+    public String machineupdateGET(Model model, @RequestParam(name = "no") int no) {
+        try {
+            
+            return "redirect:/washing/machineupdate.bubble"; //아마 그 기기의 번호가 필요할듯 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/machineupdate.bubble";
+        }
+    }
+    
     
     
     
