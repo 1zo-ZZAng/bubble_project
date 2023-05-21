@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 
-
 @Controller
 @RequestMapping(value = "/washing")
 @RequiredArgsConstructor
@@ -136,17 +135,89 @@ public class WashingController {
     }
 
     @PostMapping(value="/mypage.bubble")
-    public String updatePOST() {
+    public String updatePOST( @AuthenticationPrincipal User user, @ModelAttribute Washing washing) {
         
         try {
             
-            return "redirect:/washing/home.bubble";
+            //기존 데이터 읽어오기
+            Washing obj = wRepository.findById(user.getUsername()).orElse(null);
+            
+            obj.setPhone(washing.getPhone());
+            obj.setCeo(washing.getCeo());
+            obj.setEmail(washing.getEmail());
+            obj.setName(washing.getName());
+            obj.setAddress(washing.getAddress());
+
+            //변경항목 저장
+            wRepository.save(obj);
+            
+            return "redirect:/washing/home.bubble"; // 홈페이지가 아닌 마이페이지 그대로 있게 수정하기
 
         } catch (Exception e) {
-            
-            return "redirect:/washing/mypage.bubble"; //여기 수정해야함
+            e.printStackTrace();
+            return "redirect:/washing/mypage.bubble"; //페이지 수정하기 뒤에 ? id 나오게
         }
     }
+
+
+    /* ------------------------------------------- */
+
+    //비밀번호 변경
+    @GetMapping(value="/pwupdate.bubble")
+    public String pwupdateGET() {
+        try {
+            return "/washing/pwupdate";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/mypage.bubble"; //페이지 수정
+        }
+    }
+
+
+    @PostMapping(value="/pwupdate.bubble")
+    public String pwupdatePOST(@AuthenticationPrincipal User user, @ModelAttribute Washing washing, @RequestParam(name = "newpassword") String newpassword) {
+        try {
+
+            //기존데이터 읽어오기
+            Washing obj = wRepository.findById(user.getUsername()).orElse(null);
+
+            //암호 비교
+            if(bcpe.matches(washing.getPassword(), obj.getPassword())){
+
+                //암호화 시켜서 비밀번호 변경
+                obj.setPassword(bcpe.encode(newpassword));
+
+                //변경사항 저장
+                wRepository.save(obj);
+            }
+
+
+            return "redirect:/washing/pwupdate.bubble";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/pwupdate.bubble";
+        }
+    }
+    
+    
+
+
+
+
+    /* ---------------------------------------------- */
+
+    //기기 추가
+    @GetMapping(value="/machineinsert.bubble")
+    public String machineinsertGET() {
+        try {
+            return "/washingmachine/machineinsert";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washin/home.bubble";
+        }
+    }
+    
+    
     
     
 
