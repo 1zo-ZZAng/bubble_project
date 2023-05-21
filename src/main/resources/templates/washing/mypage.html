@@ -67,6 +67,10 @@
                 <td><input type="button" value="정보수정" onclick="updateMy()"/></td>
             </tr>
 
+            <tr>
+                <td><a th:href="@{/washing/delete.bubble?(id=${user.username})}">탈퇴</a></td>
+            </tr>
+
             
         </table>
         
