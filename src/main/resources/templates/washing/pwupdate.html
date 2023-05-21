@@ -17,15 +17,15 @@
         <table class="container" width=" 400px">
             <tr>
                 <td><label for="password"> 비밀번호 </label></td>
-                <td><input type="password" th:field="${washing.password}" class="form-control" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="password"> 새 비밀번호 </label></td>
                 <td><input type="text" th:field="${washing.password}" class="form-control" readonly></td>
             </tr>
             <tr>
-                <td><label for="password"> 새 비밀번호 확인 </label></td>
-                <td><input type="text" th:field="${washing.password}" class="form-control" readonly></td>
+                <td><label for="newpassword"> 새 비밀번호 </label></td>
+                <td><input type="text" th:field="${washing.newpassword}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="newpassword"> 새 비밀번호 확인 </label></td>
+                <td><input type="text" th:field="${washing.newpassword}" class="form-control" readonly></td>
             </tr>
         </table>
 

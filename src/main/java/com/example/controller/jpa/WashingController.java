@@ -164,9 +164,15 @@ public class WashingController {
 
     //비밀번호 변경
     @GetMapping(value="/pwupdate.bubble")
-    public String pwupdateGET() {
+    public String pwupdateGET(@RequestParam(name = "id") String id, Model model) {
         try {
+
+            Washing obj = wRepository.findById(id).orElse(null);
+
+            model.addAttribute("washing", obj);
+
             return "/washing/pwupdate";
+            
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/washing/mypage.bubble"; //페이지 수정
