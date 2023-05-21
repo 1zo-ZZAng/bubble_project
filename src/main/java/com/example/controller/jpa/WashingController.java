@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.entity.Machine;
 import com.example.entity.Washing;
+import com.example.repository.MachineRepository;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -32,6 +33,9 @@ public class WashingController {
 
     final WashingRepository wRepository;
     final WashingService wService;
+
+    final MachineRepository mRepository;
+
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
@@ -143,9 +147,9 @@ public class WashingController {
             Washing obj = wRepository.findById(user.getUsername()).orElse(null);
             
             obj.setPhone(washing.getPhone());
-            obj.setCeo(washing.getCeo());
+            obj.setCeo(washing.getCeo()); //대표자명
             obj.setEmail(washing.getEmail());
-            obj.setName(washing.getName());
+            obj.setName(washing.getName()); //업체명
             obj.setAddress(washing.getAddress());
 
             //변경항목 저장
@@ -222,6 +226,19 @@ public class WashingController {
             return "redirect:/washin/home.bubble";
         }
     }
+
+    @PostMapping(value="/machineinsert.bubble")
+    public String machineinsertPOST(@ModelAttribute Machine machine) {
+        try {
+
+            mRepository.save(machine);
+
+            return "redirect:/washing/machineinsert.bubble";
+        } catch (Exception e) {
+            return "redirect:/washing/machineinsert.bubble";
+        }
+    }
+    
     
     
     
