@@ -1,5 +1,6 @@
 package com.example.controller.jpa;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Machine;
-import com.example.entity.Washing;
 import com.example.repository.MachineRepository;
 import com.example.repository.WashingRepository;
 
@@ -129,16 +129,19 @@ public class MachineController {
 
     //기기삭제
     @PostMapping(value="/delete.bubble")
-    public String deletePOST(@ModelAttribute Machine machine, @RequestParam(name = "chk[]") String[] chk) {
+    public String deletePOST(@ModelAttribute Machine machine, @RequestParam(name = "chk[]") List<BigInteger> chk) {
         try {
 
-            mRepository.delete(machine);
+            log.info("삭제 => {}", chk.toString());
 
-            return "redirect:/washing/delete.bubble?wid=" + machine.getWashing().getId();
+            mRepository.deleteAllById(chk);
+            
+
+            return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
             
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/washing/delete.bubble?wid=" + machine.getWashing().getId();
+            return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
         }
     }
     
