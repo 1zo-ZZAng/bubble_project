@@ -53,7 +53,8 @@ public class SecurityConfig {
             .loginProcessingUrl("/customer/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler())
+            // .defaultSuccessUrl("/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -80,7 +81,8 @@ public class SecurityConfig {
             .loginProcessingUrl("/washing/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
-            .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
+            .successHandler(new CustomLoginSuccessHandler())
+            // .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
@@ -98,8 +100,12 @@ public class SecurityConfig {
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
             .antMatchers("/customer/login.bubble").permitAll()
+            .antMatchers("/customer/findid.bubble").permitAll()
+            .antMatchers("/customer/showid.bubble").permitAll()
+            .antMatchers("/customer/findpw.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
             .antMatchers("/washing/login.bubble").permitAll()
+            .antMatchers("/washing/bncheck.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
@@ -113,8 +119,8 @@ public class SecurityConfig {
         // 로그인, 로그아웃, 권한 설정 ...
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/admin/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
+            .loginPage("/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())

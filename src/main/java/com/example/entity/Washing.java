@@ -49,6 +49,10 @@ public class Washing {
     List<Machine> machine = new ArrayList<>();
 
 
+    
+
+
+
 
 
 

@@ -24,28 +24,15 @@ public class CustomerServiceImpl implements CustomerService {
 		}
     }
 
-	// 고객 비밀번호 찾기
-    @Override
-    public String selectCustomerPw(Customer obj) {
-        try {
-			return cRepository.findByPassword(obj);
+	// 아이디 찾기(이름, 전화번호, 이메일, 생년월일이 모두 일치해야함)
+	@Override
+	public Customer selectCustomerId(String name, String phone, String email) {
+		try {
+			return cRepository.findByNameAndPhoneAndEmail(name, phone, email);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-    }
-
-	// 고객 등급 표시
-    @Override
-    public long selectCustomerGrade(String id) {
-        try {
-			return cRepository.findByGrade(id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-    }
-    
+	}
 }

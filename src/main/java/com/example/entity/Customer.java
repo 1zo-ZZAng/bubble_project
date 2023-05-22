@@ -38,7 +38,7 @@ public class Customer {
     // 등록일
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @CreationTimestamp
-    @Column(name = "REGDATE", insertable = true, updatable = false)
+    @Column(name = "REGDATE", insertable = true, updatable = true)
     private Date regdate; 
     
     // 고객 등급 (0 : 탈퇴 / 1 : 세탁 초보 / 2 : 세탁 프로 / 3 : 세탁 요정)
