@@ -117,13 +117,11 @@ public class WashingController {
     }
 
 
-
-
     /* ---------------------------------------------- */
 
-    //마이페이지
+    //정보수정 (마이페이지)
     @GetMapping(value="/mypage.bubble")
-    public String updateGET(@RequestParam(name = "id") String id, Model model) {
+    public String updateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing) {
         try {
 
             Washing obj = wRepository.findById(id).orElse(null);
@@ -155,11 +153,11 @@ public class WashingController {
             //변경항목 저장
             wRepository.save(obj);
             
-            return "redirect:/washing/home.bubble"; // 홈페이지가 아닌 마이페이지 그대로 있게 수정하기
+            return "redirect:/washing/mypage.bubble?id="+user.getUsername(); 
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/washing/mypage.bubble"; //페이지 수정하기 뒤에 ? id 나오게
+            return "redirect:/washing/mypage.bubble?id="+ user.getUsername(); 
         }
     }
 
@@ -168,7 +166,7 @@ public class WashingController {
 
     //비밀번호 변경
     @GetMapping(value="/pwupdate.bubble")
-    public String pwupdateGET(@RequestParam(name = "id") String id, Model model) {
+    public String pwupdateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing) {
         try {
 
             Washing obj = wRepository.findById(id).orElse(null);
@@ -179,14 +177,15 @@ public class WashingController {
             
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/washing/mypage.bubble"; //페이지 수정
+            return "redirect:/washing/mypage.bubble?id="+ washing.getId(); //페이지 수정
         }
     }
 
 
     @PostMapping(value="/pwupdate.bubble")
-    public String pwupdatePOST(@AuthenticationPrincipal User user, @ModelAttribute Washing washing, @RequestParam(name = "newpassword") String newpassword) {
+    public String pwupdatePOST(@RequestParam(name = "id") String id, @RequestParam(name = "newpassword") String newpassword, @AuthenticationPrincipal User user, @ModelAttribute Washing washing , Model model) {
         try {
+
 
             //기존데이터 읽어오기
             Washing obj = wRepository.findById(user.getUsername()).orElse(null);
@@ -196,22 +195,42 @@ public class WashingController {
 
                 //암호화 시켜서 비밀번호 변경
                 obj.setPassword(bcpe.encode(newpassword));
+                
 
                 //변경사항 저장
                 wRepository.save(obj);
             }
 
+            model.addAttribute("msg", "비밀번호가 변경되었습니다");
+            model.addAttribute("url","/bubble_bumul/washing/pwupdate.bubble?id="+washing.getId());
 
-            return "redirect:/washing/pwupdate.bubble";
+
+            // return "redirect:/washing/pwupdate.bubble?id="+washing.getId();
+            return "message";
+
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/washing/pwupdate.bubble";
+            return "redirect:/washing/pwupdate.bubble?id="+washing.getId();
+        }
+    }
+
+    /* ---------------------------------------------- */
+
+    //탈퇴
+    @GetMapping(value="/delete.bubble")
+    public String deleteGET(@ModelAttribute Washing washing) {
+        try {
+            return "/washing/delete";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
         }
     }
     
     
 
-
+    
+    
 
 
     /* ---------------------------------------------- */
