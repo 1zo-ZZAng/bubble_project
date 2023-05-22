@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,49 @@
     <title>관리자</title>
 </head>
 <body>
-    <h3>사업자 등록정보 조회(admin)</h3>
-    <form th:action="@{/washing/business.bubble}" method="post">
-        <input type="number" name="bno" /> <br/>
-        <input type="number" name="bdate" /> <br/>
-        <input type="text" name="bname" /> <br/>
-        <input type="submit" value="조회" />
-    </form>
-</body>
+
+    <input type="number" value="사업자 등록 번호" id="bno" /><br/>
+    <input type="number" value="YYYYMMSS" id="regdate"><br/>
+    <input type="text" value="대표자명" id="pnm"><br/>
+    <input type="text" value="상호명" id="bnm"><br/>
+    <button>조회</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("button").click(function () {
+
+          var data = {
+            "businesses": [
+            {
+            b_no : document.getElementById("bno").value,
+            start_dt : document.getElementById("regdate").value,
+            p_nm : document.getElementById("pnm").value,
+            b_nm : document.getElementById("bnm").value
+            
+            }
+        ]
+          };
+          console.log(data);
+
+          let serviceKey ="Al3bMZYLF3tteWZUOulq%2FmqbqH09Whq3LSN7qXANeAop5MeLY6OMNFzt9xy4pbpDM9cvW4j6lxWxN8HDvhmSjg%3D%3D";
+          $.ajax({
+            url:
+              "https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey=" +
+              serviceKey,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "JSON",
+            contentType: "application/json",
+            accept: "application/json",
+            success: function (result) {
+              console.log("결과:: ", result);
+            },
+            error: function (error) {
+              console.log("에러: ", error);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
 </html>

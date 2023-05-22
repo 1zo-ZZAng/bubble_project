@@ -102,15 +102,6 @@ public class AdminController {
     }
 
 
-    // @GetMapping(value = "business_num.bubble")
-    // public String business_numGET(@ModelAttribute ){
-    //     try{
 
-    //     }
-    //     catch(Exception e){
-
-    //         return "redirect:/business_num.bubble"
-    //     }
-    // }
 
 }
