@@ -14,8 +14,8 @@ public interface WashingService {
 	// 업체 비번 찾기
 	public Washing findWashingPw(Washing washing);
 
-	// 비번 변경
-	public Washing updateWashingPw(Washing washing);
+	
+
 
 
     

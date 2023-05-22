@@ -45,12 +45,6 @@ public class WashingServiceImpl implements WashingService {
     }
 
 
-    //비밀번호 변경
-    @Override
-    public Washing updateWashingPw(Washing washing) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateWashingPw'");
-    }
 
     
     
