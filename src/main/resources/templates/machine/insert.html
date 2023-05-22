@@ -16,49 +16,101 @@
 
     <a th:href="@{/washing/home.bubble}"><button>홈페이지</button></a>
 
-    <form th:action="@{/machine/insert.bubble}" method="post" id="form">
+    <form th:action="@{/machine/insert.bubble(wid=${wid})}" th:object="${machine}" method="post" id="form" >
 
-        <label for="id">아이디</label>
-        <input type="text" th:field="${machine.washing.id}" class="form-control" readonly />
-        
-        <!--세탁기 종류-->
-        <label for="type">세탁기</label>
-        <select name="type" class="form-select" id="type">
-            <option value="">세탁기 선택</option>
-            <option value="세탁기">세탁기</option>
-            <option value="건조기">건조기</option>
-            <option value="일체형 세탁기">일체형 세탁기</option>
-        </select>
+        <table class="container" width=" 400px">
 
-        <!--기기 시간-->
-        <label for="type">시간</label>
-        <select name="time" class="form-select" id="time">
-            <option value="">기기선택</option>
-            <option value="40">40분</option>
-            <option value="80">80분</option>
-        </select>
+            <tr>
+                <td><label for="wid">아이디</label></td>
+                <td><input type="text" name="washing.id"  th:value="${wid}" class="form-control" readonly></td>
+            </tr>
 
-        <!--가격-->
-        <label for="type">가격</label>
-        <select name="price" class="form-select" id="price">
-            <option value="">가격 선택</option>
-            <option value="5000">5000원</option>
-            <option value="9000">10000원</option>
-        </select>
+            <!--세탁기 종류-->
+            <tr>
+                <td><label for="type">세탁기</label></td>
+                <td>
+                    <select name="type" class="form-select" id="type">
+                        <option value="">세탁기 선택</option>
+                        <option value="세탁기">세탁기</option>
+                        <option value="건조기">건조기</option>
+                        <option value="일체형세탁기">일체형 세탁기</option>
+                    </select>
+                </td>
+            </tr>
 
-        <input type="button" value="등록" onclick="insertMachine()" />
+            <!--세탁기 번호-->
+            <tr>
+                <td><label for="typeno">기기 번호</label></td>
+                <td>
+                    <select name="typeno" class="form-select" id="typeno">
+                        <option value="">기기 번호선택</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!--기기 시간-->
+            <tr>
+                <td><label for="time">시간</label></td>
+                <td>
+                    <select name="time" class="form-select" id="time">
+                        <option value="">기기선택</option>
+                        <option value="40">40분</option>
+                        <option value="80">80분</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!--가격-->
+            <tr>
+                <td><label for="price">가격</label></td>
+                <td>
+                    <select name="price" class="form-select" id="price">
+                        <option value="">가격 선택</option>
+                        <option value="5000">5000원</option>
+                        <option value="9000">10000원</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!--버튼-->
+            <tr>
+                <td><input type="button" value="등록" class="form-control" onclick="insertMachine()"  /></td>
+            </tr>
+
+        </table>
+    
 
     </form>
 
-    <script>
+
+
+    <script th:inline="javascript" type="text/javascript">
+
         function insertMachine(){
             const type = document.getElementById('type'); // 세탁기 종류
             const time = document.getElementById('time'); // 세탁기 시간
             const price = document.getElementById('price'); // 가격
 
-            
+            if(type.value.length <= 0){
+                alert('세탁기를 선택해주세요');
+                return false;
+            }
 
-            
+            if(time.value.length <= 0){
+                alert('시간을 선택해주세요');
+                return false;
+            }
+
+            if(price.value.length <= 0){
+                alert('가격을 선택해주세요');
+                return false;
+            }
+
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+
 
         }
     </script>
