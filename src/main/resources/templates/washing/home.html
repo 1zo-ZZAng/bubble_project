@@ -24,8 +24,8 @@
             <input type="submit" value="로그아웃">
         </form>
 
-        <a th:href="@{/machine/insert.bubble(wid=${user.username})}"><button>기기등록</button></a>
-        <a th:href="@{/machine/selectlist.bubble(wid=${user.username})}"><button>기기조회</button></a>
+        <a th:href="@{/machine/insert.bubble(id=${user.username})}"><button>기기등록</button></a>
+        <a th:href="@{/machine/selectlist.bubble(id=${user.username})}"><button>기기조회</button></a>
 
         <a th:href="@{/washing/mypage.bubble(id=${user.username})}"><button>마이페이지</button></a>
     </div>
