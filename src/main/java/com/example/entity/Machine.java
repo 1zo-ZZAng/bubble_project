@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import javax.persistence.Entity;
