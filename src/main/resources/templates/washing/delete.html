@@ -16,19 +16,39 @@
     <h3>탈퇴</h3>
 
     <a th:href="@{/washing/home.bubble}"><button>홈페이지</button></a>
-    <a th:href="@{/washing/mypage.bubble(id=${washing.id})}">마이페이지</a> <!--지금 작동 안됨--> <!--washing.id가 안됐는데 get에도 @ModelAttribute Washing washing 넣어주니깐 작동 됐음 아니면 못찾겠다고 지럴함-->
+    <a th:href="@{/washing/mypage.bubble(id=${washing.id})}"><button>마이페이지</button></a> <!--지금 작동 안됨--> <!--washing.id가 안됐는데 get에도 @ModelAttribute Washing washing 넣어주니깐 작동 됐음 아니면 못찾겠다고 지럴함-->
 
-    <form th:action="@{/washing/delete.bubble(id=${washing.id})}" method="post">
+    <form th:action="@{/washing/delete.bubble(id=${washing.id})}" method="post" id="form">
         <table class="container" width=" 400px">
             <tr>
                 <td><label for="password">비밀번호</label></td>
                 <td><input type="text" id="password" name="password" placeholder="비밀번호를 입력해주세요" class="form-control"></td> 
             </tr>
             <tr>
-                <td><input type="submit" value="탈퇴하기"></td>
+                <td><input type="button" value="탈퇴하기" onclick="deleteMy()"></td>
             </tr>
         </table>
     </form>
+
+    <script>
+
+        function deleteMy(){
+
+            const password = document.getElementById('password');
+
+            //유효성 검사
+            if(password.value.length <= 0){
+                alert('비밀번호를 입력해주세요');
+                password.focus();
+                return false;
+            }
+
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+
+
+        }
+    </script>
+
 
 </body>
 </html>
