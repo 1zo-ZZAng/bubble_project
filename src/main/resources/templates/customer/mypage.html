@@ -17,6 +17,14 @@
 <body>
     <h3>MYPAGE</h3>
 
+    고객 등급 : 
+    <th:block th:switch="${grade}">
+        <span th:case="'1'">세탁 초보</span>
+        <span th:case="'2'">세탁 프로</span>
+        <span th:case="'3'">세탁 요정</span>
+    </th:block>
+    <br/>
+
     <a th:href="@{/customer/mypage.bubble(menu=1)}">예약 내역 조회</a>
     <a th:href="@{/customer/mypage.bubble(menu=2)}">회원 정보 수정</a>
 
@@ -27,7 +35,7 @@
     <div th:if="${#strings.equals(param.menu, '2')}">
         <!-- 회원정보 수정 -->
         <form th:action="@{/customer/mypage.bubble(menu=2)}" th:object="${customer}" method="post" id="updateform">
-            <table class="container" width="500px">
+            <table class="container" style="width: 500px;">
                 <tr>
                     <td><label for="id" id="lbl_check">아이디</label></td>
                     <td><input type="text" th:field="${customer.id}" name="id" id="id" readonly /></td>
@@ -35,7 +43,7 @@
                 <tr>
                     <td><label for="password">비밀번호</label></td>
                     <td><input type="password" th:field="${customer.password}" id="password" name="password" autoComplete="off" readonly /></td>
-                    <td><a th:href="@{/customer/updatepw.bubble}"><button>비밀번호 변경</button></a></td>
+                    <td><input type="button" value="비밀번호 변경" onclick="openupdatepw()"></td>
                 </tr>
                 <tr>
                     <td><label for="name">이름</label></td>
@@ -72,9 +80,8 @@
                     <td>
                         <input type="button" value="정보 수정" onclick="updateOne()" />
                     </td>
-                    <td></td>
                     <td>
-                        <a th:href="@{/customer/delete.bubble}"><button>회원 탈퇴</button></a>
+                        <td><input type="button" value="회원 탈퇴" onclick="opendelete()"></td>
                     </td>
                 </tr>
             </table>
@@ -107,9 +114,6 @@
 
     </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:inline="javascript" type="text/javascript">
         // daum 우편번호
@@ -221,6 +225,14 @@
 
             document.getElementById("updateform").submit();
             alert('정보 수정이 완료되었습니다.');
+        }
+
+        function openupdatepw() {
+            window.location.href = "updatepw.bubble";
+        }
+
+        function opendelete() {
+            window.location.href = "delete.bubble";
         }
     </script>
 </body>

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-// @PropertySource(value = {"classpath:global.properties"}) // 직접 만든 환경설정파일 위치
+@PropertySource(value = {"classpath:global.properties"}) // 직접 만든 환경설정파일 위치
 @MapperScan(basePackages = {"com.example.mapper"}) // 매퍼 위치 설정
 @ComponentScan(basePackages = {"com.example.controller", 
 							   "com.example.controller.jpa", 

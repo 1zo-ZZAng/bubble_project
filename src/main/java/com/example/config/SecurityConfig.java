@@ -100,8 +100,12 @@ public class SecurityConfig {
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
             .antMatchers("/customer/login.bubble").permitAll()
+            .antMatchers("/customer/findid.bubble").permitAll()
+            .antMatchers("/customer/showid.bubble").permitAll()
+            .antMatchers("/customer/findpw.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
             .antMatchers("/washing/login.bubble").permitAll()
+            .antMatchers("/washing/bncheck.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것

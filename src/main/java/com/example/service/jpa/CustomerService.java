@@ -9,10 +9,9 @@ import com.example.entity.Customer;
 public interface CustomerService {
 	// 아이디 중복 확인 => 1 : 중복 O, 사용 불가능 / 0 : 중복 X, 사용 가능
 	public int selectCustomerIDCheck(@Param("id") String id);
-	
-	// 고객 비밀번호 찾기
-	public String selectCustomerPw(@Param("obj") Customer obj);
-	
-	// 고객 등급 표시(조회)
-	public long selectCustomerGrade(@Param("id") String id);
+
+	// 아이디 찾기(이름, 전화번호, 이메일, 생년월일이 모두 일치해야함)
+	public Customer selectCustomerId(@Param("name") String name,
+								   @Param("phone") String phone,
+								   @Param("email") String email);
 }
