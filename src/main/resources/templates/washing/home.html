@@ -23,7 +23,10 @@
         <form th:action="@{/logout.bubble}" method="post">
             <input type="submit" value="로그아웃">
         </form>
-        <a th:href="@{/washing/machineinsert.bubble}">기기등록</a>
+
+        <a th:href="@{/machine/insert.bubble}"><button>기기등록</button></a>
+        <a th:href="@{/machine/select.bubble}"><button>기기조회</button></a>
+
 
         <a th:href="@{/washing/mypage.bubble(id=${user.username})}"><button>마이페이지</button></a>
     </div>

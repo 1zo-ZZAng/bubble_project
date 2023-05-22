@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.entity.Machine;
 import com.example.entity.Washing;
-import com.example.repository.MachineRepository;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
 
@@ -42,9 +40,6 @@ public class WashingController {
     //업체
     final WashingRepository wRepository;
     final WashingService wService;
-
-    //기기
-    final MachineRepository mRepository;
 
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -253,7 +248,11 @@ public class WashingController {
     }
 
     @PostMapping(value="/delete.bubble")
-    public String deletePOST(@RequestParam(name = "id") String id, @RequestParam(name = "password") String password, @AuthenticationPrincipal User user, @ModelAttribute Washing washing , Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String deletePOST(@RequestParam(name = "id") String id, 
+                            @RequestParam(name = "password") String password, 
+                            @AuthenticationPrincipal User user, 
+                            @ModelAttribute Washing washing , 
+                            Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
 
             //기존데이터 읽어오기
@@ -302,57 +301,7 @@ public class WashingController {
     
     
 
-    
-    
-
-
-    /* ---------------------------------------------- */
-
-    //기기 추가
-    @GetMapping(value="/machineinsert.bubble")
-    public String machineinsertGET() {
-        try {
-            return "/washingmachine/machineinsert";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/washin/home.bubble";
-        }
-    }
-
-    @PostMapping(value="/machineinsert.bubble")
-    public String machineinsertPOST(@ModelAttribute Machine machine) {
-        try {
-
-            mRepository.save(machine);
-
-            return "redirect:/washing/machineinsert.bubble";
-        } catch (Exception e) {
-            return "redirect:/washing/machineinsert.bubble";
-        }
-    }
-
-    /* ---------------------------------------------- */
-
-    //기기수정
-    @GetMapping(value="/machineupdate.bubble")
-    public String machineupdateGET(Model model, @RequestParam(name = "no") int no) {
-        try {
-            
-            return "redirect:/washing/machineupdate.bubble"; //아마 그 기기의 번호가 필요할듯 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/washing/machineupdate.bubble";
-        }
-    }
-    
-    
-    
-    
-    
-    
-
-    
+/* =================================================================================================================================================== */
 
 
     
