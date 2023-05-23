@@ -12,40 +12,62 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </head>
-<body>
+<!-- 모달용 style.css -->
+<style>
 
+</style>
+<body>
+  <form th:action="@{/customer/join.bubble}" method="post" id="form">
     <input type="number" value="사업자 등록 번호" id="bno" /><br/>
     <input type="number" value="YYYYMMSS" id="regdate"><br/>
     <input type="text" value="대표자명" id="pnm"><br/>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"> 조회</button>
-
-
-
-
- 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal 제목</h4>
-      </div>
-      <div class="modal-body">
-        Modal 내용
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+    <button type="button" class="btn btn-primary" id="check">조회</button>
+  
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" id="modal-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden >
+        Launch demo modal
+      </button>
+  </form>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">사업자 등록번호 조회</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>유효한 사업자 입니다 !</p>
+            <p>회원가입 창으로 넘어갑니다 :></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+   
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script>
+      // 모달창 띄우기
+      
+
+
+      // 사업자등록번호 조회
       $(document).ready(function () {
-        $("button").click(function () {
+        $("#check").click(function () {
 
           var data = {
             "businesses": [
@@ -71,6 +93,7 @@
             contentType: "application/json",
             accept: "application/json",
             success: function (result) {
+             
               
               const obj = JSON.stringify(result);
               const obj1 = JSON.parse(obj);
@@ -84,7 +107,9 @@
                 alert("존재하지 않는 사업자번호입니다.");
               }
               else if(obj1.data[0].status.b_stt_cd == 01){
-                alert("여기에 확인되셨습니다 모달창 뜨고 다음 페이지로 넘어가야한느데 시발 이걸 어케하노");
+                $("#modal-btn").click();
+        
+                
               }
               // console.log(obj1.);
             },
