@@ -151,7 +151,7 @@ public class MachineController {
 
 
     @PostMapping(value = "/updatebatchaction.bubble")
-    public String updatebatchactionPOST(@RequestParam(name = "no[]") long[] no, 
+    public String updatebatchactionPOST(@RequestParam(name = "no[]") BigInteger[] no, 
                                         @RequestParam(name = "type[]") String[] type,
                                         @RequestParam(name = "typeno[]") BigInteger[] typeno,
                                         @RequestParam(name = "time[]") BigInteger[] time,
@@ -162,14 +162,18 @@ public class MachineController {
 
             List<Machine> list = new ArrayList<>();
 
+            log.info(list.toString());
+
             for(int i = 0; i < no.length; i++){
                 
-                Machine obj = mRepository.findById(BigInteger.valueOf(no[i])).orElse(null);
+                Machine obj = mRepository.findById(no[i]).orElse(null);
 
                 obj.setType(type[i]);
                 obj.setTypeno(typeno[i].valueOf(i));
                 obj.setTime(time[i].valueOf(i));
                 obj.setPrice(price[i].valueOf(i));
+
+                log.info("수정 => {}", obj.toString());
                 
                 list.add(obj);
 
@@ -198,7 +202,7 @@ public class MachineController {
         try {
 
 
-            log.info("삭제 => {}", chk.toString());
+            log.info("삭제하려는 세탁기 번호 => {}", chk.toString());
 
             // mRepository.deleteAll(mRepository.findAllById(chk));
             mRepository.deleteAllById(chk);
