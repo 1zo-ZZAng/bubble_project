@@ -30,11 +30,13 @@ public class SecurityServiceImpl1 implements UserDetailsService {
         Customer obj = cRepository.findById(username).orElse(null);
 
         if (obj != null) { // 아이디가 있는 경우
-            return User.builder()
-                       .username(obj.getId())
-                       .password(obj.getPassword())
-                       .roles("CUSTOMER")
-                       .build();
+            if (obj.getPassword() != null) {
+                return User.builder()
+                           .username(obj.getId())
+                           .password(obj.getPassword())
+                           .roles("CUSTOMER")
+                           .build();
+            }
         }
            
         // 아이디가 없는 경우는 User로 처리

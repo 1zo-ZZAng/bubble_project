@@ -12,4 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     // 아이디 찾기(이름, 전화번호, 이메일이 모두 일치해야함)
     Customer findByNameAndPhoneAndEmail(String name, String phone, String email);
+
+    // 비밀번호 찾기(아이디, 이메일이 모두 일치해야함)
+    Customer findByIdAndEmail(String id, String email);
 }
