@@ -8,24 +8,8 @@ import com.example.entity.Washing;
 public interface WashingService {
 
 
-	// findById
-	Washing findById(String id);
-
 	//회원가입
-	public int joinWashing(Washing obj);
-
-	//로그인
-	public int loginWashing(Washing obj);
-
-	//탈퇴
-	public int deleteWashing(Washing obj);
-
-	//정보수정
-	public int updateWashing(Washing obj);
-
-	//비밀번호 수정
-	public int pwupdateWashing(Washing obj);
-
+	public Washing joinWashing(Washing obj);
 	
 	// 아이디 중복 확인
 	public int washingIDCheck(String id);

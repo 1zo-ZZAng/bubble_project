@@ -43,93 +43,24 @@ public class WashingServiceImpl implements WashingService {
     }
 
 
-    //
-    @Override
-    public Washing findById(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
 
 
     //회원가입
     @Override
-    public int joinWashing(Washing obj) {
+    public Washing joinWashing(Washing obj) {
         try {
 
-            wRepository.save(obj);
-            return 1;
+            Washing ret = wRepository.save(obj);
+
+            return ret;
             
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
-        }
-    }
-
-
-    //로그인
-    @Override
-    public int loginWashing(Washing obj) {
-        try {
-
-            return 1;
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-
-    //탈퇴
-    @Override
-    public int deleteWashing(Washing obj) {
-        try {
-
-            return 1;
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-
-    //정보수정
-    @Override
-    public int updateWashing(Washing obj) {
-        try {
-
-            return 1;
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-
-    //비밀번호 수정
-    @Override
-    public int pwupdateWashing(Washing obj) {
-        try {
-
-            return 1;
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
+            return null;
         }
     }
 
 
 
-
-
-
-
-
-
-    
-    
     
 }

@@ -86,7 +86,7 @@ public class WashingController {
             log.info("회원가입 => {}", washing.toString());
 
             //회원가입
-            wRepository.save(washing);
+            wService.joinWashing(washing);
 
             //완료 후 이동
             return "redirect:/washing/login.bubble";
