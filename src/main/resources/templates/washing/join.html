@@ -85,15 +85,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">주소등록</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">주소 찾기</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly> 
-                    <input type="button" class="btn btn-sm btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                    <input type="text" name="address" id="sample6_address" placeholder="주소" readonly><br> 
-                    <input type="text" name="detailAddress" id="sample6_detailAddress" style="margin-top: 2px;" placeholder="상세주소"> 
-                    <input type="text" name="extraAddress" id="sample6_extraAddress" placeholder="참고항목" readonly>
+                    <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly /> 
+                    <input type="button" class="btn btn-sm btn-primary" onclick="sample6_execDaumPostcode()"  style="margin-bottom: 2px;" value="우편번호 찾기" /><br>
+                    <input type="text" name="Address" id="sample6_address" placeholder="주소" readonly />
+                    <input type="text" name="detail_Address" id="sample6_detailAddress" placeholder="상세주소" /> 
+                    <input type="text" name="extra_Address" id="sample6_extraAddress" style="margin-top: 2px;" placeholder="참고항목" readonly />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="insertAddressAction()">등록</button>
@@ -102,6 +102,7 @@
             </div>
         </div>
     </div>
+    
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -152,7 +153,6 @@
                         }
 
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                        document.getElementById('sample6_postcode').value = data.zonecode;
                         document.getElementById("sample6_address").value = addr;
                         // 커서를 상세주소 필드로 이동한다.
                         document.getElementById("sample6_detailAddress").focus();
@@ -165,28 +165,39 @@
         // 우편번호 생략
         function insertAddressAction() {
 
+            // 회원가입 페이지에 보이는 주소칸
+            const address = document.getElementById("address");
+
             // 모달창에 뜨는 주소칸
             const Address = document.getElementById('sample6_address');
             const detail_Address = document.getElementById('sample6_detailAddress');
             const extra_Address = document.getElementById('sample6_extraAddress');
 
-            // 회원가입 페이지에 보이는 주소칸
-            const address = document.getElementById("address");
+            //유효성 검사
+
+            if(Address.value.length <= 0){
+                alert('주소를 찾아주세요');
+                return false;
+            }
 
             if (detail_Address.value.length <= 0) {
-                alert('상세주소를 입력하세요.');
+                alert('상세주소를 입력해주세요');
                 detail_Address.focus();
                 return false;
             }
 
             if (detail_Address.value.length > 0) {
                 // 주소를 다묶어서 한 번에 넣었음
-                address.value = Address.value + detail_Address.value + extra_Address.value;
+                address.value = Address.value + " " + detail_Address.value + extra_Address.value;
 
-                
+
                 $('#exampleModal').modal('hide');
             }
+            
+
+            
         }
+
 
 
         //아이디 중복확인
