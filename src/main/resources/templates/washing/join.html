@@ -116,7 +116,7 @@
     <script th:inline="javascript" type="text/javascript">
 
         //우편주소
-        function sample6_execDaumPostcode() {
+        function sample6_execDaumPostcode() { //postcode api필요함
                 new daum.Postcode({
                     oncomplete: function(data) {
                         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -193,7 +193,7 @@
                 // 주소를 다묶어서 한 번에 넣었음
                 address.value = Address.value + " " + detail_Address.value + extra_Address.value;
 
-                $('#exampleModal').modal('hide'); //모달창 닫기
+                $('#exampleModal').modal('hide'); //모달창 닫기 //jquery 필요함
 
             }
 
@@ -206,7 +206,7 @@
         //아이디 중복확인
         var idcheck = 0; // 1이면 사용가능, 0이면 사용불가
             
-        async function ajaxIDCheck(e) {
+        async function ajaxIDCheck(e) { //ajax 필요함
 
             e = document.getElementById('id');
 
