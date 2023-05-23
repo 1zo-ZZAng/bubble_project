@@ -39,7 +39,7 @@ public class RestWashingController {
             log.info("아이디 => {}", id );
 
             retMap.put("status", 200);
-            retMap.put("washing", wService.washingIDCheck(id) );
+            retMap.put("washing", wService.washingIDCheck(id) ); //html에서 .washing으로 확인할 수 있음
             
         } catch (Exception e) {
             e.printStackTrace();
