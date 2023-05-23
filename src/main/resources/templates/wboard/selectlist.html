@@ -7,17 +7,9 @@
     <title>BUBBLE BUMUL</title>
 </head>
 <body>
-
-    <h3>기기등록</h3>
-
-    <form th:action="@{/washing/machineinsert.bubble}">
-        <table class="container" width=" 400px">
-            <tr>
-                <td></td>
-            </tr>
-        </table>
-
-    </form>
-    
+    <h3>게시판</h3>
+    <a th:href="@{/washing/home.bubble}"><button>홈</button></a>
+    <a th:href="@{/washing/write.bubble(id=${id})}"><button>글쓰기</button></a>
+    <hr />
 </body>
 </html>

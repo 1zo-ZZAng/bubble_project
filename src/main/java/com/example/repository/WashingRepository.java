@@ -11,5 +11,7 @@ public interface WashingRepository extends JpaRepository<Washing, String> {
     //아이디 중복 확인
     public int countById(String id);
 
+
+
     
 }

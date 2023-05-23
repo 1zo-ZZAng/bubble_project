@@ -15,7 +15,7 @@
     <h3>마이페이지</h3>
 
     <a th:href="@{/washing/home.bubble}"><button>홈페이지</button></a>
-    <a th:href="@{/washing/pwupdate.bubble(id=${washing.id})}" ><button>비밀번호 변경</button></a> <!--form태그 내에 있으니깐 작동이 안됨 밖에 있으니깐 작동이 또 됨-->
+    <!--form태그 내에 있으니깐 작동이 안됨 밖에 있으니깐 작동이 또 됨-->
     
 
     <form th:action="@{/washing/mypage.bubble(id=${washing.id})}" th:object="${washing}" method="post" id="form">
@@ -30,6 +30,7 @@
             <tr>
                 <td><label for="password"> 비밀번호 </label></td>
                 <td><input type="password" th:field="${washing.password}" class="form-control" readonly></td>
+                <td><a th:href="@{/washing/pwupdate.bubble(id=${washing.id})}" class="btn">비밀번호 변경</a></td>
             </tr>
 
             <tr>

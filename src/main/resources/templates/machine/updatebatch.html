@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUBBLE BUMUL</title>
+
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+</head>
+<body>
+    <h3>수정</h3>
+    <a th:href="@{/washing/home.bubble}">홈페이지</a>
+    <a th:href="@{/machine/selectlist.bubble(wid=${wid})}">목록</a>
+
+    <hr />
+
+    <form th:ction="@{/machine/updatebatchaction.bubble}" method="post" id="form">
+        <table class="container" width=" 400px">
+
+            <tr th:each="obj : ${list}">
+
+                <td><label for="no">번호</label></td>
+                <td><input type="text" name="no[]"  th:value="${obj.no}" class="form-control" readonly></td> 
+
+
+                <!--세탁기 종류-->
+                <td><label for="type">세탁기</label></td>
+                <td>
+                    <select name="type[]" th:value="${obj.type}" class="form-select"  id="type">
+                        <option th:selected="${obj.type}==''">세탁기 선택</option>
+                        <option th:selected="${obj.type}=='세탁기'">세탁기</option>
+                        <option th:selected="${obj.type}=='건조기'">건조기</option>
+                        <option th:selected="${obj.type}=='일체형세탁기'">일체형 세탁기</option>
+                    </select>
+                </td>
+
+                <!--세탁기 번호-->
+                <td><label for="typeno">기기 번호</label></td>
+                <td>
+                    <select name="typeno[]" th:value="${obj.typeno}" class="form-select" id="typeno">
+                        <option th:selected="${obj.typeno}==''">기기 번호선택</option>
+                        <option th:selected="${obj.typeno}=='1'">1</option>
+                        <option th:selected="${obj.typeno}=='2'">2</option>
+                        <option th:selected="${obj.typeno}=='3'">3</option>
+                    </select>
+                </td>
+
+                <!--기기 시간-->
+                <td><label for="time">시간</label></td>
+                <td>
+                    <select name="time[]" th:value="${obj.time}"  class="form-select" id="time">
+                        <option th:selected="${obj.time}==''">시간선택</option>
+                        <option th:selected="${obj.time}=='40'">40분</option>
+                        <option th:selected="${obj.time}=='80'">80분</option>
+                    </select>
+                </td>
+
+                <!--가격-->
+                <td><label for="price">가격</label></td>
+                <td>
+                    <select name="price[]" th:value="${obj.price}" class="form-select" id="price">
+                        <option th:selected="${obj.price}==''">가격 선택</option>
+                        <option th:selected="${obj.price}=='5000'">5000원</option>
+                        <option th:selected="${obj.price}=='10000'">10000원</option>
+                    </select>
+                </td>
+
+            </tr>
+
+        </table>
+
+        <!--버튼-->
+        <input type="button" value="수정" class="form-control" onclick="updateBatchAction()"/>
+
+    </form>
+
+    <script th:inline="javascript" type="text/javascript">
+
+        function updateBatchAction(){
+
+            const type = document.getElementById('type');
+            const typeno = document.getElementById('typeno');
+            const time = document.getElementById('time');
+            const price = document.getElementById('price');
+
+            if(type.value.length <= 0){
+                alert('세탁기를 선택해주세요');
+                return false;
+            }
+
+            if(typeno.value.length <= 0){
+                alert('기기번호를 선택해주세요');
+                return false;
+            }
+
+            if(time.value.length <= 0){
+                alert('시간을 선택해주세요');
+                return false;
+            }
+
+            if(price.value.length <= 0){
+                alert('가격을 선택해주세요');
+                return false;
+            }
+
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+
+        }
+    </script>
+
+
+
+
+</body>
+</html>

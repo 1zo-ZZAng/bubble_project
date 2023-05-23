@@ -66,7 +66,7 @@ public interface WashingMapper {
 	
 	// 업체 탈퇴
 	@Update({
-		" UPDATE washing SET password=null, wnumber=null, email=null, name='탈퇴', address=null, phone=null, ceo=null ",
+		" UPDATE washing SET password=null, wnumber=null, email=null, name='탈퇴', address=null, phone=null, ceo=null, role=null, chk=0 ",
 		" WHERE id=#{obj.id} AND password=#{obj.password} "
 	})
 	public int deleteWashingOne (@Param("obj") Washing obj);
