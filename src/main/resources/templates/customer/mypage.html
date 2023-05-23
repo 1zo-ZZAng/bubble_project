@@ -43,7 +43,7 @@
                 <tr>
                     <td><label for="password">비밀번호</label></td>
                     <td><input type="password" th:field="${customer.password}" id="password" name="password" autoComplete="off" readonly /></td>
-                    <td><input type="button" value="비밀번호 변경" onclick="openupdatepw()"></td>
+                    <td><a th:href="@{/customer/updatepw.bubble}" class="btn btn-primary">비밀번호 변경</a></td>
                 </tr>
                 <tr>
                     <td><label for="name">이름</label></td>
@@ -81,7 +81,7 @@
                         <input type="button" value="정보 수정" onclick="updateOne()" />
                     </td>
                     <td>
-                        <td><input type="button" value="회원 탈퇴" onclick="opendelete()"></td>
+                        <td><a th:href="@{/customer/delete.bubble}" class="btn btn-primary">회원탈퇴</a></td>
                     </td>
                 </tr>
             </table>
@@ -225,14 +225,6 @@
 
             document.getElementById("updateform").submit();
             alert('정보 수정이 완료되었습니다.');
-        }
-
-        function openupdatepw() {
-            window.location.href = "updatepw.bubble";
-        }
-
-        function opendelete() {
-            window.location.href = "delete.bubble";
         }
     </script>
 </body>

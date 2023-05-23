@@ -30,15 +30,13 @@
             </tr>
             <tr>
                 <td>
-                    <input type="button" value="아이디 찾기" onclick="findidpage()" class="form-control" />
+                    <a th:href="@{/customer/findid.bubble}" class="btn btn-primary">아이디 찾기</a>
                 </td>
                 <td>
-                    <input type="button" value="비밀번호 찾기" onclick="findpwpage()" class="form-control" />
+                    <a th:href="@{/customer/findpw.bubble}" class="btn btn-primary">비밀번호 찾기</a>
                 </td>
-            </tr>
-            <tr>
                 <td>
-                    <input type="button" value="회원가입" onclick="joinpage()" class="form-control" />
+                    <a th:href="@{/customer/join.bubble}" class="btn btn-primary">회원가입</a>
                 </td>
             </tr>
         </table>
@@ -65,14 +63,6 @@
 
             // 전송하기
             document.getElementById("form").submit();
-        }
-
-        function findidpage() {
-            window.location.href = "findid.bubble";
-        }
-
-        function joinpage() {
-            window.location.href = "join.bubble";
         }
     </script>
 </body>
