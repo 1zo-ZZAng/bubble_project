@@ -91,11 +91,17 @@
 
         function insertMachine(){
             const type = document.getElementById('type'); // 세탁기 종류
+            const typeno = document.getElementById('typeno'); //기기번호
             const time = document.getElementById('time'); // 세탁기 시간
             const price = document.getElementById('price'); // 가격
 
             if(type.value.length <= 0){
                 alert('세탁기를 선택해주세요');
+                return false;
+            }
+
+            if(typeno.value.length <= 0){
+                alert('기기번호를 선택해주세요');
                 return false;
             }
 

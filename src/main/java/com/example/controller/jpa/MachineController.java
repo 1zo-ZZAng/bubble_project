@@ -2,6 +2,7 @@ package com.example.controller.jpa;
 
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -112,24 +113,86 @@ public class MachineController {
     /* ---------------------------------------------- */
 
     //기기수정
-    @GetMapping(value="/machineupdate.bubble")
-    public String machineupdateGET(Model model, @RequestParam(name = "no") int no) {
+    @SuppressWarnings("unchecked")
+    @GetMapping(value="/updatebatch.bubble")
+    public String updatebatchGET(Model model, @AuthenticationPrincipal User user) {
         try {
             
             
-            // model.addAttribute("machine", obj);
+            List<BigInteger> chk = (List<BigInteger>) httpSession.getAttribute("chk[]");
+            List<Machine> list = mRepository.findAllById(chk);
 
-            return "/machine/update";
+            model.addAttribute("wid", user.getUsername()); 
+            model.addAttribute("list", list);
+
+            return "/machine/updatebatch";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/washing/machineupdate.bubble";
+            return "redirect:/washing/home.bubble";
         }
     }
 
+
+    @PostMapping(value = "/updatebatch.bubble")
+    public String updatebatchPOST(@RequestParam(name = "chk[]") List<BigInteger> chk){
+        try {
+            
+            log.info("수정하려는 세탁기 번호 => {}", chk.toString());
+            httpSession.setAttribute("chk[]", chk);
+
+            return "redirect:/machine/updatebatch.bubble";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        }
+    }
+
+
+    @PostMapping(value = "/updatebatchaction.bubble")
+    public String updatebatchactionPOST(@RequestParam(name = "no[]") long[] no, 
+                                        @RequestParam(name = "type[]") String[] type,
+                                        @RequestParam(name = "typeno[]") BigInteger[] typeno,
+                                        @RequestParam(name = "time[]") BigInteger[] time,
+                                        @RequestParam(name = "price[]") BigInteger[] price,
+                                        @ModelAttribute Machine machine
+                                        ){
+        try {
+
+            List<Machine> list = new ArrayList<>();
+
+            for(int i = 0; i < no.length; i++){
+                
+                Machine obj = mRepository.findById(BigInteger.valueOf(no[i])).orElse(null);
+
+                obj.setType(type[i]);
+                obj.setTypeno(typeno[i].valueOf(i));
+                obj.setTime(time[i].valueOf(i));
+                obj.setPrice(price[i].valueOf(i));
+                
+                list.add(obj);
+
+            
+            }
+
+            mRepository.saveAll(list);
+
+            return "redirect:/machine/selectlist.bubble?wid="+ machine.getWashing().getId();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return "redirect:/machine/updatebatchaction.bubble";
+
+        }
+    }
+    
+
+
     /*-------------------------------------------- */
 
-    //기기삭제
+    //기기 일괄 삭제
     @PostMapping(value="/delete.bubble")
     public String deletePOST(@ModelAttribute Machine machine, @RequestParam(name = "chk[]") List<BigInteger> chk) {
         try {
