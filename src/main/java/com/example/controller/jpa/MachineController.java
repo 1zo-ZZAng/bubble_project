@@ -1,5 +1,6 @@
 package com.example.controller.jpa;
 
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,18 +39,22 @@ public class MachineController {
     final MachineRepository mRepository;
 
     final HttpSession httpSession;
-
+    BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
 
 /* ============================================================================================== */
 
     //기기조회
+
     @GetMapping(value="/selectlist.bubble")
-    public String selectlistGET(Model model, @RequestParam(name = "wid") String wid) {
+    public String selectlistGET(Model model, @ModelAttribute Machine machine, @RequestParam(name = "wid") String wid, @AuthenticationPrincipal User user) {
         try {
+
+
 
             List<Machine> list = mRepository.findByWashing_idOrderByNoDesc(wid);
 
+            model.addAttribute("wid", user.getUsername()); 
             model.addAttribute("list", list);
 
             return "/machine/selectlist";
@@ -59,16 +65,22 @@ public class MachineController {
     }
     
 
+
+
 /* ------------------------------------------------------------ */
 
 
     //기기 등록
     @GetMapping(value="/insert.bubble")
-    public String machineinsertGET( Model model, @AuthenticationPrincipal User user) {
+    public String machineinsertGET( Model model, @AuthenticationPrincipal User user, @ModelAttribute Machine machine) {
 
         try {
             
-            model.addAttribute("wid", user.getUsername());  //wid에 저장해서 view로 넘기기 
+            model.addAttribute("wid", user.getUsername()); 
+
+            model.addAttribute("machine", machine);
+
+
 
             return "/machine/insert";
 
@@ -83,6 +95,7 @@ public class MachineController {
     @PostMapping(value="/insert.bubble")
     public String machineinsertPOST(@ModelAttribute Machine machine) {
         try {
+
 
             mRepository.save(machine);
 
@@ -121,10 +134,11 @@ public class MachineController {
     public String deletePOST(@ModelAttribute Machine machine, @RequestParam(name = "chk[]") List<BigInteger> chk) {
         try {
 
+
             log.info("삭제 => {}", chk.toString());
 
+            // mRepository.deleteAll(mRepository.findAllById(chk));
             mRepository.deleteAllById(chk);
-            
 
             return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
             

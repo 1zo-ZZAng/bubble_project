@@ -100,9 +100,9 @@ public class CustomerController {
 
     @PostMapping(value = "/findid.bubble")
     public String findidPOST(@RequestParam(name = "name") String name,
-                             @RequestParam(name = "phone") String phone,
-                             @RequestParam(name = "email") String email,
-                             Model model) {
+                            @RequestParam(name = "phone") String phone,
+                            @RequestParam(name = "email") String email,
+                            Model model) {
         Customer customer = cService.selectCustomerId(name, phone, email);
         
         if (customer != null) {
