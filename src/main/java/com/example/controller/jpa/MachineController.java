@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.entity.Machine;
 import com.example.repository.MachineRepository;
 import com.example.repository.WashingRepository;
+import com.example.service.jpa.MachineService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class MachineController {
 
      //기기
     final MachineRepository mRepository;
+    final MachineService mService;
 
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -183,6 +185,7 @@ public class MachineController {
             
             }
 
+            //저장
             mRepository.saveAll(list); 
 
             //주소문제로 판결 => 왜 안됨? => user로 받았네 주소를 그니깐 안됐음 힝구
@@ -203,23 +206,21 @@ public class MachineController {
     /*-------------------------------------------- */
 
     //기기 일괄 삭제
+    //127.0.0.1:8282/bubble_bumul/machine/selectlist.wid=wid;
     @PostMapping(value="/delete.bubble")
-    public String deletePOST( @RequestParam(name = "chk[]") List<BigInteger> chk, @AuthenticationPrincipal User user, @ModelAttribute Machine machine) {
+    public String deletePOST(@RequestParam(name = "chk[]") List<Machine> chk, @AuthenticationPrincipal User user) { //
         try {
 
+            
 
             log.info("삭제하려는 세탁기 번호 => {}", chk.toString());
 
             //로그는 찍히는 상황
             //삭제가 안되는 상황 어떻게 해야할지 고민 중..
 
-            // mRepository.deleteAll(mRepository.findAllById(chk));
-            // mRepository.delete(chk);
-            // mRepository.deleteInBatch();
-
-            mRepository.deleteAllInBatch();
+            mRepository.deleteAll();
             
-
+            
             return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
 
             

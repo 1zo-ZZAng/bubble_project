@@ -20,7 +20,11 @@ public interface MachineRepository extends JpaRepository<Machine, BigInteger> {
 
 
     //기기 선택 삭제
-    List<Machine> deleteAllByNo(List<BigInteger> no);
+    List<Machine> deleteByNo(BigInteger[] no);
+
+    //기기 선택 삭제
+    // List<Machine> deleteByNo(List<BigInteger> no);
+
 
 
 

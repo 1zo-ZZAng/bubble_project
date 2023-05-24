@@ -17,18 +17,17 @@ public class MachineServiceImpl implements MachineService {
     final MachineRepository mRepository;
 
     //일괄삭제용
-    // @Override
-    // public Machine deletMachineAll(List<BigInteger> chk) {
-    //     try {
+    @Override
+    public List<Machine> deleteAllByNo(BigInteger[] chk) {
+        try {
 
-
-    //         mRepository.deleteAllById(chk);
+            return mRepository.deleteByNo(chk);
 
             
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     }
-    // }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
 }
