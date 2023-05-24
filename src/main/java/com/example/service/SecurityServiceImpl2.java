@@ -21,6 +21,8 @@ public class SecurityServiceImpl2 implements UserDetailsService {
     final String format = "SecurityServiceImpl => {}";
     final WashingRepository wRepository;
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // (2) 아이디를 이용해서 Washing 테이블에서 정보를 꺼낸 후 User 타입으로 변환해서 리턴하면
@@ -29,6 +31,10 @@ public class SecurityServiceImpl2 implements UserDetailsService {
 
         Washing obj = wRepository.findById(username).orElse(null);
 
+
+        
+
+        
         if (obj != null) { // 아이디가 있는 경우
             return User.builder()
                         .username(obj.getId())

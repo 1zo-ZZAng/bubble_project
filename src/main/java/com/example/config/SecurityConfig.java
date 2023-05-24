@@ -83,6 +83,7 @@ public class SecurityConfig {
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())
+            // .failureHandler(new CustomLoginFailHandler())
             // .defaultSuccessUrl("/washing/home.bubble") // 로그인 성공시 이동할 페이지
             .permitAll();  
 

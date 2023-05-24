@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.entity.Machine;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
@@ -52,8 +53,12 @@ public class WashingController {
     public String homeGET(@AuthenticationPrincipal User user, Model model) {
 
         try {
+
             model.addAttribute("user", user);
+
             return "/washing/home";
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/home.bubble";
@@ -136,13 +141,13 @@ public class WashingController {
     //로그인
     @GetMapping(value = "/login.bubble")
     public String loginGET(@RequestParam(value = "error", required = false)String error, 
-                            @RequestParam(value = "exception", required = false)String exception,  //exception에 메시지를 담아서 사용자에게 전달하기 위해 model객체를 이용해서 사용자에게 전달
+                            // @RequestParam(value = "exception", required = false)String exception,  //exception에 메시지를 담아서 사용자에게 전달하기 위해 model객체를 이용해서 사용자에게 전달
                             Model model){
 
         try {
 
             model.addAttribute("error", error);
-            model.addAttribute("exception", exception); 
+            // model.addAttribute("exception", exception); 
 
             return "/washing/login";
 
