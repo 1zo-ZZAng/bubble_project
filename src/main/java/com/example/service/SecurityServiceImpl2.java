@@ -30,8 +30,6 @@ public class SecurityServiceImpl2 implements UserDetailsService {
         log.info(format, username);
 
         Washing obj = wRepository.findById(username).orElse(null);
-
-
         
 
         

@@ -19,16 +19,9 @@
     <!--로그인 됐을 때-->
     <div th:if="${user != null}">
         
+            <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
 
 
-
-            <p th:text="${user.username} + ' 님' "></p>
-
-
-        
-        
-
-    
         <form th:action="@{/logout.bubble}" method="post">
             <input type="submit" value="로그아웃">
         </form>
