@@ -65,7 +65,7 @@ public class AdminController {
             return "/admin/login";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.do";
+            return "redirect:/login.bubble";
         }
     }
 
@@ -81,7 +81,7 @@ public class AdminController {
                aRepository.save(obj);
                log.info(format, obj);
             }
-            return "redirect:/admin/home.bubble";
+            return "redirect:/admin/main.bubble";
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/admin/login.bubble";
