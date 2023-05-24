@@ -2,6 +2,7 @@
 
 html, body {margin: 0px; padding: 0px;}
 
+
 header {
     font-family: 'Open Sans', Futura,     Helvetica, Arial, sans-serif;
     position:relative;
@@ -156,40 +157,353 @@ h1 {
 
 /* main */
 .maincontainer{
+    margin: 0 auto;
     padding: 300px;
 }
 
+/* 제일 먼저 보이는 top화면 */
+.top-1{
+    margin-top: -200px;
+    border: #1363DF;
+}
+.top-2 {
+    width: 1300px;
+    height: 1000px;
+    margin-left: 20px;
+    border-radius: 3em;
+    background-color: #1363DF;
+}
 
+
+img {
+    display: block;
+    margin: 80px;
+    margin-top: 200px;
+}
+
+
+.text {
+    /* padding: 30px; */
+    margin-top: 260px;
+    margin-right: 7%;
+}
+
+.text h3 {
+    text-align: center;
+    font-size: 75px;
+    font-weight: bolder;
+    margin-bottom: 50px;
+    color: #ffffff;
+}
+
+.text p {
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.top-button{
+    margin-top: 70px;
+    margin-left: 50px;
+}
+
+
+.top-1 .text .btn {
+    border-radius: 30px;
+}
+
+.top-1 .text .btn-primary {
+    height: 90px;
+    line-height: 80px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 1em;
+    border: none;
+    color: #1C3879;
+    background-color: #ffffff;
+}
+
+.top-1 .text .btn-primary:hover, .btn-primary:active {
+    background-color: #1C3879;
+    color: #ffffff;
+}
+
+.top-1 .text .btn-secondary {
+    height: 90px;
+    line-height: 80px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 50px;
+    border-radius: 1em;
+    border: none;
+    color: #1C3879;
+    background-color: #ffffff;
+}
+
+.top-1 .text .btn-secondary:hover, .btn-secondary:active {
+    background-color: #1C3879;
+    color: #ffffff;
+}
+
+ 
+/* 소개글 */
+.main-info {
+    margin-left: 20px;
+    margin-top: 300px;
+    margin-bottom: 200px;
+}
+
+.main-info-title {
+    text-align: center;
+    margin-top: -140px;
+    margin-bottom: 80px;
+}
+
+.main-info-title h2 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #1C3879;
+}
+
+.card {
+    border-radius: 20px;
+}
+
+
+.card-title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.card-text {
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+.card-footer .btn-primary {
+    height: 70px;
+    line-height: 60px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 1em;
+    border: none;
+    color: #1C3879;
+    background-color: #ffffff;
+}
+
+.card-footer .btn-primary:hover, .card-footer .btn-primary:active {
+    background-color: #1C3879;
+    color: #ffffff;
+}
+
+
+/* 매장 찾기 find-washing */
+
+.find-washing {
+    border-radius: 20px;
+    margin-left: -245px;
+    background-color: #1363DF;
+}
+
+.find-washing-title {
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+.find-washing-title h3 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+
+#city-select {
+    
+    margin-left: -19%;
+}
+
+#sido1, #gugun1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+select {
+    font-size: 20px;
+    margin: 50px;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.find-washing .btn-primary {
+    margin-top: 48px;
+    margin-left: -33%;
+    width: 260px;
+    height: 50px;
+    line-height: 30px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    color: #1C3879;
+    background-color: #ffffff;
+}
+
+.find-washing .btn-primary:hover, .find-washing .btn-primary:active {
+    background-color: #1C3879;
+    color: #ffffff;
+}
+
+/* 예약기능소개 reserve-info */
+.reserve-info {
+    margin-top: 5px;
+    margin-bottom: 300px;
+}
+
+.reserve-info-title h3{
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 40px;
+    margin-bottom: 120px;
+}
+
+.step {
+    margin-left: 8.5%;
+}
+
+.step-1, .step-2, .step-3, .step-4 {
+    width: 350px;
+    height: 350px;
+    border-radius: 100%;
+    border: none;
+    margin-right: 60px;
+}
+
+.step-1 {
+    background-color: #cfe0f8;
+}
+
+.step-2 {
+    background-color: #9dc4fa;
+}
+
+.step-3 {
+    background-color: #64a2fa;
+}
+
+
+.step-4 {
+    margin-right: -300px;
+    background-color: #2881fe;
+}
+
+.step h4 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.step p {
+    text-align: center;
+    font-size: 30px;
+}
+
+.step .process {
+    margin-left: 347px;
+    margin-top: -170px;
+    font-size: 60px;
+    color: #1C3879;
+}
+
+/* 퀵버튼 quick-button */
+.quick-button {
+    height: 460px;
+    margin-top: 10%;
+    margin-left: 15%;
+}
+
+.quick-button button{
+    width: 400px;
+    height: 200px;
+    margin-left: 2%;
+    font-size: 50px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 15px;
+    background-color: #1363DF;
+}
+
+.quick-button button:hover, .quick-button button:active {
+    background-color: #e3c43c;
+}
+
+.quick-button a{
+    color: #ffffff;
+    text-align: center;
+}
 
 /* footer */
 footer{
     background-color: #CCF2F4;
     color:  rgb(9, 0, 63);
+    height: 200px;
 }
 
-footer > hr{
-   background-color: rgb(9, 0, 63);
-   height: 1px;
-   border: 0px;
+.copyright {
+    color: #1C3879;
+    font-size: 18px;
+    line-height: 24px;
+    margin-left: -1%;
+    padding-top: 10px;
+    text-align: center;
+    width: 100%;
 }
 
-.footer{
-    padding-top: 20px;
-    margin-left: 35px;
+.copyright a {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 4%;
     
+    color: rgb(9, 0, 63);
 }
 
-footer > ul{
-    list-style: none;
-    height: 7px;
+.copyright .bm-4 {
+    margin-right: -2%;
+}
 
+.copyright .bm-1, .bm-2, .bm-3, .bm-4 {
+    font-weight: bold;
+}
 
-  }
-  
-footer > ul > li {
+.copyright .copy-menu {
+    /* padding: 25px 0 5px 0; */
+    margin: 0 auto;
+    margin-top: 40px;
+    text-align: center;
+    vertical-align: baseline;
+    font-size: 15px;
+}
+
+.copyright .copy-menu .list-1 {
+    margin-left: 24%;
+}
+
+.copyright ul li {
     float: left;
-    /* position: relative; */
-    margin-top: 18px;
-    margin-right: 20px;
-    
+    margin-left: 2%;
+    list-style: none;
+}
+
+footer .cr {
+    margin-top: 5%;
+    margin-left: 3%;
+    font-size: 15px;
+    background-color: #CCF2F4;
 }
