@@ -64,10 +64,42 @@ public class WashingController {
 
     /* ---------------------------------------------- */
 
+    //사업자번호 받아오기
+    @GetMapping(value="/bncheck.bubble")
+    public String insertGET() {
+        try {
+            return "/washing/bncheck";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/home.bubble";
+        }
+    }
+
+    //사업자번호 bno 대표자명 pnm
+    @PostMapping(value="/bncheck.bubble")
+    public String insertPOST(@RequestParam(name="bno") String bno,
+                            @RequestParam(name = "pnm") String pnm){
+        try {
+            httpSession.setAttribute("bno", bno);
+            httpSession.setAttribute("pnm", pnm);  
+            
+            return "redirect:/washing/join.bubble";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/bncheck.bubble";
+        }
+    }
+
+
+    /* ---------------------------------------------- */
+
     //회원가입
     @GetMapping(value="/join.bubble")
-    public String joinGET() {
+    public String joinGET(Model model) {
         try {
+            model.addAttribute("wnumber", httpSession.getAttribute("bno"));
+            model.addAttribute("ceo", httpSession.getAttribute("pnm"));
+            
             return "/washing/join";
         } catch (Exception e) {
             e.printStackTrace();
