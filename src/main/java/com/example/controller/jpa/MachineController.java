@@ -45,7 +45,8 @@ public class MachineController {
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
 
-/* ============================================================================================== */
+/* --------------------------------------------------------------------------------------------------------------- */
+
 
     //기기조회
 
@@ -68,7 +69,7 @@ public class MachineController {
 
 
 
-/* ------------------------------------------------------------ */
+/* --------------------------------------------------------------------------------------------------------------- */
 
 
     //기기 등록
@@ -110,7 +111,7 @@ public class MachineController {
         }
     }
 
-    /* ---------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------- */
 
     //기기수정
     @SuppressWarnings("unchecked")
@@ -188,7 +189,7 @@ public class MachineController {
             //저장
             mRepository.saveAll(list); 
 
-            //주소문제로 판결 => 왜 안됨? => user로 받았네 주소를 그니깐 안됐음 힝구
+            //주소문제로 판결 => 왜 안됨? => user로 받았네 주소를  => 그니깐 안됐음 힝구
             // return "redirect:/washing/home.bubble";
             return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
 
@@ -203,32 +204,44 @@ public class MachineController {
     
 
 
-    /*-------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------- */
 
     //기기 일괄 삭제
     //127.0.0.1:8282/bubble_bumul/machine/selectlist.wid=wid;
     @PostMapping(value="/delete.bubble")
-    public String deletePOST(@RequestParam(name = "chk[]") List<Machine> chk, @AuthenticationPrincipal User user) { //
+    public String deletePOST(@RequestParam(name = "chk[]") List<BigInteger> chk, @AuthenticationPrincipal User user) { //
         try {
 
             
+            // String wid = user.getUsername();
+
+            // Map<String, Object> map = new HashMap<>();
+
+            // map.put("chk", chk);
+            // map.put("wid", wid);
 
             log.info("삭제하려는 세탁기 번호 => {}", chk.toString());
 
             //로그는 찍히는 상황
             //삭제가 안되는 상황 어떻게 해야할지 고민 중..
 
-            mRepository.deleteAll();
-            
-            
-            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
+            // mRepository.deleteAllById(chk); => 이거는 안됐음 믜친
 
+            //해결 완료 => 사실 이게 무슨뜻인지 모름 근데 됐음..  for문 돌려서 내가 선택한 chk값 하나하나 삭제입니까? 맞습니까?
+            for(BigInteger check : chk) mRepository.deleteById(check);
+
+            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
+            
             
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
         }
     }
-    
+
+
+/* --------------------------------------------------------------------------------------------------------------- */
+
+
     
 }

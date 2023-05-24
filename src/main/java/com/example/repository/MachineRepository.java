@@ -18,12 +18,16 @@ public interface MachineRepository extends JpaRepository<Machine, BigInteger> {
     //기기 목록하려고 있음
     List<Machine> findByWashing_idOrderByNoDesc(String id);
 
+    //기기 선택 삭제_1
+    // <T> List<T> deleteAllByNo(Class<T> no);
 
-    //기기 선택 삭제
-    List<Machine> deleteByNo(BigInteger[] no);
 
-    //기기 선택 삭제
-    // List<Machine> deleteByNo(List<BigInteger> no);
+    //기기 선택 삭제_2
+    // @Query(value = " <script> DELETE FROM MACHINE WHERE wid = :map.wid AND no IN ( <foreach collection = 'map.chk' item='tmp' separator=','> :tmp </foreach> ) </script>",  nativeQuery=true)
+    // int deleteAllByNo(@Param("map") Map<String, Object> map);
+
+    //기기 선택 삭제_3
+    
 
 
 
