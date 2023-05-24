@@ -14,17 +14,46 @@
 </head>
 
 <body>
+
+  <h3>조회</h3>
+
+  <a th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+
+  <hr />
+
   <form th:action="@{/washing/bncheck.bubble}" method="post" id="form">
-    <input type="text" name="bno" value="사업자 등록 번호" id="bno" /><br/>
-    <input type="number" value="YYYYMMSS" id="regdate"><br/>
-    <input type="text" name="pnm" value="대표자명" id="pnm"><br/>
-    <button type="button" class="btn btn-primary" id="check">조회</button>
-  
+    <table class="container" width=" 400px">
+      <tr>
+        <td><label for="bno">사업자 등록번호</label></td>
+        <td><input type="text" name="bno" id="bno" class="form-control" /></td>
+      </tr>
+
+      <tr>
+        <td><label for="regdate">등록일자</label></td>
+        <td><input type="number" value="YYYYMMSS" id="regdate"  class="form-control" /></td>
+      </tr>
+
+      <tr>
+        <td><label for="pnm">대표자명</label></td>
+        <td><input type="text" name="pnm" id="pnm" class="form-control" /></td>
+      </tr>
+      
+      <tr>
+        <td><button type="button" class="btn btn-primary" id="check">조회</button></td>
+      </tr>
+      
+      </table>
+
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary" id="modal-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden >
         Launch demo modal
       </button>
+
+
   </form>
+
+
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -45,9 +74,6 @@
     </div>
 
 
-
-
-   
 
 
 
