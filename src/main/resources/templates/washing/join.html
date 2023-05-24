@@ -32,7 +32,7 @@
 
             <tr>
                 <td><label for="wnumber"> 사업자 번호 </label></td>
-                <td><input type="text" id="wnumber" name="wnumber" placeholder="사업자 번호를 입력해주세요" class="form-control"></td>
+                <td><input type="text" id="wnumber" name="wnumber" th:value="${wnumber}" class="form-control" readonly></td>
             </tr>
 
             <tr>
@@ -42,12 +42,12 @@
 
             <tr>
                 <td><label for="name">업체명</label></td>
-                <td><input type="text" id="name" name="name" placeholder="대표자명을 입력해주세요" class="form-control"></td>
+                <td><input type="text" id="name" name="name" placeholder="업체명을 입력해주세요" class="form-control"></td>
             </tr>
 
             <tr>
                 <td><label for="ceo">대표자명</label></td>
-                <td><input type="text" id="ceo" name="ceo" placeholder="대표자명을 입력해주세요" class="form-control"></td>
+                <td><input type="text" id="ceo" name="ceo" class="form-control" th:value="${ceo}" readonly></td>
             </tr>
 
             <tr>
