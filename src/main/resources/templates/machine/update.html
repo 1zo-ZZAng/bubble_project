@@ -13,11 +13,11 @@
 <body>
     <h3>수정</h3>
     <a th:href="@{/washing/home.bubble}">홈페이지</a>
-    <a th:href="@{/machine/selectlist.bubble(wid=${wid})}">목록</a>
+    <a th:href="@{/machine/selectlist.bubble(wid=${wid})}">보유기기</a>
 
     <hr />
 
-    <form th:ction="@{/machine/updatebatchaction.bubble}" method="post" id="form">
+    <form th:action="@{/machine/updateaction.bubble}" method="post" id="form">
         <table class="container" width=" 400px">
 
             <tr th:each="obj : ${list}">
@@ -33,7 +33,7 @@
                         <option th:selected="${obj.type}==''">세탁기 선택</option>
                         <option th:selected="${obj.type}=='세탁기'">세탁기</option>
                         <option th:selected="${obj.type}=='건조기'">건조기</option>
-                        <option th:selected="${obj.type}=='일체형세탁기'">일체형 세탁기</option>
+                        <option th:selected="${obj.type}=='일체형세탁기'">일체형세탁기</option>
                     </select>
                 </td>
 
@@ -53,8 +53,8 @@
                 <td>
                     <select name="time[]" th:value="${obj.time}"  class="form-select" id="time">
                         <option th:selected="${obj.time}==''">시간선택</option>
-                        <option th:selected="${obj.time}=='40'">40분</option>
-                        <option th:selected="${obj.time}=='80'">80분</option>
+                        <option th:selected="${obj.time}=='40'">40</option>
+                        <option th:selected="${obj.time}=='80'">80</option>
                     </select>
                 </td>
 
@@ -63,8 +63,8 @@
                 <td>
                     <select name="price[]" th:value="${obj.price}" class="form-select" id="price">
                         <option th:selected="${obj.price}==''">가격 선택</option>
-                        <option th:selected="${obj.price}=='5000'">5000원</option>
-                        <option th:selected="${obj.price}=='10000'">10000원</option>
+                        <option th:selected="${obj.price}=='5000'">5000</option>
+                        <option th:selected="${obj.price}=='10000'">10000</option>
                     </select>
                 </td>
 
@@ -73,13 +73,13 @@
         </table>
 
         <!--버튼-->
-        <input type="button" value="수정" class="form-control" onclick="updateBatchAction()"/>
+        <input type="button" value="수정" class="form-control" onclick="updateAction()"/>
 
     </form>
 
     <script th:inline="javascript" type="text/javascript">
 
-        function updateBatchAction(){
+        function updateAction(){
 
             const type = document.getElementById('type');
             const typeno = document.getElementById('typeno');

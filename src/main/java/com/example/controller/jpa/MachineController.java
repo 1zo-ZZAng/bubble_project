@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.entity.Machine;
 import com.example.repository.MachineRepository;
 import com.example.repository.WashingRepository;
+import com.example.service.jpa.MachineService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class MachineController {
 
      //기기
     final MachineRepository mRepository;
+    final MachineService mService;
 
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -50,8 +52,6 @@ public class MachineController {
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @ModelAttribute Machine machine, @RequestParam(name = "wid") String wid, @AuthenticationPrincipal User user) {
         try {
-
-
 
             List<Machine> list = mRepository.findByWashing_idOrderByNoDesc(wid);
 
@@ -114,18 +114,20 @@ public class MachineController {
 
     //기기수정
     @SuppressWarnings("unchecked")
-    @GetMapping(value="/updatebatch.bubble")
-    public String updatebatchGET(Model model, @AuthenticationPrincipal User user) {
+    @GetMapping(value="/update.bubble")
+    public String updateGET(Model model, @AuthenticationPrincipal User user) {
         try {
             
             
             List<BigInteger> chk = (List<BigInteger>) httpSession.getAttribute("chk[]");
             List<Machine> list = mRepository.findAllById(chk);
 
+            log.info( "수정하려는 기기 정보들 => {}", list.toString());
+
             model.addAttribute("wid", user.getUsername()); 
             model.addAttribute("list", list);
 
-            return "/machine/updatebatch";
+            return "/machine/update";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,14 +136,15 @@ public class MachineController {
     }
 
 
-    @PostMapping(value = "/updatebatch.bubble")
-    public String updatebatchPOST(@RequestParam(name = "chk[]") List<BigInteger> chk){
+    @PostMapping(value = "/update.bubble")
+    public String updatePOST(@RequestParam(name = "chk[]") List<BigInteger> chk){
         try {
             
             log.info("수정하려는 세탁기 번호 => {}", chk.toString());
+
             httpSession.setAttribute("chk[]", chk);
 
-            return "redirect:/machine/updatebatch.bubble";
+            return "redirect:/machine/update.bubble";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,45 +152,51 @@ public class MachineController {
         }
     }
 
+    //여기서 진짜로 수정
+    @PostMapping(value = "/updateaction.bubble")
+    public String updateactionPOST(@RequestParam(name = "no[]") BigInteger[] no, 
+                                    @RequestParam(name = "type[]") String[] type,
+                                    @RequestParam(name = "typeno[]") BigInteger[] typeno,
+                                    @RequestParam(name = "time[]") BigInteger[] time,
+                                    @RequestParam(name = "price[]") BigInteger[] price,
+                                    @AuthenticationPrincipal User user
+                                    ){
 
-    @PostMapping(value = "/updatebatchaction.bubble")
-    public String updatebatchactionPOST(@RequestParam(name = "no[]") BigInteger[] no, 
-                                        @RequestParam(name = "type[]") String[] type,
-                                        @RequestParam(name = "typeno[]") BigInteger[] typeno,
-                                        @RequestParam(name = "time[]") BigInteger[] time,
-                                        @RequestParam(name = "price[]") BigInteger[] price,
-                                        @ModelAttribute Machine machine
-                                        ){
         try {
 
             List<Machine> list = new ArrayList<>();
 
-            log.info(list.toString());
+            
 
             for(int i = 0; i < no.length; i++){
                 
+                //no를 이용해서 기존 정보 가져오기
                 Machine obj = mRepository.findById(no[i]).orElse(null);
 
                 obj.setType(type[i]);
-                obj.setTypeno(typeno[i].valueOf(i));
-                obj.setTime(time[i].valueOf(i));
-                obj.setPrice(price[i].valueOf(i));
+                obj.setTypeno(typeno[i]);
+                obj.setTime(time[i]);
+                obj.setPrice(price[i]);
 
-                log.info("수정 => {}", obj.toString());
+                log.info("수정은 이렇게 할 거임 => {}", obj.toString());
                 
                 list.add(obj);
 
             
             }
 
-            mRepository.saveAll(list);
+            //저장
+            mRepository.saveAll(list); 
 
-            return "redirect:/machine/selectlist.bubble?wid="+ machine.getWashing().getId();
+            //주소문제로 판결 => 왜 안됨? => user로 받았네 주소를 그니깐 안됐음 힝구
+            // return "redirect:/washing/home.bubble";
+            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            return "redirect:/machine/updatebatchaction.bubble";
+            return "redirect:/machine/selectlist.bubble?wid="+ user.getUsername();
+
 
         }
     }
@@ -197,21 +206,27 @@ public class MachineController {
     /*-------------------------------------------- */
 
     //기기 일괄 삭제
+    //127.0.0.1:8282/bubble_bumul/machine/selectlist.wid=wid;
     @PostMapping(value="/delete.bubble")
-    public String deletePOST(@ModelAttribute Machine machine, @RequestParam(name = "chk[]") List<BigInteger> chk) {
+    public String deletePOST(@RequestParam(name = "chk[]") List<Machine> chk, @AuthenticationPrincipal User user) { //
         try {
 
+            
 
             log.info("삭제하려는 세탁기 번호 => {}", chk.toString());
 
-            // mRepository.deleteAll(mRepository.findAllById(chk));
-            mRepository.deleteAllById(chk);
+            //로그는 찍히는 상황
+            //삭제가 안되는 상황 어떻게 해야할지 고민 중..
 
-            return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
+            mRepository.deleteAll();
+            
+            
+            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
+
             
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
+            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
         }
     }
     

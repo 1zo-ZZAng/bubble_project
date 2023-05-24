@@ -44,14 +44,10 @@
         </table>
 
     <input type="button" value="삭제" onclick="deleteAction()" />
+    <input type="button" value="수정" onclick="updateAction()" />
 
         
     </form>
-
-    <!-- <input type="button" value="수정" th:onclick="formAction1(1)" />
-    <input type="button" value="삭제" th:onclick="formAction1(2)" />  -->
-    
-
 
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -60,19 +56,19 @@
 
     <script th:inline="javascript" type="text/javascript">
 
-        // function formAction1(code) {
+        
+    //수정
+    function updateAction() {
 
-        //     const form = document.getElementById('form');
+        const form = document.getElementById('form');
 
-        //     if(code === 1) {
-        //         form.action = /*[[@{/machine/updatebatch.bubble}]]*/'';
-        //     }
-        //     else if(code === 2) {
-        //         form.action = /*[[@{/machine/delete.bubble}]]*/'';
-        //     }
-        //     form.submit();
-        // }
+        form.action = [[@{/machine/update.bubble}]];
 
+        form.submit();
+
+    }
+
+    //삭제
     function deleteAction() {
 
         const chk = document.getElementsByName("chk[]");

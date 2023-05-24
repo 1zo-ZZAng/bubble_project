@@ -19,6 +19,16 @@ public interface MachineRepository extends JpaRepository<Machine, BigInteger> {
     List<Machine> findByWashing_idOrderByNoDesc(String id);
 
 
+    //기기 선택 삭제
+    List<Machine> deleteByNo(BigInteger[] no);
+
+    //기기 선택 삭제
+    // List<Machine> deleteByNo(List<BigInteger> no);
+
+
+
+
+
 
     
     
