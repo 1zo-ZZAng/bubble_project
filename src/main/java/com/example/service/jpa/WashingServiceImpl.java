@@ -14,16 +14,18 @@ public class WashingServiceImpl implements WashingService {
     final WashingRepository wRepository;
 
 
-
-
     //아이디 중복 확인
     @Override
     public int washingIDCheck(String id) {
         try {
 
-            wRepository.countById(id);
+            int ret = wRepository.countById(id);
 
-            return 1;
+            if(ret == 0){
+                return 0;
+            }else{
+                return 1;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,14 +43,24 @@ public class WashingServiceImpl implements WashingService {
     }
 
 
-    //비밀번호 변경
+
+
+    //회원가입
     @Override
-    public Washing updateWashingPw(Washing washing) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateWashingPw'");
+    public Washing joinWashing(Washing obj) {
+        try {
+
+            Washing ret = wRepository.save(obj);
+
+            return ret;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    
-    
+
+
     
 }

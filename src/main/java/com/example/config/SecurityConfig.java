@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.handler.CustomLoginFailHandler;
 import com.example.handler.CustomLoginSuccessHandler;
 import com.example.handler.CustomLogoutSuccessHandler;
 import com.example.service.SecurityServiceImpl1;
@@ -37,20 +38,20 @@ public class SecurityConfig {
     
     @Bean
     @Order(value = 1)
-    public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain3(HttpSecurity http) throws Exception {
         log.info("SecurityConfig => {}", "start filter chain");
 
         // 127.0.0.1:9090/bubble_bumul/customer/login.bubble
         // 127.0.0.1:9090/bubble_bumul/customer/loginaction.bubble
         // 해당 주소들만 필터함
-        http.antMatcher("/customer/login.bubble")
-            .antMatcher("/customer/loginaction.bubble")
+        http.antMatcher("/admin/login.bubble")
+            .antMatcher("/admin/loginaction.bubble")
             .authorizeRequests().anyRequest().authenticated().and();
 
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/customer/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/customer/loginaction.bubble") // action은? => login.html
+            .loginPage("/admin/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/admin/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())
@@ -58,7 +59,7 @@ public class SecurityConfig {
             .permitAll();  
 
         // 서비스 등록 (자동 등록됨. 생략가능)
-        http.userDetailsService(customerTableService);
+        http.userDetailsService(adminTableService);
 
         return http.build();
     }
@@ -93,15 +94,19 @@ public class SecurityConfig {
 
     @Bean // 객체를 생성(자동으로 호출됨)
     @Order(value = 3) // 마지막 숫자로 변경(로그인 해야하는 테이블의 개수)
-    public SecurityFilterChain filterChain3(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
         log.info("SecurityConfig => {}", "start filter chain");
 
         // 권한 설정
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
             .antMatchers("/customer/login.bubble").permitAll()
+            .antMatchers("/customer/findid.bubble").permitAll()
+            .antMatchers("/customer/showid.bubble").permitAll()
+            .antMatchers("/customer/findpw.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
             .antMatchers("/washing/login.bubble").permitAll()
+            .antMatchers("/washing/bncheck.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
@@ -115,8 +120,8 @@ public class SecurityConfig {
         // 로그인, 로그아웃, 권한 설정 ...
         // (1) 로그인 처리
         http.formLogin()
-            .loginPage("/login.bubble") // 로그인하는 get 주소는?
-            .loginProcessingUrl("/loginaction.bubble") // action은? => login.html
+            .loginPage("/customer/login.bubble") // 로그인하는 get 주소는?
+            .loginProcessingUrl("/customer/loginaction.bubble") // action은? => login.html
             .usernameParameter("id") // 아이디의 name값은? => login.html
             .passwordParameter("password") // 암호의 name값은? => login.html
             .successHandler(new CustomLoginSuccessHandler())
@@ -136,7 +141,7 @@ public class SecurityConfig {
         http.csrf().ignoringAntMatchers("/api/**");
 
         // 서비스 등록 (자동 등록됨. 생략가능)
-        http.userDetailsService(adminTableService);
+        http.userDetailsService(customerTableService);
 
         return http.build();
     }

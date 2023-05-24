@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사업자 등록 번호</title>
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <!--jQuery 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <h3>조회</h3>
+
+  <a th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+
+  <hr />
+
+  <form th:action="@{/washing/bncheck.bubble}" method="post" id="form">
+    <table class="container" width=" 400px">
+      <tr>
+        <td><label for="bno">사업자 등록번호</label></td>
+        <td><input type="text" name="bno" id="bno" class="form-control" /></td>
+      </tr>
+
+      <tr>
+        <td><label for="regdate">등록일자</label></td>
+        <td><input type="number" value="YYYYMMSS" id="regdate"  class="form-control" /></td>
+      </tr>
+
+      <tr>
+        <td><label for="pnm">대표자명</label></td>
+        <td><input type="text" name="pnm" id="pnm" class="form-control" /></td>
+      </tr>
+      
+      <tr>
+        <td><button type="button" class="btn btn-primary" id="check">조회</button></td>
+      </tr>
+      
+      </table>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" id="modal-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden >
+        Launch demo modal
+      </button>
+
+
+  </form>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">사업자 등록번호 조회</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>유효한 사업자 입니다 !</p>
+            <p>회원가입 창으로 넘어갑니다 :></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="bnCheckAction()" data-bs-dismiss="modal">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script>
+
+      // 사업자등록번호 조회
+      $(document).ready(function () {
+        $("#check").click(function () {
+
+          var data = {
+            "businesses": [
+            {
+            b_no : document.getElementById("bno").value,
+            start_dt : document.getElementById("regdate").value,
+            p_nm : document.getElementById("pnm").value
+            
+            }
+        ]
+          };
+          console.log(data);
+          
+
+          let serviceKey ="Al3bMZYLF3tteWZUOulq%2FmqbqH09Whq3LSN7qXANeAop5MeLY6OMNFzt9xy4pbpDM9cvW4j6lxWxN8HDvhmSjg%3D%3D";
+          $.ajax({
+            url:
+              "https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey=" +
+              serviceKey,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "JSON",
+            contentType: "application/json",
+            accept: "application/json",
+            success: function (result) {
+             
+              
+              const obj = JSON.stringify(result);
+              const obj1 = JSON.parse(obj);
+
+
+              // console.log("결과:: ", obj1);
+              // console.log("결과1:: ", obj1.status_code);
+              // console.log("결과3:: ", obj1.data[0].valid);
+              // console.log("결과2:: ", obj1.data[0].status.b_stt_cd);
+              if(obj1.data[0].valid != 01){
+                alert("존재하지 않는 사업자번호입니다.");
+              }
+              else if(obj1.data[0].status.b_stt_cd == 01){
+                $("#modal-btn").click();
+        
+                
+              }
+              // console.log(obj1.);
+            },
+            error: function (error) {
+
+              if( document.getElementById("bno").value.length <= 0){
+                alert("사업자번호를 입력해주세요");
+                document.getElementById("bno").focus;            
+              }
+              else if( document.getElementById("regdate").value.length <= 0){
+                alert("등록일자를 입력해주세요");
+              }
+              else if( document.getElementById("pnm").value.length <= 0){
+                alert("대표자명을 입력해주세요");
+              }
+              else if(obj1.data[0].valid != 01){
+                alert("존재하지 않는 사업자번호입니다.");
+              }
+            },
+          });
+        });
+      });
+
+      function bnCheckAction(){
+        document.getElementById("form").submit();
+      }
+    </script>
+  </body>
+</html>

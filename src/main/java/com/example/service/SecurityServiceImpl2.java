@@ -31,12 +31,12 @@ public class SecurityServiceImpl2 implements UserDetailsService {
 
         if (obj != null) { // 아이디가 있는 경우
             return User.builder()
-                       .username(obj.getId())
-                       .password(obj.getPassword())
-                       .roles("WASHING")
-                       .build();
+                        .username(obj.getId())
+                        .password(obj.getPassword())
+                        .roles("WASHING")
+                        .build();
         }
-           
+
         // 아이디가 없는 경우는 User로 처리
         return User.builder()
             .username("_")

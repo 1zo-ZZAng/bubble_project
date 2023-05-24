@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUBBLE BUMUL</title>
+
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <h3>비밀번호 변경</h3>
+    
+    <a th:href="@{/washing/mypage.bubble(id=${washing.id})}"><button>마이페이지</button></a>
+
+    <form th:action="@{/washing/pwupdate.bubble(id=${washing.id})}" method="post" id="form">
+
+        <hr />
+
+        <table class="container" width=" 400px">
+            <tr>
+                <td><label for="password"> 비밀번호 </label></td>
+                <td><input type="text" id="password" name="password" placeholder="현재 비밀번호를 입력해주세요" class="form-control"></td> <!--controller로 보내려면 name값이 필요함-->
+            </tr>
+            <tr>
+                <td><label for="newpassword"> 새 비밀번호 </label></td>
+                <td><input type="text" id="newpassword" name="newpassword"  placeholder="새 비밀번호를 입력해주세요" class="form-control" ></td> <!--controller로 보내려면 name값이 필요함-->
+            </tr>
+            <tr>
+                <td><label for="newpassword2"> 새 비밀번호 확인 </label></td>
+                <td><input type="text" id="newpassword2" placeholder="새 비밀번호를 한번 더 입력해주세요" class="form-control" ></td>
+            </tr>
+
+            <tr>
+                <td><input type="button" value="변경" onclick="pwupdate()"></td>
+            </tr>
+        </table>
+
+    </form>
+
+    <script>
+        
+        function pwupdate(){
+
+            const password = document.getElementById('password');
+            const newpassword = document.getElementById('newpassword');
+            const newpassword2 = document.getElementById('newpassword2');
+
+            //유효성 검사
+            if(password.value.length <= 0){
+
+                alert('현재 비밀번호를 입력해주세요');
+                password.focus();
+                return false;
+
+            }
+
+            if(password.value === newpassword.value){
+
+                alert('현재 비밀번호와 새 비밀번호가 같습니다');
+                newpassword.focus();
+                return false;
+
+            }
+
+            if(newpassword.value.length <= 0){
+
+                alert('새 비밀번호를 입력해주세요');
+                newpassword.focus();
+                return false;
+
+            }
+
+            if(newpassword2.value.length <= 0){
+
+                alert('새 비밀번호를 입력해주세요');
+                newpassword2.focus();
+                return false;
+
+            }
+
+
+            if(newpassword.value != newpassword2.value){
+
+                alert('새 비밀번호를 다시 확인해주세요');
+                newpassword2.focus();
+                return false;
+
+            }
+
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+            
+
+
+        }
+
+    </script>
+    
+    
+</body>
+</html>
