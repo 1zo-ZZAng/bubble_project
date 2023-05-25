@@ -98,11 +98,11 @@
         var idcheck = 0; // 1이면 사용가능, 0이면 사용불가
 	     	
         async function ajaxIDCheck(e) {
-            e = document.getElementById("id");
+            const id = document.getElementById("id");
 
-            if (e.value.length > 0) {
+            if (id.value.length > 0) {
                 // rest api 호출
-                const url = [[@{/api/customer/idcheck.json}]] + `?id=${e.value}`;
+                const url = [[@{/api/customer/idcheck.bubble}]] + `?id=${id.value}`;
                 const headers = {"Content-Type":"application/json"};
                 const {data} = await axios.get(url, {headers});
 
