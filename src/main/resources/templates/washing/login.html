@@ -28,33 +28,26 @@
 
                                 <!--아이디-->
 								<div class="form-group">
-									<label for="id">Id</label>
+									<label for="id">Id
+                                        <a href="" class="float-right"> Forgot Id? </a> <!--아이디 찾기 아직 안했음-->
+                                    </label>
                                     <input type="text" id="id" name="id" class="form-control" required autofocus  />
+
 								</div>
 
                                 <!--비밀번호-->
 								<div class="form-group">
-									<label for="password">Password
-										<a href="" class="float-right"> <!--비밀번호 찾기 아직 안했음-->
-											Forgot Password?
-										</a>
-									</label>
+									<label for="password">Password 
+                                        <a href="" class="float-right"> Forgot Password? </a> <!--비밀번호 찾기 아직 안했음-->
+                                    </label>
                                     <input type="password" id="password" name="password" class="form-control" required data-eye />
                                     <!-- <div class="invalid-feedback">
                                         Password is required
                                     </div> -->
 								</div>
 
-                                <!--기억-->
-								<!-- <div class="form-group">
-									<div class="custom-checkbox custom-control">
-										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
-										<label for="remember" class="custom-control-label">Remember Me</label>
-									</div>
-								</div> -->
-
-                                <!--로그인 실패시-->
-                                <div th:if="${param.error}">
+                                <!--로그인 실패시 뜨는 문구-->
+                                <div class="form-group" th:if="${param.error}">
                                     <p th:text="'흥... 틀렸어'" class="alert alert-danger"></p> <!--th:text="${exception}"-->
                                 </div>
 
@@ -62,6 +55,8 @@
 								<div class="form-group m-0">
 									<input type="button" value="Login" class="btn btn-primary btn-block" onclick="loginAction()"  />
 								</div>
+
+                                
 
                                 <!--회원가입-->
 								<div class="mt-4 text-center">
@@ -86,6 +81,7 @@
 
     <script>
 
+        //로그인 클릭시
         function loginAction(){
 
             const id = document.getElementById('id');

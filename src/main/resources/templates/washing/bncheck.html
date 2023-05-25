@@ -4,45 +4,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사업자 등록 번호</title>
-    <!--1. BootStrap용 CSS CDM 추가-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>BUBBLE BUMUL</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/washing/my-login.css}">
+
     <!--jQuery 추가-->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="my-login-page">
 
-  <h3>조회</h3>
 
-  <a th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+  <section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
 
-  <hr />
+          <!--로그-->
+					<div class="brand">
+					<!-- <img src="img/logo.jpg" alt="logo"> --> <!--버블버물 로고 올릴 것-->
+					</div>
 
-  <form th:action="@{/washing/bncheck.bubble}" method="post" id="form">
-    <table class="container" width=" 400px">
-      <tr>
-        <td><label for="bno">사업자 등록번호</label></td>
-        <td><input type="text" name="bno" id="bno" class="form-control" /></td>
-      </tr>
+					<div class="card fat">
+						<div class="card-body">
 
-      <tr>
-        <td><label for="regdate">등록일자</label></td>
-        <td><input type="number" value="YYYYMMSS" id="regdate"  class="form-control" /></td>
-      </tr>
+              <!--사업자 등록번호 조회-->
+							<h4 class="card-title">Business Information</h4>
 
-      <tr>
-        <td><label for="pnm">대표자명</label></td>
-        <td><input type="text" name="pnm" id="pnm" class="form-control" /></td>
-      </tr>
-      
-      <tr>
-        <td><button type="button" class="btn btn-primary" id="check">조회</button></td>
-      </tr>
-      
-      </table>
+              <form th:action="@{/washing/bncheck.bubble}" method="post" id="form">
+
+                <!--사업자 등록 번호-->
+								<div class="form-group">
+                  <label for="bno">사업자등록번호</label>
+                  <input type="text" name="bno" id="bno" class="form-control" required autofocus  /></td>
+								</div>
+
+                <!--개업일자-->
+                <div class="form-group">
+                  <label for="regdate">등록일</label>
+                  <input type="number" value="YYYYMMSS" id="regdate"  class="form-control" required autofocus />
+                </div>
+          
+                <!--대표자명-->
+                <div class="form-group">
+                  <label for="pnm">대표자명</label>
+                  <input type="text" name="pnm" id="pnm" class="form-control" required autofocus />
+                </div>
+                
+                <!--조회버튼-->
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-block" id="check" >조회</button>
+                </div>
+
+							</form>
+
+						</div>
+					</div>
+
+					<div class="footer">
+						Copyright &copy; 2023 &mdash; Bubble Bumul
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
 
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary" id="modal-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden >
@@ -72,11 +99,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
 
 
 
@@ -113,7 +135,6 @@
             contentType: "application/json",
             accept: "application/json",
             success: function (result) {
-             
               
               const obj = JSON.stringify(result);
               const obj1 = JSON.parse(obj);
