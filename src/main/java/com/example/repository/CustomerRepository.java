@@ -15,4 +15,10 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     // 비밀번호 찾기(아이디, 이메일이 모두 일치해야함)
     Customer findByIdAndEmail(String id, String email);
+
+    // 소셜 로그인(카카오) - 이메일 유무 확인
+    int countByEmail(String email);
+
+    // 소셜 로그인(카카오) - 이메일로 회원 1명 조회
+    Customer findByEmail(String email);
 }

@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.handler.CustomLoginFailHandler;
 import com.example.handler.CustomLoginSuccessHandler;
 import com.example.handler.CustomLogoutSuccessHandler;
 import com.example.service.SecurityServiceImpl1;
@@ -101,6 +100,7 @@ public class SecurityConfig {
         // 권한 설정
         http.authorizeRequests()
             .antMatchers("/customer/join.bubble").permitAll()
+            .antMatchers("/customer/kakaojoin.bubble").permitAll()
             .antMatchers("/customer/login.bubble").permitAll()
             .antMatchers("/customer/findid.bubble").permitAll()
             .antMatchers("/customer/showid.bubble").permitAll()
@@ -111,8 +111,8 @@ public class SecurityConfig {
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
-            .antMatchers("/washing", "/washing/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
-            .antMatchers("/customer", "/customer/*").hasAnyAuthority("ROLE_CUSTOMER")
+            .antMatchers("/washing", "/washing/*", "/machine/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
+            .antMatchers("/customer", "/customer/*", "/reserve/*").hasAnyAuthority("ROLE_CUSTOMER")
             .anyRequest().permitAll();
             
         // 403 페이지 설정(접근권한 불가 시 표시할 화면)

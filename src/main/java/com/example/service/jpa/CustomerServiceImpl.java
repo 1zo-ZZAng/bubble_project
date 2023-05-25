@@ -73,4 +73,28 @@ public class CustomerServiceImpl implements CustomerService {
 			return null;
 		}
 	}
+
+	// 소셜 로그인(카카오) - 이메일 유무 확인
+	@Override
+	public int countCustomerEmailCheck(String email) {
+		try {
+			return cRepository.countByEmail(email);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	// 소셜 로그인(카카오) - 이메일로 회원 1명 조회
+	@Override
+	public Customer selectCustomerEmail(String email) {
+		try {
+			return cRepository.findByEmail(email);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

@@ -75,6 +75,25 @@ public class CustomerController {
         }
     }
 
+    // 소셜 로그인(카카오) - 기존 회원이 아닌 경우(이메일이 없는 경우) 회원가입
+    @PostMapping(value = "/kakaojoin.bubble")
+    public String kakaojoinPOST(@ModelAttribute Customer customer) {
+        try {
+            // Customer customer = new Customer();
+            customer.setId(customer.getId());
+            customer.setEmail(customer.getEmail());
+            customer.setName(customer.getName());
+
+            cService.insertCustomer(customer);
+
+            return "redirect:/home.bubble";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/home.bubble";
+        }
+    }
+
     // --------------------------------------------------------------------------------------
 
     // 로그인
@@ -194,8 +213,9 @@ public class CustomerController {
                 SendMail mail = new SendMail();
                 mail.setAddress(obj.getEmail());
                 mail.setTitle("Bubble Bumul 임시 비밀번호 안내 이메일입니다.");
-                mail.setMessage("안녕하세요. Bubble Bumul 임시 비밀번호 안내 관련 이메일입니다. " + customer.getName() + "님의 임시 비밀번호는 "
-                                + temppw + " 입니다. " + " 로그인 후에 비밀번호를 변경해주세요.");
+                mail.setMessage("안녕하세요. Bubble Bumul 임시 비밀번호 안내 관련 이메일입니다.\n"
+                                + customer.getName() + "님의 임시 비밀번호는 " + temppw + "입니다.\n"
+                                + "로그인 후에 비밀번호를 변경해주세요.");
 
                 // (4) 메일 전송
                 mService.sendMail(mail);

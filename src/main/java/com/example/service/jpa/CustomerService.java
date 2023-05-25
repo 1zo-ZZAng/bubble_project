@@ -24,4 +24,10 @@ public interface CustomerService {
 	
 	// 비밀번호 찾기(아이디, 이메일이 모두 일치해야함)
 	public Customer selectCustomerPw(@Param("id") String id, @Param("email") String email);
+
+	// 소셜 로그인(카카오) - 이메일 유무 확인
+	public int countCustomerEmailCheck(String email);
+
+	// 소셜 로그인(카카오) - 이메일로 회원 1명 조회
+	public Customer selectCustomerEmail(String email);
 }
