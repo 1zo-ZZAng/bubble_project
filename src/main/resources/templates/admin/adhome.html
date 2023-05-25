@@ -20,7 +20,9 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
     <!--3. BootStrap Icon / font-awesome 아이콘용 CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' th:href="@{/src/main/resources/static/css/main.css}" />
+    <link rel='stylesheet' th:href="@{/css/main.css}" />
+    <!-- font -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -29,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
         integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
             const sidebarToggle = $('#sidebarToggle');
             if (sidebarToggle) {
@@ -45,73 +47,32 @@
 
 </head>
 
-<body class="sb-nav-fixed">
-    <!-- 내비게이션 영역 -->
-    <header th:replace="~{/admin/adheader.html :: header}"></header>
-   
 
+<body>
+    <!-- top nav -->
+    <header th:replace="~{/admin/adheader.html :: header}"></header>
     <!-- 전체 화면 영역 -->
     <div id="layoutTotal">
-        <!-- <div th:replace="~{/admin/adsidemenu.html :: side}"></div> -->
+        <!-- side menu -->
+        <div th:replace="~{/admin/adsidemenu.html :: side}"></div>
+        
 
         <!-- 전체화면 / 오른쪽 메인화면 영역 -->
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">대시보드</h1>
+                    <h1 class="mt-4">관리자 HOME</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">대시보드</li>
+                        <li class="breadcrumb-item active">HOME</li>
                     </ol>
-                    <!-- 카드영역 -->
-                    <div class="row">
-                        <div class="col-lg-3 cld-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">1번카드</div>
-                                <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <a class="small text-white stretched-link">상세</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-3 cld-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">2번카드</div>
-                                <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <a class="small text-white stretched-link">상세</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-3 cld-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">3번카드</div>
-                                <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <a class="small text-white stretched-link">상세</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-3 cld-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">4번카드</div>
-                                <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <a class="small text-white stretched-link">상세</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- 차트영역 -->
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    라인차트 예제
+                                    <i class="bi bi-diagram-3"></i>
+                                   제휴 업체 수
                                 </div>
                                 <div class="card-body">
                                     <canvas id="myAreaChart" width="100%" height="50"></canvas>
@@ -121,8 +82,8 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    바차트 예제
+                                    <i class="bi bi-graph-up-arrow"></i>
+                                    오늘 총 예약 건 수
                                 </div>
                                 <div class="card-body">
                                     <canvas id="myBarChart" width="100%" height="50"></canvas>
@@ -625,19 +586,10 @@
                     </div>
                 </div>
             </main>
+           
 
 
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid py-4">
-                    <div class="d-flex justify-content-between align-items-center small">
-                        <div class="text-muted me-2">Copy Right &copy; PKNU 2023.</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            <a href="#"> &middot; Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <footer th:replace="~{/admin/adfooter.html :: footer}"></footer>
         </div>
 
 
@@ -649,20 +601,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
-    <!-- Chart.js용 CDN  구버전에서 신버전으로 컨버전작업 필요 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/src/main/resources/static/js/chart-area-demo.js"></script>
-    <script src="/src/main/resources/static/js/chart-bar-demo.js"></script>
-    <!-- Simple DataTable용 JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            new simpleDatatables.DataTable("#datatableSimple", {
-                searchable: true,
-                fixedHeight: true,
-            });
-        });
-    </script>
+   <!-- Chart.js용 CDN  구버전에서 신버전으로 컨버전작업 필요 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+   <script src="/src/main/resources/static/js/chart-area-demo.js" th:inline="javascript"></script>
+   <script src="/src/main/resources/static/js/chart-bar-demo.js" th:inline="javascript" ></script>
+   <script src="/src/main/resources/static/js/chart-pie-demo.js" th:inline="javascript"></script>
+   <!-- Simple DataTable용 JS CDN -->
+   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+   <script th:inline="javascript">
+       $(document).ready(function() {
+           new simpleDatatables.DataTable("#datatableSimple", {
+               searchable: true,
+               fixedHeight: true,
+           });
+       });
+   </script>
 </body>
 
 </html>

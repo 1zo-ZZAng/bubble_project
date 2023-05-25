@@ -3,6 +3,7 @@ package com.example.controller.jpa;
 
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.entity.Admin;
+import com.example.entity.Washing;
 import com.example.repository.AdminRepository;
+import com.example.repository.WashingRepository;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class AdminController {
     
     final String format = "AdminController => {}";
     final AdminRepository aRepository;
+    final WashingRepository wRepository;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
     //127.0.0.1:8282/bubble_bumul/admin/join.bubble
@@ -94,13 +98,26 @@ public class AdminController {
     public String homeGET(@AuthenticationPrincipal User user, Model model) {
         try {
             model.addAttribute("user", user);
-            return "/admin/home";
+            return "/admin/adhome";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/login.bubble";
+            return "redirect:/admin/login.bubble";
         }
     }
 
+    @GetMapping(value = "/wlist.bubble")
+    public String wlistGET(Model model){
+        try {
+            List<Washing> list = wRepository.findAll();
+
+            log.info("{}", list.toString());
+            model.addAttribute("list", list);
+            return "/admin/wlist";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/admin/home.bubble";
+        }
+    }
 
 
 }
