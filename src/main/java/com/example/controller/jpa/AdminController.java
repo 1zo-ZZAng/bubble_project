@@ -2,7 +2,7 @@ package com.example.controller.jpa;
 
 
 
-import java.util.Collection;
+
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.entity.Admin;
-import com.example.entity.Washing;
+
+import com.example.entity.Washingmachine;
 import com.example.repository.AdminRepository;
-import com.example.repository.WashingRepository;
+import com.example.repository.WashingMachineRepository;
+
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,7 @@ public class AdminController {
     
     final String format = "AdminController => {}";
     final AdminRepository aRepository;
-    final WashingRepository wRepository;
+    final WashingMachineRepository wmRepository;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
     //127.0.0.1:8282/bubble_bumul/admin/join.bubble
@@ -108,7 +110,7 @@ public class AdminController {
     @GetMapping(value = "/wlist.bubble")
     public String wlistGET(Model model){
         try {
-            List<Washing> list = wRepository.findAll();
+            List<Washingmachine> list = wmRepository.selectwmlist();
 
             log.info("{}", list.toString());
             model.addAttribute("list", list);
