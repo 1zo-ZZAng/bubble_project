@@ -51,8 +51,8 @@ public class WBoardController {
             log.info("말머리 종류=>{}",list2.toString());
 
 
-            model.addAttribute("CodeName", list1);  
-            model.addAttribute("CodeDetail", list2);  
+            model.addAttribute("CodeName", list1);
+            model.addAttribute("CodeDetail", list2);
 
             model.addAttribute("user", user);
 

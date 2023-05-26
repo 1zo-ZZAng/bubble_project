@@ -87,7 +87,7 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
     public List<Board> selectlistBoardTypeNotice() {
         try {
             
-            return bMapper.selectlistBoardTypeNotice()
+            return bMapper.selectlistBoardTypeNotice();
 
         } catch (Exception e) {
             e.printStackTrace();
