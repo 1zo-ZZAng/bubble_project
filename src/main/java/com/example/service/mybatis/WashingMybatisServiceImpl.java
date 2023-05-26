@@ -1,5 +1,7 @@
 package com.example.service.mybatis;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Washing;
@@ -29,6 +31,18 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    // 예약 페이지에서 지역에 맞는 세탁소 리스트 조회
+    @Override
+    public List<Washing> selectWashingList(String cityname, String townname) {
+        try {
+            return wMapper.selectWashingList(cityname, townname);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
     

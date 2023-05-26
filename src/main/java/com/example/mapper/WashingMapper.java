@@ -1,5 +1,7 @@
 package com.example.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -71,5 +73,7 @@ public interface WashingMapper {
 	})
 	public int deleteWashingOne (@Param("obj") Washing obj);
 
-    
+    // 예약 페이지에서 지역에 맞는 세탁소 리스트 조회
+	@Select({"SELECT name, address, phone FROM WASHING WHERE address LIKE #{cityname} || '%' || #{townname} || '%'"})
+	public List<Washing> selectWashingList(@Param("cityname") String cityname, @Param("townname") String townname);
 }

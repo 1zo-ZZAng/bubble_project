@@ -5,14 +5,109 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel='stylesheet' th:href="@{/css/layout.css}" />
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <!--jQuery 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </head>
+<header th:replace="~{/fragments/header.html :: header}"></header>
 <body>
     <h2>예약 화면</h2>
 
-    <select onselect="">
-        <option value="none">지역(시/도) 선택</option>
-        <option th:each="city : ${citynamelist}" th:value="${city.cityname}" th:text="${city.cityname}"></option>
-    </select>
+    <table>
+        <tr>
+            <td>지역(시/도)</td>
+            <td>지역(구/군)</td>
+        </tr>
+        <tr>    
+            <td>
+                <select id="city" style="width: 200px; text-align: center;" onchange="selectCity()">
+                    <option value="none">지역(시/도) 선택</option>
+                    <option th:each="city : ${citynamelist}" th:value="${city}" th:text="${city}"></option>
+                </select>
+            </td>
+            <td>
+                <select id="town" style="width: 200px; text-align: center;">
+                    <option value="none">지역(구/군) 선택</option>
+                </select>
+            </td>
+            <td><button type="button" onclick="showWahsingList()">조회</button></td>
+        </tr>    
+    </table>
 
+    <h2>세탁 업체 목록</h2>
+    <table id="washinglist">
+    </table>
+
+    <!-- <ul style="list-style: none;">
+        <li th:each="city : ${citynamelist}">
+            <button type="button"  th:text="${city}"></button>
+        </li>
+    </ul> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+        async function selectCity() {
+            const city = $("#city option:selected").val();
+            
+            // rest api 호출
+            const url = [[@{/api/reserve/selectcity.json}]] + `?city=${city}`;
+            const headers = {"Content-Type":"application/json"};
+            const {data} = await axios.get(url, {headers});
+
+            console.log(data.town);
+
+            if (data.town.length <= 0) {
+                alert('예약 가능한 지역이 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
+            }
+            else {
+                const town = document.getElementById("town");
+                town.innerHTML = '';
+                town.innerHTML = '<option value="none">지역(구/군) 선택</option>';
+
+                for (let obj of data.town) {
+                    town.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
+                }
+            }
+        }
+
+        async function showWahsingList() {
+            const city = $("#city option:selected").val();
+            const town = $("#town option:selected").val();
+
+            // rest api 호출
+            const url = [[@{/api/reserve/washinglist.json}]] + `?city=${city}&town=${town}`;
+            const headers = {"Content-Type":"application/json"};
+            const {data} = await axios.get(url, {headers});
+
+            console.log(data.washinglist);
+
+            if (data.washinglist == null) {
+                alert('해당 지역에 예약 가능한 세탁소가 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
+            }
+            else {
+                const washinglist = document.getElementById("washinglist");
+                washinglist.innerHTML = '';
+                washinglist.innerHTML = '<tr>'
+                                        + '<th>세탁소명</th>'
+                                        + '<th>주소</th>'
+                                        + '<th>전화번호</th>'
+                                        + '</tr>';
+
+                for (let i=0; i<data.washinglist.length; i++){
+                    console.log(data.washinglist[i].name);
+                    washinglist.innerHTML += '<tr>' +
+                                                + '<td scope="row">' + data.washinglist[i].name + '</td>'
+                                                + '<td>' + data.washinglist[i].address + '</td>'
+                                                + '<td>' + data.washinglist[i].phone + '</td>'
+                                                + '</tr>';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
