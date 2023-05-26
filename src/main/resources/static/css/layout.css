@@ -37,18 +37,23 @@ h1 {
     font-size: inherit;
 }
 
-/*logout 버튼 입니다*/
-.nav ul input { 
+/*--로그아웃 버튼 입니다--*/
+
+.nav ul li input { 
     color: #CCF2F4;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 3vw;
     background-color: transparent;
+
+    display: block; /*위치가 이상하다면 이걸 주석처리 해주세용 그러면 더 이상해지긴 합니다*/
 }
 
 .nav ul li input:hover{
     color: #1C3879;
 }
+
+/*--여기 까지 로그아웃 버튼--*/
 
 
 /* 메뉴바 */

@@ -43,10 +43,9 @@
                         <li>
                             <div th:if="${user != null}">
                                 <a th:href="@{/customer/mypage.bubble}">mypage</a>
-                                
-                                <form th:action="@{/logout.bubble}" method="post">
-                                    <input class="btn" type="submit" value="logout" />
-                                </form>
+                                    <form th:action="@{/logout.bubble}" method="post">
+                                        <input class="btn" type="submit" value="logout" />
+                                    </form>
                             </div>
                         </li>
 
