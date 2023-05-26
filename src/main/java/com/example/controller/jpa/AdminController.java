@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.dto.MachineCount;
+import com.example.dto.Washing;
+import com.example.dto.WashingMachine;
 import com.example.entity.Admin;
 
-import com.example.entity.Washingmachine;
+import com.example.mapper.AdminMapper;
 import com.example.repository.AdminRepository;
 import com.example.repository.WashingMachineRepository;
 
@@ -36,9 +40,13 @@ public class AdminController {
     
     final String format = "AdminController => {}";
     final AdminRepository aRepository;
+    final AdminMapper aMapper;
     final WashingMachineRepository wmRepository;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
+
+    // --------------------------------------------------------------------------------------
+    //관리자 회원가입
     //127.0.0.1:8282/bubble_bumul/admin/join.bubble
     @GetMapping(value = "/join.bubble")
     public String joinGET() {
@@ -63,8 +71,9 @@ public class AdminController {
 
     }
 
-
-//127.0.0.1:8282/bubble_bumul/admin/login.bubble
+    // --------------------------------------------------------------------------------------
+    //관리자 로그인
+    //127.0.0.1:8282/bubble_bumul/admin/login.bubble
     @GetMapping(value = "/login.bubble")
     public String loginGET(){
         try {
@@ -94,12 +103,15 @@ public class AdminController {
         }
     }
 
-        //임포트 shift + alt + o
-     //127.0.0.1:8282/bubble_bumul/admin/home.bubble
+    // --------------------------------------------------------------------------------------
+
+    //관리자 홈
+    //127.0.0.1:8282/bubble_bumul/admin/home.bubble
      @GetMapping(value = "/home.bubble")
     public String homeGET(@AuthenticationPrincipal User user, Model model) {
         try {
             model.addAttribute("user", user);
+            log.info("{}", model);
             return "/admin/adhome";
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,13 +119,17 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value = "/wlist.bubble")
-    public String wlistGET(Model model){
-        try {
-            List<Washingmachine> list = wmRepository.selectwmlist();
 
-            log.info("{}", list.toString());
-            model.addAttribute("list", list);
+    // --------------------------------------------------------------------------------------
+
+    //업체목록 전체 조회
+    @GetMapping(value = "/wlist.bubble")
+    public String wlistGET(@ModelAttribute Washing washing,Model model){
+        try {            
+                List<Washing> list = aMapper.selectWList();
+                // log.info("{}", list.toString());
+                model.addAttribute("list", list);               
+       
             return "/admin/wlist";
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,5 +137,21 @@ public class AdminController {
         }
     }
 
+
+    //업체별 보유기기목록 조회
+    @GetMapping(value = "/wmlist.bubble")
+    public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
+        try {
+            List<MachineCount> list = aMapper.selectMCount(wnumber);
+
+            log.info("{}",list.toString());
+            model.addAttribute("list", list);
+            model.addAttribute("name", aMapper.selectWashingNameOne(wnumber));
+            return "/admin/wmlist";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/admin/wlist.bubble";
+        }
+    }
 
 }

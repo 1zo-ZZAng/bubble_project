@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
     <!--3. BootStrap Icon / font-awesome 아이콘용 CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' th:href="@{/src/main/resources/static/css/main.css}" />
+    <link rel='stylesheet' th:href="@{/css/main.css}" />
 
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -34,14 +34,14 @@
         </script>
 
 <body>
-<div id="layoutTotal" th:fragment="side">
+<div id="layoutTotal">
     <!-- 전체화면 / 왼쪽 영역 -->
-    <div id="layoutLeftSide">
+    <div id="layoutLeftSide" th:fragment="side">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">메인</div>
-                    <a class="nav-link" href="">
+                    <a class="nav-link" th:href="@{/admin/home.bubble}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         HOME
                     </a>
