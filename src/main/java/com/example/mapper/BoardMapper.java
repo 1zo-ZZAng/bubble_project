@@ -20,7 +20,7 @@ public interface BoardMapper {
     public List<BoardType> selectlistBType();
 
     //게시판 분류 -  중복 제거
-    @Select({" SELECT DISTINCT(codename) FROM BOARDTYPE "})
+    @Select({" SELECT code, codename FROM BOARDTYPE "})
     public List<BoardType> selectlistBTypeCodeName();
 
     //말머리 분류 - 중복 제거

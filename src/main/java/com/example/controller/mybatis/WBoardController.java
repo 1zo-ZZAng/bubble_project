@@ -70,14 +70,21 @@ public class WBoardController {
             
             log.info("글 작성 내용 => {}", board.toString());
 
-            bService.writeBoard(board);
-
-            return "redirect:/wboard/selectlist.bubble";
+            int ret = bService.writeBoard(board);
+            if(ret == 1){
+                return "redirect:/wboard/selectlist.bubble";
+            }else{
+                return "redirect:/wboard/write.bubble";
+            }
+            
+            
+            
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/wboard/write.bubble";
+            return null;
         }
+        
     }
 
     /* ------------------------------------------------------------- */
