@@ -1,6 +1,5 @@
 package com.example.controller.mybatis;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +17,7 @@ import com.example.service.mybatis.BoardMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Controller
@@ -41,10 +41,21 @@ public class WBoardController {
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute BoardType boardType){
+    public String writeGET(@AuthenticationPrincipal User user, Model model){
         try {
 
-            model.addAttribute("boardType", boardType);      
+            List<BoardType> list1 = bService.selectlistBTypeCodeName();
+            List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
+
+
+
+            log.info("게시판 종류=>{}",list1.toString());
+            log.info("말머리 종류=>{}",list2.toString());
+
+
+            model.addAttribute("boardType", list1);  
+            model.addAttribute("boardType", list2);  
+
             model.addAttribute("user", user);
 
             return "/wboard/write";
@@ -74,5 +85,20 @@ public class WBoardController {
     /* ------------------------------------------------------------- */
 
     //전체 조회
+    @GetMapping(value="/selectlist.bubble")
+    public String selectlistGET(Model model, @ModelAttribute Board board, @AuthenticationPrincipal User user) {
+        try {
+
+            model.addAttribute("user", user);
+            model.addAttribute("board", board);
+
+            return "/wboard/selectlist";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        }
+    }
+    
     
 }

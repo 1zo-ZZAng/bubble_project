@@ -30,6 +30,28 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+    //게시판 분류 - 중복 제거
+    @Override
+    public List<BoardType> selectlistBTypeCodeName() {
+        try {
+            return bMapper.selectlistBTypeCodeName();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //말머리 분류 - 중복 제거 null값 제외
+    @Override
+    public List<BoardType> selectlistBTypeCodeDetail() {
+        try {
+            return bMapper.selectlistBTypeCodeDetail();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     /* =============================메인=============================== */
 
@@ -58,6 +80,34 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    //게시판 공지사항만 조회
+    @Override
+    public List<Board> selectlistBoardTypeNotice() {
+        try {
+            
+            return bMapper.selectlistBoardTypeNotice()
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //게시판 분실물만 조회
+    @Override
+    public List<Board> selectlistBoardTypeLost() {
+        try {
+            
+            return bMapper.selectlistBoardTypeLost();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+            
     }
 
     //글 1개 조회
@@ -113,6 +163,8 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+
+
     /* ============================페이지네이션================================ */
 
 
@@ -129,6 +181,16 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return -1;
         }
     }
+
+
+
+
+    //페이지
+
+    
+
+
+
 
     
     

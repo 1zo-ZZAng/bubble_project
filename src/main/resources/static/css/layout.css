@@ -37,6 +37,17 @@ h1 {
     font-size: inherit;
 }
 
+/*logout 버튼 입니다*/
+.nav ul li input { 
+    color: #CCF2F4;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 3vw;
+    background-color: transparent;
+}
+
+
+
 
 /* 메뉴바 */
 

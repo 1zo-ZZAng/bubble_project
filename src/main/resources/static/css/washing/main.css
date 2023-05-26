@@ -31,8 +31,8 @@ h1, h2, h3, h4, h5, h6{
 }
 
 p{
-    margin-top: 0;
-    margin-bottom: 1.0rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .sb-nav-fixed #layoutLeftSide, .sb-topnav{
@@ -204,6 +204,14 @@ p{
     flex-shrink: 0;
     
 }
+
+/* .sb-sidenav .sb-sidenav-footer p {
+
+    text-align: center;
+    
+    
+} */
+
 
 /*왼쪽 메뉴 디자인*/
 .sb-sidenav-dark{

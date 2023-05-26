@@ -14,6 +14,12 @@ public interface BoardMybatisService {
     //게시글 분류
     public List<BoardType> selectlistBType();
 
+    //게시판 분류 -  중복 제거
+    public List<BoardType> selectlistBTypeCodeName();
+
+    //말머리 분류 - 중복 제거
+    public List<BoardType> selectlistBTypeCodeDetail();
+
 
     /* ===================================== */
     
@@ -43,9 +49,6 @@ public interface BoardMybatisService {
     public int updateHit(long no);
 
     
-
-
-
     /* ===================================== */
 
 
