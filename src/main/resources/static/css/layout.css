@@ -46,7 +46,9 @@ h1 {
     background-color: transparent;
 }
 
-
+.nav ul li input:hover{
+    color: #1C3879;
+}
 
 
 /* 메뉴바 */
