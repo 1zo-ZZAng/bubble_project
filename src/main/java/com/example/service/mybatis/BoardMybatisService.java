@@ -24,6 +24,12 @@ public interface BoardMybatisService {
     //글 전체 조회
     public List<Board> selectlistBoard();
 
+    //공지사항만 조회
+    public List<Board> selectlistBoardTypeNotice();
+
+    //분실물만 조회
+    public List<Board> selectlistBoardTypeLost();
+
     //글 1개 조회
     public Board selectOneBoard(long no);
 
@@ -35,6 +41,9 @@ public interface BoardMybatisService {
 
     //조회수 증가
     public int updateHit(long no);
+
+    
+
 
 
     /* ===================================== */

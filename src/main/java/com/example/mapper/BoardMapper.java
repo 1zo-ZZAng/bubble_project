@@ -37,6 +37,14 @@ public interface BoardMapper {
     @Select({" SELECT * FROM BOARD ORDER BY NO DESC "})
     public List<Board> selectlistBoard();
 
+    //공지사항만 조회
+    @Select({" SELECT * FROM BOARD WHERE code=1 ORDER BY NO DESC "})
+    public List<Board> selectlistBoardTypeNotice();
+
+    //분실물만 조회
+    @Select({" SELECT * FROM BOARD WHERE code=2 AND code=3 ORDER BY NO DESC "})
+    public List<Board> selectlistBoardTypeLost();
+
     //글 1개 조회
     @Select({" SELECT * FROM BOARD WHERE no=#{no} "})
     public Board selectOneBoard(@Param("no") long no);
