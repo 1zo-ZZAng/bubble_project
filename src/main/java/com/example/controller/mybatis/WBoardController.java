@@ -1,16 +1,24 @@
 package com.example.controller.mybatis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.dto.Board;
+import com.example.dto.BoardType;
 import com.example.service.mybatis.BoardMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping(value = "/wboard")
@@ -18,16 +26,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WBoardController {
 
-    final BoardMybatisService wbService;
+    final BoardMybatisService bService;
+
+
+/* =========================================================================================================== */
+
+    
+
+
+
 
     
 /* =========================================================================================================== */
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model){
+    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute BoardType boardType){
         try {
 
+            model.addAttribute("boardType", boardType);      
             model.addAttribute("user", user);
 
             return "/wboard/write";
@@ -37,5 +54,25 @@ public class WBoardController {
             return "redirect:/washing/home.bubble";
         }
     }
+
+    @PostMapping(value = "/write.bubble")
+    public String writePOST(@ModelAttribute Board board){
+        try {
+            
+            log.info("글 작성 내용 => {}", board.toString());
+
+            bService.writeBoard(board);
+
+            return "redirect:/wboard/selectlist.bubble";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/wboard/write.bubble";
+        }
+    }
+
+    /* ------------------------------------------------------------- */
+
+    //전체 조회
     
 }

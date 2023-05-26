@@ -5,9 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Board;
+import com.example.dto.BoardType;
 
 @Service
 public interface BoardMybatisService {
+
+
+    //게시글 분류
+    public List<BoardType> selectlistBType();
+
+
+    /* ===================================== */
     
 
     //글작성
@@ -28,10 +36,14 @@ public interface BoardMybatisService {
     //조회수 증가
     public int updateHit(long no);
 
+
+    /* ===================================== */
+
+
     //게시글 전체 개수
     public int countBoard();
 
-    //페이지 네이션
+    //페이징징아 
 
 
 

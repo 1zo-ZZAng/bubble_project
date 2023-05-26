@@ -46,7 +46,7 @@ public interface BoardMapper {
     public int updateHit(@Param("no") long no);
 
 
-    /* ====================페이지 네이션========================= */
+    /* ====================페이지 네이션======================= */
 
     //게시글 전체 수
     @Select({" SELECT COUNT(*) cnt FROM BOARD "})

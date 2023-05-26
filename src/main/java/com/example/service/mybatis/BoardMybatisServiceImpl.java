@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Board;
+import com.example.dto.BoardType;
 import com.example.mapper.BoardMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,24 @@ import lombok.RequiredArgsConstructor;
 public class BoardMybatisServiceImpl implements BoardMybatisService {
 
     final BoardMapper bMapper;
+
+
+    //분류코드 전체조회
+    @Override
+    public List<BoardType> selectlistBType() {
+        try {
+
+            return bMapper.selectlistBType();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /* =============================메인=============================== */
+
 
     //글 작성
     @Override
@@ -94,6 +113,8 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+    /* ============================페이지네이션================================ */
+
 
     //게시글 전체 개수
     @Override
@@ -108,5 +129,7 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return -1;
         }
     }
+
+    
     
 }
