@@ -47,14 +47,12 @@ public class WBoardController {
             List<BoardType> list1 = bService.selectlistBTypeCodeName();
             List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
 
-
-
             log.info("게시판 종류=>{}",list1.toString());
             log.info("말머리 종류=>{}",list2.toString());
 
 
-            model.addAttribute("boardType", list1);  
-            model.addAttribute("boardType", list2);  
+            model.addAttribute("CodeName", list1);  
+            model.addAttribute("CodeDetail", list2);  
 
             model.addAttribute("user", user);
 
