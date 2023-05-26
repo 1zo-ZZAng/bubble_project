@@ -38,7 +38,7 @@ h1 {
 }
 
 /*logout 버튼 입니다*/
-.nav ul li input { 
+.nav ul input { 
     color: #CCF2F4;
     font-weight: 700;
     text-transform: uppercase;

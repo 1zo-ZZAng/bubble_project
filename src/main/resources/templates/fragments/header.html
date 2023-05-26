@@ -39,19 +39,22 @@
                         <li><a href="#">HOME</a></li>
                         <li><a th:href="@{/reserve/letsgo.bubble}">Reserve</a></li>
                         <li><a href="#">Contact</a></li>
-                        <li th:if="${user != null}">
-
-                            <li><a th:href="@{/customer/mypage.bubble}">mypage</a></li>
-                            <li>
+                        
+                        <li>
+                            <div th:if="${user != null}">
+                                <a th:href="@{/customer/mypage.bubble}">mypage</a>
+                                
                                 <form th:action="@{/logout.bubble}" method="post">
                                     <input class="btn" type="submit" value="logout" />
                                 </form>
-                            </li>
+                            </div>
                         </li>
+
                         <li th:if="${user == null}">
                             <a th:href="@{/customer/login.bubble}">login</a>
-                                <a th:href="@{/customer/join.bubble}">join</a>
-                        </li>    
+                            <a th:href="@{/customer/join.bubble}">join</a>
+                        </li>   
+                        
                             
                     </ul>
                 </div>
