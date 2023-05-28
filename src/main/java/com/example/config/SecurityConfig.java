@@ -107,6 +107,7 @@ public class SecurityConfig {
             .antMatchers("/customer/findpw.bubble").permitAll()
             .antMatchers("/washing/join.bubble").permitAll()
             .antMatchers("/washing/login.bubble").permitAll()
+            .antMatchers("/washing/findid.bubble").permitAll()
             .antMatchers("/washing/bncheck.bubble").permitAll()
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()

@@ -344,7 +344,7 @@ public class WashingController {
     public String findidGET() {
         try {
 
-            return "washing/findid";
+            return "/washing/findid";
             
         } catch (Exception e) {
             e.printStackTrace();
