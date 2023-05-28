@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.entity.Machine;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
@@ -163,7 +162,7 @@ public class WashingController {
 
     //정보수정 (마이페이지)
     @GetMapping(value="/mypage.bubble")
-    public String updateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing) {
+    public String updateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing, @AuthenticationPrincipal User user) {
         try {
 
             log.info("아이디 => {}", id.toString());
@@ -171,6 +170,7 @@ public class WashingController {
             Washing obj = wRepository.findById(id).orElse(null);            
 
             model.addAttribute("washing", obj);
+            model.addAttribute("user", user);
 
             return "/washing/mypage";
 

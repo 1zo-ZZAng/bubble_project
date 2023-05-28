@@ -6,75 +6,293 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUBBLE BUMUL</title>
 
-    <!--1. BootStrap용 CSS CDM 추가-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <!-- 1. Bootstrap용 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!-- font Awesome 아이콘 CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!--아이콘 모양 돋보기라던가 그런거던데-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!--Simple DataTable용 CSS CDN--> <!--표 부분임-->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+
+    <!--현재 페이지용 CSS 외부 링크-->
+    <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/washing/main.css}'>
+
+    <!-- jquery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- font awesome용 스크립트 CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            const sidebarToggle = $('#sidebarToggle');
+            if(sidebarToggle) {
+                sidebarToggle.click(function() {
+                    console.log('숨기기');
+                    event.preventDefault(); /*아래쪽 요소로 이벤트가 전파안되도록*/
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+        });
+    </script>
+
 
 </head>
-<body>
-    
-    <h3>마이페이지</h3>
+<body class="sb-nav-fixed">
 
-    <a th:href="@{/washing/home.bubble}"><button>홈페이지</button></a>
-    <!--form태그 내에 있으니깐 작동이 안됨 밖에 있으니깐 작동이 또 됨-->
-    
+    <!--내비게이션 영역-->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
-    <form th:action="@{/washing/mypage.bubble(id=${washing.id})}" th:object="${washing}" method="post" id="form">
+        <!--Navbar Brand-->
+        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
+            <i class="bi bi-tools"></i> 
+            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+            <strong>BUBBLE BUMUL</strong>
+        </a>
 
-        <table class="container" width=" 400px">
+        <!--Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
+            <i class="bi bi-list"></i>
+        </button>
 
-            <tr>
-                <td><label class="form-label"> 아이디 </label></td>
-                <td><input type="text" th:field="${washing.id}" class="form-control" readonly/></td>
-            </tr>
+        <!--Searchbar-->
+        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group"> input group 쓰면 태그 내에 있는 것들이 합쳐짐
+                <input class="form-control" type="text" placeholder="검색어 입력 ..." aria-label="검색어 입력 ..."
+                    aria-describedby="btnSearch">
+                <button class="btn btn-primary" id="btnSearch" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form> -->
 
-            <tr>
-                <td><label for="password"> 비밀번호 </label></td>
-                <td><input type="password" th:field="${washing.password}" class="form-control" readonly></td>
-                <td><a th:href="@{/washing/pwupdate.bubble(id=${washing.id})}" class="btn">비밀번호 변경</a></td>
-            </tr>
+        <!--Profile-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="profile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
+                    <i class="bi bi-person-lines-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profile">
 
-            <tr>
-                <td><label for="wnumber"> 사업자 번호 </label></td>
-                <td><input type="text" th:field="${washing.wnumber}" class="form-control" readonly /></td>
-            </tr>
 
-            <tr>
-                <td><label for="email">이메일 </label></td>
-                <td><input type="text" th:field="${washing.email}" class="form-control"></td>
-            </tr>
+                    <!--로그아웃 상태 - 사실 로그아웃상태면 바로 로그인 창으로 이동됨-->
 
-            <tr>
-                <td><label for="name">업체명</label></td>
-                <td><input type="text" th:field="${washing.name}" class="form-control"></td>
-            </tr>
+                    <div th:if="${user == null}">
+                        <a class="dropdown-item" th:href="@{/washing/login.bubble}"><button>로그인</button></a>
+                        <a class="dropdown-item" th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+                    </div>
 
-            <tr>
-                <td><label for="ceo">대표자명</label></td>
-                <td><input type="text" th:field="${washing.ceo}" class="form-control"></td>
-            </tr>
+                    <!------------------------------------------------------------------------->
 
-            <tr>
-                <td><label for="address"> 주소 </label></td>
-                <td><input type="text" th:field="${washing.address}" class="form-control" /></td>
-            </tr>
-
-            <tr>
-                <td><label for="phone">전화번호</label></td>
-                <td><input type="text" th:field="${washing.phone}" class="form-control"></td>
-            </tr>
-            
-            <tr>
-                <td><input type="button" value="정보수정" onclick="updateMy()"/></td>
-            </tr>
-
-            <tr>
-                <td><a th:href="@{/washing/delete.bubble(id=${washing.id})}">탈퇴</a></td>
-            </tr>
-
-            
-        </table>
+                    <!-- 로그인상태 -->
+                    <div th:if="${user != null}"> 
         
-    </form>
+                        <li><a class="dropdown-item" th:href="@{/washing/mypage.bubble(id=${user.username})}">마이페이지</a></li>
+
+                        <li>
+                            <hr class="dropdown-divider"> <!--경계선-->
+                        </li> 
+
+                        <li>
+                            <form th:action="@{/logout.bubble}" method="post">
+                                <input type="submit" value="로그아웃" class="btn" />
+                            </form>
+                        </li>
+
+                    </div>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!--전체화면 영역-->
+    <div id="layoutTotal">
+        <!--전체화면 > 왼쪽 메뉴 영역-->
+        <div id="layoutLeftSide">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        
+                        <div class="sb-sidenav-menu-heading">업체</div>
+
+                        <!--매출-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
+                            <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
+                            매출
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/washing/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washing/daysales.bubble}">일별 매출</a>
+                            </nav>
+                        </div>
+
+                        <!--보유기기-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
+                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            보유기기
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${washing.id})}">기기 등록</a>
+                                    <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${washing.id})}">기기 조회</a>
+                            </nav>
+                        </div>
+
+                        <!--게시판-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
+                            <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
+                            게시판
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
+                                <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${washing.id})}">글쓰기</a>
+                            </nav>
+                        </div>
+
+                    
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+
+                    <div th:if="${user != null}" class="small">
+        
+                        <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
+
+                    </div>
+
+
+                </div>
+            </nav>
+        </div>
+
+        <!--여기에 작성해야함-->
+        <!--전체화면 > 오른쪽 메인 화면 영역-->
+        <div id="layoutContent">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="container-fluid mt-4">마이페이지</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="container-fluid breadcrumb-item active">정보수정</li>
+                    </ol>
+
+                    <div class="row justify-content-center" > <!--d-flex-->
+                        <div class="  col-md-8 col-lg-8"> <!--이부분 수정바람--> <!-------------------------------------------->
+                            <div >
+
+                                <form th:action="@{/washing/mypage.bubble(id=${washing.id})}" th:object="${washing}" method="post" id="form">
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-7">
+                                            
+                                            <!--아이디-->
+                                            <div class="form-group">
+                                                <label class="form-label"> 아이디 </label></td>
+                                                <input type="text" th:field="${washing.id}" class="form-control" readonly/>
+                                            </div>
+
+                                            <!--비밀번호-->
+                                            <div class="form-group">
+                                                <label for="password"> 
+                                                    비밀번호 
+                                                    <a th:href="@{/washing/pwupdate.bubble(id=${washing.id})}" style="text-decoration-line: none;">비밀번호 변경</a>
+                                                </label>
+                                                <input type="password" th:field="${washing.password}" class="form-control" readonly>
+                                            </div>
+
+                                            <!--사업자번호-->
+                                            <div class="form-group">
+                                                <label for="wnumber"> 사업자 번호 </label>
+                                                <input type="text" th:field="${washing.wnumber}" class="form-control" readonly />
+                                            </div>
+
+                                            <!--이메일-->
+                                            <div class="form-group">
+                                                <label for="email">이메일 </label>
+                                                <input type="text" th:field="${washing.email}" class="form-control">
+                                            </div>
+
+                                            <!--업체명-->
+                                            <div class="form-group">
+                                                <label for="name">업체명</label>
+                                                <input type="text" th:field="${washing.name}" class="form-control">
+                                            </div>
+
+                                            <!--대표자명-->
+                                            <div class="form-group">
+                                                <label for="ceo">대표자명</label>
+                                                <input type="text" th:field="${washing.ceo}" class="form-control">
+                                            </div>
+
+                                            <!--주소-->
+                                            <div class="form-group">
+                                                <label for="address"> 주소 </label>
+                                                <input type="text" th:field="${washing.address}" class="form-control" />
+                                            </div>
+
+                                            <!--전화번호-->
+                                            <div class="form-group">
+                                                <label for="phone">전화번호</label>
+                                                <input type="text" th:field="${washing.phone}" class="form-control">
+                                            </div>
+
+                                            <!--정보수정 버튼-->
+                                            <div class="form-group mb-4 mt-4">
+                                                <input type="button" class="btn btn-primary"  value="정보수정" onclick="updateMy()"/>
+                                                <div class="form-group" style="float: right;">
+                                                    <a th:href="@{/washing/delete.bubble(id=${washing.id})}" style="text-decoration-line: none;" class="float-right">탈퇴</a>
+                                                </div> 
+                                            </div>
+                                
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </main> 
+
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center small">
+                        <div class="text-muted me-2">Copyright &copy; PKNU 2023.</div>
+                        <div>
+                            <a href="#"> Privacy Policy </a> &middot; <a href="#"> Terms &amp; Conditions </a>
+                            <!--&middot; 점이고 &amp; & 임-->
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+        </div>
+
+
+
+
+    <!-- 2. Bootstrap용 js는 body에 위치해야 함! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
 
     <script th:inline="javascript" type="text/javascript">
