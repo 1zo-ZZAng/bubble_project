@@ -168,7 +168,7 @@ public class WashingController {
 
             log.info("아이디 => {}", id.toString());
 
-            Washing obj = wRepository.findById(id).orElse(null);            
+            Washing obj = wRepository.findById(id).orElse(null);
 
             model.addAttribute("washing", obj);
             model.addAttribute("user", user);
