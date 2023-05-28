@@ -34,17 +34,6 @@ public class WashingServiceImpl implements WashingService {
     }
 
 
-
-    //비밀번호 찾기
-    @Override
-    public Washing findWashingPw(Washing washing) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findWashingPw'");
-    }
-
-
-
-
     //회원가입
     @Override
     public Washing joinWashing(Washing obj) {
@@ -54,6 +43,34 @@ public class WashingServiceImpl implements WashingService {
 
             return ret;
             
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //아이디 찾기
+    @Override
+    public Washing findId(String ceo, String email) {
+        try {
+
+            return wRepository.findByCeoANDEmail(ceo, email);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //비밀번호 찾기
+    @Override
+    public Washing findPassword(String id, String email) {
+        try {
+            
+            return wRepository.findByIdANDEmail(id, email);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
