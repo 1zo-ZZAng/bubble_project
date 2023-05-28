@@ -1,5 +1,7 @@
 package com.example.service.jpa;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Customer;
@@ -93,6 +95,16 @@ public class CustomerServiceImpl implements CustomerService {
 			return cRepository.findByEmail(email);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<Customer> findAllByOrderByNameAsc() {
+		try {
+			return cRepository.findAllByOrderByNameAsc();
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}

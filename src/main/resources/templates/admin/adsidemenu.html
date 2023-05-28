@@ -54,9 +54,9 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                         data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" th:href="@{/admin/wlist.bubble}">업체 목록</a>
+                            <a class="nav-link" th:href="@{/admin/washinglist.bubble}">업체 목록</a>
                             <a class="nav-link" th:href="@{/admin/confirm.bubble}">업체 승인 대기</a> 
-                            <a class="nav-link" th:href="@{/admin/wsales.bubble}">업체별 매출</a>
+                            <a class="nav-link" th:href="@{/admin/washingsales.bubble}">업체별 매출</a>
 
                         </nav>
                     </div>
@@ -69,16 +69,11 @@
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                         data-bs-parent="#sidenavAccordion" >
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#pageCollapseAuth" aria-expanded="false"
-                                aria-controls="pageCollapseAuth">
-                                회원 목록
-                                
-                            </a>
+                            <a class="nav-link" th:href="@{/admin/customerlist.bubble}">회원 목록</a>
                             
-                            <a class="nav-link" href="#" data-bs-toggle="collapse"
+                            <a class="nav-link" data-bs-toggle="collapse"
                                 data-bs-target="#pageCollapseError" aria-expanded="false"
-                                aria-controls="pageCollapseError">
+                                aria-controls="pageCollapseError" th:href="@{/admin/boardlist.bubble}">
                                 게시판 관리
                                
                             </a>

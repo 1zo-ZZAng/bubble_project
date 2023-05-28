@@ -71,30 +71,41 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    제휴 업체 목록
+                                    
                                 </div>
                                 <div class="card-body">
-                                    <table id="datatableSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>업체명</th>
-                                                <th>대표자명</th>
-                                                <th>사업자 등록번호</th>
-                                                <th>업체 주소</th>
-                                                <th>업체 번호</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="obj : ${list}">
-                                                <td th:text="${obj.name}"></td>
-                                                <td th:text="${obj.ceo}"></td>
-                                                <td><a th:href="@{/admin/wmlist.bubble(wnumber=${obj.wnumber})}" th:text="${obj.wnumber}"></a></td>
-                                                <td th:text="${obj.address}"></td>
-                                                <td th:text="${obj.phone}"></td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                    </table>
+
+                                    
+
+                                    <form th:action="@{/admin/customerlist.bubble}" method="post" id="form">
+                                        <table id="datatableSimple">
+                                            <thead>
+                                                <tr>
+                                                    <th>선택</th>
+                                                    <th>고객 ID</th>
+                                                    <th>고객명</th>
+                                                    <th>전화번호</th>
+                                                    <th>고객 주소</th>
+                                                    <th>생년월일</th>
+                                                    <th>등급</th>
+                                                    <th>가입일자</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="obj : ${list}">
+                                                    <td><input type="checkbox" name="chk[]" th:value="${obj.id}" /></td>
+                                                    <td th:text="${obj.id}"></td>
+                                                    <td th:text="${obj.name}"></td>
+                                                    <td th:text="${obj.phone}"></td>
+                                                    <td th:text="${obj.address}"></td>
+                                                    <td th:text="${obj.birth}"></td>                       
+                                                    <td th:text="${obj.grade}"></td>                       
+                                                    <td th:text="${obj.regdate}"></td>                       
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button th:onclick="formAction()" class="btn btn-primary" id="blacklist">블랙리스트</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -130,6 +141,9 @@
                fixedHeight: true,
            });
        });
+   </script>
+   <script th:inline="javascript" type="text/javascript">
+        
    </script>
 </body>
 

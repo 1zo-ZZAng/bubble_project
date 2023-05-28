@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.example.dto.MachineCount;
 import com.example.dto.Washing;
 import com.example.dto.WashingMachine;
+import com.example.entity.Customer;
 
 
 
@@ -17,7 +18,7 @@ public interface AdminMapper {
     
 
     //업체리스트 전체 조회 (업체명, 대표자명, 주소, 사업자등록번호, 전화번호)
-    @Select({ " SELECT * FROM washing WHERE address IS NOT NULl GROUP BY name " })
+    @Select({ " SELECT * FROM washing WHERE address IS NOT NULL GROUP BY name " })
     public List<Washing> selectWList();
 
 
@@ -32,5 +33,16 @@ public interface AdminMapper {
 
     @Select({"SELECT DISTINCT(name) FROM MACHINECOUNT WHERE WNUMBER = #{wnumber}"})
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
+
+
+
+    //승인 대기/완료 업체 목록
+    @Select({" SELECT name,ceo,wnumber,phone,address FROM washing WHERE address IS NOT NULL and CHK=#{CHK} GROUP BY NAME  "})
+    public List<Washing> selectWlistUnchecked(@Param("chk") int chk);
+
+    
+
+
+
 
 }
