@@ -1,5 +1,7 @@
 package com.example.service.jpa;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +31,7 @@ public interface CustomerService {
 
 	// 소셜 로그인(카카오) - 이메일로 회원 1명 조회
 	public Customer selectCustomerEmail(String email);
+
+	//관리자 - 회원리스트
+	public List<Customer> findAllByOrderByNameAsc();
 }

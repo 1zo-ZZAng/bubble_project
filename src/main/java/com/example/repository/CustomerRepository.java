@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +23,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     // 소셜 로그인(카카오) - 이메일로 회원 1명 조회
     Customer findByEmail(String email);
+
+    // 관리자 - 회원리스트 
+    List<Customer> findAllByOrderByNameAsc();
 }
