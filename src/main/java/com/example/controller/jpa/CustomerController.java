@@ -247,6 +247,8 @@ public class CustomerController {
                             @AuthenticationPrincipal User user,
                             @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
         try {
+            model.addAttribute("user", user);
+
             Customer customer = cService.selectCustomerOne(user.getUsername());
             
             if (customer != null) {
@@ -265,6 +267,8 @@ public class CustomerController {
             else {
                 return "redirect:/customer/login.bubble";
             }
+
+           
         }
         catch (Exception e) {
             e.printStackTrace();

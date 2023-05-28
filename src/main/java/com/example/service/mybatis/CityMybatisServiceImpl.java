@@ -1,22 +1,21 @@
-package com.example.service.jpa;
+package com.example.service.mybatis;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.dto.City;
 import com.example.mapper.CityMapper;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CityServiceImpl implements CityService {
+public class CityMybatisServiceImpl implements CityMybatisService {
     final CityMapper cMapper;
 
     // 시/도 distinct 조회
     @Override
-    public List<City> selectCitynameList() {
+    public List<String> selectCitynameList() {
         try {
             return cMapper.selectCitynameList();
         }
@@ -26,11 +25,11 @@ public class CityServiceImpl implements CityService {
         }
     }
 
-    // 시/도 & 구/군 1개 조회
+    // 시/도에 맞는 구/군 조회
     @Override
-    public City selectTownOne(String cityname, String townname) {
+    public List<String> selectCityTown(String cityname) {
         try {
-            return cMapper.selectCityOne(cityname, townname);
+            return cMapper.selectCityOne(cityname);
         }
         catch (Exception e) {
             e.printStackTrace();
