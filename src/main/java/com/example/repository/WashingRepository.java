@@ -13,10 +13,10 @@ public interface WashingRepository extends JpaRepository<Washing, String> {
     public int countById(String id);
 
     //아이디 찾기
-    public Washing findByCeoANDEmail(String ceo, String email);
+    public Washing findByCeoAndEmail(String ceo, String email);
 
     //비밀번호 찾기
-    public Washing findByIdANDEmail(String id, String email);
+    public Washing findByIdAndEmail(String id, String email);
 
 
 

@@ -55,7 +55,7 @@ public class WashingServiceImpl implements WashingService {
     public Washing findId(String ceo, String email) {
         try {
 
-            return wRepository.findByCeoANDEmail(ceo, email);
+            return wRepository.findByCeoAndEmail(ceo, email);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class WashingServiceImpl implements WashingService {
     public Washing findPassword(String id, String email) {
         try {
             
-            return wRepository.findByIdANDEmail(id, email);
+            return wRepository.findByIdAndEmail(id, email);
 
         } catch (Exception e) {
             e.printStackTrace();
