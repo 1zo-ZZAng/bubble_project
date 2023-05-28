@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @Controller
 @RequestMapping(value = "/washing")
 @RequiredArgsConstructor
@@ -167,7 +168,7 @@ public class WashingController {
 
             log.info("아이디 => {}", id.toString());
 
-            Washing obj = wRepository.findById(id).orElse(null);            
+            Washing obj = wRepository.findById(id).orElse(null);
 
             model.addAttribute("washing", obj);
             model.addAttribute("user", user);
@@ -334,6 +335,38 @@ public class WashingController {
             return "redirect:/washing/home.bubble";
         }
     }
+
+
+    /* ---------------------------------------------- */
+
+    //아이디 찾기
+    @GetMapping(value="/findid.bubble")
+    public String findidGET() {
+        try {
+
+            return "washing/findid";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/login.bubble";
+        }
+    }
+
+    @PostMapping(value="/findid.bubble")
+    public String findidPOST(@RequestParam(name = "ceo") String ceo, @RequestParam(name = "email") String email) {
+        try {
+
+            
+
+
+            return "redirect:/washing/findid.bubble";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/findid.bubble";
+        }
+    }
+    
     
     
     

@@ -14,8 +14,12 @@ public interface WashingService {
 	// 아이디 중복 확인
 	public int washingIDCheck(String id);
 
-	// 업체 비번 찾기
-	public Washing findWashingPw(Washing washing);
+	//아이디 찾기
+	public Washing findId(String ceo, String email);
+
+	//비밀번호 찾기
+	public Washing findPassword(String id, String email);
+
 
 	
 
