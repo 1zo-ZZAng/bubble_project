@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.dto.City;
-
 @Service
 public interface CityMybatisService {
     // 시/도 distinct 조회

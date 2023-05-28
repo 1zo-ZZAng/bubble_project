@@ -3,7 +3,6 @@ package com.example.service.jpa;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-import com.example.dto.SendMail;
 import com.example.entity.Customer;
 
 @Service

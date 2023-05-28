@@ -1,14 +1,19 @@
 package com.example.restcontroller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.service.jpa.CustomerService;
 import com.example.service.mybatis.CityMybatisService;
 import com.example.service.mybatis.WashingMybatisService;
 
@@ -22,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RestReserveController {
     final CityMybatisService cityService;
     final WashingMybatisService wService;
+    final CustomerService cService;
 
     @GetMapping(value = "/selectcity.json")
     public Map<String, Object> selectcityGET(@RequestParam(name = "city") String city) {
@@ -50,7 +56,39 @@ public class RestReserveController {
             retMap.put("status", 200);
             retMap.put("washinglist", wService.selectWashingList(city, town));
 
-            log.info(wService.selectWashingList(city, town).toString());
+            // log.info(wService.selectWashingList(city, town).toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            retMap.put("status", -1);
+            retMap.put("error", e.getMessage());
+        }
+        return retMap;
+    }
+
+    @GetMapping(value = "/myaddress.json")
+    public Map<String, Object> myaddressGET(@AuthenticationPrincipal User user){
+        Map<String, Object> retMap = new HashMap<>();
+
+        String str = cService.selectCustomerOne(user.getUsername()).getAddress();
+        List<String> addressList = Arrays.asList(str.split(" "));
+        List<String> townList = cityService.selectCityTown(addressList.get(0));
+
+        try {
+            if (str != null & townList != null) {
+                // log.info(addressList.get(0));
+                // log.info(addressList.get(1));
+
+                retMap.put("status", 200);
+                retMap.put("cityname", addressList.get(0));
+                retMap.put("townlist", townList);
+                retMap.put("townname", addressList.get(1));
+            }
+            else {
+                retMap.put("cityname", null);
+                retMap.put("townlist", null);
+                retMap.put("townname", null);
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

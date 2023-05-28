@@ -13,15 +13,19 @@
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <style>
+        .washinglist {border: 1px solid black; word-break: break-all;}
+    </style>
 </head>
 <header th:replace="~{/fragments/header.html :: header}"></header>
 <body>
     <h2>예약 화면</h2>
 
-    <table>
+    <table style="margin-bottom: 20px;">
         <tr>
-            <td>지역(시/도)</td>
-            <td>지역(구/군)</td>
+            <th>지역(시/도)</th>
+            <th>지역(구/군)</th>
         </tr>
         <tr>    
             <td>
@@ -35,12 +39,23 @@
                     <option value="none">지역(구/군) 선택</option>
                 </select>
             </td>
-            <td><button type="button" onclick="showWahsingList()">조회</button></td>
+            <td><button type="button" class="btn btn-primary" onclick="showMyAddress()">내 주소 불러오기</button></td>
+            <td><button type="button" class="btn btn-primary" onclick="showWahsingList()">조회</button></td>
         </tr>    
     </table>
 
     <h2>세탁 업체 목록</h2>
-    <table id="washinglist">
+    <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
+        <thead style="background-color: #CCF2F4;">
+            <tr>
+                <th width="5%" class="washinglist">선택</th>
+                <th width="15%" class="washinglist">세탁소명</th>
+                <th width="50%" class="washinglist">주소</th>
+                <th width="15%" class="washinglist">전화번호</th>
+            </tr>
+        </thead>
+        <tbody id="washinglist">
+        </tbody>
     </table>
 
     <!-- <ul style="list-style: none;">
@@ -59,7 +74,7 @@
             const headers = {"Content-Type":"application/json"};
             const {data} = await axios.get(url, {headers});
 
-            console.log(data.town);
+            // console.log(data.town);
 
             if (data.town.length <= 0) {
                 alert('예약 가능한 지역이 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
@@ -75,6 +90,35 @@
             }
         }
 
+        async function showMyAddress() {
+            // rest api 호출
+            const url = [[@{/api/reserve/myaddress.json}]];
+            const headers = {"Content-Type":"application/json"};
+            const {data} = await axios.get(url, {headers});
+
+            // console.log(data.cityname);
+            // console.log(data.townlist);
+            // console.log(data.townname);
+
+            if (data.cityname == null || data.townlist == null || data.townname == null) {
+                alert('회원정보에 주소가 없습니다. 마이페이지에서 주소를 추가한 후 이용해주세요.');
+                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/mypage.bubble?menu=2";
+            }
+            else {
+                $("#city").val(data.cityname).prop("selected", true);
+
+                const town = document.getElementById("town");
+                town.innerHTML = '';
+                town.innerHTML = '<option value="none">지역(구/군) 선택</option>';
+
+                for (let obj of data.townlist) {
+                    town.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
+                }
+                
+                $("#town").val(data.townname).prop("selected", true);
+            }
+        }
+
         async function showWahsingList() {
             const city = $("#city option:selected").val();
             const town = $("#town option:selected").val();
@@ -84,7 +128,7 @@
             const headers = {"Content-Type":"application/json"};
             const {data} = await axios.get(url, {headers});
 
-            console.log(data.washinglist);
+            // console.log(data.washinglist);
 
             if (data.washinglist == null) {
                 alert('해당 지역에 예약 가능한 세탁소가 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
@@ -92,19 +136,16 @@
             else {
                 const washinglist = document.getElementById("washinglist");
                 washinglist.innerHTML = '';
-                washinglist.innerHTML = '<tr>'
-                                        + '<th>세탁소명</th>'
-                                        + '<th>주소</th>'
-                                        + '<th>전화번호</th>'
-                                        + '</tr>';
 
                 for (let i=0; i<data.washinglist.length; i++){
-                    console.log(data.washinglist[i].name);
-                    washinglist.innerHTML += '<tr>' +
-                                                + '<td scope="row">' + data.washinglist[i].name + '</td>'
-                                                + '<td>' + data.washinglist[i].address + '</td>'
-                                                + '<td>' + data.washinglist[i].phone + '</td>'
-                                                + '</tr>';
+                    // console.log(data.washinglist[i].name);
+                    washinglist.innerHTML += `<tr>`
+                                                + '<td class="washinglist"><input type="radio" name="chk[]" th:value="' + data.washinglist[i].name + '"/></td>' 
+                                                + '<td class="washinglist">' + data.washinglist[i].name + '</td>'
+                                                + '<td class="washinglist">' + data.washinglist[i].address + '</td>'
+                                                + '<td class="washinglist">' + data.washinglist[i].phone + '</td>'
+                                                + `</tr>`
+                                                ;
                 }
             }
         }

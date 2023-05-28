@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.dto.City;
 import com.example.mapper.CityMapper;
 
 import lombok.RequiredArgsConstructor;
