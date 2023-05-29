@@ -1,8 +1,11 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.entity.Reserve;
 import com.example.entity.Washing;
 
 
@@ -17,7 +20,6 @@ public interface WashingRepository extends JpaRepository<Washing, String> {
 
     //비밀번호 찾기
     public Washing findByIdAndEmail(String id, String email);
-
 
 
     

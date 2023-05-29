@@ -27,6 +27,9 @@ public class RestWashingSalesController {
     final WashingSalesMybatisService wSalesMybatisService;
     final WashingMybatisService wMybatisService;
 
+/* ================================================================================================ */
+
+
     //해당 업체의 일 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/daysales.bubble?wname=해당업체명
     @GetMapping(value="/daysales.bubble")
@@ -56,6 +59,10 @@ public class RestWashingSalesController {
         
     }
 
+
+    /* --------------------------------------------------------------------------------------- */
+
+
     // 해당 업체의 월 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/monthsales.bubble?wname=해당업체명
     @GetMapping(value="/monthsales.bubble")
@@ -84,6 +91,10 @@ public class RestWashingSalesController {
         return retMap;
         
     }
+
+
+    /* --------------------------------------------------------------------------------------- */
+
 
     // 해당 업체의 년 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/yearsales.bubble?wname=해당업체명
@@ -115,6 +126,9 @@ public class RestWashingSalesController {
     }
 
 
+    /* --------------------------------------------------------------------------------------- */
+
+
     //모든 업체의 월 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/allmonthsales.bubble
     @GetMapping(value="/allmonthsales.bubble")
@@ -142,6 +156,8 @@ public class RestWashingSalesController {
         
     }
 
+    
+    /* --------------------------------------------------------------------------------------- */
     
     
 

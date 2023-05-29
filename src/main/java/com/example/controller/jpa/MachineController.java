@@ -95,13 +95,13 @@ public class MachineController {
     }
 
     @PostMapping(value="/insert.bubble")
-    public String machineinsertPOST(@ModelAttribute Machine machine) {
+    public String machineinsertPOST(@ModelAttribute Machine machine, @AuthenticationPrincipal User user) {
         try {
 
 
             mRepository.save(machine);
 
-            return "redirect:/machine/insert.bubble";
+            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername() ;
 
         } catch (Exception e) {
 

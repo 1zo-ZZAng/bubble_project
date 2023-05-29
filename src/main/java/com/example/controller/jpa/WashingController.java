@@ -1,6 +1,7 @@
 package com.example.controller.jpa;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.entity.Reserve;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
@@ -402,6 +404,30 @@ public class WashingController {
     
 
 /* =================================================================================================================================================== */
+
+
+    //예약내역 조회
+    @GetMapping(value="/reserve.bubble")
+    public String reserveGET( Model model, @ModelAttribute Reserve reserve) { //@AuthenticationPrincipal User user
+        try {
+
+
+
+            List<Reserve> list = wService.selectReserve(reserve.getWname());
+
+            log.info("예약내역 조회 => {}", list.toString());
+
+            model.addAttribute("list", list);
+            // model.addAttribute("user", user);
+
+            return "/washing/reserve";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        }
+    }
+    
 
 
 

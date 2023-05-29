@@ -18,6 +18,9 @@ public interface WashingMybatisService {
     //1명 조회 (업체명으로)
     public Washing selectWashingnameOne(String name);
 
+    //예약조회(업체별)
+    public List<Washing> selectReserveList(String wname);
+
     
     
 }

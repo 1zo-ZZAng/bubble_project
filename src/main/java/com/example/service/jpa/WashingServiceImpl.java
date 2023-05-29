@@ -1,8 +1,12 @@
 package com.example.service.jpa;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Reserve;
 import com.example.entity.Washing;
+import com.example.repository.ReserveRepository;
 import com.example.repository.WashingRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class WashingServiceImpl implements WashingService {
     
     final WashingRepository wRepository;
-
+    final ReserveRepository rRepository;
 
     //아이디 중복 확인
     @Override
@@ -70,6 +74,20 @@ public class WashingServiceImpl implements WashingService {
         try {
             
             return wRepository.findByIdAndEmail(id, email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //예약내역조회
+    @Override
+    public List<Reserve> selectReserve(String wname) {
+        try {
+            
+            return rRepository.findByWnameOrderByRvnoDesc(wname);
 
         } catch (Exception e) {
             e.printStackTrace();

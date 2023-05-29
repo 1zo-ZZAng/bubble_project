@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.dto.Reserve;
 import com.example.dto.Washing;
 
 
@@ -68,28 +67,27 @@ public interface WashingMapper {
 	public String findWashingPw(@Param("obj") Washing obj);
 	
 	// 비번 변경
-	@Update({
-		" UPDATE washing SET password=#{obj.newpassword} WHERE id = #{obj.id} AND password=#{obj.password} "
-	})
+	@Update({" UPDATE washing SET password=#{obj.newpassword} WHERE id = #{obj.id} AND password=#{obj.password} "})
 	public int updateWashingPw (@Param("obj") Washing obj);
 	
 	// 업체 탈퇴
-	@Update({
-		" UPDATE washing SET password=null, wnumber=null, email=null, name='탈퇴', address=null, phone=null, ceo=null, role=null, chk=0 ",
-		" WHERE id=#{obj.id} AND password=#{obj.password} "
-	})
+	@Update({ " UPDATE washing SET password=null, wnumber=null, email=null, name='탈퇴', address=null, phone=null, ceo=null, role=null, chk=0 WHERE id=#{obj.id} AND password=#{obj.password} "})
 	public int deleteWashingOne (@Param("obj") Washing obj);
 
 
-	/* == 예약 페이지 == */
-
+	/* === 예약 === */
 
     // 예약 페이지에서 지역에 맞는 세탁소 리스트 조회
 	@Select({"SELECT name, address, phone FROM WASHING WHERE address LIKE #{cityname} || '%' || #{townname} || '%'"})
 	public List<Washing> selectWashingList(@Param("cityname") String cityname, @Param("townname") String townname);
 
+	//예약 내역 조회 (업체별)
+	@Select({" SELECT * FROM RESERVE WHERE wname=#{wname} "})
+	public List<Washing> selectReserveList(@Param("wname") String wname);
 
-	/* === 매출 부분 === */
+
+
+	/* === 매출 === */
 
 	//일매출
 	@Select({" SELECT TO_CHAR(RDATE, 'YYYY-MM-DD') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY-MM-DD') ORDER BY TO_CHAR(RDATE, 'YYYY-MM-DD') DESC "})

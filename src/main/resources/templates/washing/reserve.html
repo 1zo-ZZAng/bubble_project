@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Bumul</title>
+</head>
+<body>
+
+    <h3>예약내역 조회(업체별) </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>예약번호</th>
+                <th>예약날짜</th>
+                <th>고객 아이디</th>
+                <th>고객이름</th>
+                <th>고객 전화번호</th>
+                <th>고객 주소</th>
+                <th>업체명</th>
+                <th>업체 주소</th>
+                <th>업체 전화번호</th>
+                <th>세탁기</th>
+                <th>기기번호</th>
+                <th>가격</th>
+                <th>작동시간</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="obj : ${list}">
+                <td th:text="${obj.rvno}"></td>
+                <td th:text="${obj.rdate}"></td>
+                <td th:text="${obj.id}"></td>
+                <td th:text="${obj.name}"></td>
+                <td th:text="${obj.phone}"></td>
+                <td th:text="${obj.address}"></td> <!--+${obj.detailaddress}+${obj.extraaddress}-->
+                <td th:text="${obj.wname}"></td>
+                <td th:text="${obj.waddress}"></td>
+                <td th:text="${obj.wphone}"></td>
+                <td th:text="${obj.mtype}"></td>
+                <td th:text="${obj.mtypeno}"></td>
+                <td th:text="${obj.mprice}"></td>
+                <td th:text="${obj.mtime}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>
