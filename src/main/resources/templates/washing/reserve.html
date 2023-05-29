@@ -8,6 +8,8 @@
 </head>
 <body>
 
+    <a th:href="@{/washing/home.bubble}"><button>홈</button></a>
+
     <h3>예약내역 조회(업체별) </h3>
     <table border="1">
         <thead>
@@ -18,13 +20,12 @@
                 <th>고객이름</th>
                 <th>고객 전화번호</th>
                 <th>고객 주소</th>
-                <th>업체명</th>
+                <!-- <th>업체명</th>
                 <th>업체 주소</th>
-                <th>업체 전화번호</th>
+                <th>업체 전화번호</th> -->
                 <th>세탁기</th>
-                <th>기기번호</th>
                 <th>가격</th>
-                <th>작동시간</th>
+                <!-- <th>작동시간</th> -->
             </tr>
         </thead>
         <tbody>
@@ -34,14 +35,13 @@
                 <td th:text="${obj.id}"></td>
                 <td th:text="${obj.name}"></td>
                 <td th:text="${obj.phone}"></td>
-                <td th:text="${obj.address}"></td> <!--+${obj.detailaddress}+${obj.extraaddress}-->
-                <td th:text="${obj.wname}"></td>
+                <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td> <!---->
+                <!-- <td th:text="${obj.wname}"></td>
                 <td th:text="${obj.waddress}"></td>
-                <td th:text="${obj.wphone}"></td>
-                <td th:text="${obj.mtype}"></td>
-                <td th:text="${obj.mtypeno}"></td>
+                <td th:text="${obj.wphone}"></td> -->
+                <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
                 <td th:text="${obj.mprice}"></td>
-                <td th:text="${obj.mtime}"></td>
+                <!-- <td th:text="${obj.mtime}"></td> -->
             </tr>
         </tbody>
     </table>

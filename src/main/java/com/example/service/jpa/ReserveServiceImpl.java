@@ -18,10 +18,10 @@ public class ReserveServiceImpl implements ReserveService {
 
     //예약내역 조회
     @Override
-    public List<Reserve> selectReserve(String wname) {
+    public List<Reserve> selectReserve(String wid) {
         try {
             
-            return rRepository.findByWnameOrderByRvnoDesc(wname);
+            return rRepository.findByWidOrderByRvnoDesc(wid);
 
         } catch (Exception e) {
             e.printStackTrace();
