@@ -30,7 +30,10 @@
                                 <!--아이디-->
 								<div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
 									<label for="id">Id
-                                        <a href="" class="float-right"> Forgot Id? </a> <!--아이디 찾기 아직 안했음-->
+
+                                        <!--아이디 찾기-->
+                                        <a th:href="@{/washing/findid.bubble}" class="float-right"> Forgot Id? </a> 
+
                                     </label>
                                     <input type="text" id="id" name="id" class="form-control" required autofocus  />
 

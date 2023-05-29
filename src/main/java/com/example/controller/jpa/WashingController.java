@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @Controller
 @RequestMapping(value = "/washing")
 @RequiredArgsConstructor
@@ -344,7 +345,7 @@ public class WashingController {
     public String findidGET() {
         try {
 
-            return "washing/findid";
+            return "/washing/findid";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,19 +354,48 @@ public class WashingController {
     }
 
     @PostMapping(value="/findid.bubble")
-    public String findidPOST(@RequestParam(name = "ceo") String ceo, @RequestParam(name = "email") String email) {
+    public String findidPOST(@RequestParam(name = "ceo") String ceo, @RequestParam(name = "email") String email, Model model) {
         try {
 
-            
+            Washing obj = wService.findId(ceo, email);
 
+            if(obj != null) {
 
-            return "redirect:/washing/findid.bubble";
+                httpSession.setAttribute("id", obj.getId());
+
+                return "redirect:/washing/showid.bubble";
+
+            }else{
+                model.addAttribute("msg", "없는 계정입니다. 다시 확인해주세요");
+                model.addAttribute("url", "/bubble_bumul/washing/findid.bubble");
+
+                return "message";
+            }
+
             
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/washing/findid.bubble";
         }
     }
+
+    //아이디 찾기 완료했을 때 
+    @GetMapping(value="/showid.bubble")
+    public String showidGET(Model model) {
+        try {
+
+            model.addAttribute("id", httpSession.getAttribute("id"));
+
+            httpSession.invalidate();
+
+            return "/washing/showid";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        }
+    }
+    
     
     
     
