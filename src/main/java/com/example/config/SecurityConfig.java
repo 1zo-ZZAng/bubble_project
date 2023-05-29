@@ -112,7 +112,7 @@ public class SecurityConfig {
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
             .antMatchers("/washing", "/washing/*", "/machine/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
-            .antMatchers("/customer", "/customer/*", "/reserve/*").hasAnyAuthority("ROLE_CUSTOMER")
+            .antMatchers("/customer", "/customer/*", "/reserve/*").hasAnyAuthority("ROLE_CUSTOMER", "ROLE_ADMIN")
             .anyRequest().permitAll();
             
         // 403 페이지 설정(접근권한 불가 시 표시할 화면)
