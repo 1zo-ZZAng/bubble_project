@@ -40,7 +40,7 @@ public interface AdminMapper {
 
     //승인 대기/완료 업체 목록
     @Select({" SELECT name,ceo,wnumber,phone,address FROM washing WHERE address IS NOT NULL and CHK=#{CHK} GROUP BY NAME  "})
-    public List<Washing> selectWlistUnchecked(@Param("chk") int chk);
+    public List<Washing> selectWlistUnchecked(@Param("chk") String chk);
 
     
 
