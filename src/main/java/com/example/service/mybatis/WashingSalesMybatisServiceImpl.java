@@ -44,6 +44,17 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
         }
     }
 
+    //해당업체의 연매출
+    @Override
+    public List<Map<String, Object>> selectYearSales(String wname) {
+        try {
+            return wMapper.selectYearSales(wname);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     //모든업체의 월 매출
     @Override
@@ -55,6 +66,9 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
             return null;
         }
     }
+
+
+    
 
     
     

@@ -28,7 +28,7 @@ public class RestWashingSalesController {
     final WashingMybatisService wMybatisService;
 
     //해당 업체의 일 매출
-    //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/daysales.bubble?wname='업체명'
+    //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/daysales.bubble?wname=해당업체명
     @GetMapping(value="/daysales.bubble")
     public Map<String,Object> daysalesGET(@RequestParam(name = "wname") String wname) {
 
@@ -36,7 +36,7 @@ public class RestWashingSalesController {
 
         try {
 
-            log.info("업체명  출력 => {}",wname); //그치.. 내가 쓴거 나오겠지...
+            log.info("업체명  출력 => {}",wname); 
 
             List<Map<String, Object>> list = wSalesMybatisService.selectDaySales(wname);
 
@@ -57,7 +57,7 @@ public class RestWashingSalesController {
     }
 
     // 해당 업체의 월 매출
-    //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/monthsales.bubble?wname='업체명'
+    //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/monthsales.bubble?wname=해당업체명
     @GetMapping(value="/monthsales.bubble")
     public Map<String,Object> monthsalesGET(@RequestParam(name = "wname") String wname) {
 
@@ -65,7 +65,7 @@ public class RestWashingSalesController {
 
         try {
 
-            log.info("업체명 내놔 => {}",wname); //그치.. 내가 쓴거 나오겠지...
+            log.info("업체명 내놔 => {}",wname); 
 
             List<Map<String, Object>> list = wSalesMybatisService.selectMonthSales(wname);
 

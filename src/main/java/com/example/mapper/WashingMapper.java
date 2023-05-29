@@ -85,13 +85,20 @@ public interface WashingMapper {
 	public List<Washing> selectWashingList(@Param("cityname") String cityname, @Param("townname") String townname);
 
 
+	
+	/* === 매출 부분 === */
+
 	//일매출
-	@Select({" SELECT TO_CHAR(RDATE, 'YYYY-MM-DD') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY-MM-DD'), wname ORDER BY TO_CHAR(RDATE, 'YYYY-MM-DD') DESC "})
+	@Select({" SELECT TO_CHAR(RDATE, 'YYYY-MM-DD') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY-MM-DD') ORDER BY TO_CHAR(RDATE, 'YYYY-MM-DD') DESC "})
 	public List<Map<String, Object>> selectDaySales(@Param("wname") String wname);
 
 	//월매출
-	@Select({" SELECT TO_CHAR(RDATE, 'YYYY-MM') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY-MM'), wname ORDER BY TO_CHAR(RDATE, 'YYYY-MM') DESC "})
+	@Select({" SELECT TO_CHAR(RDATE, 'YYYY-MM') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY-MM') ORDER BY TO_CHAR(RDATE, 'YYYY-MM') DESC "})
 	public List<Map<String, Object>> selectMonthSales(@Param("wname") String wname);
+
+	//연매출
+	@Select({" SELECT TO_CHAR(RDATE, 'YYYY') date, SUM(mprice) DAYSALES FROM RESERVE WHERE wname=#{wname} GROUP BY TO_CHAR(RDATE, 'YYYY') ORDER BY TO_CHAR(RDATE, 'YYYY') DESC "})
+	public List<Map<String, Object>> selectYearSales(@Param("wname") String wname);
 
 	//모든 업체의 월 매출
 	@Select({" SELECT WNAME, TO_CHAR(RDATE, 'YYYY-MM') monthdate, SUM(mprice) mprice FROM reserve GROUP BY TO_CHAR(RDATE, 'YYYY-MM'), wname ORDER BY TO_CHAR(RDATE, 'YYYY-MM') DESC "})
