@@ -15,7 +15,7 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <style>
-        .washinglist {border: 1px solid black; word-break: break-all;}
+        .washing {border: 1px solid black; word-break: break-all;}
     </style>
 </head>
 <header th:replace="~{/fragments/header.html :: header}"></header>
@@ -44,25 +44,23 @@
         </tr>    
     </table>
 
-    <h2>세탁 업체 목록</h2>
-    <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
-        <thead style="background-color: #CCF2F4;">
-            <tr>
-                <th width="5%" class="washinglist">선택</th>
-                <th width="15%" class="washinglist">세탁소명</th>
-                <th width="50%" class="washinglist">주소</th>
-                <th width="15%" class="washinglist">전화번호</th>
-            </tr>
-        </thead>
-        <tbody id="washinglist">
-        </tbody>
-    </table>
+    <div id="washinglisttable" style="display: none;">
+        <h2>세탁 업체 목록</h2>
+        <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
+            <thead style="background-color: #CCF2F4;">
+                <tr>
+                    <th width="5%" class="washing">선택</th>
+                    <th width="15%" class="washing">세탁소명</th>
+                    <th width="50%" class="washing">주소</th>
+                    <th width="15%" class="washing">전화번호</th>
+                </tr>
+            </thead>
+            <tbody id="washinglist">
+            </tbody>
+        </table>
+    </div>
 
-    <!-- <ul style="list-style: none;">
-        <li th:each="city : ${citynamelist}">
-            <button type="button"  th:text="${city}"></button>
-        </li>
-    </ul> -->
+    <div id="nextbtn"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
     <script th:inline="javascript" type="text/javascript">
@@ -127,11 +125,16 @@
             const url = [[@{/api/reserve/washinglist.json}]] + `?city=${city}&town=${town}`;
             const headers = {"Content-Type":"application/json"};
             const {data} = await axios.get(url, {headers});
+            
+            console.log(city);
+            console.log(town);
+            console.log(data.washinglist);
 
-            // console.log(data.washinglist);
-
-            if (data.washinglist == null) {
+            if (data.washinglist.length == 0) {
                 alert('해당 지역에 예약 가능한 세탁소가 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
+                document.getElementById("washinglisttable").innerHTML = '';
+                // document.getElementById("nextbtn").innerHTML = '';
+                // document.getElementById("washinglisttable").style.display="none";
             }
             else {
                 const washinglist = document.getElementById("washinglist");
@@ -140,14 +143,32 @@
                 for (let i=0; i<data.washinglist.length; i++){
                     // console.log(data.washinglist[i].name);
                     washinglist.innerHTML += `<tr>`
-                                                + '<td class="washinglist"><input type="radio" name="chk[]" th:value="' + data.washinglist[i].name + '"/></td>' 
-                                                + '<td class="washinglist">' + data.washinglist[i].name + '</td>'
-                                                + '<td class="washinglist">' + data.washinglist[i].address + '</td>'
-                                                + '<td class="washinglist">' + data.washinglist[i].phone + '</td>'
+                                                + '<td class="washing"><input type="radio" name="wnumber" value="' + data.washinglist[i].wnumber + '"/></td>' 
+                                                + '<td class="washing">' + data.washinglist[i].name + '</td>'
+                                                + '<td class="washing">' + data.washinglist[i].address + '</td>'
+                                                + '<td class="washing">' + data.washinglist[i].phone + '</td>'
                                                 + `</tr>`
                                                 ;
                 }
+                
+                document.getElementById("washinglisttable").style.display="inline-block";
+
+                const nextbtn = document.getElementById("nextbtn");
+                nextbtn.innerHTML = '';
+                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">기기 선택</button>`;
+
+                // document.getElementById("nextbtn").style.display="inline-block";
             }
+        }
+        
+        function chooseMachine() {
+            const wnumber = $('input[name="wnumber"]:checked').val();
+
+            if (wnumber == null) {
+                alert('세탁 업체를 선택해주세요.');
+            }
+            
+            console.log(wnumber);
         }
     </script>
 </body>
