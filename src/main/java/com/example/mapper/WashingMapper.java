@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
 
 
@@ -82,8 +83,8 @@ public interface WashingMapper {
 	public List<Washing> selectWashingList(@Param("cityname") String cityname, @Param("townname") String townname);
 
 	//예약 내역 조회 (업체별)
-	@Select({" SELECT * FROM RESERVE WHERE wname=#{wname} "})
-	public List<Washing> selectReserveList(@Param("wname") String wname);
+	@Select({" SELECT * FROM RESERVE WHERE wname=#{wname} ORDER BY rvno DESC"})
+	public List<Reserve> selectReserveList(@Param("wname") String wname);
 
 
 

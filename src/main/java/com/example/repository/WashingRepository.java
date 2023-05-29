@@ -22,5 +22,6 @@ public interface WashingRepository extends JpaRepository<Washing, String> {
     public Washing findByIdAndEmail(String id, String email);
 
 
+
     
 }

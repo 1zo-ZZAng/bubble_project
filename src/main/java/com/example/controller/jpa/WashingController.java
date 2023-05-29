@@ -1,6 +1,5 @@
 package com.example.controller.jpa;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +24,10 @@ import com.example.entity.Reserve;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.WashingService;
+import com.example.service.mybatis.WashingMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-
-
-
-
 
 
 @Controller
@@ -44,6 +39,8 @@ public class WashingController {
     //업체
     final WashingRepository wRepository;
     final WashingService wService;
+
+    final WashingMybatisService wMybatisService;
 
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -408,16 +405,22 @@ public class WashingController {
 
     //예약내역 조회
     @GetMapping(value="/reserve.bubble")
-    public String reserveGET( Model model, @ModelAttribute Reserve reserve) { //@AuthenticationPrincipal User user
+    public String reserveGET(@AuthenticationPrincipal User user,  Model model) { 
         try {
 
+            model.addAttribute("user", user);
+            log.info("로그인한 아이디 => {}", user.getUsername());
 
+            
+            
+            
+            // List<Reserve> list = wService.selectReserve(reserve.getWname());
+            
+            // log.info("로그인한 업체명 => {}", list..getWname()); //왜 안찍힘?
 
-            List<Reserve> list = wService.selectReserve(reserve.getWname());
+            // log.info("예약내역 조회 => {}", list.toString());
 
-            log.info("예약내역 조회 => {}", list.toString());
-
-            model.addAttribute("list", list);
+            // model.addAttribute("list", list);
             // model.addAttribute("user", user);
 
             return "/washing/reserve";
