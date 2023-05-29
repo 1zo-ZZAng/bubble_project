@@ -41,17 +41,25 @@ public interface BoardMapper {
     @Delete({" DELETE FROM BOARD WHERE no=#{no} "})
     public int deleteBoard(@Param("no") long no);
 
-    //글 전체 조회 //내림차순
+    //모든 게시글 전체 조회
     @Select({" SELECT * FROM BOARD ORDER BY NO DESC "})
     public List<Board> selectlistBoard();
 
-    //공지사항만 조회
+    //공지사항만 조회 
     @Select({" SELECT * FROM BOARD WHERE code=1 ORDER BY NO DESC "})
     public List<Board> selectlistBoardTypeNotice();
 
     //분실물만 조회
-    @Select({" SELECT * FROM BOARD WHERE code=2 AND code=3 ORDER BY NO DESC "})
+    @Select({" SELECT * FROM BOARD WHERE code=2 ORDER BY NO DESC "})
     public List<Board> selectlistBoardTypeLost();
+
+    //습득물만 조회
+    @Select({" SELECT * FROM BOARD WHERE code=3 ORDER BY NO DESC "})
+    public List<Board> selectlistBoardTypeGet();
+
+    //자유게시판만 조회
+    @Select({" SELECT * FROM BOARD WHERE code=4 ORDER BY NO DESC "})
+    public List<Board> selectlistBoardTypeGeneral();
 
     //글 1개 조회
     @Select({" SELECT * FROM BOARD WHERE no=#{no} "})
@@ -69,6 +77,13 @@ public interface BoardMapper {
     public int countBoard();
     
     //페이징? => 아직 게시글 없어서 안했음
+
+
+    /* ====================검색======================= */
+
+    
+
+
 
 
 

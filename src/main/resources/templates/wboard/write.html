@@ -203,7 +203,9 @@
 
                                 <!--분류-->
                                 <div>
+
                                     <label for="type">게시판</label>
+
                                     <!--게시판-->
                                     <select onselect="">
                                         <option value="">게시판 선택</option>
@@ -215,6 +217,7 @@
                                         <option value="">말머리 선택</option>
                                         <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}"></option>
                                     </select>
+
                                 </div>
 
                                 <!-- 제목 -->
@@ -231,7 +234,7 @@
                                 </div>
                                 
                                 <!-- 작성자 -->
-                                <div class="form-floating mb-2">
+                                <div class="form-floating mb-2" hidden>
                                     <input type="text" id="writer" name="writer" th:value="${user.username}" class="form-control" readonly />
                                     <label for="writer" class="form-label">작성자</label>
                                 </div>

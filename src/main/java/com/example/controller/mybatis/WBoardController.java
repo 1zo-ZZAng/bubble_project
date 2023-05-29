@@ -30,9 +30,9 @@ public class WBoardController {
 
 
 /* =========================================================================================================== */
+    //검색창
 
-    //개피곤해
-
+    //페이지네이션
 
 
 
@@ -71,13 +71,12 @@ public class WBoardController {
             log.info("글 작성 내용 => {}", board.toString());
 
             int ret = bService.writeBoard(board);
+
             if(ret == 1){
                 return "redirect:/wboard/selectlist.bubble";
             }else{
                 return "redirect:/wboard/write.bubble";
             }
-            
-            
             
 
         } catch (Exception e) {
@@ -90,6 +89,7 @@ public class WBoardController {
     /* ------------------------------------------------------------- */
 
     //전체 조회
+    //여기서 menu=1 가르는건가?
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @ModelAttribute Board board, @AuthenticationPrincipal User user) {
         try {
@@ -122,7 +122,6 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //페이징
 
     
     

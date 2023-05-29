@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class WashingMybatisServiceImpl implements WashingMybatisService {
     
     final WashingMapper wMapper;
+    
 
     //업체 탈퇴
     @Override
@@ -41,6 +42,19 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
             return wMapper.selectWashingList(cityname, townname);
         }
         catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //1명조회 (업체명으로 조회한 거)
+    @Override
+    public Washing selectWashingnameOne(String name) {
+        try {
+
+            return wMapper.selectWashingnameOne(name);
+            
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

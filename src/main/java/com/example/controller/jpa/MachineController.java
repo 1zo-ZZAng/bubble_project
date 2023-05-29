@@ -101,7 +101,7 @@ public class MachineController {
 
             mRepository.save(machine);
 
-            return "redirect:/machine/selectlist.bubble?wid=" + machine.getWashing().getId();
+            return "redirect:/machine/insert.bubble";
 
         } catch (Exception e) {
 

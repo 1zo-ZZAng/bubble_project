@@ -15,6 +15,9 @@ public interface WashingMybatisService {
     // 예약 페이지에서 지역에 맞는 세탁소 리스트 조회
     public List<Washing> selectWashingList(String cityname, String townname);
 
+    //1명 조회 (업체명으로)
+    public Washing selectWashingnameOne(String name);
+
     
     
 }
