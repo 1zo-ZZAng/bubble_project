@@ -148,18 +148,24 @@ public class AdminController {
     //업체 목록
     @GetMapping(value = "/confirm.bubble")
     public String confirmGET(Model model,
-                            @RequestParam(name="type") String type ){
+                            @RequestParam(name="type", defaultValue = "") String type ){
         try {
             List<Washing> list = aService.selectWList();
+            
+            if(type.equals("all")){
+                list = aService.selectWList();
+                
+                
+            }   
             // log.info("{}", list.toString());
-            if(type.equals("unchecked")){
+            else if(type.equals("unchecked")){
                 list = aService.selectWlistUnchecked(0);
                 // log.info("{}", list.toString());
             }
             else if(type.equals("checked")){
                 list = aService.selectWlistUnchecked(1);
             }
-            model.addAttribute("list", list);               
+            model.addAttribute("chklist", list);          
             return "/admin/confirm";
         } catch (Exception e) {
             e.printStackTrace();

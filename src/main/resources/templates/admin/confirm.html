@@ -43,6 +43,8 @@
                 });
             }
         });
+
+       
     </script>
 
 </head>
@@ -75,13 +77,22 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form th:action="@{/admin/confirm.bubble}" method="get">
-                                        <select name="type">
-                                            <option value="all">=제휴 업체=</option>
-                                            <option value="unchecked">승인 대기</option>
-                                            <option value="checked">승인 완료</option>
-                                        </select>  
-                                        <input type="submit" value="검색" />
+                                    <form th:action="@{/admin/confirm.bubble}" method="get" id="form1">
+                                        <!-- <select name="type" id="type" onchange="this.form.submit()"> -->
+
+                                            
+                                            <select id="type" style="text-align: center;" onchange="selectType()">
+                                                <option value="none">= 제휴 업체 =</option>
+                                                <option th:each="chk : ${chklist}" th:value="${chk}" th:text="${chk}"></option>
+                                            </select>
+
+                                        <!-- <select name="type" id="type" onchange="test()">
+                                                <option value="" id="" >=제휴 업체=</option>
+                                                <option value="all" id="all" >전체</option>
+                                                <option value="unchecked" id="unchecked">승인 대기</option>
+                                                <option value="checked" id="checked" >승인 완료</option>
+                                        </select>   -->
+                                       
                                     </form>
 
                                     <form th:action="@{/admin/updateconfirm.bubble}" method="post" id="form">
@@ -132,6 +143,7 @@
         crossorigin="anonymous"></script>
    <!-- Simple DataTable용 JS CDN -->
    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+
    <script th:inline="javascript">
        $(document).ready(function() {
            new simpleDatatables.DataTable("#datatableSimple", {
@@ -139,6 +151,10 @@
                fixedHeight: true,
            });
        });
+
+       function selectType(){
+        const type = $( "#type option:selected").val();
+       }
 
        function updateChk() {
             const chk = document.getElementsByName("chk[]"); 
@@ -150,7 +166,8 @@
                     document.getElementById("form").submit();
                 }
             }
-       }
+       };
+
    </script>
 </body>
 

@@ -40,7 +40,7 @@ public class Washing {
 
     private String role = "WASHING"; //권한 default 값 washing
 
-    private BigInteger chk = BigInteger.valueOf(0) ; // 제휴 승인 여부 (0, 1) 체크 조건 있음
+    private String chk = "승인 대기"; // 승인 대기
 
 
     //machine쪽 외래키 여기서 

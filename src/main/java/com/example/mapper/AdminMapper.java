@@ -21,7 +21,9 @@ public interface AdminMapper {
     @Select({ " SELECT * FROM washing WHERE address IS NOT NULL GROUP BY name " })
     public List<Washing> selectWList();
 
-
+    //업체승인 유무 select박스
+    @Select({" SELECT DISTINCT(chk) FROM washing "})
+    public List<String> selctChkList();
 
     //업체별 보유기기 목록 조회
     @Select({" SELECT NAME, WNUMBER, TYPE, count(type) count FROM WASHINGMACHINE WHERE WNUMBER=#{WNUMBER} GROUP BY type "})
