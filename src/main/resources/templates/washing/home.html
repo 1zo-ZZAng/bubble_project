@@ -279,7 +279,7 @@
                                     예약내역
                                 </div>
                                 <div class="card-body">
-                                    <table id="datatableSimple">
+                                    <table>
                                         <thead>
                                             <tr>
                                                 <th>예약번호</th>
@@ -288,33 +288,29 @@
                                                 <th>고객이름</th>
                                                 <th>고객 전화번호</th>
                                                 <th>고객 주소</th>
-                                                <th>업체명</th>
+                                                <!-- <th>업체명</th>
                                                 <th>업체 주소</th>
-                                                <th>업체 전화번호</th>
+                                                <th>업체 전화번호</th> -->
                                                 <th>세탁기</th>
-                                                <th>기기번호</th>
                                                 <th>가격</th>
-                                                <th>작동시간</th>
+                                                <!-- <th>작동시간</th> -->
                                             </tr>
                                         </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot> -->
+                                        
                                         <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                            <tr th:each="obj : ${list}">
+                                                <td th:text="${obj.rvno}"></td>
+                                                <td th:text="${obj.rdate}"></td>
+                                                <td th:text="${obj.id}"></td>
+                                                <td th:text="${obj.name}"></td>
+                                                <td th:text="${obj.phone}"></td>
+                                                <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td> <!---->
+                                                <!-- <td th:text="${obj.wname}"></td>
+                                                <td th:text="${obj.waddress}"></td>
+                                                <td th:text="${obj.wphone}"></td> -->
+                                                <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                <td th:text="${obj.mprice}"></td>
+                                                <!-- <td th:text="${obj.mtime}"></td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -357,15 +353,7 @@
     <script src="js/chart-bar-demo.js"></script>
     <script src="js/chart-pie-demo.js"></script>
 
-    <!--Simple DataTable용 JS CDN-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script>
-        $(document).ready(function(){
-            new simpleDatatables.DataTable("#datatableSimple", {
-                searchable: true,
-                fixedHeight: true,
-            });
-        });
-    </script> -->
+
+
 </body>
 </html>

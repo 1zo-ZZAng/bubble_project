@@ -11,6 +11,6 @@ public interface ReserveService {
 
 
     //예약 내역 조회(업체별)
-	public List<Reserve> selectReserve(String wname);
+	public List<Reserve> selectReserve(String wid);
     
 }
