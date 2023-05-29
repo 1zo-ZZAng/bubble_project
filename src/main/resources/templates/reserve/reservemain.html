@@ -70,7 +70,7 @@
             // rest api 호출
             const url = [[@{/api/reserve/selectcity.json}]] + `?city=${city}`;
             const headers = {"Content-Type":"application/json"};
-            const {dta} = awaait axios.get(url, {headers});
+            const {data} = await axios.get(url, {headers});
 
             // console.log(data.town);
 
@@ -126,15 +126,14 @@
             const headers = {"Content-Type":"application/json"};
             const {data} = await axios.get(url, {headers});
             
-            console.log(city);
-            console.log(town);
-            console.log(data.washinglist);
+            // console.log(data.washinglist);
 
-            if (data.washinglist.length == 0) {
+            if (data.washinglist.length === 0) {
                 alert('해당 지역에 예약 가능한 세탁소가 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
-                document.getElementById("washinglisttable").innerHTML = '';
+                // document.getElementById("washinglisttable").innerHTML = '';
                 // document.getElementById("nextbtn").innerHTML = '';
-                // document.getElementById("washinglisttable").style.display="none";
+                document.getElementById("washinglisttable").style.display="none";
+                document.getElementById("nextbtn").style.display="none";
             }
             else {
                 const washinglist = document.getElementById("washinglist");
@@ -150,14 +149,13 @@
                                                 + `</tr>`
                                                 ;
                 }
-                
-                document.getElementById("washinglisttable").style.display="inline-block";
 
                 const nextbtn = document.getElementById("nextbtn");
                 nextbtn.innerHTML = '';
-                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">기기 선택</button>`;
+                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">업체 선택</button>`;
 
-                // document.getElementById("nextbtn").style.display="inline-block";
+                document.getElementById("washinglisttable").style.display="inline-block";
+                nextbtn.style.display="inline-block";
             }
         }
         
@@ -168,7 +166,7 @@
                 alert('세탁 업체를 선택해주세요.');
             }
             
-            console.log(wnumber);
+            // console.log(wnumber);
         }
     </script>
 </body>
