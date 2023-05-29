@@ -23,8 +23,7 @@ public interface WashingService {
 	//비밀번호 찾기
 	public Washing findPassword(String id, String email);
 
-	//예약 내역 조회(업체별)
-	public List<Reserve> selectReserve(String wname);
+
 
 	
 

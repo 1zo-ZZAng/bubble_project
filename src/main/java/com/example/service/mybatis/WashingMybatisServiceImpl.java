@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
 import com.example.mapper.WashingMapper;
 
@@ -62,7 +63,7 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
 
     //예약조회(업체별)
     @Override
-    public List<Washing> selectReserveList(String wname) {
+    public List<Reserve> selectReserveList(String wname) {
         try {
             
             return wMapper.selectReserveList(wname);
