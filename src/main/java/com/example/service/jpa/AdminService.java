@@ -31,12 +31,14 @@ public interface AdminService {
     public List<MachineCount> selectMCount(@Param("wnumber") String wnumber);
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
+    
     //승인 대기/완료 업체 목록
     public List<Washing> selectWlistUnchecked(@Param("chk") int chk);
 
 
-    //회원가입되어있는 회원 리스트
-    public List<Customer> findAllByOrderByNameAsc();
+    //업체승인 유무 select박스
+    public List<String> selctChkList();
+
 
     //전체 게시판 조회
 

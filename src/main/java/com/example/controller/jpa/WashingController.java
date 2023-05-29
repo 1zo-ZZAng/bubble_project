@@ -310,7 +310,7 @@ public class WashingController {
                 obj.setPhone(null);
                 obj.setCeo(null);
                 obj.setRole(null);
-                obj.setChk(BigInteger.valueOf(0));
+                obj.setChk(null);
 
                 //변경항목에 저장
                 wRepository.save(obj);

@@ -78,26 +78,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Customer> findAllByOrderByNameAsc() {
+    public List<String> selctChkList() {
         try {
-            return aRepository.findAllByOrderByNameAsc();
+            return aMapper.selctChkList();
            } catch (Exception e) {
             e.printStackTrace();
             return null;
            }
-            }
+    }
 
 
-    // @Override
-    // public String selectWashingNameOne(String wnumber) {
-    //     try {
-    //         return aMapper.selectWashingNameOne(wnumber);
-            
-    //    } catch (Exception e) {
-    //     e.printStackTrace();
-    //     return null;
-    //    }
-    // }
+
+
+
 
     
 
