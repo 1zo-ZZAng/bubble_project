@@ -45,19 +45,21 @@
     </table>
 
     <div id="washinglisttable" style="display: none;">
-        <h2>세탁 업체 목록</h2>
-        <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
-            <thead style="background-color: #CCF2F4;">
-                <tr>
-                    <th width="5%" class="washing">선택</th>
-                    <th width="15%" class="washing">세탁소명</th>
-                    <th width="50%" class="washing">주소</th>
-                    <th width="15%" class="washing">전화번호</th>
-                </tr>
-            </thead>
-            <tbody id="washinglist">
-            </tbody>
-        </table>
+        <form th:action="@{/selectmachine.bubble}" method="get" id="form2">
+            <h2>세탁 업체 목록</h2>
+            <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
+                <thead style="background-color: #CCF2F4;">
+                    <tr>
+                        <th width="5%" class="washing">선택</th>
+                        <th width="15%" class="washing">세탁소명</th>
+                        <th width="50%" class="washing">주소</th>
+                        <th width="15%" class="washing">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody id="washinglist">
+                </tbody>
+            </table>
+        </form>
     </div>
 
     <div id="nextbtn"></div>
@@ -74,10 +76,7 @@
 
             // console.log(data.town);
 
-            if (data.town.length <= 0) {
-                alert('예약 가능한 지역이 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
-            }
-            else {
+            if (data.town.length > 0) {
                 const town = document.getElementById("town");
                 town.innerHTML = '';
                 town.innerHTML = '<option value="none">지역(구/군) 선택</option>';
@@ -129,7 +128,7 @@
             // console.log(data.washinglist);
 
             if (data.washinglist.length === 0) {
-                alert('해당 지역에 예약 가능한 세탁소가 존재하지 않습니다. 다른 지역(시/도)을 선택해주세요.');
+                alert('예약 가능한 세탁소가 존재하지 않습니다. 다른 지역을 선택해주세요.');
                 // document.getElementById("washinglisttable").innerHTML = '';
                 // document.getElementById("nextbtn").innerHTML = '';
                 document.getElementById("washinglisttable").style.display="none";
@@ -152,7 +151,7 @@
 
                 const nextbtn = document.getElementById("nextbtn");
                 nextbtn.innerHTML = '';
-                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">업체 선택</button>`;
+                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">업체 선택 완료</button>`;
 
                 document.getElementById("washinglisttable").style.display="inline-block";
                 nextbtn.style.display="inline-block";
@@ -167,6 +166,8 @@
             }
             
             // console.log(wnumber);
+
+            document.getElementById("form2").submit();
         }
     </script>
 </body>
