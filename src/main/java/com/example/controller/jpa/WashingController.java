@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.entity.Reserve;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
+import com.example.service.jpa.ReserveService;
 import com.example.service.jpa.WashingService;
 import com.example.service.mybatis.WashingMybatisService;
 
@@ -42,6 +43,8 @@ public class WashingController {
 
     final WashingMybatisService wMybatisService;
 
+    final ReserveService rService;
+
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
@@ -53,6 +56,14 @@ public class WashingController {
     public String homeGET(@AuthenticationPrincipal User user, Model model) {
 
         try {
+
+            //하단 표
+            List<Reserve> list = rService.selectReserve(user.getUsername());
+        
+            log.info("예약내역 조회 => {}", list.toString());
+
+            model.addAttribute("list", list);
+            //
 
             model.addAttribute("user", user);
 
@@ -411,16 +422,13 @@ public class WashingController {
             model.addAttribute("user", user);
             log.info("로그인한 아이디 => {}", user.getUsername());
 
-            
-            
-            
-            // List<Reserve> list = wService.selectReserve(reserve.getWname());
-            
-            // log.info("로그인한 업체명 => {}", list..getWname()); //왜 안찍힘?
 
-            // log.info("예약내역 조회 => {}", list.toString());
+            List<Reserve> list = rService.selectReserve(user.getUsername());
+            
 
-            // model.addAttribute("list", list);
+            log.info("예약내역 조회 => {}", list.toString());
+
+            model.addAttribute("list", list);
             // model.addAttribute("user", user);
 
             return "/washing/reserve";
