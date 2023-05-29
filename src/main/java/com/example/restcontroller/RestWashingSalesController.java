@@ -85,7 +85,7 @@ public class RestWashingSalesController {
         
     }
 
-    // 해당 업체의 월 매출
+    // 해당 업체의 년 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/yearsales.bubble?wname=해당업체명
     @GetMapping(value="/yearsales.bubble")
     public Map<String,Object> yearsalesGET(@RequestParam(name = "wname") String wname) {
