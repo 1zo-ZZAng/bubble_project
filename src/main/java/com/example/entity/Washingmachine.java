@@ -34,7 +34,7 @@ public class Washingmachine {
 
     private String role;
 
-    private BigInteger chk;
+    private String chk;
 
     private BigInteger no;
 

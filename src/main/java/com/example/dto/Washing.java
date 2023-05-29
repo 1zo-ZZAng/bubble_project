@@ -23,6 +23,6 @@ public class Washing {
 
     private String role; //권한 default 값 washing
 
-    private int chk; // 제휴 승인 여부 (0, 1) 체크 조건 있음
+    private String chk; // 제휴 승인 여부 (0, 1) 체크 조건 있음
     
 }
