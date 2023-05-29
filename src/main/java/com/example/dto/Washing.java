@@ -9,7 +9,7 @@ public class Washing {
 
     private String password; //암호
 
-    private long wnumber; // 사업자 등록 번호
+    private String wnumber; // 사업자 등록 번호
 
     private String email; // 이메일
 

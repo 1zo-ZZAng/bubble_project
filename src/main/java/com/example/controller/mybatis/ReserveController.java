@@ -6,8 +6,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.dto.Washing;
 import com.example.service.mybatis.CityMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,5 +38,17 @@ public class ReserveController {
     }
     
 
+    // 예약화면 2
+    @GetMapping(value = "/selectmachine.bubble")
+    public String selectmachineGET(@ModelAttribute Washing washing) {
+        try {
+            log.info(washing.getWnumber());
 
+            return "/reserve/reservemain2";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/home.bubble";
+        }
+    }
 }
