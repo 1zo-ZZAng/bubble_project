@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
 
 @Service
@@ -19,7 +20,7 @@ public interface WashingMybatisService {
     public Washing selectWashingnameOne(String name);
 
     //예약조회(업체별)
-    public List<Washing> selectReserveList(String wname);
+    public List<Reserve> selectReserveList(String wname);
 
     
     

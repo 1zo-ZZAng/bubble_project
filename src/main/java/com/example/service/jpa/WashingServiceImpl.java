@@ -82,18 +82,7 @@ public class WashingServiceImpl implements WashingService {
     }
 
 
-    //예약내역조회
-    @Override
-    public List<Reserve> selectReserve(String wname) {
-        try {
-            
-            return rRepository.findByWnameOrderByRvnoDesc(wname);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    
 
 
 

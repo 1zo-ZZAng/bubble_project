@@ -6,7 +6,7 @@ var chartArea = {
   labels : [],
   dataSets : [],
   render : function() {
-    new Chart($("#myAreaChart"), {
+    new Chart($("#daySalesChart"), {
       type: 'line',
       data: {
         labels: chartArea.labels,
@@ -62,7 +62,7 @@ var chartArea = {
     dataSets= [];
     $.ajax({
       type : 'GET',
-      url : 'daysales.bubble',
+      url : '/api/washingsales/daysales.bubble',
       contentType: 'application/json',
       //dataType 정의
       dataType: 'json',
