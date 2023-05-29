@@ -47,8 +47,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Washing> selectWlistUnchecked(int chk) {
-       try {
+    public List<Washing> selectWlistUnchecked(String chk) {
+        try {
             return aMapper.selectWlistUnchecked(chk);
        } catch (Exception e) {
         e.printStackTrace();
