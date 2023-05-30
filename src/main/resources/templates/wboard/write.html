@@ -275,7 +275,9 @@
                                     <!--게시판-->
                                     <select onselect="" name="code" id="code">
                                         <option value="">게시판 선택</option>
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}" th:text="${CodeName.codename}"></option>
+                                        
+
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
                                     </select>
 
                                     <!--말머리-->
