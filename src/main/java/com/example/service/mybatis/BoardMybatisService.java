@@ -36,6 +36,12 @@ public interface BoardMybatisService {
     //분실물만 조회
     public List<Board> selectlistBoardTypeLost();
 
+    //유실물만 조회
+    public List<Board> selectlistBoardTypeGet();
+
+    //자유게시판만 조회
+    public List<Board> selectlistBoardTypeGeneral();
+
     //글 1개 조회
     public Board selectOneBoard(long no);
 
