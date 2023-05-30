@@ -3,6 +3,7 @@ package com.example.controller.jpa;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.example.dto.MachineCount;
 import com.example.dto.Washing;
 import com.example.entity.Admin;
 import com.example.entity.Customer;
+import com.example.entity.WashingCheck;
 import com.example.mapper.AdminMapper;
 import com.example.repository.AdminRepository;
 import com.example.repository.WashingMachineRepository;
@@ -148,28 +150,65 @@ public class AdminController {
     //업체 목록
     @GetMapping(value = "/confirm.bubble")
     public String confirmGET(Model model,
-                            @RequestParam(name="type", defaultValue = "") String type ){
-        try {
-            List<Washing> list = aService.selectWList();
-           log.info("{}", type);
-            log.info("{}", list.toString());
-            if(type.equals("all")){
-                list = aService.selectWList();
-            }
-            else if(type.equals("승인 대기")){
-                list = aService.selectWlistUnchecked(type);
+                            @RequestParam(name="type", defaultValue = "") String type,
+                            @ModelAttribute WashingCheck wChecked ){
+            try {
+                Washing washing = new Washing();
+                washing.setChk(type);
+                List<Washing> list = aService.selectWList();
+                log.info("{}", type);
                 log.info("{}", list.toString());
-            }
-            else if(type.equals("승인 완료")){
-                list = aService.selectWlistUnchecked(type);
-            }
-            model.addAttribute("chklist", aService.selctChkList());
-            model.addAttribute("list", list); 
-            return "/admin/confirm";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/admin/home.bubble";
-        }
+                if(type.equals("all")){
+                    list = aService.selectWList();
+                }
+                else if(type.equals("승인 대기")){
+                    list = aService.selectWlistUnchecked(type);
+                    log.info("{}", list.toString());
+                }
+                else if(type.equals("승인 완료")){
+                    list = aService.selectWlistUnchecked(type);
+                }
+                model.addAttribute("chklist", aService.selctChkList());
+                model.addAttribute("list", list); 
+                return "/admin/confirm";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/admin/home.bubble";
+            }                       
+        // try {
+        //     List<Washing> list = aService.selectWList();
+        //     // log.info("{}", list);
+        //     List<Washing> list1 = new ArrayList<>();
+        //     list1 = aService.selectWlistUnchecked(type);
+        //     //all일경우
+        //     if(type.equals("all")){
+        //         list = aService.selectWList();
+        //         // log.info("{}",list);
+
+        //     //승인 대기일 경우
+        //     if(type.equals("승인 대기")){
+        //         list1 = aService.selectWlistUnchecked(type);
+        //         log.info("{}",list1);
+        //     }
+        //     //승인 완료일 경우
+        //     else if(type.equals("승인 완료")){
+        //         list1 = aService.selectWlistUnchecked(type);
+        //         log.info("{}",list1);
+        //     }
+        //     model.addAttribute("list1", list1);
+        //     log.info("{}",list1);
+        //     }
+        //     model.addAttribute("list", list);
+        //     log.info("{}",list);
+        //     return "admin/confirm";
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        //     return "redirect:/admin/home.bubble";
+        // }
+
+
+
+
     }
 
     // --------------------------------------------------------------------------------------

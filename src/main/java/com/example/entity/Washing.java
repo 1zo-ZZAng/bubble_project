@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,8 +41,11 @@ public class Washing {
     private String ceo; // 대표자명
 
     private String role = "WASHING"; //권한 default 값 washing
+   
 
-    private String chk = "승인 대기"; // 승인 대기
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chkno",referencedColumnName = "no")
+    private WashingCheck washingcheck; // 승인 대기
 
 
     //machine쪽 외래키 여기서 
@@ -49,6 +54,9 @@ public class Washing {
     List<Machine> machine = new ArrayList<>();
 
 
+
+
+   
     
 
 

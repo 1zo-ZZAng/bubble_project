@@ -40,6 +40,15 @@ public class CustomerController {
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
     final HttpSession httpSession;
+
+    // --------------------------------------------------------------------------------------
+
+    // 고객 홈 화면
+    @GetMapping(value = {"/home.bubble", "/"}) 
+    public String homeGET(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("user", user);
+        return "/customer/home";
+    }
     
     // --------------------------------------------------------------------------------------
 
@@ -51,7 +60,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -71,7 +80,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -90,7 +99,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -105,7 +114,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -119,7 +128,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -146,7 +155,7 @@ public class CustomerController {
         } 
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }                       
     }
 
@@ -168,7 +177,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -182,7 +191,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -235,7 +244,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -272,7 +281,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -307,7 +316,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -321,7 +330,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -363,7 +372,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -377,7 +386,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 
@@ -434,7 +443,7 @@ public class CustomerController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
     }
 }
