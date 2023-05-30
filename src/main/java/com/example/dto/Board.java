@@ -9,11 +9,13 @@ public class Board {
 
     private long no;    // 게시글 번호
 
+    private String title; //제목
+
     private String content; // 내용
 
     private String writer;  // 작성자
 
-    private long hit; // 조회수
+    private long hit = 0; // 조회수
 
     private Date regdate; // 작성일
 

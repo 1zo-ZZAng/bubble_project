@@ -65,10 +65,12 @@ public class WBoardController {
     }
 
     @PostMapping(value = "/write.bubble")
-    public String writePOST(@ModelAttribute Board board){
+    public String writePOST(){
         try {
             
-            log.info("글 작성 내용 => {}", board.toString());
+            // log.info("글 작성 내용 => {}", board.toString());
+
+            Board obj = 
 
             int ret = bService.writeBoard(board);
 

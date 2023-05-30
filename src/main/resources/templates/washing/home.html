@@ -137,14 +137,25 @@
                         <!--매출-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
                             <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
-                            조회
+                            매출
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                                 <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                            </nav>
+                        </div>
+
+                        <!--예약-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
+                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            예약
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
                             </nav>
                         </div>
 
@@ -154,7 +165,7 @@
                             보유기기
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
                                     <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
@@ -167,7 +178,7 @@
                             게시판
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingFour" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
                                 <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
@@ -177,14 +188,12 @@
                     
                     </div>
                 </div>
+
+                <!--하단 로그인 부분-->
                 <div class="sb-sidenav-footer">
-
                     <div th:if="${user != null}" class="small">
-        
                         <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
-
                     </div>
-
 
                 </div>
             </nav>

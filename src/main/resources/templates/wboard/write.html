@@ -129,6 +129,12 @@
                         
                         <div class="sb-sidenav-menu-heading">업체</div> 
 
+                        <!--메인-->
+                        <a class="nav-link collapsed" th:href="@{/washing/home.bubble}" >
+                            <div class="sb-nav-link-icon"><i class="bi bi-house"></i></div>
+                            메인
+                        </a>
+
                         <!--매출-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
                             <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
@@ -137,8 +143,20 @@
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washing/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/washing/daysales.bubble}">일별 매출</a>
+                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                            </nav>
+                        </div>
+
+                        <!--예약-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
+                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            예약
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
                             </nav>
                         </div>
 
@@ -148,7 +166,7 @@
                             보유기기
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
                                     <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
@@ -161,7 +179,7 @@
                             게시판
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingFour" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
                                 <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
@@ -171,14 +189,12 @@
                     
                     </div>
                 </div>
+
+                <!--하단 로그인 부분-->
                 <div class="sb-sidenav-footer">
-
                     <div th:if="${user != null}" class="small">
-        
                         <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
-
                     </div>
-
 
                 </div>
             </nav>
@@ -194,7 +210,6 @@
                         <li class="breadcrumb-item active">글쓰기</li>
                     </ol>
 
-                    <!-- 내용삽입 -->
 
                     <div class="container">
                         <div class="container pt-5 mt-5" style="margin: 0 auto; padding: 50px;">
@@ -202,23 +217,21 @@
                             <form th:action="@{/wboard/write.bubble}" method="post" id="form">
 
                                 <!--분류-->
-                                <div>
-
-                                    <label for="type">게시판</label>
+                                <!-- <div>
+                                    <label for="type">게시판</label> -->
 
                                     <!--게시판-->
-                                    <select onselect="">
+                                    <!-- <select onselect="" name="code" id="code">
                                         <option value="">게시판 선택</option>
                                         <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}" th:text="${CodeName.codename}"></option>
-                                    </select>
+                                    </select> -->
 
                                     <!--말머리-->
-                                    <select onselect="">
+                                    <!-- <select onselect="" id="codedetail">
                                         <option value="">말머리 선택</option>
                                         <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}"></option>
                                     </select>
-
-                                </div>
+                                </div> -->
 
                                 <!-- 제목 -->
                                 <div class="form-floating mb-2">
@@ -249,7 +262,6 @@
                         </div>
                     </div>
 
-                    <!--여기까지 내용 삽입 완료-->
 
                 </div>
 
@@ -270,14 +282,6 @@
 
 
         </div>
-
-
-
-
-
-    
-
-        
 
     
 
@@ -328,6 +332,8 @@
         function writeAction(){
             const title = document.getElementById("title");
             const editor = document.getElementById("editor");
+            const code = document.getElementById('code');
+            const codedetail = document.getElementById('codedetail');
             
             if(title.value.length <= 0){
                 alert('제목을 작성해주세요');
@@ -340,6 +346,15 @@
                 editor.focus();
                 return false;
             }
+
+            // if(code.value.length <= 0){
+            //     alert('게시판을 선택해주세요');
+            //     return false;
+            // }
+
+            // if(title.value.length > 0){
+            //     title.value = '[' + code.value + ']' + ' ' + title.value;
+            // }
 
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
 
