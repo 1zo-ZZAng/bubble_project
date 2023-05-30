@@ -113,37 +113,37 @@ public class WBoardController {
 
 
 
-            // List<Board> list = new ArrayList<>();
+            List<Board> list = new ArrayList<>();
 
             if(menu == 1){ //전체 게시판 조회
 
-                List<Board> list = bService.selectlistBoard();
+                list = bService.selectlistBoard();
 
-                log.info("조회 => {}", list.toString());
+                // log.info("조회 => {}", list.toString());
 
                 model.addAttribute("list", list);
-                // return "/wboard/menu/menu1";
-            } 
 
-            // } else if(menu == 2) { //공지사항 전체 조회
 
-            //     list = bService.selectlistBoardTypeNotice();
-            //     model.addAttribute("list", list);
-            //     // return "/wboard/menu/menu2";
+            } else if(menu == 2) { //공지사항 전체 조회
 
-            // } else if(menu == 3) { //분실물 전체 조회
+                list = bService.selectlistBoardTypeNotice();
+                model.addAttribute("list", list);
 
-            //     list = bService.selectlistBoardTypeLost();
-            //     model.addAttribute("list", list);
-            //     // return "/wboard/menu/menu3";
 
-            // } else if(menu == 4) { //유실물 전체 조회
+            } else if(menu == 3) { //분실물 전체 조회
 
-            //     list = bService.selectlistBoardTypeGet();
-            //     model.addAttribute("list", list);
-            //     // return "/wboard/menu/menu4";
+                list = bService.selectlistBoardTypeLost();
+                model.addAttribute("list", list);
 
-            // }
+            } else if(menu == 4) { //유실물 전체 조회
+
+                list = bService.selectlistBoardTypeGet();
+                model.addAttribute("list", list);
+
+
+            }else { //menu값 없을 때 menu=1로 자동이동
+                return "redirect:/wboard/selectlist.bubble?menu=1";
+            }
 
             return "/wboard/selectlist";
             
@@ -152,27 +152,32 @@ public class WBoardController {
             return "redirect:/washing/home.bubble";
         }
 
-    }
+    }    
 
-    // @PostMapping(value="/selectlist.bubble")
-    // public String selectlistPOST(@RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
-    //     try {
+    /* ------------------------------------------------------------- */
+
+    //1개 조회
+    @GetMapping(value="/selectone.bubble")
+    public String selectOne(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
+        try {
             
-    //         if(menu == 0){
+            Board board = bService.selectOneBoard(no);
 
-    //             return "redirect:/wboard/selectlist?menu=1";
+            // model.addAttribute(null, user)
+            model.addAttribute("board", board);
+            model.addAttribute("user", user);
 
-    //         }
+            return "/wboard/selectone";
 
-    //         return "redirect:/wboard/seleclist?menu"+menu;
-
-
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return "redirect:/washing/home.bubble";
-    //     }
-    // }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/wboard/selectlist.bubble?menu"+menu;
+        }
+    }
     
+
+
+
 
     /* ------------------------------------------------------------- */
     

@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -41,7 +44,7 @@ public class Washing {
     private String ceo; // 대표자명
 
     private String role = "WASHING"; //권한 default 값 washing
-   
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chkno",referencedColumnName = "no")
@@ -54,9 +57,6 @@ public class Washing {
     List<Machine> machine = new ArrayList<>();
 
 
-
-
-   
     
 
 
