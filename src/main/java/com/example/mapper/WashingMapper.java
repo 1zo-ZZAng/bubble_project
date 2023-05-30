@@ -79,7 +79,7 @@ public interface WashingMapper {
 	/* === 예약 === */
 
     // 예약 페이지에서 지역에 맞는 세탁소 리스트 조회
-	@Select({"SELECT wnumber, name, address, phone FROM WASHING WHERE address LIKE #{cityname} || '%' || #{townname} || '%'"})
+	@Select({"SELECT wnumber, name, address, phone FROM WASHING WHERE address LIKE #{cityname} || '%' || #{townname} || '%' ORDER BY name ASC"})
 	public List<Washing> selectWashingList(@Param("cityname") String cityname, @Param("townname") String townname);
 
 	//예약 내역 조회 (업체별)

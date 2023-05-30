@@ -53,7 +53,7 @@ public interface BoardMapper {
     @Select({" SELECT * FROM BOARD WHERE code=2 ORDER BY NO DESC "})
     public List<Board> selectlistBoardTypeLost();
 
-    //습득물만 조회
+    //유실물만 조회
     @Select({" SELECT * FROM BOARD WHERE code=3 ORDER BY NO DESC "})
     public List<Board> selectlistBoardTypeGet();
 

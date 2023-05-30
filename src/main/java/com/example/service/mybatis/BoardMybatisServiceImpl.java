@@ -110,6 +110,35 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             
     }
 
+
+
+    //게시판 유실물만 조회
+    @Override
+    public List<Board> selectlistBoardTypeGet() {
+        try {
+            
+            return bMapper.selectlistBoardTypeGet();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //게시판 자유게시글만 조회
+    @Override
+    public List<Board> selectlistBoardTypeGeneral() {
+        try {
+            
+            return bMapper.selectlistBoardTypeGeneral();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
+
     //글 1개 조회
     @Override
     public Board selectOneBoard(long no) {
@@ -181,6 +210,10 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return -1;
         }
     }
+
+    
+
+    
 
 
 
