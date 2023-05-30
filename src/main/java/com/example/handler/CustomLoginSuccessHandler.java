@@ -32,7 +32,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         // 필요시 이전 페이지로 이동함
         if (role.equals("ROLE_CUSTOMER")) { // 권한이 고객
-            response.sendRedirect(request.getContextPath() + "/home.bubble");
+            response.sendRedirect(request.getContextPath() + "/customer/home.bubble");
         }
         else if (role.equals("ROLE_WASHING")) { // 권한이 판매자
             response.sendRedirect(request.getContextPath() + "/washing/home.bubble");

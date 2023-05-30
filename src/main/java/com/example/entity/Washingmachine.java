@@ -18,8 +18,6 @@ public class Washingmachine {
     @Id
     private String id;
 
-    private String password;
-
     private String wnumber;
 
     private String email;
@@ -34,7 +32,7 @@ public class Washingmachine {
 
     private String role;
 
-    private String chk;
+    private BigInteger chkno;
 
     private BigInteger no;
 

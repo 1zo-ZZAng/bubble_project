@@ -77,12 +77,12 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form th:action="@{/admin/confirm.bubble}" method="get" id="form1">
+                                    <form th:action="@{/admin/confirm.bubble}" method="get" id="form1" th:object="${chk}"> 
                                         <!-- <select name="type" id="type" onchange="this.form.submit()"> -->
-                                            <select name="type" style="text-align: center;" onchange="selectType()">
+                                            <select name="type" id="type" style="text-align: center;" onchange="selectType()">
                                                 <option value="none">= 제휴 업체 =</option>
                                                 <option value="all">전체</option>
-                                                <option th:each="chk : ${chklist}" th:value="${chk}" th:text="${chk}"></option>
+                                                <option th:each="chk : ${wChecked}" th:value="${chk}" th:text="${chk}"></option>
                                             </select>
 
                                         <!-- <select name="type" id="type" onchange="test()">
@@ -151,16 +151,23 @@
            });
        });
 
-       function selectType(){
-        const type = $("#type option:selected").val();
-        let typeChk = '${type}';
+    //    function selectType(){
+    //     const type = $("#type option:selected").val();
+    //     let typeChk = '${type}';
 
-        // value값으로 설정
-        $("#typeChk").val(type).prop("selected", true);
-        document.getElementById("form1").submit();
-        location.href = "/admin/confirm?type=?"+chk;
+    //     // value값으로 설정
+    //     $("#typeChk").val(type).prop("selected", true);
+    //     document.getElementById("form1").submit();
+    //     window.location.href = `/bubble_bumul/admin/confirm.bubble?type=${type}`;
 
-       }
+    //    }
+
+        function selectType(){
+            const type = document.getElementById("type").value;
+            console.log(type);
+            window.location.href=`/bubble_bumul/admin/confirm.bubble?type=${type}`;
+        };
+
 
        function updateChk() {
             const chk = document.getElementsByName("chk[]"); 
