@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.Board;
 import com.example.dto.BoardType;
+import com.example.dto.Washing;
 import com.example.service.mybatis.BoardMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +43,7 @@ public class WBoardController {
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model){
+    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
         try {
 
             List<BoardType> list1 = bService.selectlistBTypeCodeName();
@@ -54,6 +56,7 @@ public class WBoardController {
             model.addAttribute("CodeName", list1);
             model.addAttribute("CodeDetail", list2);
 
+            model.addAttribute("washing", washing);
             model.addAttribute("user", user);
 
             return "/wboard/write";
@@ -65,14 +68,23 @@ public class WBoardController {
     }
 
     @PostMapping(value = "/write.bubble")
-    public String writePOST(){
+    public String writePOST(@RequestParam(name = "title") String title, 
+                            @RequestParam(name = "content", required = false) String content, 
+                            @RequestParam(name = "writer") String writer, 
+                            @RequestParam(name = "code") long code, @AuthenticationPrincipal User user, @ModelAttribute Board board){
         try {
+
+            log.info(content);
             
-            // log.info("글 작성 내용 => {}", board.toString());
+            Board obj = new Board();
+            obj.setCode(code);
+            obj.setTitle(title);
+            obj.setContent(content);
+            obj.setWriter(writer);
+            
+            log.info("글 작성 내용 => {}", obj.toString());
 
-            Board obj = 
-
-            int ret = bService.writeBoard(board);
+            int ret = bService.writeBoard(obj);
 
             if(ret == 1){
                 return "redirect:/wboard/selectlist.bubble";
@@ -95,6 +107,8 @@ public class WBoardController {
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @ModelAttribute Board board, @AuthenticationPrincipal User user) {
         try {
+
+
 
             model.addAttribute("user", user);
             model.addAttribute("board", board);
