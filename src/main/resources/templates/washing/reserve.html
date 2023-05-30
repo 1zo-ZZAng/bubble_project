@@ -3,48 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Bumul</title>
+    <meta name="author" content="zizonZzang project">
+    <meta name="description" content="업체 페이지 대시보드 웹 템플릿 사용">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>BUBBLE BUMUL</title>
+
+
+    <!-- 1. Bootstrap용 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!-- font Awesome 아이콘 CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!--아이콘 모양 돋보기라던가 그런거던데-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!--Simple DataTable용 CSS CDN--> <!--표 부분임-->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+
+    <!--현재 페이지용 CSS 외부 링크-->
+    <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/washing/main.css}'>
+
+    <!-- jquery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- font awesome용 스크립트 CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            const sidebarToggle = $('#sidebarToggle');
+            if(sidebarToggle) {
+                sidebarToggle.click(function() {
+                    console.log('숨기기');
+                    event.preventDefault(); /*아래쪽 요소로 이벤트가 전파안되도록*/
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+        });
+    </script>
+
 </head>
-<body>
 
-    <a th:href="@{/washing/home.bubble}"><button>홈</button></a>
-
-    <h3>예약내역 조회(업체별) </h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>예약번호</th>
-                <th>예약날짜</th>
-                <th>고객 아이디</th>
-                <th>고객이름</th>
-                <th>고객 전화번호</th>
-                <th>고객 주소</th>
-                <!-- <th>업체명</th>
-                <th>업체 주소</th>
-                <th>업체 전화번호</th> -->
-                <th>세탁기</th>
-                <th>가격</th>
-                <!-- <th>작동시간</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="obj : ${list}">
-                <td th:text="${obj.rvno}"></td>
-                <td th:text="${obj.rdate}"></td>
-                <td th:text="${obj.id}"></td>
-                <td th:text="${obj.name}"></td>
-                <td th:text="${obj.phone}"></td>
-                <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td> <!---->
-                <!-- <td th:text="${obj.wname}"></td>
-                <td th:text="${obj.waddress}"></td>
-                <td th:text="${obj.wphone}"></td> -->
-                <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
-                <td th:text="${obj.mprice}"></td>
-                <!-- <td th:text="${obj.mtime}"></td> -->
-            </tr>
-        </tbody>
-    </table>
+<body class="sb-nav-fixed">
     
+    <!--내비게이션 영역-->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+        <!--Navbar Brand-->
+        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
+            <i class="bi bi-tools"></i> 
+            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+            <strong>BUBBLE BUMUL</strong>
+        </a>
+
+        <!--Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!--Searchbar-->
+        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group"> input group 쓰면 태그 내에 있는 것들이 합쳐짐
+                <input class="form-control" type="text" placeholder="검색어 입력 ..." aria-label="검색어 입력 ..."
+                    aria-describedby="btnSearch">
+                <button class="btn btn-primary" id="btnSearch" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form> -->
+
+        <!--Profile-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="profile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
+                    <i class="bi bi-person-lines-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profile">
+
+
+                    <!--로그아웃 상태 - 사실 로그아웃상태면 바로 로그인 창으로 이동됨-->
+
+                    <div th:if="${user == null}">
+                        <a class="dropdown-item" th:href="@{/washing/login.bubble}"><button>로그인</button></a>
+                        <a class="dropdown-item" th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
+                    </div>
+
+                    <!------------------------------------------------------------------------->
+
+                    <!-- 로그인상태 -->
+                    <div th:if="${user != null}"> 
+        
+                        <li><a class="dropdown-item" th:href="@{/washing/mypage.bubble(id=${user.username})}">마이페이지</a></li>
+
+                        <li>
+                            <hr class="dropdown-divider"> <!--경계선-->
+                        </li> 
+
+                        <li>
+                            <form th:action="@{/logout.bubble}" method="post">
+                                <input type="submit" value="로그아웃" class="btn" />
+                            </form>
+                        </li>
+
+                    </div>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!--전체화면 영역-->
+    <div id="layoutTotal">
+        <!--전체화면 > 왼쪽 메뉴 영역-->
+        <div id="layoutLeftSide">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        
+                        <div class="sb-sidenav-menu-heading">업체</div> 
+
+                        <!--메인-->
+                        <a class="nav-link collapsed" th:href="@{/washing/home.bubble}" >
+                            <div class="sb-nav-link-icon"><i class="bi bi-house"></i></div>
+                            메인
+                        </a>
+
+                        <!--매출-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
+                            <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
+                            조회
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                            </nav>
+                        </div>
+
+                        <!--보유기기-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
+                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            보유기기
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
+                                    <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
+                            </nav>
+                        </div>
+
+                        <!--게시판-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
+                            <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
+                            게시판
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
+                                <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
+                            </nav>
+                        </div>
+
+                    
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+
+                    <div th:if="${user != null}" class="small">
+        
+                        <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
+
+                    </div>
+
+
+                </div>
+            </nav>
+        </div>
+
+        <!--여기에 작성해야함-->
+        <!--전체화면 > 오른쪽 메인 화면 영역-->
+        <div id="layoutContent">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">예약 내역 조회</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+
+                    <!--테이블-->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    예약내역
+                                </div>
+                                <div class="card-body">
+                                    <table id="datatableSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>예약번호</th>
+                                                <th>예약날짜</th>
+                                                <th>고객 아이디</th>
+                                                <th>고객이름</th>
+                                                <th>고객 전화번호</th>
+                                                <th>고객 주소</th>
+                                                <!-- <th>업체명</th>
+                                                <th>업체 주소</th>
+                                                <th>업체 전화번호</th> -->
+                                                <th>세탁기</th>
+                                                <th>가격</th>
+                                                <th>작동시간</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr th:each="obj : ${list}">
+                                                <td th:text="${obj.rvno}"></td>
+                                                <td th:text="${obj.rdate}"></td>
+                                                <td th:text="${obj.id}"></td>
+                                                <td th:text="${obj.name}"></td>
+                                                <td th:text="${obj.phone}"></td>
+                                                <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                <!-- <td th:text="${obj.wname}"></td>
+                                                <td th:text="${obj.waddress}"></td>
+                                                <td th:text="${obj.wphone}"></td> -->
+                                                <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                <td th:text="${obj.mprice}"></td>
+                                                <td th:text="${obj.mtime}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center small">
+                        <div class="text-muted me-2">Copyright &copy; PKNU 2023.</div>
+                        <div>
+                            <a href="#"> Privacy Policy </a> &middot; <a href="#"> Terms &amp; Conditions </a>
+                            <!--&middot; 점이고 &amp; & 임-->
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+        </div>
+    </div>
+
+    <!-- 2. Bootstrap용 js는 body에 위치해야 함! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+        <!-- Simple DataTable용 JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            new simpleDatatables.DataTable("#datatableSimple", {
+                searchable: true,
+                fixedHeight: true,
+            });
+        });
+    </script>
+
 </body>
 </html>
+
+
