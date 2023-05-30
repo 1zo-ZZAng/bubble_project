@@ -79,10 +79,9 @@
 
                                     <form th:action="@{/admin/confirm.bubble}" method="get" id="form1">
                                         <!-- <select name="type" id="type" onchange="this.form.submit()"> -->
-
-                                            
-                                            <select id="type" style="text-align: center;" onchange="selectType()">
+                                            <select name="type" style="text-align: center;" onchange="selectType()">
                                                 <option value="none">= 제휴 업체 =</option>
+                                                <option value="all">전체</option>
                                                 <option th:each="chk : ${chklist}" th:value="${chk}" th:text="${chk}"></option>
                                             </select>
 
@@ -153,7 +152,14 @@
        });
 
        function selectType(){
-        const type = $( "#type option:selected").val();
+        const type = $("#type option:selected").val();
+        let typeChk = '${type}';
+
+        // value값으로 설정
+        $("#typeChk").val(type).prop("selected", true);
+        document.getElementById("form1").submit();
+        location.href = "/admin/confirm?type=?"+chk;
+
        }
 
        function updateChk() {

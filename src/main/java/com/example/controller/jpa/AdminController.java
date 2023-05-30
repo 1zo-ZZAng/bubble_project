@@ -151,21 +151,20 @@ public class AdminController {
                             @RequestParam(name="type", defaultValue = "") String type ){
         try {
             List<Washing> list = aService.selectWList();
-            
+           log.info("{}", type);
+            log.info("{}", list.toString());
             if(type.equals("all")){
                 list = aService.selectWList();
-                
-                
-            }   
-            // log.info("{}", list.toString());
-            else if(type.equals("unchecked")){
-                list = aService.selectWlistUnchecked(0);
-                // log.info("{}", list.toString());
             }
-            else if(type.equals("checked")){
-                list = aService.selectWlistUnchecked(1);
+            else if(type.equals("승인 대기")){
+                list = aService.selectWlistUnchecked(type);
+                log.info("{}", list.toString());
             }
-            model.addAttribute("chklist", list);          
+            else if(type.equals("승인 완료")){
+                list = aService.selectWlistUnchecked(type);
+            }
+            model.addAttribute("chklist", aService.selctChkList());
+            model.addAttribute("list", list); 
             return "/admin/confirm";
         } catch (Exception e) {
             e.printStackTrace();

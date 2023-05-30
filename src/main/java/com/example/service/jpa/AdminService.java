@@ -33,7 +33,7 @@ public interface AdminService {
 
     
     //승인 대기/완료 업체 목록
-    public List<Washing> selectWlistUnchecked(@Param("chk") int chk);
+    public List<Washing> selectWlistUnchecked(@Param("chk") String chk);
 
 
     //업체승인 유무 select박스
