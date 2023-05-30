@@ -249,8 +249,6 @@
                     <div class="container">
                         <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
 
-
-                            
                             <div class="board" style="float: left; margin-right: 5rem;" >
                                 <label for="writer">작성자</label>
                                 <p th:text="${board.writer}"></p>
@@ -258,7 +256,7 @@
 
                             <div>
                                 <label for="regdate">작성일</label>
-                                <p th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                                <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
                             </div>
                             
                             <div>
@@ -277,12 +275,21 @@
                             </div>
 
                             <!--버튼-->
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}"><button>게시글</button></a>
-                            <a th:href="@{/wboard/update.bubble(no=${board.no})}"><button>수정</button></a>
-                            <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
-                                <input type="text" name="no" th:value="${board.no}"  readonly/>
-                                <input type="button" value="삭제" onclick="deleteAction()" /> 
-                            </form>
+
+                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}"><button>목록</button></a>
+
+                            <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 가능함-->
+                            <div th:if="${user != null}">
+                                <div th:if="${board.writer} == ${user.username}">
+                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;"><button>수정</button></a>
+                                    <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
+                                        <input type="text" name="no" th:value="${board.no}"  readonly/>
+                                        <input type="submit" value="삭제" onclick="deleteAction()" /> 
+                                    </form>
+                                </div>
+                            </div>
+
+                            
 
                         </div>
                     </div>
@@ -315,9 +322,6 @@
 
     <script>
 
-        function deleteAction(){
-            
-        }
 
     </script>
 

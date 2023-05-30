@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @Controller
 @RequestMapping(value = "/wboard")
 @RequiredArgsConstructor
@@ -160,6 +161,7 @@ public class WBoardController {
     @GetMapping(value="/selectone.bubble")
     public String selectOne(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
         try {
+
             
             Board board = bService.selectOneBoard(no);
 
@@ -177,8 +179,6 @@ public class WBoardController {
     
 
 
-
-
     /* ------------------------------------------------------------- */
     
     //조회수 증가
@@ -193,6 +193,32 @@ public class WBoardController {
     /* ------------------------------------------------------------- */
 
     //삭제
+    @PostMapping(value="/delete.bubble")
+    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user) {
+        try {
+            
+            System.out.println(no);
+
+            if(no == 0) { //no값이 0일경우 목록으로 이동
+                return "redirect:/wboard/selectlist.bubble?menu="+menu;
+            }
+
+            //삭제
+            int ret = bService.deleteBoard(no);
+
+            if(ret == 1) { //성공시
+                return "redirect:/wboard/selectlist.bubble?menu="+menu;
+            }
+
+            return "redirect:/wboard/selectlist.bubble?menu="+menu;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/wboard/selectone.bubble?no="+no;
+        }
+    }
+    
+
 
     /* ------------------------------------------------------------- */
 
