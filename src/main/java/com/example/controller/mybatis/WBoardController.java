@@ -105,7 +105,7 @@ public class WBoardController {
     //전체 조회
     //여기서 menu=1 가르는건가?
     @GetMapping(value="/selectlist.bubble")
-    public String selectlistGET(Model model, @ModelAttribute Board board, @AuthenticationPrincipal User user) {
+    public String selectlistGET(Model model, @ModelAttribute Board board, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
         try {
 
 
