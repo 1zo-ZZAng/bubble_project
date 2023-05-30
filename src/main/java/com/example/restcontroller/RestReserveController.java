@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.service.jpa.CustomerService;
 import com.example.service.mybatis.CityMybatisService;
+import com.example.service.mybatis.WashingMachineMybatisService;
 import com.example.service.mybatis.WashingMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class RestReserveController {
     final CityMybatisService cityService;
     final WashingMybatisService wService;
     final CustomerService cService;
+    final WashingMachineMybatisService wmService;
 
     @GetMapping(value = "/selectcity.json")
     public Map<String, Object> selectcityGET(@RequestParam(name = "city") String city) {
@@ -88,6 +90,24 @@ public class RestReserveController {
                 retMap.put("townlist", null);
                 retMap.put("townname", null);
             }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            retMap.put("status", -1);
+            retMap.put("error", e.getMessage());
+        }
+        return retMap;
+    }
+
+    @GetMapping(value = "/selectmachine.json")
+    public Map<String, Object> selectmachineGET(@RequestParam(name = "wnumber") String wnumber,
+                                                @RequestParam(name = "machine") String machine,
+                                                @AuthenticationPrincipal User user) {
+        Map<String, Object> retMap = new HashMap<>();
+
+        try {
+            retMap.put("status", 200);
+            retMap.put("typeno",  wmService.selectmachineno(wnumber, machine));
         }
         catch (Exception e) {
             e.printStackTrace();

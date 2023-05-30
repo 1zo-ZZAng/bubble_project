@@ -6,10 +6,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.dto.Washing;
 import com.example.service.mybatis.CityMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReserveController {
     final CityMybatisService cityService;
 
-    // 예약 화면
+    // 예약 화면 1
     @GetMapping(value = "/letsgo.bubble")
     public String letsgoGET(Model model, @AuthenticationPrincipal User user) {
         try {
@@ -37,18 +36,23 @@ public class ReserveController {
         }
     }
     
-
     // 예약화면 2
-    @GetMapping(value = "/selectmachine.bubble")
-    public String selectmachineGET(@ModelAttribute Washing washing) {
-        try {
-            log.info(washing.getWnumber());
+    // @GetMapping(value = "/selectmachine.bubble")
+    // public String selectmachineGET(Model model, 
+    //                                @AuthenticationPrincipal User user,
+    //                                @RequestParam(name = "wnumber") String wnumber) {
+    //     try {
+    //         if (wnumber != null){
+    //             log.info(wnumber);
+    //             model.addAttribute("user", user);
+    //             return "/reserve/reservemain2";
+    //         }
 
-            return "/reserve/reservemain2";
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/home.bubble";
-        }
-    }
+    //         return "redirect:/home.bubble";
+    //     }
+    //     catch (Exception e) {
+    //         e.printStackTrace();
+    //         return "redirect:/home.bubble";
+    //     }
+    // }
 }
