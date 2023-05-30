@@ -197,7 +197,7 @@ public class WBoardController {
     public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user) {
         try {
             
-            System.out.println(no);
+            log.info("삭제할 게시글 번호 => {}", no);
 
             if(no == 0) { //no값이 0일경우 목록으로 이동
                 return "redirect:/wboard/selectlist.bubble?menu="+menu;
@@ -205,6 +205,8 @@ public class WBoardController {
 
             //삭제
             int ret = bService.deleteBoard(no);
+
+            log.info("삭제되면 1 아니면 0 => {}", ret);
 
             if(ret == 1) { //성공시
                 return "redirect:/wboard/selectlist.bubble?menu="+menu;
