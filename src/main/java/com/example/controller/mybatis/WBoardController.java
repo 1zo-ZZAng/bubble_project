@@ -188,6 +188,33 @@ public class WBoardController {
     /* ------------------------------------------------------------- */
 
     //수정
+    @GetMapping(value="/update.bubble")
+    public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no ) {
+        try {
+            
+            Board board = bService.selectOneBoard(no);
+
+            model.addAttribute("board", board);
+            model.addAttribute("user", user);
+
+            return "/wboard/update";
+
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/wboard/selectone.bubble?no="+no;
+        }
+    }
+
+    // int ret = bService.updateBoard(board);
+
+    //         if(ret == 1){
+    //             return "redirect:/wboard/selectlist.bubble?menu="+menu;
+    //         }
+
+    //         return "redirect:/wboard/selectone.bubble?no="+no;
+    
 
 
     /* ------------------------------------------------------------- */
