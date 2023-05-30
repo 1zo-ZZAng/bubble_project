@@ -71,7 +71,7 @@ public class WBoardController {
     public String writePOST(@RequestParam(name = "title") String title, 
                             @RequestParam(name = "content", required = false) String content, 
                             @RequestParam(name = "writer") String writer, 
-                            @RequestParam(name = "code") long code, @AuthenticationPrincipal User user, @ModelAttribute Board board){
+                            @RequestParam(name = "code") long code, @AuthenticationPrincipal User user){
         try {
 
             log.info(content);
