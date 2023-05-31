@@ -183,21 +183,19 @@ public class WBoardController {
 
     //수정 - 진행중
     @GetMapping(value="/update.bubble")
-    public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no ) {
+    public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
         try {
 
 
             Board board = bService.selectOneBoard(no);
 
-            List<BoardType> list1 = bService.selectlistBTypeCodeName();
+            List<BoardType> list1 = bService.selectlistBType();
             List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
 
             // log.info("게시판 종류=>{}",list1.toString());
             // log.info("말머리 종류=>{}",list2.toString());
 
             // List<Board> list1 = bService.selectlistBoard();
-        
-            
 
             model.addAttribute("CodeName", list1);
             model.addAttribute("CodeDetail", list2);
@@ -221,9 +219,9 @@ public class WBoardController {
 
             Board obj = bService.selectOneBoard(no);
 
-            int ret = bService.updateBoard(board);
+            log.info("수정 완료 => {}",board.toString());
 
-            log.info("수정 됐어? => {}", ret); //문제는 글 부분 수정이 안됨
+            int ret = bService.updateBoard(board);
 
             if(ret == 1){
                 return "redirect:/wboard/selectone.bubble?no="+obj.getNo();

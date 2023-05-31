@@ -273,15 +273,15 @@
                                     <!-- <label for="type">게시판</label> -->
 
                                     <!--게시판-->
-                                    <select name="code[]" id="code">
+                                    <select name="code" id="code" onchange="codeChange()">
                                         <option value="">게시판 선택</option>
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}" th:text="${CodeName.codename}"></option>
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"th:text="${CodeName.codename}" th:selected="${board.code} == ${CodeName.code}" ></option> <!--th:selected="${board.code} == ${CodeName.code}"-->
                                     </select>
 
                                     <!--말머리-->
-                                    <select id="codedetail">
+                                    <select id="codedetail" >
                                         <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}" ></option>
+                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.code}" th:text="${CodeDetail.codedetail}" th:selected="${board.code} == ${CodeDetail.code}" ></option> <!--th:selected="${board.code} == ${CodeDetail.code}"-->
                                     </select>
                                 </div>
 
@@ -314,7 +314,7 @@
             
                                 <!-- 글쓰기 버튼 -->
                                 <div>
-                                    <input type="button" value="수정" class="btn btn-primary mt-2" style="float:right" onclick="updateAction()" />
+                                    <input type="button" value="등록" class="btn btn-primary mt-2" style="float:right" onclick="updateAction()" />
                                 </div>
 
                             </form>
@@ -391,6 +391,24 @@
         });
 
 
+        //말머리부분 자동 선택되게 해줌
+        function codeChange(){
+            const code = document.getElementById('code');
+            const codedetail = document.getElementById('codedetail');
+
+            if(code.value == 2) {
+                add = codedetail.value= '찾아주세요';
+            }else if(code.value == 3) {
+                add = codedetail.value='찾아가세요';
+            }else{
+                add = codedetail.value='';
+            }
+
+        
+        }
+
+
+        //업데이트 버튼 눌렀을 때
         function updateAction(){
             const title = document.getElementById('title');
             const content = quill.root.innerHTML;
@@ -409,14 +427,20 @@
                 return false;
             }
 
+
+            //div태그 내용을 textarea로 복사 (div태그의 내용을 전송할 수 잇게 변경했음 div는 값을 전송할 수 없기때문에 어딘가 복사해서 보내야함 )
+            const divContent = quill.root.innerHTML;
+            document.getElementById("content").value = divContent;
+
+
             //말머리
             if(code.value == 2) {
                 if(title.value.length > 0) {
-                    title.value = '[' + codedetail.value + ']' + ' ' + title.value;
+                    title.value = '[' + '찾아주세요' + ']' + ' ' + title.value;
                 }
             }else if(code.value == 3) {
                 if(title.value.length > 0) {
-                    title.value = '[' + codedetail.value + ']' + ' ' + title.value;
+                    title.value = '[' + '찾아가세요' + ']' + ' ' + title.value;
                 }
             }else{
                 title.value = title.value;
