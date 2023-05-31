@@ -300,9 +300,11 @@
             
                                 <!-- 글작성-->
                                 <div style="margin-bottom:5px">
-                                    <div id="editor" name="content" th:text="${board.content}" style="height:300px">
+                                    <div id="editor" th:utext="${board.content}" style="height:300px">
                                     </div>
                                 </div> 
+                                <textarea  name="content" id="content"  style="display: none;" > <!--이거를 div로 복사할거임-->
+                                </textarea> 
                                 
                                 <!-- 작성자 -->
                                 <div class="form-floating mb-2" hidden>
@@ -422,46 +424,6 @@
 
 
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
-
-            // const form = document.createElement("form");
-            // form.setAttribute("action", [[@{/wboard/write.bubble}]]);
-            // form.setAttribute("method", "post");
-            // form.style.display="none";
-
-            // // <input type="text" name="title" value="실제입력값"></input>
-            // var input1 = document.createElement("input");
-            // input1.setAttribute("type", "text");
-            // input1.setAttribute("name", "title");
-            // input1.setAttribute("value", title.value);
-
-            // form.appendChild(input1);
-            
-            // var input2 = document.createElement("input");
-            
-            // input2.value = content;
-    
-            // form.appendChild(input2);
-            
-            // var input3 = document.createElement("input");
-            // input3.type = "text";
-            // input3.name = "writer";
-            // input3.value = writer.value;
-    
-            // form.appendChild(input3);
-
-            // var input4 = document.createElement("input");
-            // input4.type = "code";
-            // input4.name = "code";
-            // input4.value = code.value;
-    
-            // form.appendChild(input4);
-			
-			// document.body.appendChild(form); //body태그 안에 form넣는 거랑 같음
-			// form.submit();//버튼 누르면 제출
-
-
-            
-
 
         }
 
