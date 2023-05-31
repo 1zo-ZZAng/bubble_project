@@ -38,9 +38,6 @@ public class WBoardController {
 /* =========================================================================================================== */
     //검색창
 
-    //페이지네이션
-
-
 
     
 /* =========================================================================================================== */
@@ -157,17 +154,20 @@ public class WBoardController {
         try {
 
             
+            
             Board board = bService.selectOneBoard(no);
+
 
             log.info("글 1개 조회 => {}", board.toString());
 
-            // long next = bService.nextBoardOne(no);
-            // long pre = bService.preBoardOne(no);
+
+            long next = bService.nextBoardOne(no);
+            long pre = bService.preBoardOne(no);
 
 
             model.addAttribute("board", board);
-            // model.addAttribute("next", next);   //페이지
-            // model.addAttribute("pre", pre); //페이지
+            model.addAttribute("next", next);   //다음 페이지
+            model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
 
             return "/wboard/selectone";

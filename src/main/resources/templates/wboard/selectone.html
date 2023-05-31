@@ -299,13 +299,13 @@
 
                             <!--여기 까지 버튼-->
 
-                            <!-- <div th:if="${pre > 0}" >
-                                <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
+                            <div th:if="${pre > 0}" >
+                                <a class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
                             </div>
 
                             <div th:if="${next > 0}">
-                                <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${next}')">다음글</a>
-                            </div> -->
+                                <a class="btn btn-primary" onclick="ajaxUpdateHit('${next}')">다음글</a>
+                            </div>
 
                         </div>
 
@@ -335,6 +335,7 @@
 
 
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
@@ -343,27 +344,30 @@
     <script th:inline="javascript" type="text/javascript"> 
 
         //조회수 증가 및 페이지 이동
-        // async function ajaxUpdateHit(no){
+        async function ajaxUpdateHit(no){
 
-        //     const no = document.getElementById('no');
 
-        //     if(Number(no) == 0) {
-        //         alert('이동할 수 없습니다.');
-        //         return false;
-        //     }
+            // const no = document.getElementById('no');
 
-        //     const url = ${/api/wboard/updatehit.bubble}+'?no='+no;
-        //     const headers = {"Content-Type":"application/json"};
+            console.log(no);
 
-        //     const {data} = await axios.put(url, {}, {headers});
-        //     console.log(data);
+            if(Number(no) == 0) {
+                alert('이동할 수 없습니다.');
+                return false;
+            }
 
-        //     if(data.result === 1) {
-        //         // 2.  상세화면페이지로 전환
-        //         window.location.href='/wboard/selectone.bubble?no=' + no;
-        //     }
+            const url = [[@{/api/wboard/updatehit.bubble}]];
+            const headers = {"Content-Type":"application/json"};
 
-        // }
+            const {data} = await axios.put(url, {}, {headers});
+            console.log(data);
+
+            if(data.result === 1) {
+                // 2.  상세화면페이지로 전환
+                window.location.href='/wboard/selectone.bubble?no=' + no;
+            }
+
+        }
 
     </script>
 
