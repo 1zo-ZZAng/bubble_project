@@ -297,18 +297,19 @@
                                 </div>
                             </div>
 
-                            <!--여기 까지 버튼-->
+                            
 
-                            <div th:if="${pre > 0}" >
-                                <a class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
+                            <div style="margin-top: 10px;">
+                                <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
+                                    <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
+                                </div>
+
+                                <div th:if="${next > 0}">
+                                    <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${next}')">다음글</a>
+                                </div>
                             </div>
-
-                            <div th:if="${next > 0}">
-                                <a class="btn btn-primary" onclick="ajaxUpdateHit('${next}')">다음글</a>
-                            </div>
-
                         </div>
-
+                        <!--여기 까지 버튼-->
                         
                     </div>
 
