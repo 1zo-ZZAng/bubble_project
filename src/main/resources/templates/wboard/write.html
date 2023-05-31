@@ -33,6 +33,7 @@
     <!--quill-->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+
     <script>
         $(document).ready(function(){
             const sidebarToggle = $('#sidebarToggle');
@@ -119,17 +120,6 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
             <i class="bi bi-list"></i>
         </button>
-
-        <!--Searchbar-->
-        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group"> input group 쓰면 태그 내에 있는 것들이 합쳐짐
-                <input class="form-control" type="text" placeholder="검색어 입력 ..." aria-label="검색어 입력 ..."
-                    aria-describedby="btnSearch">
-                <button class="btn btn-primary" id="btnSearch" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form> -->
 
         <!--Profile-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -273,7 +263,7 @@
                                     <!-- <label for="type">게시판</label> -->
 
                                     <!--게시판-->
-                                    <select name="code" id="code" onchange="codeChange()">
+                                    <select name="code" id="code" onchange="codeChange()" > 
                                         <option value="">게시판 선택</option>
                                         <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
                                     </select>
@@ -281,7 +271,7 @@
                                     <!--말머리-->
                                     <select id="codedetail">
                                         <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}"></option>
+                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
                                     </select>
                                 </div>
 
@@ -291,9 +281,9 @@
                                     <label for="title" class="form-label">제목</label>
                                 </div>
             
-                                <!-- 글작성-->
+                                <!-- 내용부분-->
                                 <div style="margin-bottom:5px">
-                                    <div id="editor" name="content" style="height:300px">
+                                    <div id="content" name="content" style="height:300px">
                                         
                                     </div>
                                 </div> 
@@ -340,6 +330,9 @@
     <!-- Include the Quill library  글작성할 때 필요함-->
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
@@ -374,31 +367,31 @@
 
         // 위쪽에 있는 태그중에서 id가 content인 것을 찾아서 toolbar는 toolbarOptions의 값으로 대체하고 테마를 snow로 해서 변경
         // Initialize Quill editor
-        // 
-        var quill = new Quill('#editor', {
+        // editor => content
+        var quill = new Quill('#content', {
             modules: {
             toolbar: toolbarOptions
             },
+            placeholder: '내용을 입력해주세요.',
             theme: 'snow'
         });
 
 
-        //나중에 
-        // function codeChange(){
-        //     const code = document.getElementById('code');
-        //     const codedetail = document.getElementById('codedetail');
+        //말머리부분 자동 선택되게 해줌
+        function codeChange(){
+            const code = document.getElementById('code');
+            const codedetail = document.getElementById('codedetail');
 
-        //     if(code.value == 1) {
-        //         co
-        //     }else if ( code.value == 2) {
+            if(code.value == 2) {
+                add = codedetail.value= '찾아주세요';
+            }else if(code.value == 3) {
+                add = codedetail.value='찾아가세요';
+            }else{
+                add = codedetail.value='';
+            }
 
-                // }else if ( code.value == 3) {
-                    
-                // }else if ( code.value == 4) {
-                    
-                // }
-
-        // }
+        
+        }
 
 
         function writeAction(){
@@ -408,6 +401,26 @@
             const code = document.getElementById('code');
             const codedetail = document.getElementById('codedetail');
 
+            console.log(content); //여기서는 작성 된게 뜸 그렇겠지
+
+            if(code.value.length <= 0){
+                alert('게시판을 선택해주세요');
+                return false;
+            }
+
+            if(code.value == 2) {
+                if(codedetail.value <= 0) {
+                    alert('말머리를 선택해주세요');
+                    return false;
+                }
+            }
+
+            if(code.value == 3) {
+                if(codedetail.value <= 0) {
+                    alert('말머리를 선택해주세요');
+                    return false;
+                }
+            }
             
             if(title.value.length <= 0){
                 alert('제목을 작성해주세요');
@@ -415,12 +428,14 @@
                 return false;
             }
 
-            if(code.value.length <= 0){
-                alert('게시판을 선택해주세요');
+            if(content <= 0) {
+                alert('내용을 작성해주세요');
                 return false;
             }
 
-            //말머리
+
+        
+            //말머리 제목에 넣어버리기
             if(code.value == 2) {
                 if(title.value.length > 0) {
                     title.value = '[' + codedetail.value + ']' + ' ' + title.value;
@@ -433,18 +448,23 @@
                 title.value = title.value;
             }
 
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+
+
+
             // const form = document.createElement("form");
-            // form.setAttribute("action", [[@{/wboard/write.bubble}]]);
+            // form.setAttribute("action", @{/wboard/write.bubble}); //대괄호 두개 써라 오류나서 잠시 지웠다
             // form.setAttribute("method", "post");
             // form.style.display="none";
 
-            // // <input type="text" name="title" value="실제입력값"></input>
+            // <input type="text" name="title" value="실제입력값"></input>
             // var input1 = document.createElement("input");
             // input1.setAttribute("type", "text");
             // input1.setAttribute("name", "title");
             // input1.setAttribute("value", title.value);
 
             // form.appendChild(input1);
+
             
             // var input2 = document.createElement("input");
             // input2.setAttribute("type", "text");
@@ -452,27 +472,49 @@
             // input2.setAttribute("value", content);
     
             // form.appendChild(input2);
+
             
             // var input3 = document.createElement("input");
             // input3.setAttribute("type", "text");
             // input3.setAttribute("name", "writer");
             // input3.setAttribute("value", writer.value);
-    
+
             // form.appendChild(input3);
 
-            // // var select = document.getElementById("code")
-            // var input4 = document.createElement("option");
-            // // input4.setAttribute("type", "option");
-            // input4.setAttribute("th:text", );
-            // input4.setAttribute("th:value",);
-    
-            // form.appendChild(input4);
-			
+
+            //// 실패=====
+            //// var array = ["공지사항", "분실물", "유실물", "자유게시판"];
+
+            //// var selectlist = document.createElement("select");
+            //// selectlist.setAttribute("id", "code");
+            //// form.appendChild("selectlist");
+
+            //// for(var i = 0; i < array.length; i++){
+            ////     var option = document.createElement("option");
+            ////     option.setAttribute("value", array[i]);
+            ////     option.setAttribute("text", array[i]);
+            ////     selectlist.appendChild(option);
+            //// }
+
+            //실패=====
+            // var sel = document.createElement("select")
+            // var option = document.createElement("option");
+            // sel.setAttribute("id","code")
+            // // option.setAttribute("name", "code");
+            // option.setAttribute("value", code.value);
+            // option.setAttribute("text", code.text);
+
+            // form.appendChild(option);	
+
+
+            
+
 			// document.body.appendChild(form); //body태그 안에 form넣는 거랑 같음
 			// form.submit();//버튼 누르면 제출
 
 
-            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+            
+
 
         }
 

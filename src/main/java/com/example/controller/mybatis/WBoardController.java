@@ -45,22 +45,20 @@ public class WBoardController {
     
 /* =========================================================================================================== */
 
-    //글작성 - 진행중
+    //글작성 - 진행중 왜 안돼?
     @GetMapping(value = "/write.bubble")
     public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
         try {
 
-            List<BoardType> list1 = bService.selectlistBTypeCodeName();
-            List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
+            List<BoardType> list1 = bService.selectlistBType(); // 게시판 종류
+            List<BoardType> list2 = bService.selectlistBTypeCodeDetail(); //말머리
 
             log.info("게시판 종류=>{}",list1.toString());
             log.info("말머리 종류=>{}",list2.toString());
 
-
             model.addAttribute("CodeName", list1);
             model.addAttribute("CodeDetail", list2);
 
-            model.addAttribute("washing", washing);
             model.addAttribute("user", user);
 
             return "/wboard/write";
@@ -72,34 +70,27 @@ public class WBoardController {
     }
 
     @PostMapping(value = "/write.bubble")
-    public String writePOST(@RequestParam(name = "title") String title, 
-                            @RequestParam(name = "content", required = false) String content, 
-                            @RequestParam(name = "writer") String writer, 
-                            @RequestParam(name = "code") long code, @AuthenticationPrincipal User user){
+    public String writePOST(@AuthenticationPrincipal User user, 
+                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu,
+                            @ModelAttribute Board board){
+
         try {
 
-            log.info(content);
+            log.info("내용만 => {}", board.getContent());
+            log.info("작성한 내용 => {}", board.toString());
             
-            Board obj = new Board();
-            obj.setCode(code);
-            obj.setTitle(title);
-            obj.setContent(content);
-            obj.setWriter(writer);
-            
-            log.info("글 작성 내용 => {}", obj.toString());
-
-            int ret = bService.writeBoard(obj);
+            int ret = bService.writeBoard(board);
 
             if(ret == 1){
-                return "redirect:/wboard/selectlist.bubble";
+                return "redirect:/wboard/selectlist.bubble?menu="+menu;
             }else{
-                return "redirect:/wboard/write.bubble";
+                return "redirect:/wboard/write.bubble?id="+user.getUsername();
             }
             
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return "redirect:/wboard/write.bubble?id="+user.getUsername();
         }
         
     }
@@ -168,13 +159,15 @@ public class WBoardController {
             
             Board board = bService.selectOneBoard(no);
 
-            long next = bService.nextBoardOne(no);
-            long pre = bService.preBoardOne(no);
+            log.info("글 1개 조회 => {}", board.toString());
+
+            // long next = bService.nextBoardOne(no);
+            // long pre = bService.preBoardOne(no);
 
 
             model.addAttribute("board", board);
-            model.addAttribute("next", next);   //페이지
-            model.addAttribute("pre", pre); //페이지
+            // model.addAttribute("next", next);   //페이지
+            // model.addAttribute("pre", pre); //페이지
             model.addAttribute("user", user); //로그인 관련
 
             return "/wboard/selectone";
@@ -186,13 +179,6 @@ public class WBoardController {
     }
     
 
-
-    /* ------------------------------------------------------------- */
-    
-    //조회수 증가
-
-    
-
     /* ------------------------------------------------------------- */
 
     //수정 - 진행중
@@ -200,18 +186,21 @@ public class WBoardController {
     public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no ) {
         try {
 
-            // List<BoardType> list1 = bService.selectlistBTypeCodeName();
-            // List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
+
+            Board board = bService.selectOneBoard(no);
+
+            List<BoardType> list1 = bService.selectlistBTypeCodeName();
+            List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
 
             // log.info("게시판 종류=>{}",list1.toString());
             // log.info("말머리 종류=>{}",list2.toString());
 
-            
-            Board board = bService.selectOneBoard(no);
+            // List<Board> list1 = bService.selectlistBoard();
+        
             
 
-            // model.addAttribute("CodeName", list1);
-            // model.addAttribute("CodeDetail", list2);
+            model.addAttribute("CodeName", list1);
+            model.addAttribute("CodeDetail", list2);
 
             model.addAttribute("board", board);
             model.addAttribute("user", user);
@@ -257,7 +246,7 @@ public class WBoardController {
 
     //삭제 - 성공
     @PostMapping(value="/delete.bubble")
-    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user) {
+    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user, Model model) {
         try {
             
             log.info("삭제할 게시글 번호 => {}", no);
@@ -272,10 +261,24 @@ public class WBoardController {
             log.info("삭제되면 1 아니면 0 => {}", ret);
 
             if(ret == 1) { //성공시
-                return "redirect:/wboard/selectlist.bubble?menu="+menu;
+
+                model.addAttribute("msg", "삭제되었습니다");
+                model.addAttribute("url","/bubble_bumul/wboard/selectlist.bubble?menu=" + menu);
+
+                return "message";
+
+                // return "/wboard/selectlist.bubble?menu=" + menu;
+
             }
 
-            return "redirect:/wboard/selectlist.bubble?menu="+menu;
+            model.addAttribute("msg", "삭제 실패");
+            model.addAttribute("url","/bubble_bumul/wboard/selectlist.bubble?menu=" + menu);
+
+            return "message";
+
+            // return "/wboard/selectlist.bubble?menu=" + menu;
+
+        
 
         } catch (Exception e) {
             e.printStackTrace();

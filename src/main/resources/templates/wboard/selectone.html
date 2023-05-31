@@ -249,7 +249,7 @@
                     <div class="container">
                         <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
 
-                            <div>
+                            <div hidden>
                                 <label for="no">글번호</label>
                                 <p id="no" name="no" th:text="${board.no}"></p>
                             </div>
@@ -279,30 +279,30 @@
                                 <p th:text="${board.hit}"></p>
                             </div>
 
-                            <!--버튼-->
 
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}"><button>목록</button></a>
+                            <!--버튼-->
+                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
 
                             <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
                             <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
                                 <div th:if="${board.writer} == ${user.username}"> <!--작성자와 로그인된 아이디가 일치시-->
-                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;"><button>수정</button></a>
+                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
                                     <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
-                                        <input type="text" name="no" th:value="${board.no}"  readonly/>
-                                        <input type="submit" value="삭제" onclick="deleteAction()" /> 
+                                        <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
+                                        <input type="submit" value="삭제" class="btn btn-primary"/> 
                                     </form>
                                 </div>
                             </div>
 
                             <!--여기 까지 버튼-->
 
-                            <div th:if="${pre > 0}" >
+                            <!-- <div th:if="${pre > 0}" >
                                 <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
                             </div>
 
                             <div th:if="${next > 0}">
                                 <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${next}')">다음글</a>
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -340,27 +340,27 @@
     <script th:inline="javascript" type="text/javascript"> 
 
         //조회수 증가 및 페이지 이동
-        async function ajaxUpdateHit(no){
+        // async function ajaxUpdateHit(no){
 
-            const no = document.getElementById('no');
+        //     const no = document.getElementById('no');
 
-            if(Number(no) == 0) {
-                alert('이동할 수 없습니다.');
-                return false;
-            }
+        //     if(Number(no) == 0) {
+        //         alert('이동할 수 없습니다.');
+        //         return false;
+        //     }
 
-            const url = [[${/api/wboard/updatehit.bubble}]]+'?no='+no;
-            const headers = {"Content-Type":"application/json"};
+        //     const url = ${/api/wboard/updatehit.bubble}+'?no='+no;
+        //     const headers = {"Content-Type":"application/json"};
 
-            const {data} = await axios.put(url, {}, {headers});
-            console.log(data);
+        //     const {data} = await axios.put(url, {}, {headers});
+        //     console.log(data);
 
-            if(data.result === 1) {
-                // 2.  상세화면페이지로 전환
-                window.location.href='/wboard/selectone.bubble?no=' + no;
-            }
+        //     if(data.result === 1) {
+        //         // 2.  상세화면페이지로 전환
+        //         window.location.href='/wboard/selectone.bubble?no=' + no;
+        //     }
 
-        }
+        // }
 
     </script>
 

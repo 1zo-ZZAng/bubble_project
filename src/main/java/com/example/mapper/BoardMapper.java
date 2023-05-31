@@ -19,13 +19,18 @@ public interface BoardMapper {
     @Select({" SELECT * FROM BOARDTYPE "})
     public List<BoardType> selectlistBType();
 
-    //게시판 분류 -  중복 제거
+    //게시판 분류 조회
     @Select({" SELECT code, codename FROM BOARDTYPE "})
     public List<BoardType> selectlistBTypeCodeName();
 
-    //말머리 분류 - 중복 제거
-    @Select({" SELECT codedetail FROM BOARDTYPE WHERE codedetail IS NOT NULL "})
+    //말머리 분류 - null값인거 제외
+    @Select({" SELECT * FROM BOARDTYPE WHERE codedetail IS NOT null "})
     public List<BoardType> selectlistBTypeCodeDetail();
+
+    //공지사항 날짜기준 최신 3개 조회
+    @Select({" SELECT * FROM (SELECT * FROM board WHERE code=1 ORDER BY regdate DESC) WHERE ROWNUM <= 3 "})
+    public List<Board> selectlistBoardTopNotice();
+
 
     /* =====================메인======================== */
 
