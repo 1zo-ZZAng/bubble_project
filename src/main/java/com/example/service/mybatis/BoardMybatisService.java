@@ -61,8 +61,14 @@ public interface BoardMybatisService {
     //게시글 전체 개수
     public int countBoard();
 
-    //페이징징아 
+    //다음글로 넘기기
+    public int nextBoardOne(long no);
 
+    //이전글로 넘기기
+    public int preBoardOne(long no);
+
+    //페이징
+    public List<Board> selectBoardListPage(int start, int end);
 
 
 

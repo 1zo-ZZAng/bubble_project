@@ -75,9 +75,20 @@ public interface BoardMapper {
     //게시글 전체 수
     @Select({" SELECT COUNT(*) cnt FROM BOARD "})
     public int countBoard();
-    
-    //페이징? => 아직 게시글 없어서 안했음
 
+    //다음글로 넘기기
+    @Select({" SELECT NVL(MIN(no),0) FROM BOARD WHERE no > #{no} "})
+    public int nextBoardOne(@Param("no") long no);
+
+    //이전글로 넘기기
+    @Select({" SELECT NVL(MAX(no),0) FROM BOARD WHERE no < #{no} "})
+    public int preBoardOne(@Param("no") long no);
+    
+    //페이징
+    @Select({" SELECT b.* FROM( ",
+            " SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b ", 
+            " WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
+	public List<Board> selectBoardListPage(@Param("start") int start, @Param("end") int end);
 
     /* ====================검색======================= */
 

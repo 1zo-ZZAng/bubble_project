@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @Controller
 @RequestMapping(value = "/wboard")
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class WBoardController {
     
 /* =========================================================================================================== */
 
-    //글작성
+    //글작성 - 진행중
     @GetMapping(value = "/write.bubble")
     public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
         try {
@@ -105,7 +106,7 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //전체 조회
+    //전체 조회 - 성공
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
         try {
@@ -157,17 +158,24 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //1개 조회
+    //1개 조회 - 성공
     @GetMapping(value="/selectone.bubble")
-    public String selectOne(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
+    public String selectOne(Model model, @AuthenticationPrincipal User user, 
+                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+                            @RequestParam(name = "no") long no) {
         try {
 
             
             Board board = bService.selectOneBoard(no);
 
-            // model.addAttribute(null, user)
+            long next = bService.nextBoardOne(no);
+            long pre = bService.preBoardOne(no);
+
+
             model.addAttribute("board", board);
-            model.addAttribute("user", user);
+            model.addAttribute("next", next);   //페이지
+            model.addAttribute("pre", pre); //페이지
+            model.addAttribute("user", user); //로그인 관련
 
             return "/wboard/selectone";
 
@@ -187,12 +195,23 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //수정
+    //수정 - 진행중
     @GetMapping(value="/update.bubble")
     public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no ) {
         try {
+
+            // List<BoardType> list1 = bService.selectlistBTypeCodeName();
+            // List<BoardType> list2 = bService.selectlistBTypeCodeDetail();
+
+            // log.info("게시판 종류=>{}",list1.toString());
+            // log.info("말머리 종류=>{}",list2.toString());
+
             
             Board board = bService.selectOneBoard(no);
+            
+
+            // model.addAttribute("CodeName", list1);
+            // model.addAttribute("CodeDetail", list2);
 
             model.addAttribute("board", board);
             model.addAttribute("user", user);
@@ -207,19 +226,36 @@ public class WBoardController {
         }
     }
 
-    // int ret = bService.updateBoard(board);
+    @PostMapping(value="/update.bubble")
+    public String updatePOST(@ModelAttribute Board board, @RequestParam(name = "no") long no ) {
+        try {
 
-    //         if(ret == 1){
-    //             return "redirect:/wboard/selectlist.bubble?menu="+menu;
-    //         }
+            Board obj = bService.selectOneBoard(no);
 
-    //         return "redirect:/wboard/selectone.bubble?no="+no;
+            int ret = bService.updateBoard(board);
+
+            log.info("수정 됐어? => {}", ret); //문제는 글 부분 수정이 안됨
+
+            if(ret == 1){
+                return "redirect:/wboard/selectone.bubble?no="+obj.getNo();
+            }
+        
+            return "redirect:/wboard/update.bubble?no="+obj.getNo();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/wboard/selectone.bubble?no="+no;
+        }
+    }
+    
+
+
     
 
 
     /* ------------------------------------------------------------- */
 
-    //삭제
+    //삭제 - 성공
     @PostMapping(value="/delete.bubble")
     public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user) {
         try {

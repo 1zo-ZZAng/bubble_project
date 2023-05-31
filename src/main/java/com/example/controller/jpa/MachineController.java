@@ -57,6 +57,7 @@ public class MachineController {
             List<Machine> list = mRepository.findByWashing_idOrderByNoDesc(wid);
 
             model.addAttribute("wid", user.getUsername()); 
+            model.addAttribute("user", user);
             model.addAttribute("list", list);
 
             return "/machine/selectlist";
@@ -79,7 +80,7 @@ public class MachineController {
         try {
             
             model.addAttribute("wid", user.getUsername()); 
-
+            model.addAttribute("user", user);
             model.addAttribute("machine", machine);
 
 
@@ -89,7 +90,7 @@ public class MachineController {
         } catch (Exception e) {
 
             e.printStackTrace();
-            return "redirect:/machine/insert.bubble";
+            return "redirect:/washing/home.bubble";
 
         }
     }
@@ -101,12 +102,14 @@ public class MachineController {
 
             mRepository.save(machine);
 
-            return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername() ;
+            log.info("기기 등록=> {}", machine.toString());
+
+            return "redirect:/machine/insert.bubble?wid=" + user.getUsername() ;
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            return "redirect:/machine/insert.bubble";
+            return "redirect:/machine/insert.bubble?wid=" + user.getUsername();
 
         }
     }
@@ -126,6 +129,7 @@ public class MachineController {
             log.info( "수정하려는 기기 정보들 => {}", list.toString());
 
             model.addAttribute("wid", user.getUsername()); 
+            model.addAttribute("user", user);
             model.addAttribute("list", list);
 
             return "/machine/update";
