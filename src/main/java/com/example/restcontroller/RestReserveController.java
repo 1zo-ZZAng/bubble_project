@@ -1,5 +1,6 @@
 package com.example.restcontroller;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.service.jpa.CustomerService;
 import com.example.service.mybatis.CityMybatisService;
+import com.example.service.mybatis.ReserveMybatisService;
 import com.example.service.mybatis.WashingMachineMybatisService;
 import com.example.service.mybatis.WashingMybatisService;
 
@@ -29,6 +31,7 @@ public class RestReserveController {
     final WashingMybatisService wService;
     final CustomerService cService;
     final WashingMachineMybatisService wmService;
+    final ReserveMybatisService rService;
 
     @GetMapping(value = "/selectcity.json")
     public Map<String, Object> selectcityGET(@RequestParam(name = "city") String city) {
@@ -108,6 +111,26 @@ public class RestReserveController {
         try {
             retMap.put("status", 200);
             retMap.put("typeno",  wmService.selectmachineno(wnumber, machine));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            retMap.put("status", -1);
+            retMap.put("error", e.getMessage());
+        }
+        return retMap;
+    }
+
+    @GetMapping(value = "/selecteddate.json")
+    public Map<String, Object> selecteddateGET(@AuthenticationPrincipal User user,
+                                               @RequestParam(name = "wnumber") String wnumber,
+                                               @RequestParam(name = "machine") String machine,
+                                               @RequestParam(name = "machineno") BigInteger machineno,
+                                               @RequestParam(name = "rvdate") String rvdate) {
+        Map<String, Object> retMap = new HashMap<>();
+
+        try {
+            retMap.put("status", 200);
+            retMap.put("useable", rService.selectUseableTime(wnumber, machine, machineno, rvdate));
         }
         catch (Exception e) {
             e.printStackTrace();
