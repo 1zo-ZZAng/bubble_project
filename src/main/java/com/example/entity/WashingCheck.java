@@ -20,6 +20,7 @@ import lombok.ToString;
 @Table(name = "WASHINGCHECK")
 public class WashingCheck {
 
+
     @Id
     @Column(name = "no")
     private BigInteger no;

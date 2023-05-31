@@ -3,6 +3,7 @@ package com.example.controller.jpa;
 
 
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +23,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.MachineCount;
 import com.example.dto.Washing;
+import com.example.dto.Category;
 import com.example.entity.Admin;
 import com.example.entity.Customer;
 import com.example.entity.WashingCheck;
 import com.example.mapper.AdminMapper;
 import com.example.repository.AdminRepository;
+import com.example.repository.WashingCheckRepository;
 import com.example.repository.WashingMachineRepository;
+import com.example.repository.WashingRepository;
 import com.example.service.jpa.AdminService;
 import com.example.service.jpa.CustomerService;
+import com.example.service.mybatis.AdminListMybatisService;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +49,11 @@ public class AdminController {
     
     final String format = "AdminController => {}";
     final AdminRepository aRepository;
-    final AdminMapper aMapper;
+
     final AdminService aService;
+    final AdminListMybatisService aService2;
     final CustomerService cService;
-    final WashingMachineRepository wmRepository;
+    final WashingCheckRepository wcRepository;
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
@@ -149,64 +155,16 @@ public class AdminController {
 
     //업체 목록
     @GetMapping(value = "/confirm.bubble")
-    public String confirmGET(Model model,
-                            @RequestParam(name="type", defaultValue = "") String type,
-                            @ModelAttribute WashingCheck wChecked ){
+    public String confirmGET(Model model ){
             try {
-                Washing washing = new Washing();
-                washing.setChk(type);
-                List<Washing> list = aService.selectWList();
-                log.info("{}", type);
-                log.info("{}", list.toString());
-                if(type.equals("all")){
-                    list = aService.selectWList();
-                }
-                else if(type.equals("승인 대기")){
-                    list = aService.selectWlistUnchecked(type);
-                    log.info("{}", list.toString());
-                }
-                else if(type.equals("승인 완료")){
-                    list = aService.selectWlistUnchecked(type);
-                }
-                model.addAttribute("chklist", aService.selctChkList());
-                model.addAttribute("list", list); 
+
+                model.addAttribute("category", aService2.selectBoxList());      
                 return "/admin/confirm";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/admin/home.bubble";
             }                       
-        // try {
-        //     List<Washing> list = aService.selectWList();
-        //     // log.info("{}", list);
-        //     List<Washing> list1 = new ArrayList<>();
-        //     list1 = aService.selectWlistUnchecked(type);
-        //     //all일경우
-        //     if(type.equals("all")){
-        //         list = aService.selectWList();
-        //         // log.info("{}",list);
-
-        //     //승인 대기일 경우
-        //     if(type.equals("승인 대기")){
-        //         list1 = aService.selectWlistUnchecked(type);
-        //         log.info("{}",list1);
-        //     }
-        //     //승인 완료일 경우
-        //     else if(type.equals("승인 완료")){
-        //         list1 = aService.selectWlistUnchecked(type);
-        //         log.info("{}",list1);
-        //     }
-        //     model.addAttribute("list1", list1);
-        //     log.info("{}",list1);
-        //     }
-        //     model.addAttribute("list", list);
-        //     log.info("{}",list);
-        //     return "admin/confirm";
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        //     return "redirect:/admin/home.bubble";
-        // }
-
-
+   
 
 
     }
