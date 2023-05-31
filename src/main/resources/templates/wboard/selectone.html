@@ -301,7 +301,7 @@
 
                             <div style="margin-top: 10px;">
                                 <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
-                                    <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit('${pre}')">이전글</a>
+                                    <a href="#" class="btn btn-primary" onclick="ajaxUpdateHit([[${pre}]])">이전글</a> <!--어케해야하냐-->
                                 </div>
 
                                 <div th:if="${next > 0}">
