@@ -283,10 +283,13 @@
             
                                 <!-- 내용부분-->
                                 <div style="margin-bottom:5px">
-                                    <div id="content" name="content" style="height:300px">
+                                    <div id="editor" style="height:300px">
                                         
                                     </div>
-                                </div> 
+                                    
+                                </div>
+                                <textarea  name="content" id="content"  style="display: none;" > <!--이거를 div로 복사할거임-->
+                                </textarea> 
                                 
                                 <!-- 작성자 -->
                                 <div class="form-floating mb-2" hidden>
@@ -368,7 +371,7 @@
         // 위쪽에 있는 태그중에서 id가 content인 것을 찾아서 toolbar는 toolbarOptions의 값으로 대체하고 테마를 snow로 해서 변경
         // Initialize Quill editor
         // editor => content
-        var quill = new Quill('#content', {
+        var quill = new Quill('#editor', {
             modules: {
             toolbar: toolbarOptions
             },
@@ -400,6 +403,7 @@
             const writer = document.getElementById('writer');
             const code = document.getElementById('code');
             const codedetail = document.getElementById('codedetail');
+            const a = document.getElementsByName("content");
 
             console.log(content); //여기서는 작성 된게 뜸 그렇겠지
 
@@ -434,6 +438,12 @@
             }
 
 
+            
+            //div태그 내용을 textarea로 복사 (div태그의 내용을 전송할 수 잇게 변경했음 )
+            const divContent = quill.root.innerHTML;
+            document.getElementById("content").value = divContent;
+
+
         
             //말머리 제목에 넣어버리기
             if(code.value == 2) {
@@ -449,72 +459,6 @@
             }
 
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
-
-
-
-            // const form = document.createElement("form");
-            // form.setAttribute("action", @{/wboard/write.bubble}); //대괄호 두개 써라 오류나서 잠시 지웠다
-            // form.setAttribute("method", "post");
-            // form.style.display="none";
-
-            // <input type="text" name="title" value="실제입력값"></input>
-            // var input1 = document.createElement("input");
-            // input1.setAttribute("type", "text");
-            // input1.setAttribute("name", "title");
-            // input1.setAttribute("value", title.value);
-
-            // form.appendChild(input1);
-
-            
-            // var input2 = document.createElement("input");
-            // input2.setAttribute("type", "text");
-            // input2.setAttribute("name", "content");
-            // input2.setAttribute("value", content);
-    
-            // form.appendChild(input2);
-
-            
-            // var input3 = document.createElement("input");
-            // input3.setAttribute("type", "text");
-            // input3.setAttribute("name", "writer");
-            // input3.setAttribute("value", writer.value);
-
-            // form.appendChild(input3);
-
-
-            //// 실패=====
-            //// var array = ["공지사항", "분실물", "유실물", "자유게시판"];
-
-            //// var selectlist = document.createElement("select");
-            //// selectlist.setAttribute("id", "code");
-            //// form.appendChild("selectlist");
-
-            //// for(var i = 0; i < array.length; i++){
-            ////     var option = document.createElement("option");
-            ////     option.setAttribute("value", array[i]);
-            ////     option.setAttribute("text", array[i]);
-            ////     selectlist.appendChild(option);
-            //// }
-
-            //실패=====
-            // var sel = document.createElement("select")
-            // var option = document.createElement("option");
-            // sel.setAttribute("id","code")
-            // // option.setAttribute("name", "code");
-            // option.setAttribute("value", code.value);
-            // option.setAttribute("text", code.text);
-
-            // form.appendChild(option);	
-
-
-            
-
-			// document.body.appendChild(form); //body태그 안에 form넣는 거랑 같음
-			// form.submit();//버튼 누르면 제출
-
-
-            
-
 
         }
 

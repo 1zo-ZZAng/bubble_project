@@ -45,7 +45,7 @@ public class WBoardController {
     
 /* =========================================================================================================== */
 
-    //글작성 - 진행중 왜 안돼?
+    //글작성
     @GetMapping(value = "/write.bubble")
     public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
         try {

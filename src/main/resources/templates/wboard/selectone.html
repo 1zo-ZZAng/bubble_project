@@ -259,19 +259,22 @@
                                 <p th:text="${board.writer}"></p>
                             </div>
 
+                            <!--작성일자-->
                             <div>
                                 <label for="regdate">작성일</label>
                                 <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
                             </div>
                             
+                            <!--제목-->
                             <div>
                                 <label for="title" style="float: left; margin-right: 3rem;">제목</label>
                                 <p th:text="${board.title}" ></p>
                             </div>
 
+                            <!--본문 내용 부분-->
                             <div>
                                 <label for="content">내용</label>
-                                <p th:text="${board.content}"></p>
+                                <p th:utext="${board.content}"></p> <!--utext로 해야 p태그 em안나옴-->
                             </div>
 
                             <div>
