@@ -318,7 +318,7 @@ public class WashingController {
                 obj.setPhone(null);
                 obj.setCeo(null);
                 obj.setRole(null);
-                obj.setChk(null);
+                obj.setWashingcheck(null);
 
                 //변경항목에 저장
                 wRepository.save(obj);
@@ -429,7 +429,7 @@ public class WashingController {
             log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list);
-            model.addAttribute("user", user);
+            // model.addAttribute("user", user);
 
             return "/washing/reserve";
             

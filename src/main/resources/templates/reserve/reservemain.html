@@ -35,7 +35,7 @@
                 </select>
             </td>
             <td>
-                <select id="town" style="width: 200px; text-align: center;">
+                <select id="town" style="width: 200px; text-align: center;" onchange="selecttown()">
                     <option value="none">지역(구/군) 선택</option>
                 </select>
             </td>
@@ -67,6 +67,7 @@
     <br />
 
     <div id="selectmachine" style="display: none;">
+        <h2>기기 목록</h2>
         <table>
             <tr>
                 <th>사용할 기기</th>
@@ -97,6 +98,10 @@
         const selectmachine = document.getElementById("selectmachine");
 
         async function selectCity() {
+            washinglisttable.style.display="none";
+            nextbtn.style.display="none";
+            selectmachine.style.display="none";
+            
             const city = $("#city option:selected").val();
             
             // rest api 호출
@@ -118,6 +123,10 @@
         }
 
         async function showMyAddress() {
+            washinglisttable.style.display="none";
+            nextbtn.style.display="none";
+            selectmachine.style.display="none";
+
             // rest api 호출
             const url = [[@{/api/reserve/myaddress.json}]];
             const headers = {"Content-Type":"application/json"};
@@ -149,6 +158,7 @@
         async function showWahsingList() {
             const city = $("#city option:selected").val();
             const town = $("#town option:selected").val();
+            $('input[name="wnumber"]').removeAttr("checked"); 
 
             // rest api 호출
             const url = [[@{/api/reserve/washinglist.json}]] + `?city=${city}&town=${town}`;
@@ -159,45 +169,62 @@
             
             selectmachine.style.display="none";
 
-            if (data.washinglist.length === 0) {
-                alert('예약 가능한 세탁소가 존재하지 않습니다. 다른 지역을 선택해주세요.');
-                // washinglisttable.innerHTML = '';
-                // nextbtn.innerHTML = '';
-                washinglisttable.style.display="none";
-                nextbtn.style.display="none";
+            if (town == "none"){
+                alert('지역(구/군)을 선택해주세요.');
+                document.getElementById("town").focus();
             }
             else {
-                const washinglist = document.getElementById("washinglist");
-                washinglist.innerHTML = '';
-
-                for (let i=0; i<data.washinglist.length; i++){
-                    // console.log(data.washinglist[i].name);
-                    washinglist.innerHTML += `<tr>`
-                                                + '<td class="washing"><input type="radio" name="wnumber" value="' + data.washinglist[i].wnumber + '"/></td>' 
-                                                + '<td class="washing">' + data.washinglist[i].name + '</td>'
-                                                + '<td class="washing">' + data.washinglist[i].address + '</td>'
-                                                + '<td class="washing">' + data.washinglist[i].phone + '</td>'
-                                                + `</tr>`
-                                                ;
+                if (data.washinglist.length == 0) {
+                    alert('예약 가능한 세탁소가 존재하지 않습니다. 다른 지역을 선택해주세요.');
+                    // washinglisttable.innerHTML = '';
+                    // nextbtn.innerHTML = '';
+                    washinglisttable.style.display="none";
+                    nextbtn.style.display="none";
                 }
+                else {
+                    const washinglist = document.getElementById("washinglist");
+                    washinglist.innerHTML = '';
 
-                nextbtn.innerHTML = '';
-                nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">업체 선택 완료</button>`;
+                    for (let i=0; i<data.washinglist.length; i++){
+                        // console.log(data.washinglist[i].name);
+                        washinglist.innerHTML += `<tr>`
+                                                    + '<td class="washing"><input type="radio" name="wnumber" value="' + data.washinglist[i].wnumber + '"/></td>' 
+                                                    + '<td class="washing">' + data.washinglist[i].name + '</td>'
+                                                    + '<td class="washing">' + data.washinglist[i].address + '</td>'
+                                                    + '<td class="washing">' + data.washinglist[i].phone + '</td>'
+                                                    + `</tr>`
+                                                    ;
+                    }
 
-                washinglisttable.style.display="inline-block";
-                nextbtn.style.display="inline-block";
+                    nextbtn.innerHTML = '';
+                    nextbtn.innerHTML += `<button type="button" class="btn btn-primary" onclick="chooseMachine()">업체 선택 완료</button>`;
+
+                    washinglisttable.style.display="inline-block";
+                    nextbtn.style.display="inline-block";
+                }
             }
+        }
+
+        function selecttown() {
+            washinglisttable.style.display="none";
+            nextbtn.style.display="none";
+            selectmachine.style.display="none";
         }
         
         function chooseMachine() {
+            $("#machine").val("none").prop("selected", true);
+            $("#machineno").val("none").prop("selected", true);
+
             const wnumber = $('input[name="wnumber"]:checked').val();
 
-            if (wnumber == null) {
+            if (wnumber == null || typeof wnumber == "undefined") {
                 alert('세탁 업체를 선택해주세요.');
             }
+            else {
+                // console.log(wnumber);
+                selectmachine.style.display="inline-block";
+            }
             
-            // console.log(wnumber);
-
             // const form = document.createElement("form");
             // form.setAttribute("action", [[@{/reserve/selectmachine.bubble}]]);
             // form.setAttribute("method", "get");
@@ -212,8 +239,6 @@
 
             // document.body.appendChild(form);
             // form.submit();
-
-            selectmachine.style.display="inline-block";
         }
 
         async function selectMachine() {
@@ -230,6 +255,10 @@
             if (data.typeno.length <= 0) {
                 if (machine === "일체형"){
                     alert('사용가능한 ' + machine + '이 없습니다. 다른 기기를 사용해주세요.');
+                }
+                else if (machine === "none") {
+                    alert('기기를 선택해주세요.');
+                    document.getElementById("machine").focus();
                 }
                 else {
                     alert('사용가능한 ' + machine + '가 없습니다. 다른 기기를 사용해주세요.');
