@@ -429,7 +429,7 @@ public class WashingController {
             log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list);
-            model.addAttribute("user", user);
+            // model.addAttribute("user", user);
 
             return "/washing/reserve";
             
