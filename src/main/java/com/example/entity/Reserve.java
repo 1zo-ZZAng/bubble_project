@@ -45,6 +45,8 @@ public class Reserve {
 
     private String wid;
     
+    private String wnumber;
+    
     private String wname;
     
     private String waddress;
