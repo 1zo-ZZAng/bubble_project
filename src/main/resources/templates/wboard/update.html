@@ -273,19 +273,24 @@
                                     <!-- <label for="type">게시판</label> -->
 
                                     <!--게시판-->
-                                    <select onselect="" name="code" id="code">
+                                    <select name="code[]" id="code">
                                         <option value="">게시판 선택</option>
-                                        
-
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}" th:text="${CodeName.codename}"></option>
                                     </select>
 
                                     <!--말머리-->
-                                    <select onselect="" id="codedetail">
+                                    <select id="codedetail">
                                         <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}"></option>
+                                        <option th:each="CodeDetail : ${CodeDetail}" th:text="${CodeDetail.codedetail}" ></option>
                                     </select>
                                 </div>
+
+                                <!-- 글번호 -->
+                                <div class="form-floating mb-2" hidden>
+                                    <input type="text" th:field="${board.no}" class="form-control" readonly/>
+                                    <label for="no" class="form-label">글번호</label>
+                                </div>
+
 
                                 <!-- 제목 -->
                                 <div class="form-floating mb-2">
@@ -295,8 +300,7 @@
             
                                 <!-- 글작성-->
                                 <div style="margin-bottom:5px">
-                                    <div id="editor" name="content" th:field="${board.content}" style="height:300px">
-                                        
+                                    <div id="editor" name="content" th:text="${board.content}" style="height:300px">
                                     </div>
                                 </div> 
                                 
@@ -395,6 +399,11 @@
             if(title.value.length <= 0){
                 alert('제목을 작성해주세요');
                 title.focus();
+                return false;
+            }
+
+            if(code.value.length <= 0){
+                alert('게시판을 선택해주세요');
                 return false;
             }
 
