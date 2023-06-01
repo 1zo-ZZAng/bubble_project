@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.AdminChkList;
+import com.example.dto.Reserve;
+import com.example.dto.Washing;
 import com.example.mapper.AdminMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -43,10 +45,21 @@ public class AdminListMybatisServiceImpl implements AdminListMybatisService {
            }
     }
 
+
     @Override
-    public List<AdminChkList> selectWlistAfterUpdate() {
+    public Washing selectWashingOne(String wnumber) {
         try {
-            return aMapper.selectWlistAfterUpdate();
+            return aMapper.selectWashingOne(wnumber);
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+        }
+
+    @Override
+    public List<Reserve> selectMonthBox() {
+       try {
+            return aMapper.selectMonthBox();
            } catch (Exception e) {
             e.printStackTrace();
             return null;

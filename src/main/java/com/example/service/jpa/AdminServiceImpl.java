@@ -79,6 +79,16 @@ public class AdminServiceImpl implements AdminService {
            }
     }
 
+    @Override
+    public int washingCount() {
+        try {
+            return aMapper.washingCount();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
 
 
 

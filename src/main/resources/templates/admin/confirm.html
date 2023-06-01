@@ -63,7 +63,7 @@
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">제휴 업체 목록</h1>
+                    <h1 class="mt-4">업체 제휴 승인</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><a th:href="@{/admin/home.bubble}">HOME</a></li>
                     </ol>
@@ -96,6 +96,7 @@
                                                     <th width="600">업체 주소</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody id="washinglist"> 
                                                    
                                             </tbody>
@@ -162,37 +163,30 @@
                 alert('제휴 승인할 업체를 선택해주십쇼~');
             }
             else {
-                let data =[]; 
-                for(var i=0; i<chk.length; i++) {
-                    if(chk[i].checked == true){
-                        console.log(chk[i].value);
-                        
-    
-                        data.push({"bubble":chk[i].value});
-                    }
-                }
-                console.log(data);
-
                 const form = document.createElement("form");
-                form.setAttribute("action", [[@{/admin/updatechk.bubble}]]);
+                form.setAttribute("action", /*[[@{/admin/updatechk.bubble}]]*/"");
                 form.setAttribute("method", "post");
                 form.style.display="none";
 
-                const input = document.createElement("input");
-                input.setAttribute("type", "hidden");
-                input.setAttribute("name", "chk");
-                input.setAttribute("value", data);
+                for(var i=0; i<chk.length; i++) {
+                    if(chk[i].checked == true){
+                        console.log(chk[i].value);
+                        let input = document.createElement("input");
+                        input.setAttribute("type", "hidden");
+                        input.setAttribute("name", "chk");
+                        input.setAttribute("value", chk[i].value);
+                        form.appendChild(input);
+                    }
+                }
 
                 const input4 = document.createElement("input");
                 input4.type = "hidden";
                 input4.name = "_csrf";
-                input4.value =  [[${_csrf.token}]];
+                input4.value =  /*[[${_csrf.token}]]*/"";
 
-                // form.appendChild(input);
+                
                 form.appendChild(input4);
-
                 document.body.appendChild(form);
-
                 form.submit();
 
                 // $.ajax({

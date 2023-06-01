@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.MachineCount;
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
+import com.example.dto.AdminChkList;
 import com.example.dto.Category;
 import com.example.entity.Admin;
 import com.example.entity.Customer;
@@ -88,19 +90,25 @@ public class AdminController {
     }
 
     // --------------------------------------------------------------------------------------
-    //관리자 로그인
-    //127.0.0.1:8282/bubble_bumul/admin/login.bubble
-    // loginaction.bubble post는 만들지 않음. security에서 자동으로 처리함
-    @GetMapping(value = "/login.bubble")
-    public String loginGET(){
-        try {
-            return "/admin/login";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/login.bubble";
-        }
-    }
 
+        //로그인
+        @GetMapping(value = "/login.bubble")
+        public String loginGET(@RequestParam(value = "error", required = false)String error, 
+                                 Model model){
+
+            try {
+    
+                model.addAttribute("error", error);
+                // model.addAttribute("exception", exception); 
+    
+                return "/admin/login";
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/login.bubble";
+            }
+    
+        }
 
     // --------------------------------------------------------------------------------------
 
@@ -109,6 +117,10 @@ public class AdminController {
      @GetMapping(value = "/home.bubble")
     public String homeGET(@AuthenticationPrincipal User user, Model model) {
         try {
+            
+           int wc =  aService.washingCount();
+           
+            model.addAttribute("wc", wc);
             model.addAttribute("user", user);
             log.info("{}", model);
             return "/admin/adhome";
@@ -138,11 +150,14 @@ public class AdminController {
 
 
     //업체별 보유기기목록 조회 // 나중에 모달로 되면 좋겟당
+    //업체 차트
     @GetMapping(value = "/wmlist.bubble")
     public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
         try {
             List<MachineCount> list = aService.selectMCount(wnumber);
+            
 
+            
             log.info("{}",list.toString());
             model.addAttribute("list", list);
             model.addAttribute("name", aService.selectWashingNameOne(wnumber));
@@ -158,7 +173,7 @@ public class AdminController {
 
     //업체 목록
     @GetMapping(value = "/confirm.bubble")
-    public String confirmGET(Model model ){
+    public String confirmGET(Model model){
             try {
 
                 model.addAttribute("category", aService2.selectBoxList());      
@@ -167,9 +182,6 @@ public class AdminController {
                 e.printStackTrace();
                 return "redirect:/admin/home.bubble";
             }                       
-   
-
-
     }
 
     // --------------------------------------------------------------------------------------
@@ -179,11 +191,10 @@ public class AdminController {
     @PostMapping(value = "/updatechk.bubble")
     public String updatechkPOST(@RequestParam(name = "chk") String[] chk){
         try {
-           for (int i=0; i<chk.length; i++) {
-            log.info(chk[i]);
+            for (int i=0; i<chk.length; i++) {
+                log.info(chk[i]);
+                aService2.updateChk(chk[i]);
            }
-            // log.info(chk);
-
             return "redirect:/admin/confirm.bubble";
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,6 +219,13 @@ public class AdminController {
             return "redirect:/admin/home.bubble";
         }
     }
+
+
+
+
+    // --------------------------------------------------------------------------------------
+
+
 
 
 }

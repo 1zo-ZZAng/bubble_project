@@ -32,7 +32,8 @@ public interface AdminService {
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
     
-
+    //제휴 업체 수
+    public int washingCount();
 
 
     //업체승인 유무 select박스

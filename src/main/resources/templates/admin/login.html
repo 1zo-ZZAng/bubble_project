@@ -1,17 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자</title>
+    <title>BUBBLE BUMUL</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/washing/my-login.css}">
+
 </head>
-<body>
-    <h3>로그인(admin)</h3>
-    <form th:action="@{/admin/loginaction.bubble}" method="post">
-        <input type="text" name="id" /> <br/>
-        <input type="text" name="password" /> <br/>
-        <input type="submit" value="로그인" />
-    </form>
+
+<!--로그인 페이지-->
+<body class="my-login-page">
+    <section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="brand">
+						<!-- <img src="img/logo.jpg" alt="logo"> --> <!--버블버물 로고 올릴 것-->
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+
+                            <!--로그인-->
+							<h4 class="card-title">Login</h4>
+                            <div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
+                            <form th:action="@{/admin/loginaction.bubble}" method="post" id="form">
+                                <label for="id">Id </label><input type="text" name="id" id="id"  class="form-control" required autofocus/> <br/>
+                           </div>
+
+                                <!--비밀번호-->
+								<div class="form-group">
+									<label for="password">Password 
+                                    </label>
+                                    <input type="password" id="password" name="password" class="form-control" required data-eye  /> <br/>
+
+
+								</div>
+
+                                <!--로그인 실패시 뜨는 문구-->
+                                <div class="form-group" th:if="${param.error}">
+                                    <p th:text="'흥... 틀렸어'" class="alert alert-danger"></p> <!--th:text="${exception}"-->
+                                </div>
+
+                                <!--로그인 버튼-->
+								<div class="form-group m-0">
+                                    <input type="button" value="Login" class="btn btn-primary btn-block" onclick="loginAction()"  />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2023 &mdash; Bubble Bumul
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <script>
+
+        //로그인 클릭시
+        function loginAction(){
+
+            const id = document.getElementById('id');
+            const password = document.getElementById('password');
+
+            //유효성 검사
+            if(id.value.length <= 0){
+                alert('아이디를 입력해주세요.');
+                id.focus();
+                style: 'position:relative';
+                return false;
+            }
+
+            if(password.value.length <= 0){
+                alert('비밀번호를 입력해주세요.');
+                password.focus();
+                return false;
+            }
+
+            document.getElementById('form').submit();
+
+        }
+    </script>
+
+    
 </body>
 </html>

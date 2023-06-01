@@ -7,9 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.AdminChkList;
 import com.example.dto.MachineCount;
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
 import com.example.dto.WashingMachine;
 import com.example.entity.WashingCheck;
@@ -44,6 +46,9 @@ public interface AdminMapper {
     @Select({"SELECT DISTINCT(name) FROM MACHINECOUNT WHERE WNUMBER = #{wnumber}"})
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
+    @Select({" SELECT * FROM Washing WHERE WNUMBER = #{wnumber} "})
+    public Washing selectWashingOne(@Param("wnumber") String wnumber);
+
     //제휴 승인 update
     @Update({" UPDATE washing SET chkno=1 WHERE wnumber=#{wnumber} "})
     public int updateChk(@Param("wnumber") String wnumber );
@@ -53,17 +58,20 @@ public interface AdminMapper {
     public List<AdminChkList> selectWlistUnchecked(@Param("chk") String chk);
 
 
+    //제휴 업체 수
+    @Select({" SELECT count(*) FROM washing WHERE address IS NOT NULL AND chkno=1 "})
+    public int washingCount();
 
 
     //---------------------------차트------------------------------
     
     //차트의 월별 선택
     @Select({" SELECT DISTINCT (SUBSTRING(rvdate,0,7) ) FROM reserve "})
-    public String selectMonthBox();
+    public List<Reserve> selectMonthBox();
 
-    //차트의 월 선택에 따른 매출 조회 // 이부분이 어떻게 되어야하나요 매퍼요정씨?
-    @Select({" SELECT rvdate, sum(mprice) FROM reserve WHERE SUBSTRING(rvdate,0,7)='?' GROUP BY rvdate "})
-    public List<String> selectMonthChart();
+    //차트의 월 선택에 따른 매출 조회
+    @Select({" SELECT rvdate, sum(mprice) FROM reserve WHERE SUBSTRING(rvdate,0,7)=#{rvmonth} GROUP BY rvdate "})
+    public List<String> selectMonthChart(@RequestParam("rvmonth") String rvmonth);
 
     
 
