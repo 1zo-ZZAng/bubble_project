@@ -165,10 +165,12 @@ public class WBoardController {
             long pre = bService.preBoardOne(no);
 
 
-            model.addAttribute("board", board);
+            model.addAttribute("board", board); //게시글 1개 조회 view로 넘기기
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
+
+            bService.updateHit(no); //해당 게시글 조회수 증가
 
             return "/wboard/selectone";
 
