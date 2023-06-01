@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/washing/my-login.css}">
 </head>
 
-<!--아이디 찾기 페이지-->
+<!--비밀번호 찾기 페이지-->
 <body class="my-login-page">
     <section class="h-100">
 		<div class="container h-100">
@@ -22,15 +22,18 @@
 						<div class="card-body">
 
                             <!--아이디 찾기-->
-							<h4 class="card-title">아이디 찾기</h4>
+							<h4 class="card-title">비밀번호 찾기</h4>
 
-                            <form th:action="@{/washing/findid.bubble}" method="post" id="form">
+                            <form th:action="@{/washing/findpw.bubble}" method="post" id="form">
 
-                                <!--이름-->
+                                <!--아이디-->
 								<div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
-									<label for="ceo">대표자명</label>
-                                    <input type="text" id="ceo" name="ceo" class="form-control" required autofocus  />
-
+									<label for="id">
+                                        아이디
+                                        <!--아이디 찾기-->
+                                        <a th:href="@{/washing/findid.bubble}" class="float-right"> 아이디 찾기 </a> 
+                                    </label>
+                                    <input type="text" id="id" name="id" class="form-control" required autofocus  />
 								</div>
 
                                 <!--이메일-->
@@ -39,9 +42,9 @@
                                     <input type="text" id="email" name="email" class="form-control" required data-eye />
 								</div>
 
-                                <!--아이디 찾기 버튼-->
+                                <!--비밀번호 찾기 버튼-->
 								<div class="form-group m-0">
-									<input type="button" value="찾기" class="btn btn-primary btn-block" onclick="findIdAction()"  />
+									<input type="button" value="찾기" class="btn btn-primary btn-block" onclick="findPWAction()"  />
 								</div>
 
                                 
@@ -69,15 +72,15 @@
 
     <script th:inline="javascript" type="text/javascript">
 
-        function findIdAction() {
+        function findPWAction() {
 
-            const ceo = document.getElementById('ceo');
+            const id = document.getElementById('id');
             const email = document.getElementById('email');
 
 
             //유효성 검사
-            if(ceo.value.length <= 0) {
-                alert('이름을 입력해주세요');
+            if(id.value.length <= 0) {
+                alert('아이디를 입력해주세요');
                 ceo.focus();
                 return false;
             }

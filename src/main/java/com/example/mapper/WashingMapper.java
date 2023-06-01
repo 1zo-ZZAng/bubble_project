@@ -91,19 +91,23 @@ public interface WashingMapper {
 	/* === 매출 === */
 
 	//일매출 //오라클은 sysdate mysql은 curdate()로 오늘날짜를 조회할 수 있다
-	@Select({" SELECT SUBSTRING(rvdate, 0,10) daysales, sum(mprice) total FROM RESERVE WHERE wname=#{wname} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,10) "})
-	public List<Map<String, Object>> selectDaySales(@Param("wname") String wname);
+	@Select({" SELECT SUBSTRING(rvdate, 0,10) daysales, sum(mprice) total, wid FROM RESERVE WHERE wid=#{wid} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,10) "})
+	public List<Map<String, Object>> selectDaySales(@Param("wid") String wid);
 
 	//월매출
-	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthsales, sum(mprice) total FROM RESERVE WHERE wname=#{wname} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,7); "})
-	public List<Map<String, Object>> selectMonthSales(@Param("wname") String wname);
+	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthsales, sum(mprice) total FROM RESERVE WHERE wid=#{wid} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,7); "})
+	public List<Map<String, Object>> selectMonthSales(@Param("wid") String wid);
 
 	//연매출
-	@Select({" SELECT SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE wname=#{wname} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,4); "})
-	public List<Map<String, Object>> selectYearSales(@Param("wname") String wname);
+	@Select({" SELECT SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total, wid FROM RESERVE WHERE wid=#{wid} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,4); "})
+	public List<Map<String, Object>> selectYearSales(@Param("wid") String wid);
 
 	//모든 업체의 연 매출 
 	@Select({" SELECT wname, SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= curdate() GROUP BY SUBSTRING(rvdate, 0,4), wname; "})
 	public List<Map<String, Object>> selectAllMonthSales();
+
+	//월별사용자수 => 메인페이지에 띄우기
+	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthly, count(*) usercnt FROM RESERVE WHERE wid=#{wid} AND TO_CHAR(RVDATE, 'YYYY-MM-DD HH:MI:ss') <= SYSDATE GROUP BY SUBSTRING(rvdate, 0,7) "})
+	public List<Map<String, Object>> selectUserCnt();
 
 }

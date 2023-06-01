@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.example.dto.SendMail;
 import com.example.entity.Reserve;
 import com.example.entity.Washing;
 import com.example.repository.WashingRepository;
+import com.example.service.jpa.MailService;
 import com.example.service.jpa.ReserveService;
 import com.example.service.jpa.WashingService;
 import com.example.service.mybatis.WashingMybatisService;
@@ -43,8 +44,10 @@ public class WashingController {
     final WashingService wService;
 
     final WashingMybatisService wMybatisService;
-
+    
     final ReserveService rService;
+
+    final MailService mService; // 비밀번호 찾기 - 이메일 전송
 
     final HttpSession httpSession;
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -60,8 +63,9 @@ public class WashingController {
 
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername());
+            
         
-            log.info("예약내역 조회 => {}", list.toString());
+            // log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list);
             //
@@ -228,12 +232,14 @@ public class WashingController {
 
     //비밀번호 변경
     @GetMapping(value="/pwupdate.bubble")
-    public String pwupdateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing) {
+    public String pwupdateGET(@RequestParam(name = "id") String id, Model model, @ModelAttribute Washing washing, @AuthenticationPrincipal User user) {
         try {
 
             Washing obj = wRepository.findById(id).orElse(null);
 
+            model.addAttribute("user", user);
             model.addAttribute("washing", obj);
+
 
             return "/washing/pwupdate";
             
@@ -263,7 +269,7 @@ public class WashingController {
                 wRepository.save(obj);
 
                 model.addAttribute("msg", "비밀번호가 변경되었습니다");
-                model.addAttribute("url","/bubble_bumul/washing/pwupdate.bubble?id=" + obj.getId());
+                model.addAttribute("url","/bubble_bumul/washing/mypage.bubble?id=" + obj.getId());
 
                 return "message";
 
@@ -288,8 +294,11 @@ public class WashingController {
 
     //탈퇴
     @GetMapping(value="/delete.bubble")
-    public String deleteGET(@ModelAttribute Washing washing) {
+    public String deleteGET(@ModelAttribute Washing washing, Model model, @AuthenticationPrincipal User user) {
         try {
+
+            model.addAttribute("user", user);
+
             return "/washing/delete";
         } catch (Exception e) {
             e.printStackTrace();
@@ -407,6 +416,77 @@ public class WashingController {
         }
     }
     
+    /* ---------------------------------------------- */
+
+    //비밀번호 찾기
+    @GetMapping(value="/findpw.bubble")
+    public String findpwGET() {
+        try {
+            return "/washing/findpw";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/login.bubble";
+        }
+    }
+
+    @PostMapping(value = "/findpw.bubble")
+    public String findpwPOST(@ModelAttribute Washing obj, Model model) {
+        try {
+            // (1) 임시 비밀번호 생성
+            char [] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+            String temppw = ""; // 임시 비밀번호를 저장할 변수
+
+            // 문자 배열 길이의 값을 랜덤으로 8개를 뽑아 임시 비밀번호를 생성
+            for (int i = 0; i < 8; i++){
+                int idx = (int) (charSet.length * Math.random());
+                temppw += charSet[idx];
+            }
+
+            
+
+            // (2) 임시 비밀번호로 업데이트
+            Washing washing = wService.findPassword(obj.getId(), obj.getEmail());
+
+            if (washing != null) {
+                washing.setPassword(bcpe.encode(temppw));
+
+                wService.joinWashing(washing);
+
+                // (3) 메일 내용을 생성
+                SendMail mail = new SendMail();
+                mail.setAddress(obj.getEmail());
+                mail.setTitle("Bubble Bumul 임시 비밀번호 안내 이메일입니다.");
+                mail.setMessage("안녕하세요. Bubble Bumul 임시 비밀번호 안내 관련 이메일입니다.\n"
+                                + washing.getId() + "님의 임시 비밀번호는 " + temppw + "입니다.\n"
+                                + "로그인 후에 비밀번호를 변경해주세요.");
+
+                // (4) 메일 전송
+                mService.sendMail(mail);
+
+                model.addAttribute("msg", "입력하신 이메일로 임시 비밀번호가 발송되었습니다.");
+                model.addAttribute("url", "/bubble_bumul/washing/login.bubble");
+        
+                return "message";
+            }
+            else {
+                model.addAttribute("msg", "입력하신 정보와 일치하는 계정이 존재하지 않습니다.");
+                model.addAttribute("url", "/bubble_bumul/washing/findpw.bubble");
+        
+                return "message";
+            }
+            
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/login.bubble";
+        }
+    }
+
+
+    
     
     
     
@@ -443,7 +523,8 @@ public class WashingController {
 
 /* =================================================================================================================================================== */
 
-    //월 매출
+
+    
     
 
     

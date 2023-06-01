@@ -29,70 +29,70 @@
 					<div class="card fat">
 						<div class="card-body">
                             <!--회원가입-->
-							<h4 class="card-title">Register</h4>
+							<h4 class="card-title">회원가입</h4>
 
                             <form th:action="@{/washing/join.bubble}" method="post" id="form" class="my-login-validation" novalidate="">
 
                                 <!--아이디-->
                                 <div class="form-group">
-                                    <label for="id"> Id 
-                                        <a class="float-right" onclick="ajaxIDCheck(this)" style="color: #007bff;"> check </a>
+                                    <label for="id"> 아이디
+                                        <a class="float-right" onclick="ajaxIDCheck(this)" style="color: #007bff; cursor: pointer;"> 중복확인 </a>
                                     </label>
-                                    <input type="text" id="id" name="id" class="form-control" />
+                                    <input type="text" id="id" name="id" class="form-control" required autofocus />
                                 </div>
 
                                 <!--이메일-->
 								<div class="form-group">
-									<label for="email">E-Mail Address</label>
+									<label for="email">이메일</label> <!--E-Mail Address-->
 									<input id="email" type="email" name="email" class="form-control"  required>
 								</div>
 
                                 <!--암호-->
 								<div class="form-group">
-									<label for="password">Password</label>
+									<label for="password">비밀번호</label>
 									<input type="password" id="password" class="form-control" name="password" required data-eye />
 								</div>
 
                                 <!--암호 확인-->
                                 <div class="form-group">
-                                    <label for="pwcheck" >Password</label>
+                                    <label for="pwcheck" >비밀번호 확인</label>
                                     <input type="password" id="pwcheck" name="pwcheck" class="form-control" required data-eye />
                                 </div>
 
                                 <!--대표자명-->
                                 <div class="form-group">
-									<label for="ceo">CEO</label>
+									<label for="ceo">대표자명</label>
 									<input type="text" id="ceo" name="ceo" th:value="${ceo}" class="form-control" readonly />
 								</div>
 
                                 <!--사업자등록번호-->
                                 <div class="form-group">
-                                    <label for="wnumber"> Business Registration Number </label>
+                                    <label for="wnumber"> 사업자등록번호 </label>
                                     <input type="text" id="wnumber" name="wnumber" th:value="${wnumber}" class="form-control" readonly />
                                 </div>
 
                                 <!--업체명-->
                                 <div class="form-group">
-                                    <label for="name">Company</label>
+                                    <label for="name">상호명</label>
                                     <input type="text" id="name" name="name" class="form-control" required data-eye />
                                 </div>
 
                                 <!--주소-->
                                 <div class="form-group">
-                                    <label for="address">Address
-                                        <a id="addr_button" class="float-right" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #007bff;">find?</a>
+                                    <label for="address">주소
+                                        <a id="addr_button" class="float-right" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #007bff; cursor: pointer;">주소찾기</a>
                                     </label>
                                     <input type="text" id="address" name="address"  class="form-control" readonly />            
                                 </div>
 
                                 <!--전화번호-->
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
+                                    <label for="phone">전화번호</label>
                                     <input type="text" id="phone" name="phone" class="form-control" required data-eye />
                                 </div>
 
                                 <!-- 승인여부 -->
-                                <div class="form-group" >
+                                <div class="form-group" hidden >
                                     <label for="phone">승인여부</label>
                                     <input type="text" id="chkno" name="chkno" value="0" class="form-control" required data-eye readonly />
                                 </div>
@@ -100,13 +100,13 @@
 
                                 <!--회원가입 버튼-->
 								<div class="form-group m-0">
-                                    <input type="button" value="Register" class="btn btn-primary btn-block" onclick="joinAction()"/>
+                                    <input type="button" value="회원가입" class="btn btn-primary btn-block" onclick="joinAction()"/>
 								</div>
 
                                 <!--회원가입 되어있을 경우 로그인으로 이동-->
 								<div class="mt-4 text-center">
-									Already have an account? <a th:href="@{/washing/login.bubble}">Login</a> <br> <br>
-                                    Check the Business Registration Number <br> <a th:href="@{/washing/bncheck.bubble}">Business Registration Number</a>
+									이미 계정이 있으신가요? <a th:href="@{/washing/login.bubble}">로그인</a> <br> <br>
+                                    사업자등록번호 조회 <a th:href="@{/washing/bncheck.bubble}">사업자등록번호</a>
 								</div>
 							</form>
 						</div>

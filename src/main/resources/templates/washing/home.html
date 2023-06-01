@@ -33,6 +33,8 @@
     <!-- font awesome용 스크립트 CDN-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+
     <style>
         .datatable-bottom .datatable-info {
             display: none;
@@ -137,13 +139,13 @@
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                             </nav>
                         </div>
 
                         <!--예약-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
                             예약
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -254,11 +256,12 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <ic class="fas fa-chart-area me-1"></ic>
-                                    일매출
+                                    월매출
                                 </div>
                                 <div class="card-body">
                                     <!--여기서 차트가 만들어짐-->
-                                    <canvas id="daySalesChart" width="100%" height="50"></canvas>
+                                    <!-- <div id="daySalesChart" style="width: 100%; height: 50;"></div> -->
+                                    <canvas id="monthSalesChart" width="100%" height="50"></canvas>
 
                                 </div>
                             </div>
@@ -324,6 +327,7 @@
 
             </main>
 
+            <!--하단영역-->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid py-4">
                     <div class="d-flex justify-content-between align-items-center small">
@@ -343,6 +347,11 @@
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -350,13 +359,15 @@
 
     <!--Chart.js용 CDN 구버전에서 신버전으로 컨버전 작업 필요함 (나중에)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/washing/chartDaysales.js}"></script>
-    <script src="js/chart-bar-demo.js"></script>
-    <script src="js/chart-pie-demo.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
 
     <!-- Simple DataTable용 JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script th:inline="javascript">
+    <script th:inline="javascript" type="text/javascript">
+
+        //예약내역 표
         $(document).ready(function() {
             new simpleDatatables.DataTable("#datatableSimple", {
                 searchable: true,
@@ -365,7 +376,12 @@
         });
 
 
+
+        //매출 그래프
+
+        //월매출 -- 눈물만 난다
         
+
     </script>
 
 </body>

@@ -24,8 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
-
-
 @Controller
 @RequestMapping(value = "/wboard")
 @RequiredArgsConstructor
@@ -33,11 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 public class WBoardController {
 
     final BoardMybatisService bService;
-
-
-/* =========================================================================================================== */
-    //검색창
-
 
     
 /* =========================================================================================================== */

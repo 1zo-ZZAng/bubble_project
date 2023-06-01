@@ -26,6 +26,8 @@ public class Reserve {
     private String detailaddress;
     
     private String extraaddress;
+
+    private String wid;
     
     private String wname;
     
