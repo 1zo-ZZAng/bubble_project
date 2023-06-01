@@ -25,6 +25,5 @@ public class Washing {
 
     private String role; //권한 default 값 washing
 
-    private BigInteger chk; // 제휴 승인 여부 (0, 1) 체크 조건 있음
-    
+    private BigInteger chkno; // 제휴 승인 여부 (0, 1) 체크 조건 있음
 }

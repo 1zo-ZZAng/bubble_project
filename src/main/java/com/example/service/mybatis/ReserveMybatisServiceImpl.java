@@ -49,4 +49,16 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
     //         return null;
     //     }
     // }
+
+    // 예약하기
+    @Override
+    public int insertReserve(String cid, Long mno, String rvdate, String rvtime) {
+        try {
+            return rMapper.insertReserve(cid, mno, rvdate, rvtime);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

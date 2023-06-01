@@ -3,6 +3,7 @@ package com.example.mapper;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -30,4 +31,11 @@ public interface ReserveMapper {
 //                                             @Param("type") String machine,
 //                                             @Param("mtypeno") BigInteger machineno,
 //                                             @Param("rvdate") String rvdate);
+
+    // 예약하기
+    @Insert({"INSERT INTO reservation(cid, mno, rvdate, rvtime) VALUES(#{cid}, #{mno}, #{rvdate}, #{rvtime})"})
+    public int insertReserve(@Param("cid") String cid,
+                                 @Param("mno") Long mno,
+                                 @Param("rvdate") String rvdate,
+                                 @Param("rvtime") String rvtime);
 }
