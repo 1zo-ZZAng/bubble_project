@@ -1,100 +1,77 @@
 /*General Styling*/
 
-html, body {margin: 0px; padding: 0px;}
+html, body {margin: 0px; padding: 0px;
+    font-family: 'Open Sans', Futura,     Helvetica, Arial, sans-serif;}
 
-
-header {
-    font-family: 'Open Sans', Futura,     Helvetica, Arial, sans-serif;
-    position:relative;
-    text-align: center;
-    -webkit-font-smoothing: antialiased;
-    color: #1363DF;
-    background-color: #CCF2F4;
-}
-
-
-.container {
-  display: block;
-  height: 150px;
-}
-
-h1 {
-  font-size: 3em;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-top: 0;
-}
-
-.container>p {
-  font-size: 22px;
-  text-transform: uppercase;
-  margin-top: 40px;
-}
-
+    header {
+        font-family: 'Open Sans', Futura,     Helvetica, Arial, sans-serif;
+        position:relative;
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    
+    /* 공지사항 */
+    #notice {
+        background-color: black; 
+        color: white; /*폰트 색*/
+        padding: 10px 10px 10px 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    
+    /* 로고 */
+    #logo-section{
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+    
+    #logo-section p{
+      margin-bottom: 0px;
+    }
+    
+    #logo-section > #logo{
+        margin-top: 0px;
+    }
+    
+    /* 나중에 로고 넣으면 뺼 */
+    #logo-section > #logo a{
+        margin-top: 0px;
+    }
+    
+    .navigation .navlist ul li{
+        list-style: none;
+        float: left;
+        margin-left: 2%;
+    }
+    
 [href] {
-    color: #CCF2F4;
     text-decoration: none;
     font-size: inherit;
+    color: black;
 }
 
 /*--로그아웃 버튼 입니다--*/
 
 .nav ul li input { 
-    color: #CCF2F4;
+    /* color: #CCF2F4;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 3vw;
-    background-color: transparent;
+    background-color: transparent; */
 
     display: block; /*위치가 이상하다면 이걸 주석처리 해주세용 그러면 더 이상해지긴 합니다*/
 }
 
-.nav ul li input:hover{
-    color: #1C3879;
+.nav ul li input:hover,
+.nav ul li input:focus,
+.nav ul li input:active,
+{
+   
 }
 
 /*--여기 까지 로그아웃 버튼--*/
 
-
-/* 메뉴바 */
-
-.modal-nav {
-    width: 100%;
-    background-color: #1363DF;
-    height: 100px;
-}
-
-.navigation {
-    display: flex;
-}
-
-.nav ul li a:hover{
-    text-decoration: none;
-    color: #1C3879;
-}
-
-.nav ul li a{
-    padding:1em;
-    margin-top: 100px;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size:3vw;
-    letter-spacing: -0.08em;
-}
-
-.nav ul li{
-    display: inline-block;
-    font-size: 3em;
-}
-
-.nav ul{
-    clear: both;
-    width: 100%;
-    height: 100px;
-    text-align: center;
-    padding-top: 8px;
-    padding-left: 0px;
-}
 
 /*반응형 웹*/
 /* Portrait Tablet to Landscape and Desktop */

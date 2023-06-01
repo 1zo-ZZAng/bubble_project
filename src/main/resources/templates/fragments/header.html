@@ -4,14 +4,14 @@
 <head th:fragment="fragment-header">
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>버블버물</title>
+    <title>새로운 헤더</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!--1. BootStrap용 CSS CDM 추가-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 
 
-    <link rel='stylesheet' type='text/css' media='screen' href="/src/main/resources/static/css/layout.css">
+        <link rel='stylesheet' th:href="@{/css/home.css}" />
 
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -22,91 +22,86 @@
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
     </style>
 </head>
-
-<body th:fragment="header">
-    <header>
+<body>
+    <header th:fragment="header">
+        <div id="notice">
+            <a>공지사항 1</a>
+            <a>공지사항 2</a>
+            <a>공지사항 3</a>
+        </div>
         <div>
-            <div class="container" id="section1">
-                <h1>LOGO</h1>
+            <div class="container" id="logo-section">
                 <p>Coin , Laundry , Reserve !</p>
+                <div id="logo">
+                    <a th:href="@{/customer/home.bubble}">Bubble Bumul</a>
+                </div>
             </div>
             <div class="navigation">
-                <div class="modal-nav nav">
-                    <ul>
-                        <li><a href="#">HOME</a></li>
-                        <li><a th:href="@{/reserve/letsgo.bubble}">Reserve</a></li>
-                        <li><a href="#">Contact</a></li>
+                <div class="navlist">
+                  <a th:href="@{/customer/home.bubble}">Home</a>
+                  <a th:href="@{/customer/home.bubble}">Reserve</a>
+                  <a th:href="@{/customer/home.bubble}">Contact</a>
+                  <!-- 로그인 O -->
+                  <a th:if="${user != null}" th:href="@{/customer/mypage.bubble}">Mypage</a>
 
-                        <!-- 로그인 O -->
-                        <li th:if="${user != null}">
-                            <a th:href="@{/customer/mypage.bubble}">mypage</a>
-                        </li>
-                        <li th:if="${user != null}">
-                            <a href="javascript:logoutAction()">logout</a>
-                        </li>
-
-                        <!-- 로그인 X -->
-                        <li th:if="${user == null}">
-                            <a th:href="@{/customer/login.bubble}">login</a>
-                        </li>
-                        <li th:if="${user == null}">
-                            <a th:href="@{/customer/join.bubble}">join</a>
-                        </li>
-                    </ul>
+                <a th:if="${user != null}" href="javascript:logoutAction()">Logout</a>
+                <!-- 로그인 X -->
+                <a th:if="${user == null}" th:href="@{/customer/login.bubble}">Login</a>
+                <a th:if="${user == null}" th:href="@{/customer/join.bubble}">Join</a>
                 </div>
             </div>
         </div>
     </header>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    // 여우정
+    // Kakao.init('f761a223ea6f6b6f19c7d7cb193bdc41');
+    // 신애린
+    Kakao.init('51de80643ee3e6de36c332711a96b13b');
+    // 탁승은
+    // ?
 
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script th:inline="javascript" type="text/javascript">
-        // 여우정
-        // Kakao.init('f761a223ea6f6b6f19c7d7cb193bdc41');
-        // 신애린
-        Kakao.init('51de80643ee3e6de36c332711a96b13b');
-        // 탁승은
-        // ?
+    function logoutAction() {
+        if (confirm('로그아웃 하시겠습니까?')) {
+            const form = document.createElement("form");
+            form.setAttribute("action", [[@{/logout.bubble}]]);
+            form.setAttribute("method", "post");
+            form.style.display = "none";
 
-        function logoutAction() {
-            if (confirm('로그아웃 하시겠습니까?')) {
-                const form = document.createElement("form");
-                form.setAttribute("action", [[@{/logout.bubble}]]);
-                form.setAttribute("method", "post");
-                form.style.display = "none";
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "_csrf";
+            input.value = [[${ _csrf.token }]];
 
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "_csrf";
-                input.value = [[${ _csrf.token }]];
+            form.appendChild(input);
 
-                form.appendChild(input);
+            // 카카오로 소셜 로그인 한 경우
+            // console.log([[${user?.username}]]);
+            const userid = [[${user?.username}]]; // 로그인한 고객의 아이디
+            // console.log(userid.startsWith("kakao"));
+            if (userid.startsWith("kakao") == true) {
+                if (Kakao.Auth.getAccessToken()) {
 
-                // 카카오로 소셜 로그인 한 경우
-                // console.log([[${user?.username}]]);
-                const userid = [[${user?.username}]]; // 로그인한 고객의 아이디
-                // console.log(userid.startsWith("kakao"));
-                if (userid.startsWith("kakao") == true) {
-                    if (Kakao.Auth.getAccessToken()) {
+                    Kakao.API.request({
+                        url: '/v1/user/unlink',
+                        success: function (response) {
+                            // console.log(response)
+                        },
+                        fail: function (error) {
+                            console.log(error)
+                        },
+                    });
 
-                        Kakao.API.request({
-                            url: '/v1/user/unlink',
-                            success: function (response) {
-                                // console.log(response)
-                            },
-                            fail: function (error) {
-                                console.log(error)
-                            },
-                        });
-
-                        Kakao.Auth.setAccessToken(null);
-                    }
+                    Kakao.Auth.setAccessToken(null);
                 }
-
-                document.body.appendChild(form);
-                form.submit();
             }
+
+            document.body.appendChild(form);
+            form.submit();
         }
-    </script>
+    }
+</script>
 </body>
 
 </html>
