@@ -211,14 +211,49 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
-    
+    //다음글
+    @Override
+    public int nextBoardOne(long no) {
+        try {
+
+            return bMapper.nextBoardOne(no);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    //이전글
+    @Override
+    public int preBoardOne(long no) {
+        try {
+
+            return bMapper.preBoardOne(no);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    //전체 페이지 123456 
+    @Override
+    public List<Board> selectBoardListPage(int start, int end) {
+        try {
+
+            return bMapper.selectBoardListPage(start, end);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     
-
-
-
-
-    //페이지
 
     
 

@@ -27,6 +27,10 @@ public class Reserve {
     @Column(name = "RDATE", insertable = true, updatable = false)
     private Date rdate;
 
+    private String rvdate;
+
+    private String rvtime;
+
     private String id;
 
     private String name;
@@ -40,6 +44,8 @@ public class Reserve {
     private String extraaddress;
 
     private String wid;
+    
+    private String wnumber;
     
     private String wname;
     
