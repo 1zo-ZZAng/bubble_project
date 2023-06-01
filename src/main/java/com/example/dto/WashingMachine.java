@@ -11,6 +11,7 @@ public class WashingMachine {
     private String address;
     private String phone;
     private String ceo;
+    private Long no;
     private String type;
     private Long typeno;
     private Long price;

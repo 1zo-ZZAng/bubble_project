@@ -8,7 +8,6 @@ import lombok.Data;
 
 
 @Data
-@Immutable
 public class Reserve {
 
     private long rvno;

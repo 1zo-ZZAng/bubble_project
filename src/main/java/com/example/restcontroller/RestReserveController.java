@@ -33,7 +33,7 @@ public class RestReserveController {
     final WashingMachineMybatisService wmService;
     final ReserveMybatisService rService;
 
-    @GetMapping(value = "/selectcity.json")
+    @GetMapping(value = "/selectedcity.json")
     public Map<String, Object> selectcityGET(@RequestParam(name = "city") String city) {
         Map<String, Object> retMap = new HashMap<>();
 
@@ -102,8 +102,8 @@ public class RestReserveController {
         return retMap;
     }
 
-    @GetMapping(value = "/selectmachine.json")
-    public Map<String, Object> selectmachineGET(@RequestParam(name = "wnumber") String wnumber,
+    @GetMapping(value = "/selectedmachine.json")
+    public Map<String, Object> selectedmachineGET(@RequestParam(name = "wnumber") String wnumber,
                                                 @RequestParam(name = "machine") String machine,
                                                 @AuthenticationPrincipal User user) {
         Map<String, Object> retMap = new HashMap<>();
