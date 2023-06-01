@@ -1,5 +1,6 @@
 package com.example.service.jpa;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.example.dto.Washing;
 import com.example.dto.WashingMachine;
 import com.example.entity.Admin;
 import com.example.entity.Customer;
+import com.example.entity.WashingCheck;
 import com.example.entity.Washingmachine;
 import com.example.mapper.AdminMapper;
 import com.example.repository.AdminRepository;
@@ -46,16 +48,6 @@ public class AdminServiceImpl implements AdminService {
        }
     }
 
-    @Override
-    public List<Washing> selectWlistUnchecked(String chk) {
-        try {
-            return aMapper.selectWlistUnchecked(chk);
-       } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-       }
-    
-    }
 
     @Override
     public List<MachineCount> selectMCount(String wnumber) {
@@ -78,7 +70,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<String> selctChkList() {
+    public List<WashingCheck> selctChkList() {
         try {
             return aMapper.selctChkList();
            } catch (Exception e) {
@@ -86,6 +78,8 @@ public class AdminServiceImpl implements AdminService {
             return null;
            }
     }
+
+
 
 
 

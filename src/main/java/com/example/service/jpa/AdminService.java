@@ -1,16 +1,16 @@
 package com.example.service.jpa;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import com.example.dto.AdminChkList;
 import com.example.dto.MachineCount;
 import com.example.dto.Washing;
 import com.example.dto.WashingMachine;
-import com.example.entity.Admin;
-import com.example.entity.Customer;
-import com.example.entity.Washingmachine;
+import com.example.entity.WashingCheck;
 
 @Service
 public interface AdminService {
@@ -32,12 +32,12 @@ public interface AdminService {
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
     
-    //승인 대기/완료 업체 목록
-    public List<Washing> selectWlistUnchecked(@Param("chk") String chk);
+
 
 
     //업체승인 유무 select박스
-    public List<String> selctChkList();
+    public List<WashingCheck> selctChkList();
+
 
 
     //전체 게시판 조회

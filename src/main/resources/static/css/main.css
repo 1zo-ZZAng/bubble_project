@@ -333,12 +333,13 @@ select{
     border-bottom-right-radius: 0.5rem;
 }
 
-.datatable-bottom {
+/* .datatable-bottom {
     display: none;
-}
+} */
 
 /* 일괄승인 */
 #allbtn{
+    z-index: 999;
     float: right;
     margin-top: 20px;
     margin-right: 50px;
