@@ -5,7 +5,9 @@ package com.example.controller.jpa;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -134,7 +137,7 @@ public class AdminController {
     }
 
 
-    //업체별 보유기기목록 조회
+    //업체별 보유기기목록 조회 // 나중에 모달로 되면 좋겟당
     @GetMapping(value = "/wmlist.bubble")
     public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
         try {
@@ -172,21 +175,19 @@ public class AdminController {
     // --------------------------------------------------------------------------------------
 
 
-    //제휴 승인
-    @PostMapping(value = "/updateconfirm.bubble")
-    public String updateConfirmPOST(@RequestParam(name = "chk[]") String[] chk){
+    // //제휴 승인
+    @PostMapping(value = "/updatechk.bubble")
+    public String updatechkPOST(@RequestParam(name = "chk") String[] chk){
         try {
-            // 1. chk로 오는 사업자번호에 맞는 업체 하나 받아서 객체 생성
-            // 2. 1번 객체 set~~ chk 값 변경
-            // 3. 1번 객체 save
-            
+           for (int i=0; i<chk.length; i++) {
+            log.info(chk[i]);
+           }
+            // log.info(chk);
 
-            return "redirect:/admin/confirm.bubble?type=unchecked";
-            // List<Integer> chk = (List<Integer>) httpSession.getAttribute("chk[]");
-            // List<Washing> list = aMapper.selectWlistUnchecked(0);
+            return "redirect:/admin/confirm.bubble";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/admin/confirm?type=unchecked";
+            return "redirect:/admin/confirm.bubble";
         }
     }
 

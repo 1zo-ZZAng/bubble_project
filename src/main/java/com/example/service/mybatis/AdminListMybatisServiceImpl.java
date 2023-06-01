@@ -43,6 +43,16 @@ public class AdminListMybatisServiceImpl implements AdminListMybatisService {
            }
     }
 
+    @Override
+    public List<AdminChkList> selectWlistAfterUpdate() {
+        try {
+            return aMapper.selectWlistAfterUpdate();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+    }
+
     
     
 }

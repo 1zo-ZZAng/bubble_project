@@ -45,13 +45,27 @@ public interface AdminMapper {
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
     //제휴 승인 update
-
     @Update({" UPDATE washing SET chkno=1 WHERE wnumber=#{wnumber} "})
     public int updateChk(@Param("wnumber") String wnumber );
 
     //승인 대기/완료 업체 목록
     @Select({" SELECT * FROM ADMINCHKLIST WHERE wnumber IS NOT NULL AND chk=#{chk} GROUP BY address  "})
     public List<AdminChkList> selectWlistUnchecked(@Param("chk") String chk);
+
+
+
+
+    //---------------------------차트------------------------------
+    
+    //차트의 월별 선택
+    @Select({" SELECT DISTINCT (SUBSTRING(rvdate,0,7) ) FROM reserve "})
+    public String selectMonthBox();
+
+    //차트의 월 선택에 따른 매출 조회 // 이부분이 어떻게 되어야하나요 매퍼요정씨?
+    @Select({" SELECT rvdate, sum(mprice) FROM reserve WHERE SUBSTRING(rvdate,0,7)='?' GROUP BY rvdate "})
+    public List<String> selectMonthChart();
+
+    
 
     
 

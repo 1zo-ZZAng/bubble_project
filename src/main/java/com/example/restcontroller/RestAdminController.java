@@ -1,6 +1,7 @@
 package com.example.restcontroller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,19 +46,22 @@ public class RestAdminController {
     }
 
 
-    // @PostMapping(value = "/updatechk.json")
-    // public Map<String, Object> updatechkPOST(@RequestParam(name = "chk[]") String chk[]){
-    //     Map<String, Object> retMap = new HashMap<>();
-    //     try {
-    //         retMap.put("status", 200);
-            
-    //         retMap.put("chk[]", alService.updateChk());
+    @PostMapping(value = "/updatechk.json")
+    public Map<String, Object> updatechkPOST(@RequestBody List<Map<String,String>> bubble){
+        Map<String, Object> retMap = new HashMap<>();
+        try {
+            for(Map<String,String> map: bubble ){
+                retMap.put("status",200);
+                retMap.put("bubble",alService.updateChk(map.get("bubble")));
+            }   
+        } catch (Exception e) {
+            e.printStackTrace();
+            retMap.put("status", -1);
+            retMap.put("error", e.getMessage());
+        }
+        return retMap;
+    }
 
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         retMap.put("status", -1);
-    //         retMap.put("error", e.getMessage());
-    //     }
-    //     return retMap;
-    // }
+
+
 }

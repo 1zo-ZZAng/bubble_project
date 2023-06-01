@@ -16,4 +16,5 @@ public interface AdminListMybatisService {
 
     //승인 대기 -> 승인 
     public int updateChk(String wnumber);
+
 }
