@@ -33,6 +33,11 @@
     <!-- font awesome용 스크립트 CDN-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <style>
+        .datatable-bottom .datatable-info {
+            display: none;
+        }
+    </style>
 
     <script>
         $(document).ready(function(){
@@ -66,17 +71,6 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
             <i class="bi bi-list"></i>
         </button>
-
-        <!--Searchbar-->
-        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group"> input group 쓰면 태그 내에 있는 것들이 합쳐짐
-                <input class="form-control" type="text" placeholder="검색어 입력 ..." aria-label="검색어 입력 ..."
-                    aria-describedby="btnSearch">
-                <button class="btn btn-primary" id="btnSearch" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form> -->
 
         <!--Profile-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -369,6 +363,9 @@
                 fixedHeight: true,
             });
         });
+
+
+        
     </script>
 
 </body>
