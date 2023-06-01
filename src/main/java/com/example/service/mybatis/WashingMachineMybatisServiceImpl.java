@@ -24,5 +24,17 @@ public class WashingMachineMybatisServiceImpl implements WashingMachineMybatisSe
             return null;
         }
     }
+
+    // 예약 - 사업자번호, 기기명, 기기별 번호 => no 기기번호(시퀀스) 반환
+    @Override
+    public Long selectWashingmachineNo(String wnumber, String type, Long typeno) {
+        try {
+            return wmMapper.selectWashingmachineNo(wnumber, type, typeno);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return Long.valueOf(-1);
+        }
+    }
     
 }
