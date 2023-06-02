@@ -114,7 +114,7 @@ public class SecurityConfig {
             .antMatchers("/admin/join.bubble").permitAll()
             .antMatchers("/admin/login.bubble").permitAll()
             .antMatchers("/admin", "/admin/*").hasAuthority("ROLE_ADMIN") // 주소가 9090/bubble_bumul/admin ~ 인 모든 것
-            .antMatchers("/washing", "/washing/*", "/machine/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
+            .antMatchers("/washing", "/washing/*", "/machine/*","/wboard/*", "/washingsales/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_WASHING")
             .antMatchers("/customer", "/customer/*", "/reserve/*").hasAnyAuthority("ROLE_CUSTOMER", "ROLE_ADMIN")
             .anyRequest().permitAll();
             
