@@ -56,6 +56,19 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
     }
 
 
+    //해당업체의 월별사용자수
+    @Override
+    public List<Map<String, Object>> selectUserCnt(String wid) {
+        try {
+            return wMapper.selectUserCnt(wid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 
     

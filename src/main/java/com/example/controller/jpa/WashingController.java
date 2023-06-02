@@ -68,7 +68,10 @@ public class WashingController {
             List<Reserve> list = rService.selectReserve(user.getUsername());
 
             //월 매출
-            List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
+            // List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
+
+            //사용자수 (월 기준)
+            List<Map<String, Object>> list1 = wSalesMybatisService.selectUserCnt(user.getUsername());
 
             //연 매출
             List<Map<String, Object>> list2 = wSalesMybatisService.selectYearSales(user.getUsername());
