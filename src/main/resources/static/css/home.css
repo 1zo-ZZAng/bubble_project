@@ -153,12 +153,19 @@
     margin-left: 12px;
 }
 
-/* 메인 이미지 옆 line */
+/* 메인 이미지 옆 line
 #mainline{
     margin-left: 130px;
     width: 55%;
     border: solid 2px;
-    background-color: black;
+    
+} */
+
+
+.line {
+  border-top: 5px solid black;
+  width: 70px;
+  margin-left: 250px;
+  margin-top: 18px;
+  margin-bottom: 30px;
 }
-
-
