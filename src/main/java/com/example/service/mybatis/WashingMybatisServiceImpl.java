@@ -61,17 +61,17 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
         }
     }
 
-    //예약조회(업체별)
-    @Override
-    public List<Reserve> selectReserveList(String wname) {
-        try {
+    // //예약조회(업체별)
+    // @Override
+    // public List<Reserve> selectReserveList(String wname) {
+    //     try {
             
-            return wMapper.selectReserveList(wname);
+    //         return wMapper.selectReserveList(wname);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return null;
+    //     }
+    // }
     
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.Washing;
+import com.example.dto.WashingMachine;
 import com.example.service.jpa.CustomerService;
 import com.example.service.mybatis.CityMybatisService;
 import com.example.service.mybatis.ReserveMybatisService;
@@ -122,15 +124,40 @@ public class RestReserveController {
 
     @GetMapping(value = "/selecteddate.json")
     public Map<String, Object> selecteddateGET(@AuthenticationPrincipal User user,
-                                                @RequestParam(name = "wnumber") String wnumber,
-                                                @RequestParam(name = "machine") String machine,
-                                                @RequestParam(name = "machineno") BigInteger machineno,
-                                                @RequestParam(name = "rvdate") String rvdate) {
+                                               @RequestParam(name = "wnumber") String wnumber,
+                                               @RequestParam(name = "machine") String machine,
+                                               @RequestParam(name = "machineno") BigInteger machineno,
+                                               @RequestParam(name = "rvdate") String rvdate) {
         Map<String, Object> retMap = new HashMap<>();
 
         try {
             retMap.put("status", 200);
             retMap.put("useable", rService.selectUseableTime(wnumber, machine, machineno, rvdate));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            retMap.put("status", -1);
+            retMap.put("error", e.getMessage());
+        }
+        return retMap;
+    }
+
+    @GetMapping(value = "/reservecheck.json")
+    public Map<String, Object> reservecheckGET(@AuthenticationPrincipal User user,
+                                               @RequestParam(name = "wnumber") String wnumber,
+                                               @RequestParam(name = "machine") String machine,
+                                               @RequestParam(name = "machineno") BigInteger machineno) {
+        Map<String, Object> retMap = new HashMap<>();
+
+        try {
+            WashingMachine washingmachine = wmService.selectWashingNameAddressPhone(wnumber, machine, machineno);
+
+            retMap.put("status", 200);
+            retMap.put("wname", washingmachine.getName());
+            retMap.put("waddress", washingmachine.getAddress());
+            retMap.put("wphone", washingmachine.getPhone());
+            retMap.put("price", washingmachine.getPrice());
+            // retMap.put("runtime", washingmachine.getTime());
         }
         catch (Exception e) {
             e.printStackTrace();

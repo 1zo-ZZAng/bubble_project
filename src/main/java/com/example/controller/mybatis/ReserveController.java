@@ -1,19 +1,13 @@
 
 package com.example.controller.mybatis;
 
-import java.math.BigInteger;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.dto.Reserve;
 import com.example.service.mybatis.CityMybatisService;
 import com.example.service.mybatis.ReserveMybatisService;
 import com.example.service.mybatis.WashingMachineMybatisService;
@@ -45,33 +39,34 @@ public class ReserveController {
         }
     }
 
-    @PostMapping(value = "/letsgo.bubble")
-    public String letsgoPOST(@AuthenticationPrincipal User user,
-                             @RequestParam(name = "wnumber") String wnumber,
-                             @RequestParam(name = "machine") String machine,
-                             @RequestParam(name = "machineno") Long machineno,
-                             @RequestParam(name = "rvdate") String rvdate,
-                             @RequestParam(name = "rvtime") String rvtime) {
-        try {
-            // log.info(wnumber);
-            // log.info(machine);
-            // log.info(machineno.toString(0));
-            // log.info(rvdate);
-            // log.info(rvtime);
+    // @PostMapping(value = "/letsgo.bubble")
+    // public String letsgoPOST(@AuthenticationPrincipal User user,
+    //                          @RequestParam(name = "wnumber") String wnumber,
+    //                          @RequestParam(name = "machine") String machine,
+    //                          @RequestParam(name = "machineno") Long machineno,
+    //                          @RequestParam(name = "rvdate") String rvdate,
+    //                          @RequestParam(name = "rvtime") String rvtime) {
+    //     try {
+    //         log.info(wnumber);
+    //         log.info(machine);
+    //         log.info(machineno.toString());
+    //         log.info(rvdate);
+    //         log.info(rvtime);
 
-            // 기기번호(시퀀스) => reservation 테이블의 mno
-            Long mno = wmService.selectWashingmachineNo(wnumber, machine, machineno);
-            // log.info(String.valueOf(mno));
+    //         return "redirect:/reserve/reservecomplete.bubble";
+    //     }
+    //     catch (Exception e) {
+    //         e.printStackTrace();
+    //         return "redirect:/home.bubble";
+    //     }
+    // }
 
-            // 예약
-            // int ret = rService.insertReserve(user.getUsername(), mno, rvdate, rvtime);
-            // log.info(String.valueOf(ret));
 
-            return "/reserve/reservemain";
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/home.bubble";
-        }
-    }
+    // 기기번호(시퀀스) => reservation 테이블의 mno
+    // Long mno = wmService.selectWashingmachineNo(wnumber, machine, machineno);
+    // log.info(String.valueOf(mno));
+
+    // 예약
+    // int ret = rService.insertReserve(user.getUsername(), mno, rvdate, rvtime);
+    // log.info(String.valueOf(ret));
 }
