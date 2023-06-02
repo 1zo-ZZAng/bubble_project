@@ -122,10 +122,10 @@ public class RestReserveController {
 
     @GetMapping(value = "/selecteddate.json")
     public Map<String, Object> selecteddateGET(@AuthenticationPrincipal User user,
-                                               @RequestParam(name = "wnumber") String wnumber,
-                                               @RequestParam(name = "machine") String machine,
-                                               @RequestParam(name = "machineno") BigInteger machineno,
-                                               @RequestParam(name = "rvdate") String rvdate) {
+                                                @RequestParam(name = "wnumber") String wnumber,
+                                                @RequestParam(name = "machine") String machine,
+                                                @RequestParam(name = "machineno") BigInteger machineno,
+                                                @RequestParam(name = "rvdate") String rvdate) {
         Map<String, Object> retMap = new HashMap<>();
 
         try {
