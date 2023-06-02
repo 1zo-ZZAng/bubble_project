@@ -29,6 +29,8 @@ public class RestWashingSalesController {
     final WashingSalesMybatisService wSalesMybatisService;
     final WashingMybatisService wMybatisService;
 
+
+
 /* ================================================================================================ */
 
 
@@ -68,7 +70,7 @@ public class RestWashingSalesController {
     // 해당 업체의 월 매출
     //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/monthsales.bubble?wname=해당업체명
     @GetMapping(value="/monthsales.bubble")
-    public Map<String,Object> monthsalesGET(@RequestParam(name = "wid") String wid) {
+    public Map<String,Object> monthsalesGET(@RequestParam(name = "wid") String wid) { //@RequestBody Reserve reserve
 
         Map<String, Object> retMap = new HashMap<>();
 
@@ -77,10 +79,8 @@ public class RestWashingSalesController {
             log.info("업체 아이디 => {}",wid); 
 
             List<Map<String, Object>> list = wSalesMybatisService.selectMonthSales(wid);
-            
-            
 
-            log.info("매출조회 => {}", list.get(0)); //여기가 나와야 하는 상황
+            log.info("매출조회 => {}", list.toString());  
             
             retMap.put("status", 200);
             retMap.put("list", list);

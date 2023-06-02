@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
 import com.example.mapper.WashingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,20 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
     public List<Map<String, Object>> selectAllMonthSales() {
         try {
             return wMapper.selectAllMonthSales();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
+    //해당 업체 월매출 - controller용
+    @Override
+    public List<Reserve> selectMonthControllerSales(String wid) {
+        try {
+
+            return wMapper.selectMonthControllerSales(wid);
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;

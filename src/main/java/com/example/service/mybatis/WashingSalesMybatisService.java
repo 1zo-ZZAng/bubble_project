@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
+
 
 
 @Service
@@ -21,5 +23,9 @@ public interface WashingSalesMybatisService {
 
     //모든 업체의 월 매출
     public List<Map<String, Object>> selectAllMonthSales();
+
+
+    //해당 업체의 월매출 - controller
+    public List<Reserve> selectMonthControllerSales(String wid);
     
 }

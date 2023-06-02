@@ -1,6 +1,7 @@
 package com.example.controller.jpa;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import com.example.service.jpa.MailService;
 import com.example.service.jpa.ReserveService;
 import com.example.service.jpa.WashingService;
 import com.example.service.mybatis.WashingMybatisService;
+import com.example.service.mybatis.WashingSalesMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,7 @@ public class WashingController {
     final WashingService wService;
 
     final WashingMybatisService wMybatisService;
+    final WashingSalesMybatisService wSalesMybatisService;
     
     final ReserveService rService;
 
@@ -63,13 +66,19 @@ public class WashingController {
 
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername());
+
+            //월 매출
+            List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
+
+            //연 매출
+            List<Map<String, Object>> list2 = wSalesMybatisService.selectYearSales(user.getUsername());
             
         
             // log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list);
-            //
-
+            model.addAttribute("list1", list1);
+            model.addAttribute("list2", list2);
             model.addAttribute("user", user);
 
             return "/washing/home";

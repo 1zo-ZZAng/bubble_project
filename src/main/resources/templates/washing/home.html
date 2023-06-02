@@ -138,7 +138,8 @@
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <!-- <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a>  --> <!--수정수정수정수정크리스탈수정-->
                                 <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                             </nav>
                         </div>
@@ -275,7 +276,7 @@
                                     연매출
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
+                                    <canvas id="yearSalesChart" width="100%" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -376,10 +377,105 @@
         });
 
 
+        ////////////////////////////////////////////////차트//////////////////////////////////////////////////
 
-        //매출 그래프
+        //월 매출
+        var salesData = [[${list1}]];
 
-        //월매출 -- 눈물만 난다
+        console.log(salesData);
+
+        //확인용
+        for(let i=0; i<salesData.length; i++) {
+            console.log(salesData[i].TOTAL);
+            console.log(salesData[i].MONTHSALES);
+        }
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.TOTAL;
+        });
+
+        //년-달
+        var labels = salesData.map(function(monthly){
+            return monthly.MONTHSALES;
+        });
+
+
+        var ctx = document.getElementById("monthSalesChart");
+        var myChart = new Chart(ctx, {
+            type: 'line', //bar, line만 바꾸면 됨
+            animationEnabled: true,
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '월별 매출',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 100 // 100원 단위로
+                        }
+				}]
+                }
+            }
+        });
+
+
+        //연매출
+        var salesData = [[${list2}]];
+
+        console.log(salesData);
+
+        //확인용
+        for(let i=0; i<salesData.length; i++) {
+            console.log(salesData[i].TOTAL);
+            console.log(salesData[i].YEARSALES);
+        }
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.TOTAL;
+        });
+
+        //년
+        var labels = salesData.map(function(monthly){
+            return monthly.YEARSALES;
+        });
+
+
+        var ctx = document.getElementById("yearSalesChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', //bar, line만 바꾸면 됨
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '연 매출',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 100 // 100원 단위로
+                        }
+                }]
+                }
+            }
+        });
         
 
     </script>
