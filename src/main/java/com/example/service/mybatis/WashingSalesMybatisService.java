@@ -21,11 +21,4 @@ public interface WashingSalesMybatisService {
     //해당업체의 연매출
     public List<Map<String, Object>> selectYearSales(String wid);
 
-    //모든 업체의 월 매출
-    public List<Map<String, Object>> selectAllMonthSales();
-
-
-    //해당 업체의 월매출 - controller
-    public List<Reserve> selectMonthControllerSales(String wid);
-    
 }

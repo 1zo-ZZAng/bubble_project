@@ -132,36 +132,6 @@ public class RestWashingSalesController {
 
     /* --------------------------------------------------------------------------------------- */
 
-
-    //모든 업체의 월 매출
-    //주소 127.0.0.1:8282/bubble_bumul/api/washingsales/allmonthsales.bubble
-    @GetMapping(value="/allmonthsales.bubble")
-    public Map<String,Object> selectMonthSalesGET() {
-
-        Map<String, Object> retMap = new HashMap<>();
-
-        try {
-
-            List<Map<String, Object>> list = wSalesMybatisService.selectAllMonthSales();
-
-            log.info("내놔 => {}", list.toString()); //여기가 나와야 하는 상황
-            
-            retMap.put("status", 200);
-            retMap.put("list", list);
-
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            retMap.put("status", -1);
-            retMap.put("error", e.getMessage()); 
-        }
-
-        return retMap;
-        
-    }
-
-    
-    /* --------------------------------------------------------------------------------------- */
     
     
 
