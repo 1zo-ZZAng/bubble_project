@@ -30,7 +30,7 @@ public class WashingSalesController {
 
     //월 매출
     @GetMapping(value="/monthsales.bubble")
-    public String getMethodName(@AuthenticationPrincipal User user, Model model) { //@RequestParam(name = "wid") String wid,
+    public String monthGET(@AuthenticationPrincipal User user, Model model) { //@RequestParam(name = "wid") String wid,
 
         try {
 
@@ -38,10 +38,10 @@ public class WashingSalesController {
 
             log.info("매출 1 => {} ", list1.toString());
 
-            // for(Map<String, Object> list : list1) {
-            // log.info("매출 for문 => {} ", list.toString());
+            for(Map<String, Object> list : list1) {
+            log.info("매출 for문 => {} ", list.toString());
 
-            // }
+            }
 
 
             model.addAttribute("user", user);
@@ -59,7 +59,26 @@ public class WashingSalesController {
     
     /* --------------------------------------------------------------- */
     
-    //연매출
+    //일매출
+    @GetMapping(value="/daysales.bubble")
+    public String dayGET(@AuthenticationPrincipal User user, Model model) { 
+
+        try {
+
+            List<Map<String, Object>> list1 = wSalesMybatisService.selectDaySales(user.getUsername());
+
+            model.addAttribute("list1", list1);
+            model.addAttribute("user", user);
+
+            return "/washing/daysales";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/washing/home.bubble";
+        } 
+        
+    }
+
+
 
     
 

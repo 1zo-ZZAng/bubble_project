@@ -138,9 +138,8 @@
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <!-- <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a>  --> <!--수정수정수정수정크리스탈수정-->
-                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> 
+                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> 
                             </nav>
                         </div>
 
@@ -435,10 +434,10 @@
         console.log(salesData);
 
         //확인용
-        // for(let i=0; i<salesData.length; i++) {
-        //     console.log(salesData[i].TOTAL);
-        //     console.log(salesData[i].YEARSALES);
-        // }
+        for(let i=0; i<salesData.length; i++) {
+            console.log(salesData[i].TOTAL);
+            console.log(salesData[i].YEARSALES);
+        }
 
         //매출액
         var total = salesData.map(function(monthly) {

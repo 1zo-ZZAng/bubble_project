@@ -133,8 +133,8 @@
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> 
+                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> 
                             </nav>
                         </div>
 
@@ -202,8 +202,9 @@
 
                     <!--차트영역-->
                     <div class="row">
+
                         <!--라인 차트-->
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <ic class="fas fa-chart-area me-1"></ic>
@@ -217,21 +218,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--바 차트-->
-                        <div class="col-lg-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    연매출
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
 
@@ -269,45 +255,7 @@
 
 
     <script>
-        window.onload = function() {
 
-            // var wname = document.getElementById('wname');
-
-            var dataPoints = [];
-
-            var options =  {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Daily Sales Data"
-                },
-                axisX: {
-                    valueFormatString: "YYYY MMM DD",
-                },
-                axisY: {
-                    title: "total sales",
-                    titleFontSize: 24
-                },
-                data: [{
-                    type: "spline", 
-                    yValueFormatString: "$#,###.##",
-                    dataPoints: dataPoints
-                }]
-            };
-
-            function addData(data) {
-                for (var i = 0; i < data.length; i++) {
-                    dataPoints.push({
-                        x: new Date(data[i].date),
-                        y: data[i].units
-                    });
-                }
-                $("#daySalesChart").CanvasJSChart(options);
-
-            }
-            $.getJSON([[@{/api/washingsales/daysales.bubble}]] + `?wid=${wid}`, addData);
-
-            }
     </script>
 
 </body>
