@@ -30,7 +30,7 @@
     <header style="background-color: white;  position: fixed; top: 0; left: 0; right: 0;">
         <div id="notice">
             <a>신규 가입 10% 할인 쿠폰 > </a>
-            <a>[BS휴먼크린피아] 내부 수리 공지 > </a>
+            <a th:href="@{/board/}">[BS휴먼크린피아] 내부 수리 공지 > </a>
             <a>예약 시간 관련 공지 > </a>
         </div>
         <div>
@@ -44,7 +44,7 @@
                 <div class="navlist">
                   <a th:href="@{/customer/home.bubble}">Home</a>
                   <a th:href="@{/customer/home.bubble}">Reserve</a>
-                  <a th:href="@{/customer/home.bubble}">Contact</a>
+                  <a th:href="@{/customer/home.bubble}">Board</a>
                   <!-- 로그인 O -->
                     <div th:if="${user != null}">
                         <a th:href="@{/customer/mypage.bubble}">Mypage</a>
