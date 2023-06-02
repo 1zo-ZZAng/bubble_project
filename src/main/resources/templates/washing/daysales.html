@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="zizonZzang project">
+    <meta name="description" content="업체 페이지 대시보드 웹 템플릿 사용">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>BUBBLE BUMUL</title>
+
 
     <!-- 1. Bootstrap용 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,6 +30,12 @@
     <!-- font awesome용 스크립트 CDN-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <style>
+        .datatable-bottom .datatable-info {
+            display: none;
+        }
+    </style>
+
     <script>
         $(document).ready(function(){
             const sidebarToggle = $('#sidebarToggle');
@@ -41,62 +50,8 @@
         });
     </script>
 
-    <style>
-
-        /* *{
-            font-family: 'NanumSquareLight';
-        } */
-        /*select 부분 디자인임*/
-        select {
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            appearance: none;
-            
-            font-family: 'NanumSquareLight';
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            
-            color: #444;
-            background-color: #fff;
-            
-            padding: .6em 1.4em .5em .8em;
-            margin: 0;
-            
-            border: 1px solid #aaa;
-            border-radius: .5em;
-            box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-            }
-
-            select:hover {
-            border-color: #888;
-            }
-
-            select:focus {
-            border-color: #aaa;
-            box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-            box-shadow: 0 0 0 3px -moz-mac-focusring;
-            color: #222;
-            outline: none;
-            }
-
-            select:disabled {
-            opacity: 0.5;
-            }
-
-            /* label {
-            font-family: "Noto Sans KR", sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.3;
-            
-            color: #444;
-            
-            margin-right: 0.5em;
-            } */
-    </style>
-
 </head>
+
 <body class="sb-nav-fixed">
     
     <!--내비게이션 영역-->
@@ -240,78 +195,41 @@
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">게시판</h1>
+                    <h1 class="mt-4">매출</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">글조회</li>
+                        <li class="breadcrumb-item active">일매출</li>
                     </ol>
 
+                    <!--차트영역-->
+                    <div class="row">
+                        <!--라인 차트-->
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <ic class="fas fa-chart-area me-1"></ic>
+                                    일매출
+                                </div>
+                                <div class="card-body">
+                                    <!--여기서 차트가 만들어짐-->
+                                    <!-- <canvas id="daySalesChart" width="100%" height="50"></canvas> -->
+                                    <canvas id="daySalesChart" width="100%" height="50"></canvas>
 
-                    <div class="container">
-                        <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
-
-                            <div hidden>
-                                <label for="no">글번호</label>
-                                <p id="no" name="no" th:text="${board.no}"></p>
-                            </div>
-
-                            <div class="board" style="float: left; margin-right: 3rem;" >
-                                <label for="writer">작성자</label>
-                                <p th:text="${board.writer}"></p>
-                            </div>
-
-                            <!--작성일자-->
-                            <div>
-                                <label for="regdate">작성일</label>
-                                <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
-                            </div>
-                            
-                            <!--제목-->
-                            <div>
-                                <label for="title" style="float: left; margin-right: 3rem;">제목</label>
-                                <p th:text="${board.title}" ></p>
-                            </div>
-
-                            <!--본문 내용 부분-->
-                            <div>
-                                <label for="content">내용</label>
-                                <p th:utext="${board.content}"></p> <!--utext로 해야 p태그 em안나옴-->
-                            </div>
-
-                            <div>
-                                <label for="hit" style="float: left; margin-right: 3rem;">조회수</label>
-                                <p th:text="${board.hit}"></p>
-                            </div>
-
-
-                            <!--버튼-->
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
-
-                            <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
-                            <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
-                                <div th:if="${board.writer} == ${user.username}"> <!--작성자와 로그인된 아이디가 일치시-->
-                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
-                                    <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
-                                        <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
-                                        <input type="submit" value="삭제" class="btn btn-primary"/> 
-                                    </form>
                                 </div>
                             </div>
-
-                            
-
-                            <!-- <div style="margin-top: 10px;">
-                                <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
-                                    <a href="#" class="btn btn-primary" onclick="prePageAction('${pre}')">이전글</a> 
-                                </div>
-
-                                <div th:if="${next > 0}">
-                                    <a href="#" class="btn btn-primary" onclick="nextPageAction('${next}')">다음글</a>
-                                </div>
-                            </div> -->
-                            
                         </div>
-                        <!--여기 까지 버튼-->
-                        
+
+                        <!--바 차트-->
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    연매출
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -319,7 +237,6 @@
 
             </main>
 
-            <!--하단영역-->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid py-4">
                     <div class="d-flex justify-content-between align-items-center small">
@@ -334,42 +251,63 @@
 
 
         </div>
+    </div>
 
-
-    <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <!-- 2. Bootstrap용 js는 body에 위치해야 함! -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 
-    <script th:inline="javascript" type="text/javascript"> 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-        //조회수 증가 및 페이지 이동
-        // async function ajaxUpdateHit1(no){
 
-        //     console.log('no값 => ',no);
+    <!--Chart.js용 CDN 구버전에서 신버전으로 컨버전 작업 필요함 (나중에)-->
+    <!--Chart.js용 CDN 구버전에서 신버전으로 컨버전 작업 필요함 (나중에)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
 
-        //     const pre = document.getElementById('${pre}');
-        //     const next = document.getElementById('${next}');
 
-        //     const url = @{/api/wboard/updatehit.bubble} +`?no=${no}`; //주석 풀면 대괄호 두개 넣을 것
-        //     const headers = {"Content-Type":"application/json"};
+    <script>
+        window.onload = function() {
 
-        //     const {data} = await axios.put(url, {}, {headers});
+            // var wname = document.getElementById('wname');
 
-        //     console.log(data.result); //왜 값이 0이지? 1이 나와야하는거 아닌가
+            var dataPoints = [];
 
-        //     if(data.result === 1) {
-        //         // 2.  상세화면페이지로 전환
-        //         window.location.href='/wboard/selectone.bubble?no=' + no;
-        //     }else {
-        //         alert('이동할 수 없습니다.');
-        //         return false;
-        //     }
+            var options =  {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Daily Sales Data"
+                },
+                axisX: {
+                    valueFormatString: "YYYY MMM DD",
+                },
+                axisY: {
+                    title: "total sales",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline", 
+                    yValueFormatString: "$#,###.##",
+                    dataPoints: dataPoints
+                }]
+            };
 
-        // }
+            function addData(data) {
+                for (var i = 0; i < data.length; i++) {
+                    dataPoints.push({
+                        x: new Date(data[i].date),
+                        y: data[i].units
+                    });
+                }
+                $("#daySalesChart").CanvasJSChart(options);
 
+            }
+            $.getJSON([[@{/api/washingsales/daysales.bubble}]] + `?wid=${wid}`, addData);
+
+            }
     </script>
 
 </body>

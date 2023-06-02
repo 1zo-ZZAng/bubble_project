@@ -33,6 +33,11 @@
     <!-- font awesome용 스크립트 CDN-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <style>
+        .datatable-bottom .datatable-info {
+                display: none;
+            }
+    </style>
 
     <script>
         $(document).ready(function(){
@@ -149,7 +154,7 @@
 
                         <!--예약-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
                             예약
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -223,6 +228,7 @@
                                             <tr>
                                                 <th>예약번호</th>
                                                 <th>예약날짜</th>
+                                                <th>세탁예약날짜</th>
                                                 <th>고객 아이디</th>
                                                 <th>고객이름</th>
                                                 <th>고객 전화번호</th>
@@ -240,6 +246,7 @@
                                             <tr th:each="obj : ${list}">
                                                 <td th:text="${obj.rvno}"></td>
                                                 <td th:text="${obj.rdate}"></td>
+                                                <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
                                                 <td th:text="${obj.id}"></td>
                                                 <td th:text="${obj.name}"></td>
                                                 <td th:text="${obj.phone}"></td>

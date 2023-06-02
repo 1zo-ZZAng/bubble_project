@@ -34,6 +34,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
+
+    <style>
+        .datatable-bottom .datatable-info {
+            display: none;
+        }
+    </style>
+
     <script>
         $(document).ready(function(){
             const sidebarToggle = $('#sidebarToggle');
@@ -66,17 +73,6 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
             <i class="bi bi-list"></i>
         </button>
-
-        <!--Searchbar-->
-        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group"> input group 쓰면 태그 내에 있는 것들이 합쳐짐
-                <input class="form-control" type="text" placeholder="검색어 입력 ..." aria-label="검색어 입력 ..."
-                    aria-describedby="btnSearch">
-                <button class="btn btn-primary" id="btnSearch" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form> -->
 
         <!--Profile-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -142,14 +138,15 @@
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <!-- <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a>  --> <!--수정수정수정수정크리스탈수정-->
+                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                             </nav>
                         </div>
 
                         <!--예약-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
                             예약
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -260,11 +257,12 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <ic class="fas fa-chart-area me-1"></ic>
-                                    일매출
+                                    월매출
                                 </div>
                                 <div class="card-body">
                                     <!--여기서 차트가 만들어짐-->
-                                    <canvas id="daySalesChart" width="100%" height="50"></canvas>
+                                    <!-- <div id="daySalesChart" style="width: 100%; height: 50;"></div> -->
+                                    <canvas id="monthSalesChart" width="100%" height="50"></canvas>
 
                                 </div>
                             </div>
@@ -278,7 +276,7 @@
                                     연매출
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
+                                    <canvas id="yearSalesChart" width="100%" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -330,6 +328,7 @@
 
             </main>
 
+            <!--하단영역-->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid py-4">
                     <div class="d-flex justify-content-between align-items-center small">
@@ -349,6 +348,11 @@
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -356,19 +360,124 @@
 
     <!--Chart.js용 CDN 구버전에서 신버전으로 컨버전 작업 필요함 (나중에)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/washing/chartDaysales.js}"></script>
-    <script src="js/chart-bar-demo.js"></script>
-    <script src="js/chart-pie-demo.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
 
     <!-- Simple DataTable용 JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script th:inline="javascript">
+    <script th:inline="javascript" type="text/javascript">
+
+        //예약내역 표
         $(document).ready(function() {
             new simpleDatatables.DataTable("#datatableSimple", {
                 searchable: true,
                 fixedHeight: true,
             });
         });
+
+
+        ////////////////////////////////////////////////차트//////////////////////////////////////////////////
+
+        //월 매출
+        var salesData = [[${list1}]];
+
+        console.log(salesData);
+
+        //확인용
+        for(let i=0; i<salesData.length; i++) {
+            console.log(salesData[i].TOTAL);
+            console.log(salesData[i].MONTHSALES);
+        }
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.TOTAL;
+        });
+
+        //년-달
+        var labels = salesData.map(function(monthly){
+            return monthly.MONTHSALES;
+        });
+
+
+        var ctx = document.getElementById("monthSalesChart");
+        var myChart = new Chart(ctx, {
+            type: 'line', //bar, line만 바꾸면 됨
+            animationEnabled: true,
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '월별 매출',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 100 // 100원 단위로
+                        }
+				}]
+                }
+            }
+        });
+
+
+        //연매출
+        var salesData = [[${list2}]];
+
+        console.log(salesData);
+
+        //확인용
+        // for(let i=0; i<salesData.length; i++) {
+        //     console.log(salesData[i].TOTAL);
+        //     console.log(salesData[i].YEARSALES);
+        // }
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.TOTAL;
+        });
+
+        //년
+        var labels = salesData.map(function(monthly){
+            return monthly.YEARSALES;
+        });
+
+
+        var ctx = document.getElementById("yearSalesChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', //bar, line만 바꾸면 됨
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '연 매출',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 100 // 100원 단위로
+                        }
+                }]
+                }
+            }
+        });
+        
+
     </script>
 
 </body>

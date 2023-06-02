@@ -19,10 +19,10 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
     //일매출
     @Override
-    public List<Map<String, Object>> selectDaySales(String wname) {
+    public List<Map<String, Object>> selectDaySales(String wid) {
         try {
 
-            return wMapper.selectDaySales(wname);
+            return wMapper.selectDaySales(wid);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,10 +33,10 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
     //해당업체의 월매출
     @Override
-    public List<Map<String, Object>> selectMonthSales(String wname) {
+    public List<Map<String, Object>> selectMonthSales(String wid) {
         try {
 
-            return wMapper.selectMonthSales(wname);
+            return wMapper.selectMonthSales(wid);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,9 +46,9 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
     //해당업체의 연매출
     @Override
-    public List<Map<String, Object>> selectYearSales(String wname) {
+    public List<Map<String, Object>> selectYearSales(String wid) {
         try {
-            return wMapper.selectYearSales(wname);
+            return wMapper.selectYearSales(wid);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -56,16 +56,6 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
     }
 
 
-    //모든업체의 월 매출
-    @Override
-    public List<Map<String, Object>> selectAllMonthSales() {
-        try {
-            return wMapper.selectAllMonthSales();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
     
