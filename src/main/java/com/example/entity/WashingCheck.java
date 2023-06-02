@@ -22,7 +22,7 @@ public class WashingCheck {
 
 
     @Id
-    @Column(name = "no")
+    @Column(columnDefinition="long default 0", name = "no")
     private BigInteger no;
 
     private String chk;

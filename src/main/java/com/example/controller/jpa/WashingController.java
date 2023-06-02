@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.dto.SendMail;
 import com.example.entity.Reserve;
 import com.example.entity.Washing;
+import com.example.entity.WashingCheck;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.MailService;
 import com.example.service.jpa.ReserveService;
@@ -149,6 +150,8 @@ public class WashingController {
 
             //확인용
             log.info("회원가입 => {}", washing.toString());
+
+            
 
             //회원가입
             wService.joinWashing(washing);
