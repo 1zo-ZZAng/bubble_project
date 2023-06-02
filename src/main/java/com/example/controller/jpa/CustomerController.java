@@ -95,7 +95,7 @@ public class CustomerController {
 
             cService.insertCustomer(customer);
 
-            return "redirect:/home.bubble";
+            return "redirect:/customer/home.bubble";
         }
         catch (Exception e) {
             e.printStackTrace();

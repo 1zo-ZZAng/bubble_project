@@ -17,21 +17,25 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+
     <!-- font -->
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+        @import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap');
     </style>
+        
 </head>
-<body>
-    <header th:fragment="header">
+<body th:fragment="header" id="header">
+    <header style="background-color: white;  position: fixed; top: 0; left: 0; right: 0;">
         <div id="notice">
-            <a>공지사항 1</a>
-            <a>공지사항 2</a>
-            <a>공지사항 3</a>
+            <a>신규 가입 10% 할인 쿠폰 > </a>
+            <a>[BS휴먼크린피아] 내부 수리 공지 > </a>
+            <a>예약 시간 관련 공지 > </a>
         </div>
         <div>
             <div class="container" id="logo-section">
-                <p>Coin , Laundry , Reserve !</p>
+                <p style="background-color: black; color: white; width: 200px; padding-left: 3px;"> Coin , Laundry , Reserve !</p>
                 <div id="logo">
                     <a th:href="@{/customer/home.bubble}">Bubble Bumul</a>
                 </div>
@@ -42,12 +46,20 @@
                   <a th:href="@{/customer/home.bubble}">Reserve</a>
                   <a th:href="@{/customer/home.bubble}">Contact</a>
                   <!-- 로그인 O -->
-                  <a th:if="${user != null}" th:href="@{/customer/mypage.bubble}">Mypage</a>
-
-                <a th:if="${user != null}" href="javascript:logoutAction()">Logout</a>
-                <!-- 로그인 X -->
-                <a th:if="${user == null}" th:href="@{/customer/login.bubble}">Login</a>
-                <a th:if="${user == null}" th:href="@{/customer/join.bubble}">Join</a>
+                    <div th:if="${user != null}">
+                        <a th:href="@{/customer/mypage.bubble}">Mypage</a>
+                    </div>
+                    <div th:if="${user != null}" >
+                        <a href="javascript:logoutAction()">Logout</a>
+                    </div>
+                    <!-- 로그인 X -->
+                    <div  th:if="${user == null}">
+                        <a th:href="@{/customer/login.bubble}">Login</a>
+                    </div>
+                    
+                    <div  th:if="${user == null}">
+                        <a th:href="@{/customer/join.bubble}">Join</a>
+                    </div>
                 </div>
             </div>
         </div>

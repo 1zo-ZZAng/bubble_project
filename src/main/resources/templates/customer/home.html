@@ -13,7 +13,17 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel='stylesheet' th:href="@{/css/bootstrap.min.css.map}" />
     <link rel='stylesheet' th:href="@{/css/home.css}" />
+
+    <!--탭 아이콘 변경-->
+    <link rel="icon" th:href="@{/images/iconlog.png}">   
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -112,26 +122,29 @@
 
     <div class="maincontainer">
         <!-- 제일 먼저 보이는 화면 -->
-        <div class="top-1">
+        <div class="top-1" id="section1">
             <div class="top-2">
                 <div class="row">
                     <div class="col-6 img-intro">
-                        <img th:src="@{/images/white.png}" style="width: 500px; height: 600px; border-radius: 20px;"> 
+                        <img th:src="@{/images/white.png}" style="margin-left: 25px; width: 900px; height: 600px;"> 
                     </div>
                     <div class="col-6">
                         <div class="text">
                             <h3>BUBBLE BUMUL</h3>
-                            <p>아직도 빨래방 이용하려고 기다리시나요?<br />당신의 소중한 시간을 위해<br />저희 예약 서비스를 이용해보세요!</p>
+                            <p>아직도 빨래방 이용하려고 기다리시나요?<br />여러분의 소중한 시간 <br />버블버물이 지켜드립니다 !</p>
                             <div class="top-button" id="section2">
-                                <a class="btn btn-primary" href="#section3">예약하러 가기</a>
-                                <a class="btn btn-secondary" href="#section4">우리동네 빨래방 찾기</a>
+                                <a class="btn btn-primary" href="#section3">Go to Reserve !</a>
+                                <a class="btn btn-secondary" href="#section4">Find Laundry Shop !</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- 소개글 -->
+        <div id="topload">
+            <a href="#section1"><img th:src="@{/images/upload.png}"style="width: 40px;"></img></a>
+        </div>
+            <!-- 소개글 -->
         <div class="row gx-4 gx-lg-5 main-info">
             <div class="main-info-title">
                 <h2>버블버물 서비스 소개</h2>
@@ -165,7 +178,7 @@
             </div>
         </div>
         <!-- 매장 찾기 -->
-        <!-- <div class="find-washing text-white my-5 mt-5 py-4 text-center" 
+        <div class="find-washing text-white my-5 mt-5 py-4 text-center" 
             style="width: 1800px; height: 300px;">
             <div class="card-body find-washing-title">
                 <h3>우리동네 코인빨래방을 찾아보세요!</h3>
@@ -180,10 +193,10 @@
                     <button class="btn btn-primary">검색하기</button>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- 예약 기능 소개 -->
-        <!-- <div class="reserve-info" id="section3">
+        <div class="reserve-info" id="section3">
             <div class="reserve-info-title">
                 <h3>예약은 이렇게 진행됩니다!</h3>
             </div>
@@ -208,15 +221,15 @@
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, molestiae?</p>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- 맨 밑 퀵버튼 -->
-        <!-- <div class="quick-button">
+        <div class="quick-button">
             <button><a th:href="@{/customer/reserve.bubble}">빨래 먼저 하기</a></button>
-            <button><a href="#section1">맨위로</a></button>
+            
             <button><a href="#">제휴 문의</a></button>
         </div>
-    </div> -->
+    </div>
 
 
 </body>
