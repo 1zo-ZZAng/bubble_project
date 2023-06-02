@@ -21,6 +21,11 @@
     font-family: 'NanumSquare';
 }
 
+#notice [href] {
+    text-decoration: none;
+    color: white;
+}
+
 /* 로고 */
 #logo-section{
     margin-left: 20px;
@@ -47,7 +52,8 @@
 
 
 
- *,
+/* header navbar */
+*,
 *:before,
 *:after{
     padding: 0;
@@ -56,10 +62,12 @@
 }
 
 .navlist{
-    /* height: 100vh; */
+    float: right;
     width: 70vw;
     min-width: 600px;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 
 }
 
@@ -89,6 +97,16 @@
     width: 100%;
 }
 
+#search{
+    float: right;
+    margin-top: 0px;
+    top: 15px;
+    right: 40px;
+    width: 67px;
+    height: 67px;
+    padding: 10px;
+}
+
 
 /* top 버튼 */
 #topload{
@@ -101,9 +119,46 @@
 
 /* top text */
 .text{
-    margin-left: 100px;
+    margin-left: 200px;
     margin-top: 50px;
 }
 
+
+/* 메인 화면 */
+
+/* 메인 이미지 */
+#mainimg{
+    margin-left: 25px; 
+    width: 1000px; 
+    height: 600px;
+}
+
+/* 메인 이미지 옆 글 */
+#maintext{
+    padding: 5%;
+}
+#bubblebumul{
+    font-family: 'Geologica', sans-serif;
+    font-size: 50px;
+    font-weight: 800;
+    text-align: center;
+    /* color: steelblue; */
+}
+
+#bubbletext{
+    margin-left: 150px;
+}
+
+#section2{
+    margin-left: 12px;
+}
+
+/* 메인 이미지 옆 line */
+#mainline{
+    margin-left: 130px;
+    width: 55%;
+    border: solid 2px;
+    background-color: black;
+}
 
 
