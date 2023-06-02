@@ -23,16 +23,16 @@
 						<div class="card-body">
 
                             <!--로그인-->
-							<h4 class="card-title">Login</h4>
+							<h4 class="card-title">로그인</h4>
 
                             <form th:action="@{/washing/loginaction.bubble}" method="post" id="form">
 
                                 <!--아이디-->
 								<div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
-									<label for="id">Id
+									<label for="id"> 아이디
 
                                         <!--아이디 찾기-->
-                                        <a th:href="@{/washing/findid.bubble}" class="float-right"> Forgot Id? </a> 
+                                        <a th:href="@{/washing/findid.bubble}" class="float-right"> 아이디 찾기 </a> 
 
                                     </label>
                                     <input type="text" id="id" name="id" class="form-control" required autofocus  />
@@ -41,8 +41,8 @@
 
                                 <!--비밀번호-->
 								<div class="form-group">
-									<label for="password">Password 
-                                        <a href="" class="float-right"> Forgot Password? </a> <!--비밀번호 찾기 아직 안했음-->
+									<label for="password"> 비밀번호
+                                        <a th:href="@{/washing/findpw.bubble}" class="float-right"> 비밀번호 찾기 </a> <!--비밀번호 찾기 아직 안했음-->
                                     </label>
                                     <input type="password" id="password" name="password" class="form-control" required data-eye />
                                     <!-- <div class="invalid-feedback">
@@ -52,19 +52,20 @@
 
                                 <!--로그인 실패시 뜨는 문구-->
                                 <div class="form-group" th:if="${param.error}">
-                                    <p th:text="'흥... 틀렸어'" class="alert alert-danger"></p> <!--th:text="${exception}"-->
+                                    <p th:text="'아이디 또는 비밀번호가 틀렸습니다'" style="color: red;"></p> <!--th:text="${exception}"-->
                                 </div>
 
                                 <!--로그인 버튼-->
 								<div class="form-group m-0">
-									<input type="button" value="Login" class="btn btn-primary btn-block" onclick="loginAction()"  />
+									<input type="button" value="로그인" class="btn btn-primary btn-block" onclick="loginAction()"  />
 								</div>
 
                                 
 
                                 <!--회원가입-->
 								<div class="mt-4 text-center">
-									Don't have an account? <a th:href="@{/washing/join.bubble}">Create One</a>
+									계정이 없으십니까? <a th:href="@{/washing/join.bubble}">회원가입</a> <br>
+                                    <!-- 사업자등록번호 조회 <a th:href="@{/washing/bncheck.bubble}">사업자등록번호</a> -->
 								</div>
 							</form>
 						</div>
