@@ -176,20 +176,28 @@
                             </nav>
                         </div>
 
-                        <!--게시판-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
-                            <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
-                            게시판
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingFour" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
-                                <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
-                            </nav>
-                        </div>
+                        
 
-                    
+
+                            <!--게시판-->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
+                                <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
+                                게시판
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseWBoard" aria-labelledby="headingFour" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
+                                    <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
+                                </nav>
+                            </div>
+
+
+                        
+
+                        
+                        
+
                     </div>
                 </div>
 
@@ -327,6 +335,8 @@
     <!-- Simple DataTable용 JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
     <script th:inline="javascript" type="text/javascript">
+
+        
 
         //예약내역 표
         $(document).ready(function() {
