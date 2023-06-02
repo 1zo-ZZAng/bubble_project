@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.Washing;
 
 
+
 @Repository
 public interface WashingRepository extends JpaRepository<Washing, String> {
 

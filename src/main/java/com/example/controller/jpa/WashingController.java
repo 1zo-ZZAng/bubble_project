@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.dto.SendMail;
 import com.example.entity.Reserve;
 import com.example.entity.Washing;
-import com.example.entity.WashingCheck;
 import com.example.repository.WashingRepository;
 import com.example.service.jpa.MailService;
 import com.example.service.jpa.ReserveService;
@@ -76,6 +75,10 @@ public class WashingController {
 
             //연 매출
             List<Map<String, Object>> list2 = wSalesMybatisService.selectYearSales(user.getUsername());
+
+
+            Washing washing = wRepository.findById(user.getUsername()).orElse(null);
+            
             
         
             // log.info("예약내역 조회 => {}", list.toString());
@@ -84,6 +87,7 @@ public class WashingController {
             model.addAttribute("list1", list1);
             model.addAttribute("list2", list2);
             model.addAttribute("user", user);
+            model.addAttribute("washing", washing);
 
             return "/washing/home";
 
@@ -151,8 +155,6 @@ public class WashingController {
             //확인용
             log.info("회원가입 => {}", washing.toString());
 
-            
-
             //회원가입
             wService.joinWashing(washing);
 
@@ -184,11 +186,10 @@ public class WashingController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble";
+            return "redirect:/home.bubble"; //고객 홈으로 이동
         }
 
     }
-
 
     /* ---------------------------------------------- */
 
@@ -199,6 +200,7 @@ public class WashingController {
 
             log.info("아이디 => {}", id.toString());
 
+             //기존 데이터 읽어오기
             Washing obj = wRepository.findById(id).orElse(null);
 
             model.addAttribute("washing", obj);
@@ -254,7 +256,6 @@ public class WashingController {
 
             model.addAttribute("user", user);
             model.addAttribute("washing", obj);
-
 
             return "/washing/pwupdate";
             
