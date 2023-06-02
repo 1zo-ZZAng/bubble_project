@@ -45,22 +45,25 @@
                                     </label>
                                     <input type="password" id="password" name="password" class="form-control" required
                                         data-eye />
+                                </div>
 
-
+                                <div class="form-group" th:if="${param.error}">
+                                    <p th:text="'아이디 또는 비밀번호가 틀렸습니다'" style="color: red;"></p>
                                 </div>
 
                                 <!--로그인 버튼-->
                                 <div class="form-group m-0">
                                     <input type="button" value="Login" class="btn btn-primary btn-block"
                                         onclick="loginAction()" />
-
+                                </div>
                                 <div class="mt-3 mb-3 text-center">
                                     <span style="display:block;">Login with Social Account</span>
                                 </div>
-                                <div class="mt"
-                                <a id="kakao-login-btn" href="javascript:loginWithKakao()">
-                                    <img th:src="@{/images/kakao-login.png}" alt="카카오 로그인 버튼" width="335" height="50">
-                                </a>
+                                <div class="mt">
+                                    <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+                                        <img th:src="@{/images/kakao-login.png}" alt="카카오 로그인 버튼" width="335" height="50">
+                                    </a>
+                                </div>
 
                                 <!--회원가입-->
                                 <div class="mt-4 text-center">
@@ -139,61 +142,61 @@
 
                             // 성공시 이동할 페이지
                             const url = [[@{/api/customer/kakaologin.bubble}]];
-                    const headers = { "Content-Type": "application/json" };
-                    const body = { "email": email, "id": id };
-                    const { data } = await axios.post(url, body, { headers: headers });
+                            const headers = { "Content-Type": "application/json" };
+                            const body = { "email": email, "id": id };
+                            const { data } = await axios.post(url, body, { headers: headers });
 
-                    // console.log(data.ret);
+                            // console.log(data.ret);
 
-                    if (data.ret == 1) { // 기존 회원이 카카오로 로그인 => home 화면으로
-                        location.href = "http://127.0.0.1:8282/bubble_bumul/customer/home.bubble";
-                    }
-                    else if (data.ret == 0) { // 기존 회원이 아님 => 추가 데이터를 받아서 회원가입
-                        // console.log(id);
-                        // console.log(email);
-                        // console.log(nickname);
+                            if (data.ret == 1) { // 기존 회원이 카카오로 로그인 => home 화면으로
+                                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/home.bubble";
+                            }
+                            else if (data.ret == 0) { // 기존 회원이 아님 => 추가 데이터를 받아서 회원가입
+                                // console.log(id);
+                                // console.log(email);
+                                // console.log(nickname);
 
-                        const form = document.createElement("form");
-                        form.setAttribute("action", [[@{/customer/kakaojoin.bubble}]]);
-            form.setAttribute("method", "post");
-            form.style.display = "none";
+                                const form = document.createElement("form");
+                                form.setAttribute("action", [[@{/customer/kakaojoin.bubble}]]);
+                                form.setAttribute("method", "post");
+                                form.style.display = "none";
 
-            const input1 = document.createElement("input");
-            input1.setAttribute("type", "hidden");
-            input1.setAttribute("name", "id");
-            input1.setAttribute("value", id);
+                                const input1 = document.createElement("input");
+                                input1.setAttribute("type", "hidden");
+                                input1.setAttribute("name", "id");
+                                input1.setAttribute("value", id);
 
-            const input2 = document.createElement("input");
-            input2.setAttribute("type", "hidden");
-            input2.setAttribute("name", "email");
-            input2.setAttribute("value", email);
+                                const input2 = document.createElement("input");
+                                input2.setAttribute("type", "hidden");
+                                input2.setAttribute("name", "email");
+                                input2.setAttribute("value", email);
 
-            const input3 = document.createElement("input");
-            input3.setAttribute("type", "hidden");
-            input3.setAttribute("name", "name");
-            input3.setAttribute("value", nickname);
+                                const input3 = document.createElement("input");
+                                input3.setAttribute("type", "hidden");
+                                input3.setAttribute("name", "name");
+                                input3.setAttribute("value", nickname);
 
-            const input4 = document.createElement("input");
-            input4.type = "hidden";
-            input4.name = "_csrf";
-            input4.value = [[${ _csrf.token }]];
+                                const input4 = document.createElement("input");
+                                input4.type = "hidden";
+                                input4.name = "_csrf";
+                                input4.value = [[${ _csrf.token }]];
 
-            form.appendChild(input1);
-            form.appendChild(input2);
-            form.appendChild(input3);
-            form.appendChild(input4);
+                                form.appendChild(input1);
+                                form.appendChild(input2);
+                                form.appendChild(input3);
+                                form.appendChild(input4);
 
-            document.body.appendChild(form);
-            form.submit();
-        }
+                                document.body.appendChild(form);
+                                form.submit();
+                            }
 						}
 					})
 		        },
-        fail: function(err) {
-            alert(JSON.stringify(err));
+                fail: function(err) {
+                    alert(JSON.stringify(err));
+                }
+            });
         }
-			});
-		}
     </script>
 </body>
 
