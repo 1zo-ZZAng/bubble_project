@@ -2,8 +2,6 @@ package com.example.dto;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Immutable;
-
 import lombok.Data;
 
 
@@ -13,6 +11,10 @@ public class Reserve {
     private long rvno;
 
     private Date rdate;
+
+    private String rvdate;
+
+    private String rvtime;
 
     private String id;
 
@@ -27,6 +29,8 @@ public class Reserve {
     private String extraaddress;
 
     private String wid;
+
+    private String wnumber;
     
     private String wname;
     

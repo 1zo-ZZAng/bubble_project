@@ -1,6 +1,9 @@
 package com.example.controller.jpa;
 
+import java.io.Console;
 import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +23,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.dto.Reserve;
 import com.example.dto.SendMail;
 import com.example.entity.Customer;
 import com.example.service.jpa.CustomerService;
 import com.example.service.jpa.MailService;
+import com.example.service.mybatis.ReserveMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
     final CustomerService cService;
     final MailService mService; // 비밀번호 찾기 - 이메일 전송
+    final ReserveMybatisService rService;
 
     // 암호화
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -258,6 +264,7 @@ public class CustomerController {
         try {
             model.addAttribute("user", user);
 
+            List<Reserve> reserveList = rService.selectReserveList(user.getUsername());
             Customer customer = cService.selectCustomerOne(user.getUsername());
             
             if (customer != null) {
@@ -265,7 +272,7 @@ public class CustomerController {
                 model.addAttribute("grade", customer.getGrade());
 
                 if (menu == 1) { // 예약 내역 조회
-                    
+                    model.addAttribute("reserveList", reserveList);
                 }
                 else if (menu == 2) { // 회원정보 수정
                     model.addAttribute("customer", customer);
@@ -277,7 +284,6 @@ public class CustomerController {
                 return "redirect:/customer/login.bubble";
             }
 
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -288,7 +294,7 @@ public class CustomerController {
     @PostMapping(value = "/mypage.bubble")
     public String mypagePOST(@RequestParam(name = "menu") int menu,
                              @AuthenticationPrincipal User user,
-                             @ModelAttribute Customer obj) {
+                             @ModelAttribute Customer obj, Model model) {
         try {
             if (menu == 1) { // 예약 내역 조회
 
@@ -298,17 +304,27 @@ public class CustomerController {
                 Customer customer = cService.selectCustomerOne(user.getUsername());
     
                 if (customer != null) {
-                    // 2. 변경 항목을 바꿈 (이름, 전화번호, 이메일, 주소(주소, 상세주소, 참고항목))
-                    customer.setName(obj.getName());
-                    customer.setPhone(obj.getPhone());
-                    customer.setEmail(obj.getEmail());
-                    customer.setAddress(obj.getAddress());
-                    customer.setDetailaddress(obj.getDetailaddress());
-                    customer.setExtraaddress(obj.getExtraaddress());
-        
-                    // 3. 다시 저장
-                    cService.insertCustomer(customer);
-                    return "redirect:/customer/mypage.bubble?menu=2";
+                    if (bcpe.matches(obj.getPassword(), customer.getPassword())) {
+                        // 2. 변경 항목을 바꿈 (이름, 전화번호, 이메일, 주소(주소, 상세주소, 참고항목))
+                        customer.setName(obj.getName());
+                        customer.setPhone(obj.getPhone());
+                        customer.setEmail(obj.getEmail());
+                        customer.setAddress(obj.getAddress());
+                        customer.setDetailaddress(obj.getDetailaddress());
+                        customer.setExtraaddress(obj.getExtraaddress());
+            
+                        // 3. 다시 저장
+                        cService.insertCustomer(customer);
+
+                        model.addAttribute("msg", "정보 수정이 완료되었습니다.");
+                        model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
+
+                        return "message";
+                    }
+                    model.addAttribute("msg", "비밀번호를 정확하게 입력해주세요.");
+                    model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
+
+                    return "message";
                 }
             }
     
@@ -322,10 +338,34 @@ public class CustomerController {
 
     // --------------------------------------------------------------------------------------
 
+    // 예약 내역 상세
+    @GetMapping(value = "/reservedetail.bubble")
+    public String reserveoneGET(Model model, @AuthenticationPrincipal User user,
+                                @RequestParam(name = "rvno") BigInteger rvno){
+        try {
+            model.addAttribute("user", user);
+
+            model.addAttribute("reserveOne", rService.selectReserveOne(rvno));
+
+            return "/customer/reservedetail";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/customer/home.bubble";
+        }
+    }
+
+    // 예약 취소
+    
+
+    // --------------------------------------------------------------------------------------
+
     // 비밀번호 변경
     @GetMapping(value = "/updatepw.bubble")
-    public String updatepwGET() {
+    public String updatepwGET(Model model, @AuthenticationPrincipal User user) {
         try {
+            model.addAttribute("user", user);
+
             return "/customer/updatepw";
         }
         catch (Exception e) {
@@ -380,8 +420,10 @@ public class CustomerController {
 
     // 탈퇴
     @GetMapping(value = "/delete.bubble")
-    public String deleteGET() {
+    public String deleteGET(Model model, @AuthenticationPrincipal User user) {
         try {
+            model.addAttribute("user", user);
+            
             return "/customer/delete";
         }
         catch (Exception e) {

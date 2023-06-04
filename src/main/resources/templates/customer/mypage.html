@@ -24,9 +24,20 @@
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- Simple DataTable용 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .rlist {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 </head>
-<header th:replace="~{/fragments/header.html :: header}"></header>
 <body>
+    <header th:replace="~{/fragments/header.html :: header}"></header>
+
     <div class="maincontainer">
         <h3>MYPAGE</h3>
 
@@ -42,7 +53,27 @@
         <a th:href="@{/customer/mypage.bubble(menu=2)}">회원 정보 수정</a>
 
         <div th:if="${#strings.equals(param.menu, '1')}">
-
+            <!-- 예약 내역 조회 -->
+            <table id="datatableSimple">
+                <thead>
+                    <tr>
+                        <th>예약번호</th>
+                        <th>세탁소</th>
+                        <th>세탁소 주소</th>
+                        <th>예약일</th>
+                        <th>예약 시간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="list : ${reserveList}">
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a></td>
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.wname}"></a></td>
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.waddress}"></a></td>
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvdate}"></a></td>
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvtime}"></a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div th:if="${#strings.equals(param.menu, '2')}">
@@ -55,7 +86,7 @@
                     </tr>
                     <tr>
                         <td><label for="password">비밀번호</label></td>
-                        <td><input type="password" th:field="${customer.password}" id="password" name="password" autoComplete="off" readonly /></td>
+                        <td><input type="password" th:field="${customer.password}" id="password" name="password" autoComplete="off" /></td>
                         <td><a th:href="@{/customer/updatepw.bubble}" class="btn btn-primary">비밀번호 변경</a></td>
                     </tr>
                     <tr>
@@ -127,6 +158,13 @@
     </div>
 
     </form>
+
+    <!--2. BootStrap용 JS는 body태그 내 맨 아래에 위치해야 함-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+     <!-- Simple DataTable용 JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -207,6 +245,7 @@
         }
 
         function updateOne() {
+            const password = document.getElementById("password");
             const name = document.getElementById("name");
             const phone = document.getElementById("phone");
             const email = document.getElementById("email");
@@ -214,6 +253,12 @@
 
             // 유효성 검사
             // 1. 모든 항목이 입력되어 있어야함
+            if (password.value.length <= 0) {
+                alert('비밀번호를 입력하세요.');
+                password.focus();
+                return false; // 함수종료, 전송하지 않음
+            }
+
             if (name.value.length <= 0) {
                 alert('이름을 입력하세요.');
                 name.focus();
@@ -239,8 +284,19 @@
             }
 
             document.getElementById("updateform").submit();
-            alert('정보 수정이 완료되었습니다.');
         }
+
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const menuParam = urlParams.get('menu');
+
+            if (menuParam === '1') {
+                new simpleDatatables.DataTable("#datatableSimple", {
+                    searchable: true,
+                    fixedHeight: true,
+                });
+            }
+        });
     </script>
 </body>
 
