@@ -81,6 +81,8 @@ public class MachineController {
     public String machineinsertGET( Model model, @AuthenticationPrincipal User user, @ModelAttribute Machine machine) {
 
         try {
+
+            
             
             model.addAttribute("wid", user.getUsername()); 
             model.addAttribute("user", user);
