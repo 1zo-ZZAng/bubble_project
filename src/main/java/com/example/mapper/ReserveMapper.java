@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.example.dto.Reserve;
+
 @Mapper
 public interface ReserveMapper {
     // 기기별 시간
@@ -31,6 +33,18 @@ public interface ReserveMapper {
 //                                             @Param("type") String machine,
 //                                             @Param("mtypeno") BigInteger machineno,
 //                                             @Param("rvdate") String rvdate);
+
+    // 예약 내역 조회 - 목록 (예약번호, 세탁소명, 세탁소 주소, 예약일, 예약시간)
+    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime FROM reserve WHERE id=#{id} ORDER BY rvno DESC"})
+    public List<Reserve> selectReserveList(@Param("id") String id); 
+
+    // 예약 내역 상세
+    @Select({"SELECT rvno, wname, waddress, wphone, rvdate, rvtime, mtype, mtypeno, mprice, mtime FROM reserve WHERE rvno=#{rvno}"})
+    public Reserve selectReserveOne(@Param("rvno") BigInteger rvno);
+
+    // 예약 취소 - 예약번호로 해당 예약 찾기
+    @Select({"SELECT * FROM reserve WHERE rvno=#{rvno}"})
+    public Reserve selectReserveRvno(@Param("rvno") BigInteger rvno);
 
     // 예약하기
     @Insert({"INSERT INTO reservation(cid, mno, rvdate, rvtime) VALUES(#{cid}, #{mno}, #{rvdate}, #{rvtime})"})

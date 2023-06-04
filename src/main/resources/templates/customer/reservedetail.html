@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel='stylesheet' th:href="@{/css/home.css}" />
+    <!--탭 아이콘 변경-->
+    <link rel="icon" th:href="@{/images/iconlog.png}">   
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+
+    <style>
+        .tdc {
+            width: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header th:replace="~{/fragments/header.html :: header}"></header>
+
+    <div class="maincontainer">
+        <h3>예약 상세 내역</h3>
+
+        <div>
+            <table>
+                <tr th:each="one : ${reserveOne}">
+                    <td>예약 번호</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.rvno}"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>세탁소</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.wname}"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>세탁소 주소</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.waddress}"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>세탁소 연락처</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.wphone}"></td>
+                </tr>
+                <tr>
+                    <td>예약일</td>
+                    <td class="tdc"> : </td>
+                    <td id="rvdate"></td>
+                </tr>
+                <tr>
+                    <td>예약 시간</td>
+                    <td class="tdc"> : </td>
+                    <td id="rvtime"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>기기 종류</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.mtype}"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>기기 번호</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="|${one.mtypeno}번|"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>이용 요금</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="|${one.mprice}원|"></td>
+                </tr>
+                <tr th:each="one : ${reserveOne}">
+                    <td>작동 시간</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="|${one.mtime}분|"></td>
+                </tr>
+                <!-- <tr>
+                    <td><button class="btn btn-primary">예약 취소</button></td>
+                </tr> -->
+            </table>
+        </div>
+
+        <div>
+            <input type="button" value="예약 취소" onclick="reserveCancel()" class="btn btn-primary"/>
+        </div>
+    </div>
+
+    <script th:inline="javascript" type="text/javascript">
+        // 예약일
+        let rvdate = [[${reserveOne.rvdate}]];
+        // console.log(rvdate);
+
+        let rvdatesplit = rvdate.split('-');
+        // for (let i=0; i<rvdatesplit.length; i++) {
+        //     console.log(rvdatesplit[i]);
+        // }
+
+        let year = rvdatesplit[0];
+        let month = parseInt(rvdatesplit[1]);
+        let day = parseInt(rvdatesplit[2]);
+        let formattedDate = year + '년 ' + month + '월 ' + day + '일';
+        // console.log(formattedDate);
+
+        document.getElementById("rvdate").textContent = formattedDate;
+
+        // ----------------------------------------------------------------------
+
+        // 예약 시간
+        let rvtime = [[${reserveOne.rvtime}]];
+        
+        let rvtimesplit = rvtime.split(':');
+
+        let hour = rvtimesplit[0];
+        let minute = rvtimesplit[1];
+        let formattedTime = hour + '시 ' + minute + '분';
+
+        document.getElementById("rvtime").textContent = formattedTime;
+    </script>
+</body>
+</html>
