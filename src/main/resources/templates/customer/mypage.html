@@ -39,18 +39,27 @@
     <header th:replace="~{/fragments/header.html :: header}"></header>
 
     <div class="maincontainer">
-        <h3>MYPAGE</h3>
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page">Mypage</p>
+        </div>
+        <div id="gradepart">
+            <div id="grade">
+                <img id="gradeicon" th:src="@{/images/}">
+                고객 등급 : 
+                <th:block th:switch="${grade}">
+                    <span th:case="'1'">세탁 초보</span>
+                    <span th:case="'2'">세탁 프로</span>
+                    <span th:case="'3'">세탁 요정</span>
+                </th:block>
+            </div>
+        </div>
 
-        고객 등급 : 
-        <th:block th:switch="${grade}">
-            <span th:case="'1'">세탁 초보</span>
-            <span th:case="'2'">세탁 프로</span>
-            <span th:case="'3'">세탁 요정</span>
-        </th:block>
-        <br/>
-
-        <a th:href="@{/customer/mypage.bubble(menu=1)}">예약 내역 조회</a>
-        <a th:href="@{/customer/mypage.bubble(menu=2)}">회원 정보 수정</a>
+        <div id="mypagesection">
+            <a th:href="@{/customer/mypage.bubble(menu=1)}">예약 내역 조회</a>
+            <p>ㅣ</p>
+            <a th:href="@{/customer/mypage.bubble(menu=2)}">회원 정보 수정</a>
+        </div>
 
         <div th:if="${#strings.equals(param.menu, '1')}">
             <!-- 예약 내역 조회 -->
