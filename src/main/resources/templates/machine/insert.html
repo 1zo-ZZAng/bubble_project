@@ -322,6 +322,25 @@
 
 
         }
+
+
+        // 데이터베이스에 있는 기기 번호 목록
+        var existingDeviceNumbers = [1, 2, 3, 4];
+
+        // 페이지 로드 시 기기 번호 선택 상자 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            var typenoSelect = document.getElementById('typeno');
+
+            // 데이터베이스에 없는 기기 번호만 선택 상자에 추가
+            for (var i = 1; i <= 4; i++) {
+                if (!existingDeviceNumbers.includes(i)) {
+                    var option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    typenoSelect.appendChild(option);
+                }
+            }
+        });
     </script>
 
 </body>

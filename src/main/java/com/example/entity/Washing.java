@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -48,7 +47,7 @@ public class Washing {
     private WashingCheck washingcheck; // 승인 대기
 
 
-    //machine쪽 외래키 여기서 
+    //machine쪽 외래키 여기서
     @ToString.Exclude
     @OneToMany(mappedBy = "washing", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Machine> machine = new ArrayList<>();

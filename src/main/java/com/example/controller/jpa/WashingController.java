@@ -81,6 +81,8 @@ public class WashingController {
 
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
+
+            log.info("값 => {}",washing.getWashingcheck().getNo());
             
             
         
@@ -122,7 +124,7 @@ public class WashingController {
                             @RequestParam(name = "pnm") String pnm){
         try {
             httpSession.setAttribute("bno", bno);
-            httpSession.setAttribute("pnm", pnm);  
+            httpSession.setAttribute("pnm", pnm); 
             
             return "redirect:/washing/join.bubble";
         } catch (Exception e) {

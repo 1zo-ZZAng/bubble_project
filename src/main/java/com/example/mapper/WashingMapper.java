@@ -110,7 +110,7 @@ public interface WashingMapper {
 	public List<Map<String, Object>> selectUserCnt(@Param("wid") String wid);
 
 	//최근 일주일 사용자 수 (메인페이지에)
-	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid='a' AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') GROUP BY rvdate "})
+	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') GROUP BY rvdate "})
 	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
 
 }

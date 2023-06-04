@@ -90,9 +90,7 @@ public interface BoardMapper {
     public int preBoardOne(@Param("no") long no);
     
     //페이징
-    @Select({" SELECT b.* FROM( ",
-            " SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b ", 
-            " WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
+    @Select({" SELECT b.* FROM( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
 	public List<Board> selectBoardListPage(@Param("start") int start, @Param("end") int end);
 
     /* ====================검색======================= */

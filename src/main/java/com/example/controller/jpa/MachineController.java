@@ -51,13 +51,16 @@ public class MachineController {
     //기기조회
 
     @GetMapping(value="/selectlist.bubble")
-    public String selectlistGET(Model model, @ModelAttribute Machine machine, @RequestParam(name = "wid") String wid, @AuthenticationPrincipal User user) {
+    public String selectlistGET(Model model, @RequestParam(name = "wid") String wid, @AuthenticationPrincipal User user) {
         try {
 
             List<Machine> list = mRepository.findByWashing_idOrderByNoDesc(wid);
 
-            model.addAttribute("wid", user.getUsername()); 
+//            Washing washing = wRepository.findById(user.getUsername()).orElse(null);
+
+            model.addAttribute("wid", user.getUsername());
             model.addAttribute("user", user);
+//            model.addAttribute("washing", washing);
             model.addAttribute("list", list);
 
             return "/machine/selectlist";

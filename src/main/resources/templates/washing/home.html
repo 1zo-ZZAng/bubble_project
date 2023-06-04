@@ -138,46 +138,45 @@
                             메인
                         </a>
 
-                        <!--매출-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
-                            <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
-                            매출
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> 
-                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> 
-                            </nav>
-                        </div>
+                        <div th:if="${washing.washingcheck.no != 0}">
+                                
+                            <!--매출-->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
+                                <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
+                                매출
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> 
+                                    <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> 
+                                </nav>
+                            </div>
 
-                        <!--예약-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
-                            예약
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
-                            </nav>
-                        </div>
+                            <!--예약-->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
+                                <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
+                                예약
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
+                                </nav>
+                            </div>
 
-                        <!--보유기기-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
-                            <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
-                            보유기기
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseMachines" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
-                                    <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
-                            </nav>
-                        </div>
-
-                        
-
+                            <!--보유기기-->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
+                                <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
+                                보유기기
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseMachines" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
+                                        <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
+                                </nav>
+                            </div>
 
                             <!--게시판-->
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
@@ -192,12 +191,8 @@
                                 </nav>
                             </div>
 
-
+                        </div>
                         
-
-                        
-                        
-
                     </div>
                 </div>
 

@@ -299,7 +299,7 @@
 
                             
 
-                            <!-- <div style="margin-top: 10px;">
+                            <div style="margin-top: 10px;">
                                 <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
                                     <a href="#" class="btn btn-primary" onclick="prePageAction('${pre}')">이전글</a> 
                                 </div>
@@ -307,7 +307,7 @@
                                 <div th:if="${next > 0}">
                                     <a href="#" class="btn btn-primary" onclick="nextPageAction('${next}')">다음글</a>
                                 </div>
-                            </div> -->
+                            </div>
                             
                         </div>
                         <!--여기 까지 버튼-->
@@ -345,7 +345,13 @@
 
     <script th:inline="javascript" type="text/javascript"> 
 
-        //조회수 증가 및 페이지 이동
+        // 페이지 이동
+
+     // function nextPageAction(next){
+
+            window.location.href = '/wboard/selectone.bubble?no='+next;
+
+     //   }
         // async function ajaxUpdateHit1(no){
 
         //     console.log('no값 => ',no);
@@ -353,20 +359,9 @@
         //     const pre = document.getElementById('${pre}');
         //     const next = document.getElementById('${next}');
 
-        //     const url = @{/api/wboard/updatehit.bubble} +`?no=${no}`; //주석 풀면 대괄호 두개 넣을 것
-        //     const headers = {"Content-Type":"application/json"};
 
-        //     const {data} = await axios.put(url, {}, {headers});
+        //     window.location.href='/wboard/selectone.bubble?no=' + no;
 
-        //     console.log(data.result); //왜 값이 0이지? 1이 나와야하는거 아닌가
-
-        //     if(data.result === 1) {
-        //         // 2.  상세화면페이지로 전환
-        //         window.location.href='/wboard/selectone.bubble?no=' + no;
-        //     }else {
-        //         alert('이동할 수 없습니다.');
-        //         return false;
-        //     }
 
         // }
 
