@@ -153,14 +153,6 @@
     margin-left: 12px;
 }
 
-/* 메인 이미지 옆 line
-#mainline{
-    margin-left: 130px;
-    width: 55%;
-    border: solid 2px;
-    
-} */
-
 
 .line {
   border-top: 5px solid black;
@@ -168,4 +160,9 @@
   margin-left: 250px;
   margin-top: 18px;
   margin-bottom: 30px;
+}
+
+
+#info{
+    display: flex;
 }
