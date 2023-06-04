@@ -67,12 +67,6 @@ public class WashingController {
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername());
 
-            //월 매출
-            // List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
-
-            //사용자수 (월 기준)
-            //List<Map<String, Object>> list1 = wSalesMybatisService.selectUserCnt(user.getUsername());
-
             //최근 일주일간 사용자 수
             List<Map<String, Object>> list1 = wSalesMybatisService.selectWeekUserCnt(user.getUsername());
 
@@ -82,7 +76,7 @@ public class WashingController {
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
 
-            log.info("값 => {}",washing.getWashingcheck().getNo());
+            log.info("승인여부 => {}",washing.getWashingcheck().getNo());
             
             
         
