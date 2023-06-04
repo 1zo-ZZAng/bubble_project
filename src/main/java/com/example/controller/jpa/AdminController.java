@@ -119,12 +119,23 @@ public class AdminController {
         try {
             
            int wc =  aService.washingCount();
-           //월 총매출
+           //월별 총매출
            List<Map<String, Object>> msaleslist = aService.selectMonthAllSales();
+           //최근예약추이
+            
+            //예약 날짜 목록 최신순
+            Reserve RvdateList = aService.selectRvdateList();
+            //예약등록 날짜 목록 최신순
+            Reserve RdateList = aService.selectRdateList();
+
            
+        //    log.info("allList=>{}",allList.toString());
             model.addAttribute("wc", wc);
+            model.addAttribute("RvdateList", RvdateList);
+            model.addAttribute("RdateList", RdateList);
+            model.addAttribute("msaleslist", msaleslist);
             model.addAttribute("user", user);
-            log.info("{}", model);
+            // log.info("{}", model);
             return "/admin/adhome";
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,7 +153,7 @@ public class AdminController {
                 List<Washing> list = aService.selectWList();
                 // log.info("{}", list.toString());
                 model.addAttribute("list", list);
-                log.info("{}",model.toString());             
+                // log.info("{}",model.toString());             
        
             return "/admin/wlist";
         } catch (Exception e) {
@@ -158,12 +169,12 @@ public class AdminController {
     @GetMapping(value = "/wmlist.bubble")
     public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
         try {
-            //보유기기 표
+            //보유기기 표 list
             List<MachineCount> list = aService.selectMCount(wnumber);
-            //월별 매출 조회
+            //월별 매출 조회 mlist
             List<Map<String,Object>> mlist = aService.selectMonthWashingChart(wnumber);
             
-            //업체별 매출 조회
+            //업체별 매출 조회 mdlist
             List<Map<String,Object>> mdlist = aService.selectMonthDateWashingChart(wnumber);
             //-----------------------차트-------------------------
 
@@ -225,7 +236,7 @@ public class AdminController {
     @GetMapping(value = "/customerlist.bubble")
     public String selectCustomerListGET(Model model){
         try {
-            List<Customer> list = cService.findAllByOrderByNameAsc();
+            List<Customer> list = aService.selectCustomer();
             log.info("{}",list.toString());
             model.addAttribute("list", list);
 

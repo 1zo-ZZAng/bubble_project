@@ -28,6 +28,44 @@ public class AdminServiceImpl implements AdminService {
     final AdminMapper aMapper;
 
 
+    //--------------관리자홈----------------
+    @Override
+    public Reserve selectRvdateList() {
+        try {
+            return aMapper.selectRvdateList();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Reserve selectRdateList() {
+        try {
+            return aMapper.selectRdateList();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public int washingCount() {
+        try {
+            return aMapper.washingCount();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
+
+
+    
+
     @Override
     public List<Washing> selectWList() {
         try {
@@ -81,15 +119,7 @@ public class AdminServiceImpl implements AdminService {
            }
     }
 
-    @Override
-    public int washingCount() {
-        try {
-            return aMapper.washingCount();
-           } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-           }
-    }
+
 
     @Override
     public int todayRVWashingCount(String wnumber) {
@@ -101,6 +131,16 @@ public class AdminServiceImpl implements AdminService {
            }
     }
 
+    @Override
+    public List<Customer> selectCustomer() {
+        try {
+            return aMapper.selectCustomer();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+
+    }
 
 
 //---------------------------차트------------------------------
@@ -146,15 +186,7 @@ public class AdminServiceImpl implements AdminService {
            }
     }
 
-    @Override
-    public Reserve selectRvList() {
-        try {
-            return aMapper.selectRvList();
-           } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-           }
-    }
+
 
     @Override
     public List<Map<String, Object>> selectMonthDateWashingChart(String wnumber) {
@@ -186,6 +218,19 @@ public class AdminServiceImpl implements AdminService {
             return null;
            }
     }
+
+    @Override
+    public List<Washing> selectAllWasingList() {
+        try {
+            return aMapper.selectAllWasingList();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+    }
+
+
+
 
         
 }

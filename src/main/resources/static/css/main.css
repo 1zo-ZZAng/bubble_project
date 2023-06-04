@@ -44,6 +44,18 @@ p {
     z-index: 999;
 }
 
+.row{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.col-lg-4{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .sb-nav-fixed #layoutTotal #layoutLeftSide {
     width: 225px;
     height: 100vh;

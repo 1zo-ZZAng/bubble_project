@@ -12,6 +12,7 @@ import com.example.dto.MachineCount;
 import com.example.dto.Reserve;
 import com.example.dto.Washing;
 import com.example.dto.WashingMachine;
+import com.example.entity.Customer;
 import com.example.entity.WashingCheck;
 
 @Service
@@ -26,6 +27,9 @@ public interface AdminService {
     //업체리스트 전체 조회
     public List<Washing> selectWList();
 
+    //업체리스트 전체 조회(제휴 유무 x)
+    public List<Washing> selectAllWasingList();
+
     //업체별 오늘의 예약 건
     public int todayRVWashingCount(String wnumber);
 
@@ -36,9 +40,17 @@ public interface AdminService {
     public List<MachineCount> selectMCount(@Param("wnumber") String wnumber);
     public String selectWashingNameOne(@Param("wnumber") String wnumber);
 
-    
+    //회원목록
+    public List<Customer> selectCustomer();
+
     //제휴 업체 수
     public int washingCount();
+
+    //예약 날짜 목록 최신순
+    public Reserve selectRvdateList();
+
+    //예약등록 날짜 목록 최신순
+    public Reserve selectRdateList();
 
 
     //업체승인 유무 select박스
@@ -68,8 +80,6 @@ public interface AdminService {
 
     public int todayRVCount();
 
-    //예약 목록 최신순
-    public Reserve selectRvList();
 
     //월별 매출 조회 box
     public List<String> selectMonthBoxList(@Param("wnumber") String wnumber);
