@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.dto.Reserve;
 import com.example.dto.Washing;
 
 
@@ -106,8 +105,12 @@ public interface WashingMapper {
 	@Select({" SELECT wname, SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now()  GROUP BY SUBSTRING(rvdate, 0,4), wname"})
 	public List<Map<String, Object>> selectAllMonthSales();
 
-	//월별사용자수 => 메인페이지에 띄우기
+	//월별사용자수
 	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthly, count(*) usercnt FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() GROUP BY SUBSTRING(rvdate, 0,7) "})
 	public List<Map<String, Object>> selectUserCnt(@Param("wid") String wid);
+
+	//최근 일주일 사용자 수 (메인페이지에)
+	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid='a' AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') GROUP BY rvdate "})
+	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
 
 }

@@ -71,7 +71,10 @@ public class WashingController {
             // List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
 
             //사용자수 (월 기준)
-            List<Map<String, Object>> list1 = wSalesMybatisService.selectUserCnt(user.getUsername());
+            //List<Map<String, Object>> list1 = wSalesMybatisService.selectUserCnt(user.getUsername());
+
+            //최근 일주일간 사용자 수
+            List<Map<String, Object>> list1 = wSalesMybatisService.selectWeekUserCnt(user.getUsername());
 
             //연 매출
             List<Map<String, Object>> list2 = wSalesMybatisService.selectYearSales(user.getUsername());
@@ -83,9 +86,9 @@ public class WashingController {
         
             // log.info("예약내역 조회 => {}", list.toString());
 
-            model.addAttribute("list", list);
-            model.addAttribute("list1", list1);
-            model.addAttribute("list2", list2);
+            model.addAttribute("list", list); //예약 내역
+            model.addAttribute("list1", list1); //최근 일주일 간 사용자 수
+            model.addAttribute("list2", list2); //연매출
             model.addAttribute("user", user);
             model.addAttribute("washing", washing);
 

@@ -68,6 +68,19 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
         }
     }
 
+    //최근 일주일간 사용자 수
+    @Override
+    public List<Map<String, Object>> selectWeekUserCnt(String wid) {
+        try {
+
+            return wMapper.selectWeekUserCnt(wid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 

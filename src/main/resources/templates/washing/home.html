@@ -228,10 +228,10 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <ic class="fas fa-chart-area me-1"></ic>
-                                    사용자 수
+                                    최근 사용자 수
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="userCntChart" width="100%" height="50"></canvas>
+                                    <canvas id="userWeekCntChart" width="100%" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -349,8 +349,58 @@
 
         ////////////////////////////////////////////////차트//////////////////////////////////////////////////
 
-        //월 매출
+        //최근 일주일 사용자 수
+        var salesData = [[${list1}]];
+
+        console.log(salesData);
+
+        //확인용
+        for(let i=0; i<salesData.length; i++) {
+            console.log(salesData[i].USERCNT);
+            console.log(salesData[i].WEEKLY);
+        }
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.USERCNT;
+        });
+
+        //년
+        var labels = salesData.map(function(monthly){
+            return monthly.WEEKLY;
+        });
+
+
+        var ctx = document.getElementById("userWeekCntChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', //bar, line만 바꾸면 됨
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '사용자 수',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 1 // 1 단위로
+                        }
+                }]
+                }
+            }
+        });
         
+
+// ---------------------------------------------------------------------------------
+
+
 
         //연매출
         var salesData = [[${list2}]];

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.dto.Reserve;
 import com.example.dto.Washing;
 import com.example.mapper.WashingMapper;
 

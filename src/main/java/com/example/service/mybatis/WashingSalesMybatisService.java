@@ -23,5 +23,6 @@ public interface WashingSalesMybatisService {
     public List<Map<String, Object>> selectUserCnt(String wid);
 
     //주별 사용자 수
+    public List<Map<String, Object>> selectWeekUserCnt(String wid);
 
 }
