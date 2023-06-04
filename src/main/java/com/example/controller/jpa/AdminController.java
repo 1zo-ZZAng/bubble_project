@@ -119,6 +119,8 @@ public class AdminController {
         try {
             
            int wc =  aService.washingCount();
+           //월 총매출
+           List<Map<String, Object>> msaleslist = aService.selectMonthAllSales();
            
             model.addAttribute("wc", wc);
             model.addAttribute("user", user);
@@ -139,7 +141,8 @@ public class AdminController {
         try {            
                 List<Washing> list = aService.selectWList();
                 // log.info("{}", list.toString());
-                model.addAttribute("list", list);               
+                model.addAttribute("list", list);
+                log.info("{}",model.toString());             
        
             return "/admin/wlist";
         } catch (Exception e) {
@@ -149,18 +152,31 @@ public class AdminController {
     }
 
 
+    
     //업체별 보유기기목록 조회 // 나중에 모달로 되면 좋겟당
     //업체 차트
     @GetMapping(value = "/wmlist.bubble")
     public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
         try {
+            //보유기기 표
             List<MachineCount> list = aService.selectMCount(wnumber);
+            //월별 매출 조회
+            List<Map<String,Object>> mlist = aService.selectMonthWashingChart(wnumber);
             
+            //업체별 매출 조회
+            List<Map<String,Object>> mdlist = aService.selectMonthDateWashingChart(wnumber);
+            //-----------------------차트-------------------------
 
-            
-            log.info("{}",list.toString());
+
             model.addAttribute("list", list);
             model.addAttribute("name", aService.selectWashingNameOne(wnumber));
+            model.addAttribute("rvcount", aService.todayRVWashingCount(wnumber));
+            model.addAttribute("mdlist", mdlist);
+            model.addAttribute("mlist", mlist);
+            log.info("업체별매출2 => {}",mlist.toString());
+            log.info("업체별매출 => {}",mdlist.toString());
+            log.info("보유기기 => {}",list.toString());
+
             return "/admin/wmlist";
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,6 +240,8 @@ public class AdminController {
 
 
     // --------------------------------------------------------------------------------------
+
+
 
 
 

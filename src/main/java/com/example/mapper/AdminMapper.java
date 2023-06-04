@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -40,7 +41,7 @@ public interface AdminMapper {
     public List<WashingMachine> selectWmList(@Param("wnumber") String wnumber);
 
     //보유기기 목록
-    @Select({ " SELECT * FROM MACHINECOUNT WHERE WNUMBER=#{WNUMBER}  " })
+    @Select({ " SELECT * FROM MACHINECOUNT WHERE WNUMBER=#{WNUMBER} " })
     public List<MachineCount> selectMCount(@Param("wnumber") String wnumber);
 
     @Select({"SELECT DISTINCT(name) FROM MACHINECOUNT WHERE WNUMBER = #{wnumber}"})
@@ -62,6 +63,10 @@ public interface AdminMapper {
     @Select({" SELECT count(*) FROM washing WHERE address IS NOT NULL AND chkno=1 "})
     public int washingCount();
 
+    //업체 별 오늘의 예약 건 
+    @Select({"   SELECT count(*) FROM reserve WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) = now() AND wnumber = #{wnumber} "})
+    public int todayRVWashingCount(@Param("wnumber") String wnumber);
+
 
     //---------------------------차트------------------------------
     
@@ -69,11 +74,42 @@ public interface AdminMapper {
     @Select({" SELECT DISTINCT (SUBSTRING(rvdate,0,7) ) FROM reserve "})
     public List<Reserve> selectMonthBox();
 
-    //차트의 월 선택에 따른 매출 조회
-    @Select({" SELECT rvdate, sum(mprice) FROM reserve WHERE SUBSTRING(rvdate,0,7)=#{rvmonth} GROUP BY rvdate "})
-    public List<String> selectMonthChart(@RequestParam("rvmonth") String rvmonth);
 
+    ///월 총 매출 조회(오늘의 날짜 포함) 
+    @Select({" SELECT SUBSTRING(rvdate, 0,7) mdate, sum(mprice) mtotal FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now()  GROUP BY SUBSTRING(rvdate, 0,7) "})
+    public List<Map<String,Object>> selectMonthAllSales();
+
+    //월- 일별 총 매출 조회(오늘의 날짜 포함) ex)2023-04 (1~30)
+    @Select({" SELECT SUBSTRING(rvdate,0,10) day, sum(mprice) dtotal FROM reserve WHERE SUBSTRING(RVDATE,0,7)='#{selectdate}'  AND CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) <= now()  GROUP BY SUBSTRING(rvdate,0,10) "})
+    public List<Map<String,Object>> selectMonthChart(@Param("selectdate") String selectdate);
+
+    //오늘 총 예약 건 
+    @Select({" SELECT count(*) TODAY FROM reserve WHERE CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) = now() "})
+    public int todayRVCount();
+
+    //예약 목록 최신순
+    @Select({" SELECT * FROM reserve WHERE CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) <= now()  GROUP BY rvno ORDER by rvdate desc "})
+    public Reserve selectRvList();
     
+
+    // -------------------업체별 페이지 차트--------------------------
+
+    //업체별 모든 매출 조회
+    @Select({" SELECT SUBSTRING(rvdate, 0,10) rvday, wname, sum(mprice) mtotal FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND wnumber=#{wnumber} GROUP BY SUBSTRING(rvdate, 0,10) "})
+    public List<Map<String,Object>> selectMonthDateWashingChart(@Param("wnumber") String wnumber);
+
+    //월별 매출 조회 box
+    @Select({" SELECT SUBSTRING(rvdate, 0,7) rvday FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND Wnumber=#wnumber GROUP BY SUBSTRING(rvdate, 0,7) "})
+    public List<String> selectMonthBoxList(@Param("wnumber") String wnumber);
+
+    //월별 매출 조회
+    @Select({"  SELECT SUBSTRING(rvdate, 0,7) rvday, sum(mprice) mtotal FROM RESERVE WHERE AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND WNUMBER=#{WNUMBER} GROUP BY SUBSTRING(rvdate, 0,7)"})
+    public List<Map<String,Object>> selectMonthWashingChart(@Param("wnumber") String wnumber);
+
+
+
+
+
 
     
 
