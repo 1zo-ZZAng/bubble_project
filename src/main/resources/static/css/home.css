@@ -153,14 +153,6 @@
     margin-left: 12px;
 }
 
-/* 메인 이미지 옆 line
-#mainline{
-    margin-left: 130px;
-    width: 55%;
-    border: solid 2px;
-    
-} */
-
 
 .line {
   border-top: 5px solid black;
@@ -168,4 +160,73 @@
   margin-left: 250px;
   margin-top: 18px;
   margin-bottom: 30px;
+}
+
+.introduce{
+    margin-top: 50px;
+}
+
+#info{
+    display: flex;
+}
+
+
+
+/* 마이페이지 */
+
+#pageheader{
+    display: flex;
+    justify-content: flex-start;
+}
+
+#pageline {
+    border-top: 8px solid black;
+    width: 70px;
+    margin-top: 35px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+  }
+
+#page{
+    font-family: 'Geologica', sans-serif;
+    font-size: 50px;
+    font-weight: 800;
+}
+
+#gradepart{
+    height: 200px;   
+}
+
+#grade{
+    display: inline;
+}
+
+#mypagesection{
+    display: flex;
+    justify-content: center;
+}
+#mypagesection a{
+    margin-right: 65px;
+    margin-left: 65px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+#mypagesection p{
+    margin-top: 2px;
+}
+
+#datatableSimple{
+    width: 100%;
+    padding: 5%;
+}
+
+.datatable-top{
+    width: 95%;
+}
+
+.datatable-dropdown{
+    margin-left: 80px;
 }
