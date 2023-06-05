@@ -1,17 +1,23 @@
 package com.example.entity;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -45,4 +51,8 @@ public class Customer {
     private BigInteger grade = BigInteger.valueOf(1); 
 
     private String role = "CUSTOMER"; // 권한 (CUSTOMER)
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    List<Reservation> reservation = new ArrayList<>();
 }

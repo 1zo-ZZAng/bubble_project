@@ -41,6 +41,8 @@ public class Reservation {
     @JoinColumn(name = "cid", referencedColumnName = "id")  //소문자로 해뒀는데 문제있을경우 대문자로 바꿔야함 기억하자고
     private Customer customer;
 
-
-    
+    // 외래키 - 예약 상태(reserve_state)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "state", referencedColumnName = "state")
+    private Reserve_State reservestate;
 }

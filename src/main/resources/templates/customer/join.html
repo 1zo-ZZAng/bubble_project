@@ -275,17 +275,26 @@
                 alert('주소를 입력해주세요.');
                 return false;
             }
+
+            // 2. 아이디가 kakao로 시작 불가능하게!! (소셜 로그인 자동 가입 => kakao로 시작)
+            if (id.value.startsWith('kakao')) {
+                alert('kakao로 시작하는 아이디는 생성하실 수 없습니다. 다른 아이디로 가입해주세요.');
+                id.value='';
+                id.focus();
+                return false;
+            }
             
-            // 2. 아이디 중복 X ->  사용가능
+            // 3. 아이디 중복 X ->  사용가능
             if (idcheck === 0) {
                 alert('아이디 중복 확인을 해주세요.');
                 id.focus();
                 return false;
             }
             
-            // 3. 비밀번호와 비밀번호확인이 일치
+            // 4. 비밀번호와 비밀번호확인이 일치
             if (pw.value !== pwcheck.value) {
                 alert('비밀번호가 일치하지 않습니다.');
+                pwcheck.value='';
                 pwcheck.focus();
                 return false;
             }

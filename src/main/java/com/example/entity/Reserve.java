@@ -62,4 +62,6 @@ public class Reserve {
     private BigInteger mprice;
 
     private BigInteger mtime;
+
+    private String state;
 }

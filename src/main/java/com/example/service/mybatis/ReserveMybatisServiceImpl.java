@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reservation;
 import com.example.dto.Reserve;
 import com.example.mapper.ReserveMapper;
 
@@ -77,9 +78,9 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
 
     // 예약 내역 상세
     @Override
-    public Reserve selectReserveOne(BigInteger rvno) {
+    public Reserve selectReserveDetail(BigInteger rvno) {
         try {
-            return rMapper.selectReserveOne(rvno);
+            return rMapper.selectReserveDetail(rvno);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -87,15 +88,15 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
         }
     }
 
-    // 예약 취소 - 예약번호로 해당 예약 찾기
+    // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
     @Override
-    public Reserve selectReserveRvno(BigInteger rvno) {
+    public int deleteReserveOne(BigInteger rvno) {
         try {
-            return rMapper.selectReserveRvno(rvno);
+            return rMapper.deleteReserveOne(rvno);
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 }

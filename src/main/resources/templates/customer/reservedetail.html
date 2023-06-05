@@ -94,6 +94,9 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
     <script th:inline="javascript" type="text/javascript">
         // 예약일
         let rvdate = [[${reserveOne.rvdate}]];
@@ -124,6 +127,44 @@
         let formattedTime = hour + '시 ' + minute + '분';
 
         document.getElementById("rvtime").textContent = formattedTime;
+
+        // ----------------------------------------------------------------------
+
+        function reserveCancel() {
+            // console.log([[${reserveOne.rvno}]]);
+            const currentDate = new Date();
+
+            if (confirm(formattedDate + " " + formattedTime + " 예약을 취소하시겠습니까?")) {
+                if (currentDate.toISOString().slice(0, 10) < rvdate) {
+                    const form = document.createElement("form");
+                    form.setAttribute("action", [[@{/customer/reservecancel.bubble}]]);
+                    form.setAttribute("method", "post");
+                    form.style.display="none";
+
+                    const input1 = document.createElement("input");
+                    input1.setAttribute("type", "hidden");
+                    input1.setAttribute("name", "rvno");
+                    input1.setAttribute("value", [[${reserveOne.rvno}]]);
+
+                    const input2 = document.createElement("input");
+                    input2.setAttribute("type", "hidden");
+                    input2.setAttribute("name", "_csrf");
+                    input2.setAttribute("value", [[${_csrf.token}]]);
+
+                    form.appendChild(input1);
+                    form.appendChild(input2);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+                else if (currentDate.toISOString().slice(0, 10) == rvdate) {
+                    alert('예약 당일에는 취소가 불가능합니다.');
+                }
+                else {
+                    alert('예약 당일 이후로는 취소가 불가능합니다.');
+                }
+            }
+        }
     </script>
 </body>
 </html>

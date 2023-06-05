@@ -23,6 +23,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -54,6 +55,7 @@ public class Board {
     private BoardType boardType;
 
     // 외래키 (board : reply = 1 : N)
+    @ToString.Exclude
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Reply> reply = new ArrayList<>();
 }

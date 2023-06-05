@@ -1,7 +1,10 @@
 package com.example.entity;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
 
 @Data
@@ -38,6 +42,10 @@ public class Machine {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wid", referencedColumnName = "id")  //소문자로 해뒀는데 문제있을경우 대문자로 바꿔야함 기억하자고
     private Washing washing;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "machine", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    List<Reservation> reservation = new ArrayList<>();
 
 
 }
