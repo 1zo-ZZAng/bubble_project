@@ -71,6 +71,7 @@
                         <th>세탁소 주소</th>
                         <th>예약일</th>
                         <th>예약 시간</th>
+                        <th>예약 현황</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +81,7 @@
                         <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.waddress}"></a></td>
                         <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvdate}"></a></td>
                         <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvtime}"></a></td>
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.state}"></a></td>
                     </tr>
                 </tbody>
             </table>

@@ -48,4 +48,5 @@ public class Reserve {
 
     private long mtime;
     
+    private String state;
 }
