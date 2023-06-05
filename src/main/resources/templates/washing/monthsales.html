@@ -213,7 +213,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
-                                    Year
+                                    Month
                                 </div>
                                 <div class="card-body">
                                     <!--여기서 차트가 만들어짐-->
@@ -227,7 +227,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
-                                    Month
+                                    Year
                                 </div>
                                 <div class="card-body">
                                     <!--여기서 차트가 만들어짐-->
@@ -283,6 +283,7 @@
 
         //매출 차트
 
+        //월 매출
         var salesData = [[${list1}]];
 
         console.log(salesData);
@@ -304,7 +305,7 @@
             data: {
                 labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
                 datasets: [{
-                    label: '월별 매출',
+                    label: '월 매출',
                     data: total,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
@@ -324,8 +325,10 @@
             }
         });
 
-        //월 매출
-        var salesData = [[${list2}]];
+        // ====================
+
+        //연 매출
+        var salesData = [[${list}]];
 
         console.log(salesData);
 

@@ -47,8 +47,8 @@ public class WashingSalesController {
 
 
             log.info("연매출 => {} ", list1.toString());
-            log.info("월매출 1 => {} ", list2.toString());
-            log.info("일매출 1 => {} ", list3.toString());
+            log.info("월매출 => {} ", list2.toString());
+            log.info("일매출 => {} ", list3.toString());
 
             // for(Map<String, Object> list : list1) {
             // log.info("매출 for문 => {} ", list.toString());
