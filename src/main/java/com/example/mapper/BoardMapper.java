@@ -66,6 +66,10 @@ public interface BoardMapper {
     @Select({" SELECT * FROM BOARD WHERE code=4 ORDER BY NO DESC "})
     public List<Board> selectlistBoardTypeGeneral();
 
+    //최신글 5개 조회 (일단은 공지사항)
+    @Select({" SELECT NO, title, writer, hit, max(regdate) as date, code FROM board WHERE code=1 GROUP BY regdate ORDER BY regdate DESC LIMIT 6 "})
+    public List<Board> selectListLimitBoard();
+
     //글 1개 조회
     @Select({" SELECT * FROM BOARD WHERE no=#{no} "})
     public Board selectOneBoard(@Param("no") long no);

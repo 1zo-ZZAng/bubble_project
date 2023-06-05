@@ -30,6 +30,6 @@ public interface WashingMachineMapper {
     /* == 업체 == */
 
     // 기기 사용 률
-    @Select({" SELECT mtype, COUNT(*) AS count, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' ) AS usagRate FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' GROUP BY mtype "})
+    @Select({" SELECT mtype, COUNT(*) AS count, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' ) AS userate FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' GROUP BY mtype "})
     public List<Map<String, Object>> selectMachineUseRate(@Param("wid") String wid);
 }

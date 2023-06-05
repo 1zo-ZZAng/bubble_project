@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.dto.Reserve;
 import com.example.mapper.ReserveMapper;
+import com.example.mapper.WashingMachineMapper;
 import com.example.mapper.WashingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
     final WashingMapper wMapper;
     final ReserveMapper rMapper; // 예약내역 조회
+    final WashingMachineMapper wmMapper; // 기기 사용률
 
 
     //일매출
@@ -134,6 +136,20 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
             
             return rMapper.selectReserveStateRevCancle(wid);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //기기 사용률
+    @Override
+    public List<Map<String, Object>> selectMachineUseRate(String wid) {
+        try {
+
+            return wmMapper.selectMachineUseRate(wid);
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;

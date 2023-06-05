@@ -113,4 +113,6 @@ public interface WashingMapper {
 	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY rvdate "})
 	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
 
+	
+
 }

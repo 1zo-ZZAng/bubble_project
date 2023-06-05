@@ -253,6 +253,19 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+    //최신글 5개만 조회
+    @Override
+    public List<Board> selectListLimitBoard() {
+        try {
+            
+            return bMapper.selectListLimitBoard();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     
 
     

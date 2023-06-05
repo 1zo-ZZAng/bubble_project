@@ -140,7 +140,6 @@
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" th:href="@{/washingsales/monthsales.bubble}">월별 매출</a> 
-                                <a class="nav-link" th:href="@{/washingsales/daysales.bubble}">일별 매출</a> 
                             </nav>
                         </div>
 
@@ -203,7 +202,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">매출</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">월매출</li>
+                        <li class="breadcrumb-item active">매출현황</li>
                     </ol>
 
                     <!--차트영역-->
@@ -214,7 +213,21 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
-                                    월매출
+                                    Year
+                                </div>
+                                <div class="card-body">
+                                    <!--여기서 차트가 만들어짐-->
+                                    <canvas id="yearSalesChart" width="100%" height="50"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--차트-->
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Month
                                 </div>
                                 <div class="card-body">
                                     <!--여기서 차트가 만들어짐-->
@@ -222,6 +235,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        
+
+                        
 
                     </div>
 
@@ -266,8 +283,49 @@
 
         //매출 차트
 
-        //월 매출
         var salesData = [[${list1}]];
+
+        console.log(salesData);
+
+        //매출액
+        var total = salesData.map(function(monthly) {
+            return monthly.TOTAL;
+        });
+
+        //년-달
+        var labels = salesData.map(function(monthly){
+            return monthly.MONTHSALES;
+        });
+
+
+        var ctx = document.getElementById("yearSalesChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', //bar, line만 바꾸면 됨
+            data: {
+                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                datasets: [{
+                    label: '월별 매출',
+                    data: total,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true, //0부터 시작하게 함
+                            fontSize : 14,
+                            stepSize: 100 // 100원 단위로
+                        }
+				}]
+                }
+            }
+        });
+
+        //월 매출
+        var salesData = [[${list2}]];
 
         console.log(salesData);
 

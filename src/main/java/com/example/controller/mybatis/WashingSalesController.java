@@ -34,24 +34,34 @@ public class WashingSalesController {
 
 /* ============================================================================== */
 
-    //월 매출
+    //매출 페이지
     @GetMapping(value="/monthsales.bubble")
     public String monthGET(@AuthenticationPrincipal User user, Model model) { //@RequestParam(name = "wid") String wid,
 
         try {
 
-            List<Map<String, Object>> list1 = wSalesMybatisService.selectMonthSales(user.getUsername());
+            List<Map<String, Object>> list1 = wSalesMybatisService.selectYearSales(user.getUsername()); //연 매출
+            List<Map<String, Object>> list2 = wSalesMybatisService.selectMonthSales(user.getUsername()); // 월 매출
+            List<Map<String, Object>> list3 = wSalesMybatisService.selectDaySales(user.getUsername()); // 일 매출
 
-            log.info("매출 1 => {} ", list1.toString());
 
-            for(Map<String, Object> list : list1) {
-            log.info("매출 for문 => {} ", list.toString());
 
-            }
+            log.info("연매출 => {} ", list1.toString());
+            log.info("월매출 1 => {} ", list2.toString());
+            log.info("일매출 1 => {} ", list3.toString());
+
+            // for(Map<String, Object> list : list1) {
+            // log.info("매출 for문 => {} ", list.toString());
+
+            // }
 
 
             model.addAttribute("user", user);
-            model.addAttribute("list1", list1);
+            model.addAttribute("list1", list1); //연 매출
+            model.addAttribute("list1", list2); //월 매출
+            model.addAttribute("list2", list3); //일 매출
+
+
 
             return "/washing/monthsales";
             
@@ -130,6 +140,9 @@ public class WashingSalesController {
             return "redirect:/washing/home.bubble";
         }
     }
+
+
+
 
 
 

@@ -54,6 +54,9 @@ public interface BoardMybatisService {
     //조회수 증가
     public int updateHit(long no);
 
+    //최신글 5개
+    public List<Board> selectListLimitBoard();
+
     
     /* ===================================== */
 

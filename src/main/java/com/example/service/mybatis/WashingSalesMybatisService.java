@@ -28,7 +28,7 @@ public interface WashingSalesMybatisService {
     public List<Map<String, Object>> selectWeekUserCnt(String wid);
 
 
-        /* ==예약내역 조회부분== */
+        /* == 예약내역 조회부분 == */
 
 
     //전체조회
@@ -42,5 +42,11 @@ public interface WashingSalesMybatisService {
 
     //예약 취소
     public List<Reserve> selectReserveStateRevCancle(String wid);
+
+
+        /* == 기기 사용 률 == */
+        
+
+    public List<Map<String, Object>> selectMachineUseRate(String wid);
 
 }
