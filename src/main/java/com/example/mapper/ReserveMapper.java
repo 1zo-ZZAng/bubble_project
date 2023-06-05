@@ -21,7 +21,7 @@ public interface ReserveMapper {
     // 업체별, 기기별, 기기번호별, 날짜별 사용 가능한 시간
     @Select({" SELECT starttime FROM runtime "
            + " WHERE type=#{type} "
-           + " AND starttime NOT IN (SELECT rvtime FROM reserve WHERE wnumber=#{wnumber} AND mtype=#{type} AND mtypeno=#{mtypeno} AND rvdate=#{rvdate}) "})
+           + " AND starttime NOT IN (SELECT rvtime FROM reserve WHERE wnumber=#{wnumber} AND mtype=#{type} AND mtypeno=#{mtypeno} AND rvdate=#{rvdate} AND state != '예약 취소') "})
     public List<String> selectUseableTime(@Param("wnumber") String wnumber,
                                           @Param("type") String machine,
                                           @Param("mtypeno") BigInteger machineno,
@@ -36,12 +36,12 @@ public interface ReserveMapper {
 //                                             @Param("mtypeno") BigInteger machineno,
 //                                             @Param("rvdate") String rvdate);
 
-    // 예약 내역 조회 - 목록 (예약번호, 세탁소명, 세탁소 주소, 예약일, 예약시간)
-    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rvno DESC"})
+    // 예약 내역 조회 - 목록 (예약번호, 세탁소명, 세탁소 주소, 예약일, 예약시간, 현황)
+    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime, state FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rvno DESC"})
     public List<Reserve> selectReserveList(@Param("id") String id); 
 
     // 예약 내역 상세
-    @Select({"SELECT rvno, wname, waddress, wphone, rvdate, rvtime, mtype, mtypeno, mprice, mtime FROM reserve WHERE rvno=#{rvno}"})
+    @Select({"SELECT rvno, wname, waddress, wphone, rvdate, rvtime, mtype, mtypeno, mprice, mtime, state FROM reserve WHERE rvno=#{rvno}"})
     public Reserve selectReserveDetail(@Param("rvno") BigInteger rvno);
 
     // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update

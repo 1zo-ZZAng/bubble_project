@@ -17,4 +17,6 @@ public class Reservation {
     private String rvdate;
 
     private String rvtime;
+
+    private String state;
 }
