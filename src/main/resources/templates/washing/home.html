@@ -49,9 +49,26 @@
             font-family: 'NanumSquareLight';
         }
 
+        .datatable-sorter::before {
+            display: none;
+        }
+        
+
+        .datatable-sorter::after {
+            display: none;
+        }
+
+        .datatable-top{
+            display: none;
+        }
+
+        .datatable-bottom{
+            display: none;
+        }
+
 
         .datatable-bottom .datatable-info {
-            display: none;
+                display: none;
         }
     </style>
 
@@ -167,7 +184,7 @@
                             </a>
                             <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
+                                    <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
                                 </nav>
                             </div>
 
@@ -272,19 +289,21 @@
                                                 <th>고객 주소</th>
                                                 <th>세탁기</th>
                                                 <th>가격</th>
+                                                <th>이용현황</th>
                                             </tr>
                                         </thead>
                                         
                                         <tbody>
                                             <tr th:each="obj : ${list}">
                                                 <td th:text="${obj.rvno}"></td>
-                                                <td th:text="${obj.rdate}"></td>
+                                                <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                 <td th:text="${obj.id}"></td>
                                                 <td th:text="${obj.name}"></td>
                                                 <td th:text="${obj.phone}"></td>
                                                 <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td> <!---->
                                                 <td th:text="${obj.mtype}"></td>
                                                 <td th:text="${obj.mprice}"></td>
+                                                <td th:text="${obj.state}"></td>
                                             </tr>
                                         </tbody>
                                     </table>

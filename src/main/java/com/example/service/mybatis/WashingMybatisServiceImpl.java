@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Washing;
-import com.example.entity.Reserve;
 import com.example.mapper.WashingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
     
     final WashingMapper wMapper;
 
-    
 
     //업체 탈퇴
     @Override

@@ -74,6 +74,8 @@ public class WashingController {
             List<Map<String, Object>> list2 = wSalesMybatisService.selectYearSales(user.getUsername());
 
 
+
+
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
 
             log.info("승인여부 => {}",washing.getWashingcheck().getNo());
@@ -511,31 +513,30 @@ public class WashingController {
 
 
     //예약내역 조회
-    @GetMapping(value="/reserve.bubble")
-    public String reserveGET(@AuthenticationPrincipal User user,  Model model, @ModelAttribute Reserve reserve) {  //@RequestParam(name = "menu", required = false, defaultValue = "0") int menu
-        try {
+    // @GetMapping(value="/reserve.bubble")
+    // public String reserveGET(@AuthenticationPrincipal User user,  Model model, @ModelAttribute Reserve reserve) {  //@RequestParam(name = "menu", required = false, defaultValue = "0") int menu
+    //     try {
 
-            model.addAttribute("user", user);
-            log.info("로그인한 아이디 => {}", user.getUsername());
-
-
+    //         model.addAttribute("user", user);
+    //         log.info("로그인한 아이디 => {}", user.getUsername());
 
 
-            List<Reserve> list = rService.selectReserve(user.getUsername());
+    //         List<Reserve> list = rService.selectReserve(user.getUsername());
+
             
 
-            // log.info("예약내역 조회 => {}", list.toString());
+    //         // log.info("예약내역 조회 => {}", list.toString());
 
-            model.addAttribute("list", list);
-            // model.addAttribute("user", user);
+    //         model.addAttribute("list", list);
+    //         // model.addAttribute("user", user);
 
-            return "/washing/reserve";
+    //         return "/washing/reserve";
             
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/washing/home.bubble";
-        }
-    }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return "redirect:/washing/home.bubble";
+    //     }
+    // }
 
 
 /* =================================================================================================================================================== */

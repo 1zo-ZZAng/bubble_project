@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
+
 
 
 @Service
@@ -24,5 +26,21 @@ public interface WashingSalesMybatisService {
 
     //주별 사용자 수
     public List<Map<String, Object>> selectWeekUserCnt(String wid);
+
+
+        /* ==예약내역 조회부분== */
+
+
+    //전체조회
+    public List<Reserve> selectReserveAllList(String wid);
+
+    //이용완료
+    public List<Reserve> selectReserveStateUseComplete( String wid);
+
+    //예약 완료
+    public List<Reserve> selectReserveStateRevComplete(String wid);
+
+    //예약 취소
+    public List<Reserve> selectReserveStateRevCancle(String wid);
 
 }

@@ -40,9 +40,25 @@
         }
 
 
+
+        .datatable-sorter::before {
+            display: none;
+        }
+
+        .datatable-sorter::after {
+            display: none;
+        }
+
+        .datatable-bottom{
+            display: none;
+        }
+
+
         .datatable-bottom .datatable-info {
                 display: none;
-            }
+        }
+
+        
     </style>
 
     <script>
@@ -221,65 +237,230 @@
                     </ol>
 
 
-                    <!-- <table class="mb-3">
+                    <table class="mb-3">
                         <tr>
-                            <td><a th:href="@{/washing/reserve.bubble(menu=1)}" style="text-decoration: none; color: black; ">전체</a></td>
-                            <td><a th:href="@{/washing/reserve.bubble(menu=2)}" style="text-decoration: none; color: black;">예약 완료</a></td>
-                            <td><a th:href="@{/washing/reserve.bubble(menu=3)}" style="text-decoration: none; color: black;">예약 취소</a></td>
-                            <td><a th:href="@{/washing/reserve.bubble(menu=4)}" style="text-decoration: none; color: black;">이용 완료</a></td>
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=1)}" style="text-decoration: none; color: black;">전체</a></td>
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=2)}" style="text-decoration: none; color: black;">이용 완료</a></td>
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=3)}" style="text-decoration: none; color: black;">예약 완료</a></td>
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=4)}" style="text-decoration: none; color: black;">예약 취소</a></td>
                         </tr>
-                    </table> -->
+                    </table>
 
 
                     <!--테이블-->
                     <div class="row">
                         <div class="col">
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    예약내역
+                                
+                                <!--전체 예약 내역-->
+                                <div th:if="${#strings.equals(param.menu, '1')}">
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        전체 예약 내역
+                                    </div>
+                                    <div class="card-body">
+
+                                        <table id="datatableSimple">
+                                            <thead>
+                                                <tr>
+                                                    <th>예약번호</th>
+                                                    <th>예약날짜</th>
+                                                    <th>세탁예약날짜</th>
+                                                    <th>고객 아이디</th>
+                                                    <th>고객이름</th>
+                                                    <th>고객 전화번호</th>
+                                                    <th>고객 주소</th>
+                                                    <!-- <th>업체명</th>
+                                                    <th>업체 주소</th>
+                                                    <th>업체 전화번호</th> -->
+                                                    <th>세탁기</th>
+                                                    <th>가격</th>
+                                                    <th>작동시간</th>
+                                                    <th>이용현황</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr th:each="obj : ${list}">
+                                                    <td th:text="${obj.rvno}"></td>
+                                                    <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
+                                                    <td th:text="${obj.id}"></td>
+                                                    <td th:text="${obj.name}"></td>
+                                                    <td th:text="${obj.phone}"></td>
+                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                    <!-- <td th:text="${obj.wname}"></td>
+                                                    <td th:text="${obj.waddress}"></td>
+                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                    <td th:text="${obj.mprice}"></td>
+                                                    <td th:text="${obj.mtime}"></td>
+                                                    <td th:text="${obj.state}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
                                 </div>
-                                <div class="card-body">
-                                    <table id="datatableSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>예약번호</th>
-                                                <th>예약날짜</th>
-                                                <th>세탁예약날짜</th>
-                                                <th>고객 아이디</th>
-                                                <th>고객이름</th>
-                                                <th>고객 전화번호</th>
-                                                <th>고객 주소</th>
-                                                <!-- <th>업체명</th>
-                                                <th>업체 주소</th>
-                                                <th>업체 전화번호</th> -->
-                                                <th>세탁기</th>
-                                                <th>가격</th>
-                                                <th>작동시간</th>
-                                                <th>이용현황</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            <tr th:each="obj : ${list}">
-                                                <td th:text="${obj.rvno}"></td>
-                                                <td th:text="${obj.rdate}"></td>
-                                                <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
-                                                <td th:text="${obj.id}"></td>
-                                                <td th:text="${obj.name}"></td>
-                                                <td th:text="${obj.phone}"></td>
-                                                <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
-                                                <!-- <td th:text="${obj.wname}"></td>
-                                                <td th:text="${obj.waddress}"></td>
-                                                <td th:text="${obj.wphone}"></td> -->
-                                                <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
-                                                <td th:text="${obj.mprice}"></td>
-                                                <td th:text="${obj.mtime}"></td>
-                                                <td th:text="${obj.state}"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                                <!--이용 완료 내역-->
+                                <div th:if="${#strings.equals(param.menu, '2')}">
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        이용 완료 내역
+                                    </div>
+                                    <div class="card-body">
+
+                                        <table id="datatableSimple">
+                                            <thead>
+                                                <tr>
+                                                    <th>예약번호</th>
+                                                    <th>예약날짜</th>
+                                                    <th>세탁예약날짜</th>
+                                                    <th>고객 아이디</th>
+                                                    <th>고객이름</th>
+                                                    <th>고객 전화번호</th>
+                                                    <th>고객 주소</th>
+                                                    <!-- <th>업체명</th>
+                                                    <th>업체 주소</th>
+                                                    <th>업체 전화번호</th> -->
+                                                    <th>세탁기</th>
+                                                    <th>가격</th>
+                                                    <th>작동시간</th>
+                                                    <th>이용현황</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr th:each="obj : ${list}">
+                                                    <td th:text="${obj.rvno}"></td>
+                                                    <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
+                                                    <td th:text="${obj.id}"></td>
+                                                    <td th:text="${obj.name}"></td>
+                                                    <td th:text="${obj.phone}"></td>
+                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                    <!-- <td th:text="${obj.wname}"></td>
+                                                    <td th:text="${obj.waddress}"></td>
+                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                    <td th:text="${obj.mprice}"></td>
+                                                    <td th:text="${obj.mtime}"></td>
+                                                    <td th:text="${obj.state}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
+
+                                <!--예약 완료 내역-->
+                                <div th:if="${#strings.equals(param.menu, '3')}">
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        예약 완료 내역
+                                    </div>
+                                    <div class="card-body">
+
+                                        <table id="datatableSimple">
+                                            <thead>
+                                                <tr>
+                                                    <th>예약번호</th>
+                                                    <th>예약날짜</th>
+                                                    <th>세탁예약날짜</th>
+                                                    <th>고객 아이디</th>
+                                                    <th>고객이름</th>
+                                                    <th>고객 전화번호</th>
+                                                    <th>고객 주소</th>
+                                                    <!-- <th>업체명</th>
+                                                    <th>업체 주소</th>
+                                                    <th>업체 전화번호</th> -->
+                                                    <th>세탁기</th>
+                                                    <th>가격</th>
+                                                    <th>작동시간</th>
+                                                    <th>이용현황</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr th:each="obj : ${list}">
+                                                    <td th:text="${obj.rvno}"></td>
+                                                    <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
+                                                    <td th:text="${obj.id}"></td>
+                                                    <td th:text="${obj.name}"></td>
+                                                    <td th:text="${obj.phone}"></td>
+                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                    <!-- <td th:text="${obj.wname}"></td>
+                                                    <td th:text="${obj.waddress}"></td>
+                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                    <td th:text="${obj.mprice}"></td>
+                                                    <td th:text="${obj.mtime}"></td>
+                                                    <td th:text="${obj.state}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <!--예약 취소 내역-->
+                                <div th:if="${#strings.equals(param.menu, '4')}">
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        예약 취소 내역
+                                    </div>
+                                    <div class="card-body">
+
+                                        <table id="datatableSimple">
+                                            <thead>
+                                                <tr>
+                                                    <th>예약번호</th>
+                                                    <th>예약날짜</th>
+                                                    <th>세탁예약날짜</th>
+                                                    <th>고객 아이디</th>
+                                                    <th>고객이름</th>
+                                                    <th>고객 전화번호</th>
+                                                    <th>고객 주소</th>
+                                                    <!-- <th>업체명</th>
+                                                    <th>업체 주소</th>
+                                                    <th>업체 전화번호</th> -->
+                                                    <th>세탁기</th>
+                                                    <th>가격</th>
+                                                    <th>작동시간</th>
+                                                    <th>이용현황</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr th:each="obj : ${list}">
+                                                    <td th:text="${obj.rvno}"></td>
+                                                    <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime} "></td>
+                                                    <td th:text="${obj.id}"></td>
+                                                    <td th:text="${obj.name}"></td>
+                                                    <td th:text="${obj.phone}"></td>
+                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                    <!-- <td th:text="${obj.wname}"></td>
+                                                    <td th:text="${obj.waddress}"></td>
+                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
+                                                    <td th:text="${obj.mprice}"></td>
+                                                    <td th:text="${obj.mtime}"></td>
+                                                    <td th:text="${obj.state}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>

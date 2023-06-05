@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.dto.Reservation;
 import com.example.dto.Reserve;
 
 @Mapper
@@ -51,7 +50,29 @@ public interface ReserveMapper {
     // 예약하기
     @Insert({"INSERT INTO reservation(cid, mno, rvdate, rvtime) VALUES(#{cid}, #{mno}, #{rvdate}, #{rvtime})"})
     public int insertReserve(@Param("cid") String cid,
-                                 @Param("mno") Long mno,
-                                 @Param("rvdate") String rvdate,
-                                 @Param("rvtime") String rvtime);
+                                @Param("mno") Long mno,
+                                @Param("rvdate") String rvdate,
+                                @Param("rvtime") String rvtime);
+
+
+    /* == 업체 == */
+
+    //전체조회
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} ORDER BY rvno desc "})
+    public List<Reserve> selectReserveAllList(@Param("wid") String wid);
+
+    //이용완료
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '이용 완료' ORDER BY rvno desc "})
+    public List<Reserve> selectReserveStateUseComplete(@Param("wid") String wid);
+
+    //예약 완료
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 완료' ORDER BY rvno desc "})
+    public List<Reserve> selectReserveStateRevComplete(@Param("wid") String wid);
+
+    //예약 취소
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 취소' ORDER BY rvno desc "})
+    public List<Reserve> selectReserveStateRevCancle(@Param("wid") String wid);
+
+    
+    
 }

@@ -94,8 +94,6 @@ public class WBoardController {
 
             model.addAttribute("user", user);
 
-
-
             List<Board> list = new ArrayList<>();
 
             if(menu == 1){ //전체 게시판 조회
@@ -164,7 +162,6 @@ public class WBoardController {
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
 
-            // bService.updateHit(no); //해당 게시글 조회수 증가
 
             return "/wboard/selectone";
 

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reserve;
+import com.example.mapper.ReserveMapper;
 import com.example.mapper.WashingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
 
     final WashingMapper wMapper;
+    final ReserveMapper rMapper; // 예약내역 조회
 
 
     //일매출
@@ -75,6 +78,62 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
             return wMapper.selectWeekUserCnt(wid);
             
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    
+    /* ==예약내역 조회 부분== */
+
+    //전체조회
+    @Override
+    public List<Reserve> selectReserveAllList(String wid) {
+        try {
+            
+            return rMapper.selectReserveAllList(wid);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //이용완료
+    @Override
+    public List<Reserve> selectReserveStateUseComplete(String wid) {
+        try {
+
+            return rMapper.selectReserveStateUseComplete(wid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //예약완료
+    @Override
+    public List<Reserve> selectReserveStateRevComplete(String wid) {
+        try {
+
+            return rMapper.selectReserveStateRevComplete(wid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //예약취소
+    @Override
+    public List<Reserve> selectReserveStateRevCancle(String wid) {
+        try {
+            
+            return rMapper.selectReserveStateRevCancle(wid);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
