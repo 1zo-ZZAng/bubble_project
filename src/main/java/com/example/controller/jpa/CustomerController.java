@@ -345,7 +345,8 @@ public class CustomerController {
         try {
             model.addAttribute("user", user);
 
-            model.addAttribute("reserveOne", rService.selectReserveOne(rvno));
+            model.addAttribute("reserveOne", rService.selectReserveDetail(rvno));
+            model.addAttribute("rvno", rvno);
 
             return "/customer/reservedetail";
         }
@@ -356,8 +357,30 @@ public class CustomerController {
     }
 
     // 예약 취소
-    
+    @PostMapping(value = "/reservecancel.bubble")
+    public String reservecancelPOST(Model model, @AuthenticationPrincipal User user,
+                                    @RequestParam(name = "rvno") BigInteger rvno) {
+        try {
+            int ret = rService.deleteReserveOne(rvno);
 
+            if (ret == 1) {
+                model.addAttribute("msg", "예약이 취소되었습니다.");
+                model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=1");
+
+                return "message";
+            }
+
+            model.addAttribute("msg", "예약 취소가 불가능합니다.");
+            model.addAttribute("url", "/bubble_bumul/customer/reservedetail.bubble?rvno=" + rvno);
+
+            return "message";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/customer/home.bubble";
+        }
+    }
+    
     // --------------------------------------------------------------------------------------
 
     // 비밀번호 변경
@@ -443,26 +466,53 @@ public class CustomerController {
             Customer customer = cService.selectCustomerOne(user.getUsername());
             
             if (customer != null) {
-                // 2. 조회된 정보의 암호와 사용자가 입력한 암호를 matches로 비교
-                // 비밀번호 확인 => matches(바꾸기 전 비번, 해시된 비번)
-                if (bcpe.matches(obj.getPassword(), customer.getPassword())) {
-                    // 3. 아이디를 제외한 나머지 정보들은 null이나 0으로 처리
-                    customer.setPassword(null);
+                // 일반 계정인 경우
+                if (user.getUsername().startsWith("kakao") == false){
+                    // 2. 조회된 정보의 암호와 사용자가 입력한 암호를 matches로 비교
+                    // 비밀번호 확인 => matches(바꾸기 전 비번, 해시된 비번)
+                    if (bcpe.matches(obj.getPassword(), customer.getPassword())) {
+                        // 3. 아이디를 제외한 나머지 정보들은 null이나 0으로 처리
+                        customer.setPassword(null);
+                        customer.setName(null);
+                        customer.setPhone(null);
+                        customer.setEmail(null);
+                        customer.setAddress(null);
+                        customer.setDetailaddress(null);
+                        customer.setExtraaddress(null);
+                        customer.setBirth(null);
+                        customer.setRegdate(null);
+                        customer.setGrade(BigInteger.valueOf(0));
+                        customer.setRole(null);
+            
+                        // 4. 다시 저장
+                        cService.insertCustomer(customer);
+            
+                        // 5. 로그아웃 -> 세션에서 제거
+                        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                        if (auth != null) {
+                            new SecurityContextLogoutHandler().logout(request, response, auth);
+                        }
+            
+                        model.addAttribute("msg", "탈퇴가 완료되었습니다.");
+                        model.addAttribute("url", "/bubble_bumul/home.bubble");
+            
+                        return "message";
+                    }
+
+                    model.addAttribute("msg", "비밀번호를 정확하게 입력해주세요.");
+                    model.addAttribute("url", "/bubble_bumul/customer/delete.bubble");
+            
+                    return "message";
+                }
+                else { // 카카오를 이용해서 회원가입된 계정인 경우
                     customer.setName(null);
-                    customer.setPhone(null);
                     customer.setEmail(null);
-                    customer.setAddress(null);
-                    customer.setDetailaddress(null);
-                    customer.setExtraaddress(null);
-                    customer.setBirth(null);
                     customer.setRegdate(null);
                     customer.setGrade(BigInteger.valueOf(0));
                     customer.setRole(null);
-        
-                    // 4. 다시 저장
+
                     cService.insertCustomer(customer);
-        
-                    // 5. 로그아웃 -> 세션에서 제거
+
                     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                     if (auth != null) {
                         new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -473,11 +523,6 @@ public class CustomerController {
         
                     return "message";
                 }
-        
-                model.addAttribute("msg", "비밀번호를 정확하게 입력해주세요.");
-                model.addAttribute("url", "/bubble_bumul/customer/delete.bubble");
-        
-                return "message";
             }
             else {
                 return "redirect:/login.bubble";

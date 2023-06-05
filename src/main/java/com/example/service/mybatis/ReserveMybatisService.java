@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.Reservation;
 import com.example.dto.Reserve;
 
 @Service
@@ -22,10 +23,10 @@ public interface ReserveMybatisService {
     public List<Reserve> selectReserveList(String id); 
 
     // 예약 내역 상세
-    public Reserve selectReserveOne(BigInteger rvno);
+    public Reserve selectReserveDetail(BigInteger rvno);
 
-    // 예약 취소 - 예약번호로 해당 예약 찾기
-    public Reserve selectReserveRvno(BigInteger rvno);
+    // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
+    public int deleteReserveOne(BigInteger rvno);
 
     // 예약하기
     public int insertReserve(String cid, Long mno, String rvdate, String rvtime);

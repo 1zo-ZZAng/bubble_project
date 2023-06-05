@@ -96,7 +96,11 @@
                     <tr>
                         <td><label for="password">비밀번호</label></td>
                         <td><input type="password" th:field="${customer.password}" id="password" name="password" autoComplete="off" /></td>
-                        <td><a th:href="@{/customer/updatepw.bubble}" class="btn btn-primary">비밀번호 변경</a></td>
+                        <td>
+                            <span id="pwchange" style="display: none;">
+                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-primary">비밀번호 변경</a>
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="name">이름</label></td>
@@ -134,7 +138,7 @@
                             <input type="button" value="정보 수정" onclick="updateOne()" />
                         </td>
                         <td>
-                            <td><a th:href="@{/customer/delete.bubble}" class="btn btn-primary">회원탈퇴</a></td>
+                            <td><button type="button" class="btn btn-primary" onclick="deleteOne()">회원 탈퇴</button></td>
                         </td>
                     </tr>
                 </table>
@@ -178,6 +182,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:inline="javascript" type="text/javascript">
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const menuParam = urlParams.get('menu');
+
+            if (menuParam === '1') {
+                new simpleDatatables.DataTable("#datatableSimple", {
+                    searchable: true,
+                    fixedHeight: true,
+                });
+            }
+            else if (menuParam === '2') {
+                if ([[${user.username}]].startsWith('kakao') == false) {
+                    document.getElementById("pwchange").style.display="inline-block";
+                }
+            }
+        });
+
         // daum 우편번호
         function sample6_execDaumPostcode() {
             new daum.Postcode({
@@ -295,17 +316,46 @@
             document.getElementById("updateform").submit();
         }
 
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const menuParam = urlParams.get('menu');
+        function deleteOne() {
+            // 소셜 로그인(카카오)한 계정이라면 비밀번호 확인 절차 없이 바로 탈퇴
+            if ([[${user.username}]].startsWith('kakao') == true) { 
+                if (confirm('정말로 탈퇴하시겠습니까?')) {
+                    const form = document.createElement("form");
+                    form.setAttribute("action", [[@{/customer/delete.bubble}]]);
+                    form.setAttribute("method", "post");
+                    form.style.display="none";
+    
+                    const input1 = document.createElement("input");
+                    input1.setAttribute("type", "hidden");
+                    input1.setAttribute("name", "_csrf");
+                    input1.setAttribute("value", [[${_csrf.token}]]);
+    
+                    form.appendChild(input1);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
 
-            if (menuParam === '1') {
-                new simpleDatatables.DataTable("#datatableSimple", {
-                    searchable: true,
-                    fixedHeight: true,
-                });
+                    if (Kakao.Auth.getAccessToken()) {
+                        Kakao.API.request({
+                            url: '/v1/user/unlink',
+                            success: function (response) {
+                                // console.log(response)
+                            },
+                            fail: function (error) {
+                                console.log(error)
+                            },
+                        });
+
+                        Kakao.Auth.setAccessToken(null);
+                        }
+                }
             }
-        });
+            else { // 일반 계정인 경우
+                if (confirm('정말로 탈퇴하시겠습니까?')) {
+                    window.location.href = 'http://127.0.0.1:8282/bubble_bumul/customer/delete.bubble';
+                }
+            }
+        }
     </script>
 </body>
 
