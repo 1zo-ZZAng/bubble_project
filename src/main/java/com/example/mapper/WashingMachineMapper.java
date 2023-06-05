@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,10 @@ public interface WashingMachineMapper {
 	public WashingMachine selectWashingNameAddressPhone(@Param("wnumber") String wnumber,
                                                         @Param("type") String type,
                                                         @Param("typeno") BigInteger typeno);
+
+    /* == 업체 == */
+
+    // 기기 사용 률
+    @Select({" SELECT mtype, COUNT(*) AS count, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' ) AS usagRate FROM RESERVE WHERE wid=#{wid} AND STATE ='이용 완료' GROUP BY mtype "})
+    public List<Map<String, Object>> selectMachineUseRate(@Param("wid") String wid);
 }
