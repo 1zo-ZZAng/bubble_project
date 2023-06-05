@@ -18,5 +18,5 @@ public class Reservation {
 
     private String rvtime;
 
-    private String state;
+    private String state="예약 완료";
 }

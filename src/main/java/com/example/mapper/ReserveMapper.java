@@ -45,7 +45,7 @@ public interface ReserveMapper {
     public Reserve selectReserveDetail(@Param("rvno") BigInteger rvno);
 
     // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
-    @Update({"UPDATE RESERVATION SET rvdate = NULL, rvtime = NULL WHERE no=#{rvno}"})
+    @Update({"UPDATE RESERVATION SET state='예약 취소' WHERE no=#{rvno}"})
     public int deleteReserveOne(@Param("rvno") BigInteger rvno);
 
     // 예약하기
