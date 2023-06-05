@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Washing;
+import com.example.entity.Reserve;
 import com.example.mapper.WashingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class WashingMybatisServiceImpl implements WashingMybatisService {
     
     final WashingMapper wMapper;
+
     
 
     //업체 탈퇴
@@ -60,17 +62,6 @@ public class WashingMybatisServiceImpl implements WashingMybatisService {
         }
     }
 
-    // //예약조회(업체별)
-    // @Override
-    // public List<Reserve> selectReserveList(String wname) {
-    //     try {
-            
-    //         return wMapper.selectReserveList(wname);
 
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     }
-    // }
     
 }

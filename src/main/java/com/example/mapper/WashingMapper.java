@@ -90,27 +90,27 @@ public interface WashingMapper {
 	/* === 매출 === */
 
 	//일매출 //오라클은 sysdate mysql은 curdate()로 오늘날짜를 조회할 수 있다
-	@Select({" SELECT SUBSTRING(rvdate, 0,10) daysales, sum(mprice) total FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL  GROUP BY SUBSTRING(rvdate, 0,10) "})
+	@Select({" SELECT SUBSTRING(rvdate, 0,10) daysales, sum(mprice) total FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY SUBSTRING(rvdate, 0,10) "})
 	public List<Map<String, Object>> selectDaySales(@Param("wid") String wid);
 
 	//월매출 
-	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthsales, sum(mprice) total  FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL  GROUP BY SUBSTRING(rvdate, 0,7) "})
+	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthsales, sum(mprice) total  FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL AND STATE = '이용 완료' GROUP BY SUBSTRING(rvdate, 0,7) "})
 	public List<Map<String, Object>> selectMonthSales(@Param("wid") String wid);
 
 	//연매출
-	@Select({" SELECT SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL   GROUP BY SUBSTRING(rvdate, 0,4) "})
+	@Select({" SELECT SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY SUBSTRING(rvdate, 0,4) "})
 	public List<Map<String, Object>> selectYearSales(@Param("wid") String wid);
 
 	//모든 업체의 연 매출 
-	@Select({" SELECT wname, SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now AND rvdate IS NOT NULL  GROUP BY SUBSTRING(rvdate, 0,4), wname"})
+	@Select({" SELECT wname, SUBSTRING(rvdate, 0,4) yearsales, sum(mprice) total FROM RESERVE WHERE CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now AND rvdate IS NOT NULL AND STATE = '이용 완료' GROUP BY SUBSTRING(rvdate, 0,4), wname"})
 	public List<Map<String, Object>> selectAllMonthSales();
 
 	//월별사용자수
-	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthly, count(*) usercnt FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL  GROUP BY SUBSTRING(rvdate, 0,7) "})
+	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthly, count(*) usercnt FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY SUBSTRING(rvdate, 0,7) "})
 	public List<Map<String, Object>> selectUserCnt(@Param("wid") String wid);
 
 	//최근 일주일 사용자 수 (메인페이지에)
-	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL  GROUP BY rvdate "})
+	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY rvdate "})
 	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
 
 }

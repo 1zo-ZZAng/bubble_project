@@ -1,7 +1,10 @@
 package com.example.service.jpa;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Reserve;
 import com.example.entity.Washing;
 import com.example.repository.ReserveRepository;
 import com.example.repository.WashingRepository;
@@ -77,6 +80,9 @@ public class WashingServiceImpl implements WashingService {
             return null;
         }
     }
+
+
+
 
 
 

@@ -30,5 +30,18 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
 
+    //예약 내역 조회
+    @Override
+    public List<Reserve> selectReserveList(String wid, String state) {
+        try {
+            
+            return rRepository.findByWidAndState(wid, state);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     
 }

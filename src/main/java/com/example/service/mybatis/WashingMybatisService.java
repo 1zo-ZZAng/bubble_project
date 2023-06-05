@@ -21,6 +21,9 @@ public interface WashingMybatisService {
     //예약조회(업체별)
     // public List<Reserve> selectReserveList(String wname);
 
+
+
+    
     
     
 }

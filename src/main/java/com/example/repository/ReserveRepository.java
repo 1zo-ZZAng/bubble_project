@@ -23,6 +23,8 @@ public interface ReserveRepository extends JpaRepository<Reserve, BigInteger> {
     //예약내역조회 (업체별)
     List<Reserve> findByWidOrderByRvnoDesc(String wid);
 
+    List<Reserve> findByWidAndState(String wid, String state);
+
 
     /* === 관리자용 ==== */
     

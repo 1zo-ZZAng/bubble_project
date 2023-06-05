@@ -512,11 +512,13 @@ public class WashingController {
 
     //예약내역 조회
     @GetMapping(value="/reserve.bubble")
-    public String reserveGET(@AuthenticationPrincipal User user,  Model model) { 
+    public String reserveGET(@AuthenticationPrincipal User user,  Model model, @ModelAttribute Reserve reserve) {  //@RequestParam(name = "menu", required = false, defaultValue = "0") int menu
         try {
 
             model.addAttribute("user", user);
             log.info("로그인한 아이디 => {}", user.getUsername());
+
+
 
 
             List<Reserve> list = rService.selectReserve(user.getUsername());
