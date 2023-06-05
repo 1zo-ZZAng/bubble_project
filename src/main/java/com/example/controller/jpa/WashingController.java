@@ -522,7 +522,7 @@ public class WashingController {
             List<Reserve> list = rService.selectReserve(user.getUsername());
             
 
-            log.info("예약내역 조회 => {}", list.toString());
+            // log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list);
             // model.addAttribute("user", user);
