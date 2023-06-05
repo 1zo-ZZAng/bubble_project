@@ -83,13 +83,15 @@
                     <td class="tdc"> : </td>
                     <td th:text="|${one.mtime}분|"></td>
                 </tr>
-                <!-- <tr>
-                    <td><button class="btn btn-primary">예약 취소</button></td>
-                </tr> -->
+                <tr th:each="one : ${reserveOne}">
+                    <td>예약 현황</td>
+                    <td class="tdc"> : </td>
+                    <td th:text="${one.state}"></td>
+                </tr>
             </table>
         </div>
 
-        <div>
+        <div th:if="${reserveOne.state == '예약 완료'}">
             <input type="button" value="예약 취소" onclick="reserveCancel()" class="btn btn-primary"/>
         </div>
     </div>

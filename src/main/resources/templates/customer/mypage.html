@@ -33,6 +33,21 @@
             text-decoration: none;
             color: black;
         }
+
+        .rlist:hover {
+            color: black;
+            font-weight: 900;
+        }
+
+        .blue-text {
+            color: rgb(2, 2, 155);
+        }
+        .gray-text {
+            color: rgba(128, 128, 128, 0.801);
+        }
+        .red-text {
+            color: rgba(255, 0, 0, 0.815);
+        }
     </style>
 </head>
 <body>
@@ -46,12 +61,14 @@
         <div id="gradepart">
             <div id="grade">
                 <img id="gradeicon" th:src="@{/images/}">
-                고객 등급 : 
+                <p th:text="|${name} 님 환영합니다! |"></p>
+                고객님의 고객 등급은 
                 <th:block th:switch="${grade}">
                     <span th:case="'1'">세탁 초보</span>
                     <span th:case="'2'">세탁 프로</span>
                     <span th:case="'3'">세탁 요정</span>
                 </th:block>
+                입니다.
             </div>
         </div>
 
@@ -77,11 +94,12 @@
                 <tbody>
                     <tr th:each="list : ${reserveList}">
                         <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a></td>
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.wname}"></a></td>
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.waddress}"></a></td>
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvdate}"></a></td>
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvtime}"></a></td>
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.state}"></a></td>
+                        <td th:text="${list.wname}"></td>
+                        <td th:text="${list.waddress}"></td>
+                        <td th:text="${list.rvdate}"></td>
+                        <td th:text="${list.rvtime}"></td>
+                        <!-- <td th:text="${list.state}"></td> -->
+                        <td><span th:text="${list.state}" th:class="${list.state == '예약 완료' ? 'blue-text' : (list.state == '이용 완료' ? 'gray-text' : (list.state == '예약 취소' ? 'red-text' : ''))}"></span></td>
                     </tr>
                 </tbody>
             </table>

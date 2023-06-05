@@ -269,6 +269,7 @@ public class CustomerController {
             
             if (customer != null) {
                 // 고객 등급
+                model.addAttribute("name", customer.getName());
                 model.addAttribute("grade", customer.getGrade());
 
                 if (menu == 1) { // 예약 내역 조회
