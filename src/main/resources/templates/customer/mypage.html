@@ -40,6 +40,7 @@
         }
 
         .blue-text {
+            font-weight: bold;
             color: rgb(2, 2, 155);
         }
         .gray-text {
@@ -86,7 +87,7 @@
                         <th>예약번호</th>
                         <th>세탁소</th>
                         <th>세탁소 주소</th>
-                        <th>예약일</th>
+                        <th>이용일</th>
                         <th>예약 시간</th>
                         <th>예약 현황</th>
                     </tr>
@@ -99,7 +100,9 @@
                         <td th:text="${list.rvdate}"></td>
                         <td th:text="${list.rvtime}"></td>
                         <!-- <td th:text="${list.state}"></td> -->
-                        <td><span th:text="${list.state}" th:class="${list.state == '예약 완료' ? 'blue-text' : (list.state == '이용 완료' ? 'gray-text' : (list.state == '예약 취소' ? 'red-text' : ''))}"></span></td>
+                        <td>
+                            <span th:text="${list.state}" th:classappend="${list.state == '예약 완료' ? 'blue-text' : (list.state == '이용 완료' ? 'gray-text' : (list.state == '예약 취소' ? 'red-text' : ''))}"></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -168,7 +171,7 @@
 
     <!-- 주소등록 버튼을 누르면 나오는 모달창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">주소 찾기</h5>

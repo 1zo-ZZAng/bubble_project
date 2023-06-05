@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.entity.Customer;
+import com.example.service.jpa.CustomerService;
 import com.example.service.mybatis.CityMybatisService;
 import com.example.service.mybatis.ReserveMybatisService;
 import com.example.service.mybatis.WashingMachineMybatisService;
@@ -23,13 +25,18 @@ public class ReserveController {
     final CityMybatisService cityService;
     final ReserveMybatisService rService;
     final WashingMachineMybatisService wmService;
+    final CustomerService cService;
 
     // 예약 화면
     @GetMapping(value = "/letsgo.bubble")
     public String letsgoGET(Model model, @AuthenticationPrincipal User user) {
         try {
+            Customer customer = cService.selectCustomerOne(user.getUsername());
+
             model.addAttribute("user", user);
             model.addAttribute("citynamelist", cityService.selectCitynameList());
+
+            model.addAttribute("customer", customer);
 
             return "/reserve/reservemain";
         }
