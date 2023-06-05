@@ -3,13 +3,11 @@ package com.example.restcontroller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.Board;
 import com.example.service.mybatis.BoardMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +24,8 @@ public class RestWBoardController {
 
     //조회수 증가
     //127.0.0.1:8282/bubble_bumul/api/wboard/updatehit.bubble?no=
-    @PutMapping(value="/updatehit.bubble")
-    public Map<String, Integer> updatehitPUT( @RequestParam(name = "no") long no) {
+    @GetMapping(value="/updatehit.bubble")
+    public Map<String, Integer> updatehitGET( @RequestParam(name = "no") long no) {
 
         Map<String, Integer> retMap = new HashMap<>();
 
@@ -38,11 +36,15 @@ public class RestWBoardController {
             retMap.put("status", 200);
             retMap.put("result", ret);
 
+            log.info("값은? => {}", ret);
+
             
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return retMap;
+
     }
 
     

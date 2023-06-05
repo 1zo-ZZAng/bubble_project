@@ -87,7 +87,7 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //전체 조회 - 성공
+    //전체 조회 
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
         try {
@@ -139,17 +139,14 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //1개 조회 - 성공
+    //1개 조회
     @GetMapping(value="/selectone.bubble")
     public String selectOne(Model model, @AuthenticationPrincipal User user, 
                             @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
                             @RequestParam(name = "no") long no) {
         try {
 
-            
-            
             Board board = bService.selectOneBoard(no);
-
 
             log.info("글 1개 조회 => {}", board.toString());
 
@@ -157,13 +154,17 @@ public class WBoardController {
             long next = bService.nextBoardOne(no);
             long pre = bService.preBoardOne(no);
 
+            log.info("이전페이지 번호 => {}", pre);
+            log.info("다음페이지 번호 => {}", next);
+
+
 
             model.addAttribute("board", board); //게시글 1개 조회 view로 넘기기
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
 
-            bService.updateHit(no); //해당 게시글 조회수 증가
+            // bService.updateHit(no); //해당 게시글 조회수 증가
 
             return "/wboard/selectone";
 
@@ -176,7 +177,7 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //수정 - 진행중
+    //수정 
     @GetMapping(value="/update.bubble")
     public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
         try {
@@ -237,7 +238,7 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //삭제 - 성공
+    //삭제 
     @PostMapping(value="/delete.bubble")
     public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user, Model model) {
         try {
