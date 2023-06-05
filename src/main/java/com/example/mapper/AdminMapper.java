@@ -25,7 +25,7 @@ import com.example.entity.WashingCheck;
 public interface AdminMapper {
     
 
-    //업체리스트 전체 조회 (업체명, 대표자명, 주소, 사업자등록번호, 전화번호)
+    //업체리스트 전체 조회 (업체명, 대표자명, 주소, 사업자등록번호, 전화번호) 제휴 o
     @Select({ " SELECT * FROM washing WHERE address IS NOT NULL AND chkno = 1 GROUP BY name " })
     public List<Washing> selectWList();
 
@@ -76,6 +76,28 @@ public interface AdminMapper {
     public int todayRVWashingCount(@Param("wnumber") String wnumber);
 
 
+    //오늘 총 예약 건 
+    @Select({" SELECT count(*) TODAY FROM reserve WHERE CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) = now() "})
+    public int todayRVCount();
+
+    //예약 날짜 목록 최신순
+    @Select({" SELECT * FROM reserve WHERE rvdate IS NOT NULL ORDER by rvdate DESC ,RVTIME desc "})
+    public List<Reserve> selectRvdateList();
+
+    //예약등록 날짜 목록 최신순
+    @Select({" SELECT * FROM reserve WHERE rvdate IS NOT NULL ORDER by rdate desc "})
+    public List<Reserve> selectRdateList();
+
+    //이번달 예약 건수
+    @Select({" SELECT count(*) FROM (SELECT * FROM reserve WHERE rvdate IS NOT NULL AND SUBSTRING(rvdate,0,7) = SUBSTRING(curdate(),0,7) ORDER by rvdate DESC ,RVTIME DESC) "})
+    public int thisMonthRVCount();
+
+    //가장 많이 이용하는 기기
+    @Select({" SELECT mtype FROM RESERVE  GROUP BY mtype ORDER BY count(*) DESC LIMIT 1 "})
+    public String Top1MachineType();
+    
+
+
     //---------------------------차트------------------------------
     
     //차트의 월별 선택
@@ -91,17 +113,22 @@ public interface AdminMapper {
     @Select({" SELECT SUBSTRING(rvdate,0,10) day, sum(mprice) dtotal FROM reserve WHERE SUBSTRING(RVDATE,0,7)='#{selectdate}'  AND CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) <= now()  GROUP BY SUBSTRING(rvdate,0,10) "})
     public List<Map<String,Object>> selectMonthChart(@Param("selectdate") String selectdate);
 
-    //오늘 총 예약 건 
-    @Select({" SELECT count(*) TODAY FROM reserve WHERE CONCAT(SUBSTRING(rvdate,0,10),' ',SUBSTRING(RVTIME ,0,5)) = now() "})
-    public int todayRVCount();
+    //매출 1위 업체
+    @Select({" SELECT r.wname FROM RESERVE r WHERE r.state='이용 완료' GROUP BY r.wname ORDER BY sum(mprice) DESC LIMIT 1 "})
+    public String Top1Washing();
 
-    //예약 날짜 목록 최신순
-    @Select({" SELECT * FROM reserve WHERE rvdate IS NOT NULL ORDER by rvdate DESC ,RVTIME desc "})
-    public Reserve selectRvdateList();
+    //예약 추이 (예약 완료)
+    @Select({ " SELECT count(*) FROM (SELECT * FROM reserve r WHERE SUBSTRING(rvdate,0,7) = SUBSTRING(curdate(),0,7) AND r.state='예약 완료' ORDER by rvdate DESC ,RVTIME DESC )  "})
+    public int MonthRvOkState();
 
-     //예약등록 날짜 목록 최신순
-     @Select({" SELECT * FROM reserve WHERE rvdate IS NOT NULL ORDER by rdate desc "})
-     public Reserve selectRdateList();
+    //예약 추이 (예약 취소)
+    @Select({"  SELECT count(*) FROM (SELECT * FROM reserve r WHERE SUBSTRING(rvdate,0,7) = SUBSTRING(curdate(),0,7) AND r.state='예약 취소' ORDER by rvdate DESC ,RVTIME DESC )  "})
+    public int MonthRvCancelState();
+
+    //예약 추이 (이용 완료)
+    @Select({"  SELECT count(*) FROM (SELECT * FROM reserve r WHERE SUBSTRING(rvdate,0,7) = SUBSTRING(curdate(),0,7) AND r.state='이용 완료' ORDER by rvdate DESC ,RVTIME DESC )  "})
+    public int MonthUseOkState();
+
     
 
     // -------------------업체별 페이지 차트--------------------------

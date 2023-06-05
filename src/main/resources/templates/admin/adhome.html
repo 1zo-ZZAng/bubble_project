@@ -68,7 +68,7 @@
                         <div class="col-lg-2">
                             <div>
                                 <div class="card mb-4">
-                                    <div class="card-header">
+                                    <div class="card-header"  style="text-align: center; background-color: rgba(2,117,216,0.3);">
                                         <i class="bi bi-diagram-3"></i>
                                         제휴 업체 수
                                     </div>
@@ -79,23 +79,23 @@
                             </div>
                             <div>
                                 <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="bi bi-diagram-3"></i>
-                                        제휴 업체 수
+                                    <div class="card-header" style="text-align: center; background-color: rgba(2,117,216,0.3);">
+                                        <i class="bi bi-calendar-check"></i>
+                                        이번달 예약 건 
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="mt-2" th:text="|${wc}개|" style="margin-left: 80px;"></h3>
+                                        <h3 class="mt-2" th:text="|${mcount}개|" style="margin-left: 80px;"></h3>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="bi bi-diagram-3"></i>
-                                        제휴 업체 수
+                                    <div class="card-header" style="text-align: center; background-color: rgba(2,117,216,0.3);">
+                                        <i class="bi bi-coin"></i>
+                                        매출 1위 업체
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="mt-2" th:text="|${wc}개|" style="margin-left: 80px;"></h3>
+                                        <h3 class="mt-2" th:text="|${top}|" style="margin-left: 15px;"></h3>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                     최근 예약 추이
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="myBarChart" width="100%" height="56"></canvas>
+                                    <canvas id="chartCanvas" width="100%" height="56"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr th:each="obj : ${RvList}">
+                                            <tr th:each="obj : ${RvdateList}">
                                                 <td th:text="${obj.name}"></td>
                                                 <td th:text="${obj.wname}"></td>
                                                 <td th:text="${obj.rvdate}"></td>
@@ -201,98 +201,168 @@
             });
         });
 
-        //    차트
-        // let month = 
-        var ctx = document.getElementById("myBarChart");        
-        var myLineChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: "Revenue",
-                    backgroundColor: "rgba(2,117,216,0.5)",
-                    borderColor: "rgba(2,117,216,1)",
-                    data: [4215, 5312, 6251, 7841, 9821, 14984],
-                }],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        barPercentage: 0.5, // 막대 두께 비율
-                        categoryPercentage: 0.8, // 그룹(카테고리) 너비 비율
-                        time: {
-                            unit: 'month'
-                        },
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 6
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 15000,
-                            maxTicksLimit: 5
-                        },
-                        gridLines: {
-                            display: true
-                        }
-                    }],
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
+
+        
+
+    //-----------------------월별 총 매출-----------------------------------
+    var salesMonthAllData = [[${ msaleslist }]];
+    
+    //확인용
+    // for(let i=0; i<salesData.length; i++) {
+    //     console.log(salesData[i].RVDAY);
+    //     console.log(salesData[i].MTOTAL);
+    // }
 
 
-        //    차트
-        // let month = 
-        var ctx = document.getElementById("AllSalesChart");        
-        var myLineChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: "Revenue",
-                    backgroundColor: "rgba(2,117,216,0.5)",
-                    borderColor: "rgba(2,117,216,1)",
-                    data: [4215, 5312, 6251, 7841, 9821, 14984],
+    //매출액
+    var total = salesMonthAllData.map(function (monthly) {
+        return monthly.MTOTAL;
+    });
+
+    //년-달-일
+    var labels = salesMonthAllData.map(function (monthly) {
+        return monthly.MDATE; //여기를 꼭 대문자로 해야함
+    });
+
+    console.log(total);
+    console.log(labels);
+
+
+    //    차트
+    var ctx = document.getElementById("AllSalesChart").getContext('2d');
+
+    var myBarMonthChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "월 별 매출",
+                backgroundColor: "rgba(2,117,216,0.5)",
+                borderColor: "rgba(2,117,216,1)",
+                data: total,
+            }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    barPercentage: 0.5, // 막대 두께 비율
+                    categoryPercentage: 0.9, // 그룹(카테고리) 너비 비율
+                    time: {
+                        unit: 'month'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 15
+                    }
                 }],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        barPercentage: 0.5, // 막대 두께 비율
-                        categoryPercentage: 0.8, // 그룹(카테고리) 너비 비율
-                        time: {
-                            unit: 'month'
-                        },
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 6
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 15000,
-                            maxTicksLimit: 5
-                        },
-                        gridLines: {
-                            display: true
-                        }
-                    }],
-                },
-                legend: {
-                    display: false
-                }
+
+                yAxes: [{
+                    ticks: {
+                        max : 50000,
+                        beginAtZero: true, //0부터 시작하게 함
+                        fontSize: 14,
+                        stepSize: 5000 // 100원 단위로
+                    }
+                }]
             }
-        });
+        }
+    });
+
+
+//-----------------------최근 예약 추이-----------------------------------
+
+
+
+     //예약 상태
+     var MonthRvOkState = [[${ rvok }]];
+     var MonthRvCancelState = [[${ rvcancel }]];
+     var MonthUseOkState = [[${ rvuseok }]];
+
+    //확인용
+    // for(let i=0; i<salesData.length; i++) {
+    //     console.log(salesData[i].RVDAY);
+    //     console.log(salesData[i].MTOTAL);
+    // }
+
+
+
+
+    console.log(MonthRvOkState);
+    console.log('--------');
+    console.log(MonthRvCancelState);
+    console.log('--------');
+    console.log(MonthUseOkState);
+    // console.log(labels);
+
+
+
+    // console.log('eklfuhldkihfalk');
+   
+
+// Pie Chart Example
+var ctx1 = document.getElementById("chartCanvas");
+var myPieChart = new Chart(ctx1, {
+  type: 'pie',
+  data: {
+    labels: ["예약 완료","예약 취소","이용 완료"],
+    datasets: [{
+      data: [MonthRvOkState, MonthRvCancelState,MonthUseOkState],
+      backgroundColor: ['#1363DF', '#CCF2F4', '#1C3879'],
+    }],
+  },
+});
+
+
+
+    // // 막대 그래프를 그릴 데이터 준비
+    // const dataset1 = {
+    //   label: "예약 완료",
+    //   data: data.map(item => item.value).toString(),
+    //   backgroundColor: "rgba(255, 0, 0, 0.5)",
+    //   borderWidth: 1
+    // };
+
+    // const dataset2 = {
+    //   label: "예약 취소",
+    //   data: data1.map(item => item.value).toString(),
+    //   backgroundColor: "rgba(0, 0, 255, 0.5)",
+    //   borderWidth: 1
+    // };
+
+    // const dataset3 = {
+    //   label: "이용 완료",
+    //   data:  data2.map(item => item.value).toString(),
+    //   backgroundColor: "rgba(0, 255, 0, 0.5)",
+    //   borderWidth: 1
+    // };
+
+    // // 막대 그래프를 그릴 수 있는 Chart 객체 생성
+    // const ctx1 = document.getElementById("chartCanvas").getContext("2d");
+    // const chart = new Chart(ctx1, {
+    //   type: "bar",
+    //   data: {
+    //     labels: labels,
+    //     datasets: [dataset1, dataset2, dataset3]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //     scales: {
+    //       x: {
+    //         stacked: true // x축 방향으로 막대를 쌓음
+    //       },
+    //       yAxes: [{
+    //                 ticks: {
+    //                     max : 15,
+    //                     beginAtZero: true, //0부터 시작하게 함
+    //                     fontSize: 14,
+    //                     stepSize: 3 // 100원 단위로
+    //                 }
+    //             }]
+    //     }
+    //   }
+    // });
 
 
     </script>
