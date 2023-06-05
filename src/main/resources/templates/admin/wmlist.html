@@ -105,9 +105,9 @@
                                     </div>
                                     <div class="col-lg-3 cld-md-3">
                                         <div class="card  text-black mb-4">
-                                            <div class="card-body" style="margin-left: 120px;">여긴 모하징</div>
+                                            <div class="card-body" style="margin-left: 100px;">가장 많이 사용되는 기기</div>
                                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                                <h1 class="mt-2" th:text="|${rvcount}건|" style="margin-left: 140px;"></h1>
+                                                <h1 class="mt-2" th:text="|${topMachine}|" style="margin-left: 120px;"></h1>
                                             </div>
 
                                         </div>
@@ -230,10 +230,10 @@
                     }],
                     yAxes: [{
                         ticks: {
-                            max : 1000,
+                            max : 50000,
                             beginAtZero: true, //0부터 시작하게 함
                             fontSize: 14,
-                            stepSize: 200 // 100원 단위로
+                            stepSize: 5000 // 100원 단위로
                         }
                     }]
                 }
@@ -298,10 +298,10 @@
 
                     yAxes: [{
                         ticks: {
-                            max : 1000,
+                            max : 50000,
                             beginAtZero: true, //0부터 시작하게 함
                             fontSize: 14,
-                            stepSize: 200 // 100원 단위로
+                            stepSize: 5000 // 100원 단위로
                         }
                     }]
                 }
