@@ -101,7 +101,7 @@ public class CustomerController {
 
             cService.insertCustomer(customer);
 
-            model.addAttribute("msg", "예약 서비스 이용시 연락처가 필요합니다.\n마이페이지로 이동하여 입력 후 수정해주세요.");
+            model.addAttribute("msg", "예약 서비스 이용시 전화번호가 필요합니다.\n마이페이지로 이동하여 입력 후 수정해주세요.");
             model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
 
             return "message";

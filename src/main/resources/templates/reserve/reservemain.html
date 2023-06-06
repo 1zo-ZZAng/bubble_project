@@ -557,17 +557,18 @@
                     console.log(rsp);
                     if ( rsp.success ) {
                         result = 1;
-                        var msg = '결제가 완료되었습니다.';
-                        msg += '고유ID : ' + rsp.imp_uid;
-                        msg += '상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                        var msg = '결제가 완료되었습니다.\n';
+                        // msg += '고유ID : ' + rsp.imp_uid;
+                        msg += '주문번호 : ' + rsp.merchant_uid;
+                        msg += '\n결제 금액 : ' + rsp.paid_amount + "원";
+                        // msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                        alert(msg);
                     } else {
                         result = 0;
                         // var msg = '결제에 실패하였습니다.';
                         // msg += '에러내용 : ' + rsp.error_msg;
                     }
-                    alert(msg);
 
                     // 예약
                     if (result == 1) {
