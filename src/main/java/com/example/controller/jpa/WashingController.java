@@ -84,7 +84,7 @@ public class WashingController {
             List<Map<String, Object>> list2 = wSalesMybatisService.selectMonthSales(user.getUsername());
 
             //최신글 5개 조회
-            // List<Board> list3 =bMybatisService.selectListLimitBoard();
+            List<Board> list3 =bMybatisService.selectListLimitBoard();
 
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
@@ -200,7 +200,7 @@ public class WashingController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/home.bubble"; //고객 홈으로 이동
+            return "redirect:/customer/home.bubble"; //고객 홈으로 이동
         }
 
     }
