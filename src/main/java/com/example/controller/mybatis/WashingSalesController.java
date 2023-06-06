@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
+//매출 & 예약 내역들
+
 @Controller
 @RequestMapping(value = "/washingsales")
 @RequiredArgsConstructor
@@ -30,12 +32,10 @@ public class WashingSalesController {
     final WashingSalesMybatisService wSalesMybatisService;
 
 
-
-
 /* ============================================================================== */
 
     //매출 페이지
-    @GetMapping(value="/monthsales.bubble")
+    @GetMapping(value="/sales.bubble")
     public String monthGET(@AuthenticationPrincipal User user, Model model) { //@RequestParam(name = "wid") String wid,
 
         try {
@@ -43,6 +43,13 @@ public class WashingSalesController {
             List<Map<String, Object>> list1 = wSalesMybatisService.selectYearSales(user.getUsername()); //연 매출
             List<Map<String, Object>> list2 = wSalesMybatisService.selectMonthSales(user.getUsername()); // 월 매출
             List<Map<String, Object>> list3 = wSalesMybatisService.selectDaySales(user.getUsername()); // 일 매출
+
+            List<Map<String, Object>> list4 = wSalesMybatisService.selectMachineUseRate(user.getUsername()); //기기 사용률
+
+            Reserve obj1 = wSalesMybatisService.selectTodayCurSales(user.getUsername()); //오늘 매출
+            Reserve obj2 = wSalesMybatisService.selectMonthCurSales(user.getUsername()); //이번달 매출
+
+            
 
 
 
@@ -61,9 +68,14 @@ public class WashingSalesController {
             model.addAttribute("list2", list2); //월 매출
             model.addAttribute("list3", list3); //일 매출
 
+            model.addAttribute("list4", list4); //기기 사용률 
+
+            model.addAttribute("obj1", obj1); //오늘 총 매출
+            model.addAttribute("obj2", obj2); //이번달 총 매출
 
 
-            return "/washing/monthsales";
+
+            return "/washing/sales";
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,31 +84,10 @@ public class WashingSalesController {
         
     }
 
-    
-    /* --------------------------------------------------------------- */
-    
-    //일매출
-    @GetMapping(value="/daysales.bubble")
-    public String dayGET(@AuthenticationPrincipal User user, Model model) { 
-
-        try {
-
-            List<Map<String, Object>> list1 = wSalesMybatisService.selectDaySales(user.getUsername());
-
-            model.addAttribute("list1", list1);
-            model.addAttribute("user", user);
-
-            return "/washing/daysales";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/washing/home.bubble";
-        } 
-        
-    }
 
     /* ============================================================================== */
 
-    //예약내역 조회
+    //예약내역 페이지
     @GetMapping(value="/reserve.bubble")
     public String reserveGET(@AuthenticationPrincipal User user,  Model model, @ModelAttribute Reserve reserve, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {  //
         try {
@@ -125,8 +116,6 @@ public class WashingSalesController {
             }else { //menu값 없을 때 menu=1로 자동이동
                 return "redirect:/washingsales/reserve.bubble?menu=1";
             }
-            
-            
 
             // log.info("예약내역 조회 => {}", list.toString());
 

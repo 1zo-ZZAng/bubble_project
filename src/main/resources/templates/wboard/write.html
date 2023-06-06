@@ -178,21 +178,21 @@
                             메인
                         </a>
 
-                        <!--매출-->
+                        <!--매출 & 예약 내역 조회-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div> <!--아이콘 변경-->
-                            매출
+                            <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
+                            조회
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/api/washingsales/monthsales.bubble}">월별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                                <a class="nav-link" th:href="@{/api/washingsales/daysales.bubble}">일별 매출</a> <!---수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <a class="nav-link" th:href="@{/washingsales/sales.bubble}">매출</a> 
+                                <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
                             </nav>
                         </div>
 
                         <!--예약-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
                             <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
                             예약
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -201,7 +201,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
                             </nav>
-                        </div>
+                        </div> -->
 
                         <!--보유기기-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
@@ -209,7 +209,7 @@
                             보유기기
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseMachines" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
                                     <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
@@ -222,7 +222,7 @@
                             게시판
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingFour" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
                                 <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>

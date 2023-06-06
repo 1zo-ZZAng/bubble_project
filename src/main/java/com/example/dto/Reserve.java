@@ -53,5 +53,7 @@ public class Reserve {
 
     ///
 
+    private long total;
+
 
 }

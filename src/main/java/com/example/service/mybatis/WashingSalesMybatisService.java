@@ -58,7 +58,7 @@ public interface WashingSalesMybatisService {
 
         /* == 기기 사용 률 == */
         
-
+    //기기 사용률
     public List<Map<String, Object>> selectMachineUseRate(String wid);
 
 }
