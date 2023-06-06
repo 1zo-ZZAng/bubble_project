@@ -486,52 +486,6 @@
             // console.log(machineno);
             // console.log(rvdate);
             // console.log(rvtime);
-
-            // 예약
-            // const form = document.createElement("form");
-            // form.setAttribute("action", [[@{/reserve/letsgo.bubble}]]);
-            // form.setAttribute("method", "post");
-            // form.style.display="none";
-
-            // const input1 = document.createElement("input");
-            // input1.setAttribute("type", "hidden");
-            // input1.setAttribute("name", "wnumber");
-            // input1.setAttribute("value", wnumber);
-
-            // const input2 = document.createElement("input");
-            // input2.setAttribute("type", "hidden");
-            // input2.setAttribute("name", "machine");
-            // input2.setAttribute("value", machine);
-
-            // const input3 = document.createElement("input");
-            // input3.setAttribute("type", "hidden");
-            // input3.setAttribute("name", "machineno");
-            // input3.setAttribute("value", machineno);
-
-            // const input4 = document.createElement("input");
-            // input4.setAttribute("type", "hidden");
-            // input4.setAttribute("name", "rvdate");
-            // input4.setAttribute("value", rvdate);
-
-            // const input5 = document.createElement("input");
-            // input5.setAttribute("type", "hidden");
-            // input5.setAttribute("name", "rvtime");
-            // input5.setAttribute("value", rvtime);
-
-            // const input6 = document.createElement("input");
-            // input6.setAttribute("type", "hidden");
-            // input6.setAttribute("name", "_csrf");
-            // input6.setAttribute("value", [[${_csrf.token}]]);
-
-            // form.appendChild(input1);
-            // form.appendChild(input2);
-            // form.appendChild(input3);
-            // form.appendChild(input4);
-            // form.appendChild(input5);
-            // form.appendChild(input6);
-
-            // document.body.appendChild(form);
-            // form.submit();
         }
 
         // 결제 - 주문번호(현재 날짜 포맷)
@@ -562,8 +516,8 @@
             var now = new Date(); // 현재 날짜 및 시간
             // console.log(dateFormat(now));
             
-            const rvdate = document.getElementById("date").value;
-            let rvdatesplit = rvdate.slice(2, 10).split('-');
+            const rvnodate = document.getElementById("date").value;
+            let rvdatesplit = rvnodate.slice(2, 10).split('-');
             let rvdates = '';
             for (let i=0; i<rvdatesplit.length; i++) {
                 rvdates += rvdatesplit[i];
@@ -580,14 +534,14 @@
 
             // ----------------------------------------------------------
             
+            const wnumber = $('input[name="wnumber"]:checked').val();
             const machine = $("#machine option:selected").val();
-
+            const machineno = $("#machineno option:selected").val();
+            const rvdate = document.getElementById("date").value;
+            
             // ----------------------------------------------------------
 
-
-
-            // ----------------------------------------------------------
-
+            var result = '';
             //가맹점 식별코드
             IMP.request_pay({
                 pg: "html5_inicis",
@@ -601,16 +555,66 @@
             }, function(rsp) {
                 console.log(rsp);
                 if ( rsp.success ) {
+                    result = 1;
                     var msg = '결제가 완료되었습니다.';
                     msg += '고유ID : ' + rsp.imp_uid;
                     msg += '상점 거래ID : ' + rsp.merchant_uid;
                     msg += '결제 금액 : ' + rsp.paid_amount;
                     msg += '카드 승인번호 : ' + rsp.apply_num;
                 } else {
+                    result = 0;
                     var msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
                 }
                 alert(msg);
+
+                // 예약
+                if (result == 1) {
+                    const form = document.createElement("form");
+                    form.setAttribute("action", [[@{/reserve/letsgo.bubble}]]);
+                    form.setAttribute("method", "post");
+                    form.style.display="none";
+
+                    const input1 = document.createElement("input");
+                    input1.setAttribute("type", "hidden");
+                    input1.setAttribute("name", "wnumber");
+                    input1.setAttribute("value", wnumber);
+
+                    const input2 = document.createElement("input");
+                    input2.setAttribute("type", "hidden");
+                    input2.setAttribute("name", "machine");
+                    input2.setAttribute("value", machine);
+
+                    const input3 = document.createElement("input");
+                    input3.setAttribute("type", "hidden");
+                    input3.setAttribute("name", "machineno");
+                    input3.setAttribute("value", machineno);
+
+                    const input4 = document.createElement("input");
+                    input4.setAttribute("type", "hidden");
+                    input4.setAttribute("name", "rvdate");
+                    input4.setAttribute("value", rvdate);
+
+                    const input5 = document.createElement("input");
+                    input5.setAttribute("type", "hidden");
+                    input5.setAttribute("name", "rvtime");
+                    input5.setAttribute("value", rvtime);
+
+                    const input6 = document.createElement("input");
+                    input6.setAttribute("type", "hidden");
+                    input6.setAttribute("name", "_csrf");
+                    input6.setAttribute("value", [[${_csrf.token}]]);
+
+                    form.appendChild(input1);
+                    form.appendChild(input2);
+                    form.appendChild(input3);
+                    form.appendChild(input4);
+                    form.appendChild(input5);
+                    form.appendChild(input6);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
             });
         }
     </script>
