@@ -284,7 +284,7 @@
                                                     <th>번호</th>
                                                     <th>제목</th>
                                                     <!-- <th>작성자</th> -->
-                                                    <!-- <th>작성일</th> -->
+                                                    <th>작성일</th>
                                                     <th>조회수</th>
                                                 </tr>
                                             </thead>
@@ -293,7 +293,7 @@
                                                     <td th:text="${obj.no}"></td>
                                                     <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none;"></a></td>
                                                     <!-- <td th:text="${obj.writer}"></td> -->
-                                                    <!-- <td th:text="${obj.regdate}"></td> -->
+                                                    <td th:text="${#dates.format(obj.date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     <td th:text="${obj.hit}"></td>
                                                 </tr>
                                             </tbody>

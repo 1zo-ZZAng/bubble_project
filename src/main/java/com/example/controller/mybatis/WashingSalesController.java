@@ -48,7 +48,7 @@ public class WashingSalesController {
 
             log.info("연매출 => {} ", list1.toString());
             log.info("월매출 => {} ", list2.toString());
-            log.info("일매출 => {} ", list3.toString());
+            // log.info("일매출 => {} ", list3.toString());
 
             // for(Map<String, Object> list : list1) {
             // log.info("매출 for문 => {} ", list.toString());
@@ -58,8 +58,8 @@ public class WashingSalesController {
 
             model.addAttribute("user", user);
             model.addAttribute("list1", list1); //연 매출
-            model.addAttribute("list1", list2); //월 매출
-            model.addAttribute("list2", list3); //일 매출
+            model.addAttribute("list2", list2); //월 매출
+            model.addAttribute("list3", list3); //일 매출
 
 
 
