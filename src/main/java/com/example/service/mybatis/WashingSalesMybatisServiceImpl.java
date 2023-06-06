@@ -73,7 +73,7 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
         }
     }
 
-    //최근 일주일간 사용자 수
+    //최근 일주일간 사용자 수 
     @Override
     public List<Map<String, Object>> selectWeekUserCnt(String wid) {
         try {
@@ -86,6 +86,32 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
         }
     }
 
+    //오늘자 매출 (오늘만 조회됨)
+    @Override
+    public Reserve selectTodayCurSales(String wid) {
+        try {
+            
+            return wMapper.selectTodayCurSales(wid);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    //이번달 매출(이번달만 조회됨)
+    @Override
+    public Reserve selectMonthCurSales(String wid) {
+        try {
+
+            return wMapper.selectMonthCurSales(wid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     
     /* ==예약내역 조회 부분== */
@@ -158,9 +184,4 @@ public class WashingSalesMybatisServiceImpl implements WashingSalesMybatisServic
 
 
 
-
-    
-
-    
-    
 }

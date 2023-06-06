@@ -268,7 +268,7 @@
                             </div>
                         </div>
 
-                        <!--테이블(보드) 영역-->
+                        <!--게시판 테이블 영역-->
                         <div class="col-lg-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
@@ -283,7 +283,7 @@
                                                 <tr>
                                                     <th>번호</th>
                                                     <th>제목</th>
-                                                    <th>작성자</th>
+                                                    <!-- <th>작성자</th> -->
                                                     <!-- <th>작성일</th> -->
                                                     <th>조회수</th>
                                                 </tr>
@@ -292,8 +292,8 @@
                                                 <tr th:each="obj : ${list3}">
                                                     <td th:text="${obj.no}"></td>
                                                     <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none;"></a></td>
-                                                    <td th:text="${obj.writer}"></td>
-                                                    <!-- <td th:text="${#dates.format(obj1.date, 'yyyy-MM-dd HH:mm:ss')}"></td> -->
+                                                    <!-- <td th:text="${obj.writer}"></td> -->
+                                                    <!-- <td th:text="${obj.date}"></td> -->
                                                     <td th:text="${obj.hit}"></td>
                                                 </tr>
                                             </tbody>
@@ -306,7 +306,7 @@
                     </div>
 
 
-                    <!--테이블(보드) 영역-->
+                    <!--예약 내역 테이블 영역-->
                     <div class="row">
                         <div class="col">
                             <div class="card mb-4">
@@ -510,7 +510,7 @@
                         ticks: {
                             beginAtZero: true, //0부터 시작하게 함
                             fontSize : 14,
-                            stepSize: 100 // 100원 단위로
+                            stepSize: 5000 // 100원 단위로
                         }
                 }]
                 }

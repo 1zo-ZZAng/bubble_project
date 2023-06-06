@@ -26,6 +26,7 @@ public interface ReserveRepository extends JpaRepository<Reserve, BigInteger> {
     List<Reserve> findByWidAndState(String wid, String state);
 
 
+
     /* === 관리자용 ==== */
     
 }

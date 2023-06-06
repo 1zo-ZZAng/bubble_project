@@ -43,20 +43,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WashingController {
 
-    //업체
+    //entity
     final WashingRepository wRepository;
     final WashingService wService;
+    final ReserveService rService;  //예약view
 
+    //dto
     final WashingMybatisService wMybatisService;
-    final WashingSalesMybatisService wSalesMybatisService;
-    
-    final ReserveService rService;
+    final WashingSalesMybatisService wSalesMybatisService; //매출
 
-    final MailService mService; // 비밀번호 찾기 - 이메일 전송
+    // 비밀번호 찾기 - 이메일 전송
+    final MailService mService; 
 
-    final BoardMybatisService bMybatisService; // 게시판
+    //게시판
+    final BoardMybatisService bMybatisService; 
 
     final HttpSession httpSession;
+
+    //비밀번호 암호화
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
 
@@ -79,8 +83,6 @@ public class WashingController {
 
             //최신글 5개 조회
             List<Board> list3 =bMybatisService.selectListLimitBoard();
-
-
 
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);

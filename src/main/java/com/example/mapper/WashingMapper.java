@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.example.dto.Reserve;
 import com.example.dto.Washing;
 
 
@@ -109,9 +110,17 @@ public interface WashingMapper {
 	@Select({" SELECT SUBSTRING(rvdate, 0,7) monthly, count(*) usercnt FROM RESERVE WHERE wid=#{wid} AND CONCAT(SUBSTRING(RVDATE, 0, 10), ' ', SUBSTRING(rvtime, 0, 5)) <= now() AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY SUBSTRING(rvdate, 0,7) "})
 	public List<Map<String, Object>> selectUserCnt(@Param("wid") String wid);
 
-	//최근 일주일 사용자 수 (메인페이지에)
+	//최근 일주일 사용자 수
 	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY rvdate "})
 	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
+
+	//오늘의 총매출 (오늘만 나옴)
+	@Select({"SELECT rvdate AS today, SUM(mprice) AS total  FROM RESERVE WHERE wid=#{wid} AND rvdate  = curdate() AND STATE='이용 완료' GROUP BY rvdate "})
+	public Reserve selectTodayCurSales(@Param("wid") String wid);
+
+	//이번달 총 매출 (이번달것만 나옴)
+	@Select({" SELECT SUBSTRING(rvdate, 0, 7) AS monthly, SUM(mprice) AS total  FROM RESERVE WHERE wid=#{wid} AND SUBSTRING(rvdate, 0, 7) = SUBSTRING(now(),0, 7) AND STATE ='이용 완료' GROUP BY SUBSTRING(rvdate, 0, 7) "})
+	public Reserve selectMonthCurSales(@Param("wid") String wid);
 
 	
 

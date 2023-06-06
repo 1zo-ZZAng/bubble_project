@@ -12,6 +12,10 @@ import com.example.dto.Reserve;
 @Service
 public interface WashingSalesMybatisService {
 
+
+        /* == 매출 == */
+
+
     //해당업체의 일매출
     public List<Map<String, Object>> selectDaySales(String wid);
 
@@ -24,8 +28,16 @@ public interface WashingSalesMybatisService {
     //월별 사용자 수
     public List<Map<String, Object>> selectUserCnt(String wid);
 
-    //주별 사용자 수
+    //최근 일주일 사용자 수
     public List<Map<String, Object>> selectWeekUserCnt(String wid);
+
+
+	//오늘의 총매출 (오늘만 나옴)
+	public Reserve selectTodayCurSales(String wid);
+
+	//이번달 총 매출 (이번달것만 나옴)
+	public Reserve selectMonthCurSales(String wid);
+
 
 
         /* == 예약내역 조회부분 == */
