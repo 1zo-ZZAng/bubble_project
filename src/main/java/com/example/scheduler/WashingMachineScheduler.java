@@ -54,7 +54,7 @@ public class WashingMachineScheduler {
             // log.info(format.format(cal.getTime()));
 
 
-            // 2. if(RVDATE = 찍은거랑 같아 && RVTIME = 찍은거랑 같아)
+            // 2. if(RVDATE = 찍은거랑 같아(서버시간) && RVTIME = 찍은거랑 같아)
             if(format.format(cal.getTime()).equals(format.format(now))){
 
                 // log.info("성공 => {}", 1);
