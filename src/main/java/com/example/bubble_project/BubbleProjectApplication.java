@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @PropertySource(value = {"classpath:global.properties"}) // 직접 만든 환경설정파일 위치
@@ -19,9 +20,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 								"com.example.service.mybatis",
 								"com.example.config",
 								"com.example.restcontroller",
-								"com.example.filter"}) // 컨트롤러, 서비스 위치, 시큐리티환경, 레스트컨트롤러 설정
+								"com.example.filter",
+								"com.example.scheduler"}) // 컨트롤러, 서비스 위치, 시큐리티환경, 레스트컨트롤러 설정
 @EntityScan(basePackages = {"com.example.entity"}) // 엔티티 위치
 @EnableJpaRepositories(basePackages = {"com.example.repository"}) // 저장소 위치
+
+@EnableScheduling //스케쥴링 사용
 public class BubbleProjectApplication {
 
 	public static void main(String[] args) {

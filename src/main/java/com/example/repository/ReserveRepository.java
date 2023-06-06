@@ -12,6 +12,8 @@ import com.example.entity.Reserve;
 public interface ReserveRepository extends JpaRepository<Reserve, BigInteger> {
 
 
+
+
     /* === 고객용 ==== */
 
     

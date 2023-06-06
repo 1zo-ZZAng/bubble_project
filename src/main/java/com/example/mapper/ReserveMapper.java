@@ -56,23 +56,31 @@ public interface ReserveMapper {
                                 @Param("rvtime") String rvtime);
 
 
-    /* == 업체 == */
+    /* == 예약 내역 전체 조회업체 == */
 
     //전체조회
-    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} ORDER BY rvno desc "})
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} ORDER BY rdate desc "})
     public List<Reserve> selectReserveAllList(@Param("wid") String wid);
 
     //이용완료
-    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '이용 완료' ORDER BY rvno desc "})
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '이용 완료' ORDER BY rdate desc "})
     public List<Reserve> selectReserveStateUseComplete(@Param("wid") String wid);
 
     //예약 완료
-    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 완료' ORDER BY rvno desc "})
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 완료' ORDER BY rdate desc "})
     public List<Reserve> selectReserveStateRevComplete(@Param("wid") String wid);
 
     //예약 취소
-    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 취소' ORDER BY rvno desc "})
+    @Select({" SELECT * FROM RESERVE WHERE wid=#{wid} and state = '예약 취소' ORDER BY rdate desc "})
     public List<Reserve> selectReserveStateRevCancle(@Param("wid") String wid);
+
+    /* 스케쥴러 사용 */
+
+    @Select({ " SELECT rvdate, rvtime FROM RESERVE " })
+    public List<Reserve> selectReserveListSch();
+
+    
+
 
     
     

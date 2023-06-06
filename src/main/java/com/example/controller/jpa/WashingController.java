@@ -75,6 +75,8 @@ public class WashingController {
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername()); //예약 내역
 
+            
+
             //최근 일주일간 사용자 수
             List<Map<String, Object>> list1 = wSalesMybatisService.selectWeekUserCnt(user.getUsername());
 
@@ -82,7 +84,7 @@ public class WashingController {
             List<Map<String, Object>> list2 = wSalesMybatisService.selectMonthSales(user.getUsername());
 
             //최신글 5개 조회
-            List<Board> list3 =bMybatisService.selectListLimitBoard();
+            // List<Board> list3 =bMybatisService.selectListLimitBoard();
 
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
@@ -91,7 +93,7 @@ public class WashingController {
             
             
         
-            // log.info("예약내역 조회 => {}", list.toString());
+            log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list); //예약 내역
             model.addAttribute("list1", list1); //최근 일주일 간 사용자 수
