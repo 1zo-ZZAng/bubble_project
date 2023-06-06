@@ -63,6 +63,15 @@
             pointer-events: none;
         }
 
+        a{
+            text-decoration: none;
+        }
+
+
+        #layoutTotal #layoutContent .container-fluid .mb-3 a  {
+            color: black;
+        }
+
 
     </style>
 
@@ -168,18 +177,6 @@
                             </nav>
                         </div>
 
-                        <!--예약-->
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
-                            예약
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
-                            </nav>
-                        </div> -->
-
                         <!--보유기기-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
                             <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
@@ -227,17 +224,19 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">게시판</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">목록</li>
+                        <li class="breadcrumb-item active">목록</li>  
                     </ol>
 
-                    <table class="mb-3">
-                        <tr>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="text-decoration: none; color: black; ">전체게시판</a></td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="text-decoration: none; color: black;">공지사항</a></td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="text-decoration: none; color: black;">분실물</a></td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}" style="text-decoration: none; color: black;">유실물</a></td>
-                        </tr>
-                    </table>
+                    <div style="width: 60%;">
+                        <table class="mb-3" style="border-collapse: collapse; width: 30%;">
+                            <tr>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}">전체게시판</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}">공지사항</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}">분실물</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}">유실물</a></td>
+                            </tr>
+                        </table>
+                    </div>
                         
 
                     

@@ -28,12 +28,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-    <style>
-        *{
-            font-family: 'NanumSquareLight';
-        }
-    </style>
-
     <script>
         $(document).ready(function(){
             const sidebarToggle = $('#sidebarToggle');
@@ -50,9 +44,10 @@
 
     <style>
 
-        /* *{
+        *{
             font-family: 'NanumSquareLight';
-        } */
+        }
+
         /*select 부분 디자인임*/
         select {
             -moz-appearance: none;
@@ -91,16 +86,6 @@
             opacity: 0.5;
             }
 
-            /* label {
-            font-family: "Noto Sans KR", sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.3;
-            
-            color: #444;
-            
-            margin-right: 0.5em;
-            } */
     </style>
 
 </head>
@@ -252,8 +237,7 @@
                         <li class="breadcrumb-item active">글조회</li>
                     </ol>
 
-
-                    <div class="container">
+                    <div class="container" >
                         <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
 
                             <div hidden>
@@ -288,7 +272,7 @@
                                 <label for="hit" style="float: left; margin-right: 3rem;">조회수</label>
                                 <p th:text="${board.hit}"></p>
                             </div>
-
+                        </div>
 
                             <!--버튼-->
                             <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
@@ -307,14 +291,6 @@
                             
 
                             <div style="margin-top: 10px;">
-
-                                <!-- <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
-                                    <input type="button" class="btn btn-primary" onclick="prePageAction('${pre}')" value="이전글" >
-                                </div>
-
-                                <div th:if="${next > 0}">
-                                    <input type="button" class="btn btn-primary" onclick="nextPageAction('${next}')" value="다음글" >
-                                </div> -->
 
                                 <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
                                     <a href="#" class="btn btn-primary" th:onclick="ajaxUpdateHit([[${pre}]])">이전글</a>

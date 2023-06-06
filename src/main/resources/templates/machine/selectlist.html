@@ -56,6 +56,11 @@
             display: none;
         }
 
+        .datatable-wrapper.no-footer .datatable-container {
+            border-bottom: none;
+        }
+
+
     </style>
 
     <script>
@@ -160,17 +165,6 @@
                             </nav>
                         </div>
 
-                        <!--예약-->
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
-                            예약
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
-                            </nav>
-                        </div> -->
 
                         <!--보유기기-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
@@ -222,40 +216,42 @@
                         <li class="breadcrumb-item active">조회</li>
                     </ol>
 
-                    <form th:action="@{/machine/delete.bubble}" method="post" id="form">
-                        <table id="datatableSimple">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>번호</th>
-                                    <th>세탁기</th>
-                                    <th>기기번호</th>
-                                    <th>시간</th>
-                                    <th>가격</th>
-                                </tr>
-                            </thead>
-                
-                            <tbody>
-                                <tr th:each="obj : ${list}">
-                                    <td><input type="checkbox" name="chk[]" th:value="${obj.no}" /></td>
-                                    <td th:text="${obj.no}"></td> <!--longValue()는 BigInteger에서는 불가능함-->
-                                    <td th:text="${obj.type}"></td>
-                                    <td th:text="${obj.typeno}"></td>
-                                    <td th:text="${obj.time}"></td>
-                                    <td th:text="${obj.price}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                
-                        <div style="margin-top: 1rem;">
-                            <input type="button" value="삭제" onclick="deleteAction()" class="btn btn-primary"/>
-                            <input type="button" value="수정" onclick="updateAction()" class="btn btn-primary" />
-                            <!-- <a th:href="@{/machine/insert.bubble(wid=${user.username})}" class="btn btn-primary">등록</a> -->
-                        </div>
                     
-                
+                        <form th:action="@{/machine/delete.bubble}" method="post" id="form">
+                            
+                            <table id="datatableSimple" > <!--id="datatableSimple"-->
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>번호</th>
+                                        <th>세탁기</th>
+                                        <th>기기번호</th>
+                                        <th>시간</th>
+                                        <th>가격</th>
+                                    </tr>
+                                </thead>
+                    
+                                <tbody>
+                                    <tr th:each="obj : ${list}">
+                                        <td><input type="checkbox" name="chk[]" th:value="${obj.no}" /></td>
+                                        <td th:text="${obj.no}"></td> <!--longValue()는 BigInteger에서는 불가능함-->
+                                        <td th:text="${obj.type}"></td>
+                                        <td th:text="${obj.typeno}"></td>
+                                        <td th:text="${obj.time}"></td>
+                                        <td th:text="${obj.price}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                    
+                            <div style="margin-top: 1rem;">
+                                <input type="button" value="삭제" onclick="deleteAction()" class="btn btn-primary"/>
+                                <input type="button" value="수정" onclick="updateAction()" class="btn btn-primary" />
+                                <!-- <a th:href="@{/machine/insert.bubble(wid=${user.username})}" class="btn btn-primary">등록</a> -->
+                            </div>
                         
-                    </form>
+                
+                        </form>
                     
 
                 </div>
