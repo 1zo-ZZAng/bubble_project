@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 								"com.example.config",
 								"com.example.restcontroller",
 								"com.example.filter",
-								"com.example.scheduler"}) // 컨트롤러, 서비스 위치, 시큐리티환경, 레스트컨트롤러 설정
+								"com.example.scheduler"}) // 컨트롤러, 서비스 위치, 시큐리티환경, 레스트컨트롤러, 필터, 스케쥴러 설정
 @EntityScan(basePackages = {"com.example.entity"}) // 엔티티 위치
 @EnableJpaRepositories(basePackages = {"com.example.repository"}) // 저장소 위치
 
