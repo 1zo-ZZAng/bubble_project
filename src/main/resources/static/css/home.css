@@ -7,8 +7,14 @@
 
 .maincontainer{
     font-family: 'NanumSquare';
+    margin-top: 200px;
+}
+
+.maincontainerhome{
+    font-family: 'NanumSquare';
     margin-top: 250px;
 }
+
 
 /* 공지사항 */
 #notice {
@@ -177,6 +183,7 @@
 #pageheader{
     display: flex;
     justify-content: flex-start;
+
 }
 
 #pageline {
@@ -192,19 +199,33 @@
     font-family: 'Geologica', sans-serif;
     font-size: 50px;
     font-weight: 800;
+    margin-bottom: 0px;
 }
 
 #gradepart{
-    height: 200px;   
+    height: 200px;  
+    background-color: rgb(209, 208, 208); 
+    padding: 3%;
+    display: flex;
+    justify-content: center;
 }
 
 #grade{
     display: inline;
+    padding-left: 2%;
+    font-size: 30px;
+}
+
+#higrade{
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 #mypagesection{
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 #mypagesection a{
     margin-right: 65px;
@@ -229,4 +250,81 @@
 
 .datatable-dropdown{
     margin-left: 80px;
+}
+
+
+/* 회원가입 */
+#jointitle{
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.container{
+    font-size: 18px;
+}
+
+/* 아이디 줄 */
+#lbl_check{
+    float: left;
+}
+
+#id{
+    margin-left: 40px;
+}
+
+#idbutton{
+    margin-left: 80px;
+}
+
+
+/* 비밀번호줄 */
+#password{
+    margin-left: 40px;
+}
+#pwcheck{
+    margin-left: 40px;
+}
+
+/* 이름 */
+#name{
+    margin-left: 40px;
+}
+
+
+ #phone{
+    margin-left: 40px;
+    text-align: center;
+}
+
+#email{
+    margin-left: 40px;
+}
+#birth{
+    margin-left: 40px;
+}
+
+#address{
+    margin-left: 40px;
+}
+#add_button{
+    margin-left: 80px;
+}
+
+#detailaddress{
+    margin-left: 40px;
+}
+#extraaddress{
+    margin-left: 80px;
+}
+
+#joinus{
+    margin-left: 40px;
+    width: 100%;
+}
+
+#update{
+    margin-left: 40px;
+    width: 80%;
 }
