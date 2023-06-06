@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.Board;
 import com.example.dto.BoardType;
+import com.example.dto.Reply;
 import com.example.dto.Washing;
 import com.example.service.mybatis.BoardMybatisService;
+import com.example.service.mybatis.ReplyMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WBoardController {
 
-    final BoardMybatisService bService;
+    final BoardMybatisService bService; //게시판
+
+    final ReplyMybatisService rService; // 댓글
 
     
 /* =========================================================================================================== */
@@ -133,20 +137,25 @@ public class WBoardController {
             return "redirect:/washing/home.bubble";
         }
 
-    }    
+    }
 
     /* ------------------------------------------------------------- */
 
     //1개 조회
     @GetMapping(value="/selectone.bubble")
-    public String selectOne(Model model, @AuthenticationPrincipal User user, 
-                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+    public String selectOne(Model model, @AuthenticationPrincipal User user,
+                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu,
                             @RequestParam(name = "no") long no) {
         try {
 
             Board board = bService.selectOneBoard(no);
 
+            List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
+
             log.info("글 1개 조회 => {}", board.toString());
+
+
+
 
 
             long next = bService.nextBoardOne(no);
@@ -161,6 +170,7 @@ public class WBoardController {
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
+            model.addAttribute("list", list); //해당게시글의 댓글 전체 조회
 
 
             return "/wboard/selectone";

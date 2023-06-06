@@ -50,12 +50,12 @@ public class ReserveController {
 
     @PostMapping(value = "/letsgo.bubble")
     public String letsgoPOST(Model model, @AuthenticationPrincipal User user,
-                             @RequestParam(name = "rvno") String rvno,
-                             @RequestParam(name = "wnumber") String wnumber,
-                             @RequestParam(name = "machine") String machine,
-                             @RequestParam(name = "machineno") Long machineno,
-                             @RequestParam(name = "rvdate") String rvdate,
-                             @RequestParam(name = "rvtime") String rvtime) {
+                            @RequestParam(name = "rvno") String rvno,
+                            @RequestParam(name = "wnumber") String wnumber,
+                            @RequestParam(name = "machine") String machine,
+                            @RequestParam(name = "machineno") Long machineno,
+                            @RequestParam(name = "rvdate") String rvdate,
+                            @RequestParam(name = "rvtime") String rvtime) {
         try {
             // log.info(rvno);
             // log.info(wnumber);

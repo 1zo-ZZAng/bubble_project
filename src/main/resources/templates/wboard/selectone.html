@@ -272,9 +272,52 @@
                                 <label for="hit" style="float: left; margin-right: 3rem;">조회수</label>
                                 <p th:text="${board.hit}"></p>
                             </div>
-                        </div>
 
-                            <!--버튼-->
+                            <hr>
+
+                            
+                            <!--댓글 조회 부분-->
+                            <label> 댓글 </label>
+                            <table>
+                                <tr th:each = "obj : ${list}">
+                                    <td th:text="${obj.writer}"></td>
+                                    <td th:text="${obj.content}"></td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                </tr>
+                            </table>
+
+                        
+                            <hr>
+
+                            <!--댓글 작성 부분-->
+
+                            <form th:action="@{/reply/insert.bubble}" method="post">
+                                
+                                <div>
+                                    <label>게시글 번호</label>
+                                    <input type="text" name="bno" th:value="${board.no}" readonly />
+                                </div>
+
+                                <div>
+                                    <label for="replycontent">댓글 내용</label>
+                                    <input type="text" name="content" placeholder="댓글 내용" />
+                                </div>
+
+                                <div>
+                                    <label for="replywriter">댓글 작성자</label>
+                                    <input type="text" name="writer" th:value="${user.username}" readonly />
+                                </div>
+
+                                <div>
+                                    <input type="submit" value="작성" class="btn btn-primary" />
+                                </div>
+
+                            </form>
+
+
+                            <hr>
+
+                            <!--버튼 시작-->
                             <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
 
                             <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
@@ -283,7 +326,7 @@
                                     <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
                                     <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
                                         <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
-                                        <input type="submit" value="삭제" class="btn btn-primary"/> 
+                                        <input type="submit" value="삭제" class="btn btn-primary"/>
                                     </form>
                                 </div>
                             </div>
@@ -291,7 +334,6 @@
                             
 
                             <div style="margin-top: 10px;">
-
                                 <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
                                     <a href="#" class="btn btn-primary" th:onclick="ajaxUpdateHit([[${pre}]])">이전글</a>
                                 </div>
@@ -299,12 +341,12 @@
                                 <div th:if="${next > 0}">
                                     <a href="#" class="btn btn-primary"  th:onclick="ajaxUpdateHit([[${next}]])">다음글</a>
                                 </div>
-
                             </div>
-                            
+
+                            <!--여기 까지 버튼-->
+
                         </div>
-                        <!--여기 까지 버튼-->
-                        
+
                     </div>
 
 
@@ -344,7 +386,7 @@
     console.log([[${pre}]]);
     console.log([[${next}]]); -->
 
-    <script th:inline="javascript" type="text/javascript"> 
+    <script th:inline="javascript" type="text/javascript">
 
         async function ajaxUpdateHit(no) {
 
