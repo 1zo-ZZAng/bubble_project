@@ -92,7 +92,7 @@ public class CustomerController {
 
     // 소셜 로그인(카카오) - 기존 회원이 아닌 경우(이메일이 없는 경우) 회원가입
     @PostMapping(value = "/kakaojoin.bubble")
-    public String kakaojoinPOST(@ModelAttribute Customer customer) {
+    public String kakaojoinPOST(Model model, @ModelAttribute Customer customer) {
         try {
             // Customer customer = new Customer();
             customer.setId(customer.getId());
@@ -101,7 +101,10 @@ public class CustomerController {
 
             cService.insertCustomer(customer);
 
-            return "redirect:/customer/home.bubble";
+            model.addAttribute("msg", "예약 서비스 이용시 연락처가 필요합니다. \n 마이페이지로 이동하여 입력 후 수정해주세요.");
+            model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
+
+            return "message";
         }
         catch (Exception e) {
             e.printStackTrace();
