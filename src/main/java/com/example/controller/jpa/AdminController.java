@@ -122,18 +122,35 @@ public class AdminController {
            //월별 총매출
            List<Map<String, Object>> msaleslist = aService.selectMonthAllSales();
            //최근예약추이
+           int rvok = aService.MonthRvOkState();
+           int rvcancel = aService.MonthRvCancelState();
+           int rvuseok = aService.MonthUseOkState();
+        //    List<Reserve> rvdatelist = aService.ReserveDateAll();
             
             //예약 날짜 목록 최신순
-            Reserve RvdateList = aService.selectRvdateList();
+            List<Reserve> RvdateList = aService.selectRvdateList();
             //예약등록 날짜 목록 최신순
-            Reserve RdateList = aService.selectRdateList();
+            List<Reserve> RdateList = aService.selectRdateList();
+            //이번달 예약 건 수
+            int mcount = aService.thisMonthRVCount();
+            //매출 top1
+            String top = aService.Top1Washing();
 
            
-        //    log.info("allList=>{}",allList.toString());
+           log.info("msaleslist=>{}",msaleslist.toString());
             model.addAttribute("wc", wc);
+            model.addAttribute("top", top);
+            model.addAttribute("mcount", mcount);
             model.addAttribute("RvdateList", RvdateList);
             model.addAttribute("RdateList", RdateList);
             model.addAttribute("msaleslist", msaleslist);
+
+
+            model.addAttribute("rvok", rvok);
+            model.addAttribute("rvcancel", rvcancel);
+            model.addAttribute("rvuseok", rvuseok);
+            // model.addAttribute("rvdatelist", rvdatelist);
+
             model.addAttribute("user", user);
             // log.info("{}", model);
             return "/admin/adhome";
@@ -176,6 +193,8 @@ public class AdminController {
             
             //업체별 매출 조회 mdlist
             List<Map<String,Object>> mdlist = aService.selectMonthDateWashingChart(wnumber);
+            //가장많이 사용하는 기기
+            String topMachine = aService.Top1MachineType();
             //-----------------------차트-------------------------
 
 
@@ -184,6 +203,7 @@ public class AdminController {
             model.addAttribute("rvcount", aService.todayRVWashingCount(wnumber));
             model.addAttribute("mdlist", mdlist);
             model.addAttribute("mlist", mlist);
+            model.addAttribute("topMachine", topMachine);
             log.info("업체별매출2 => {}",mlist.toString());
             log.info("업체별매출 => {}",mdlist.toString());
             log.info("보유기기 => {}",list.toString());

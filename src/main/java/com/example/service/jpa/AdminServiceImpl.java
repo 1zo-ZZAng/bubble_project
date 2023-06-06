@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 
     //--------------관리자홈----------------
     @Override
-    public Reserve selectRvdateList() {
+    public List<Reserve> selectRvdateList() {
         try {
             return aMapper.selectRvdateList();
             
@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Reserve selectRdateList() {
+    public List<Reserve> selectRdateList() {
         try {
             return aMapper.selectRdateList();
             
@@ -142,6 +142,16 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    @Override
+    public int thisMonthRVCount() {
+        try {
+            return aMapper.thisMonthRVCount();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
 
 //---------------------------차트------------------------------
 
@@ -228,6 +238,60 @@ public class AdminServiceImpl implements AdminService {
             return null;
            }
     }
+
+    @Override
+    public int MonthRvOkState() {
+        try {
+            return aMapper.MonthRvOkState();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
+    @Override
+    public int MonthRvCancelState() {
+        try {
+            return aMapper.MonthRvCancelState();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
+    @Override
+    public int MonthUseOkState() {
+        try {
+            return aMapper.MonthUseOkState();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+           }
+    }
+
+    @Override
+    public String Top1Washing() {
+        try {
+            return aMapper.Top1Washing();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+    }
+
+    @Override
+    public String Top1MachineType() {
+        try {
+            return aMapper.Top1MachineType();
+           } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+           }
+    }
+
+
+
+
 
 
 

@@ -47,15 +47,35 @@ public interface AdminService {
     public int washingCount();
 
     //예약 날짜 목록 최신순
-    public Reserve selectRvdateList();
+    public List<Reserve> selectRvdateList();
 
     //예약등록 날짜 목록 최신순
-    public Reserve selectRdateList();
+    public List<Reserve> selectRdateList();
 
 
     //업체승인 유무 select박스
     public List<WashingCheck> selctChkList();
 
+    //이번달 예약 건 수
+    public int thisMonthRVCount();
+
+    //매출 1위 업체
+    public String Top1Washing();
+
+    //가장 많이 이용하는 기기
+    public String Top1MachineType();
+    
+
+    //예약 추이
+        //예약 추이 (예약 완료)    
+        public int MonthRvOkState();
+    
+        //예약 추이 (예약 취소)
+        public int MonthRvCancelState();
+    
+        //예약 추이 (이용 완료)
+        public int MonthUseOkState();
+        
 
     //---------------------------차트------------------------------
     
