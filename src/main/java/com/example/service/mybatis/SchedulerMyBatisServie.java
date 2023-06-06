@@ -12,6 +12,8 @@ public interface SchedulerMyBatisServie {
     //스케쥴러
     public List<Reserve> selectReserveListSch();
 
+    public int updateReserveState(String rvno);
+
 
     
 }

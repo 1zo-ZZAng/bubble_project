@@ -76,10 +76,12 @@ public interface ReserveMapper {
 
     /* 스케쥴러 사용 */
 
-    @Select({ " SELECT rvdate, rvtime FROM RESERVE " })
+    @Select({ " SELECT rvno, rvdate, rvtime, mtype, mtime FROM RESERVE " })
     public List<Reserve> selectReserveListSch();
 
-    
+
+    @Update({" UPDATE reservation SET state='이용 완료' WHERE no = #{rvno} AND state='예약 완료' "})
+    public int updateReserveState(@Param("rvno") String rvno);
 
 
     

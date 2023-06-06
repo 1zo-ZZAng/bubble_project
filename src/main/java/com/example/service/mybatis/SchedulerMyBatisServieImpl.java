@@ -16,7 +16,7 @@ public class SchedulerMyBatisServieImpl implements SchedulerMyBatisServie{
     final ReserveMapper rMapper;
     
     
-    //스케줄러
+    //스케쥴러 조회
     @Override
     public List<Reserve> selectReserveListSch() {
         try {
@@ -26,6 +26,19 @@ public class SchedulerMyBatisServieImpl implements SchedulerMyBatisServie{
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //스케줄러 업데이트
+    @Override
+    public int updateReserveState(String rvno) {
+        try {
+
+            return rMapper.updateReserveState(rvno);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
     
