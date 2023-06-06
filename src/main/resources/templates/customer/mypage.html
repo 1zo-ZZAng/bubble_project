@@ -61,7 +61,7 @@
         </div>
         <div id="gradepart">
             <div id="grade">
-                <img id="gradeicon" th:src="@{/images/}">
+                <!-- <img id="gradeicon" th:src="@{/images/}"> -->
                 <p th:text="|${name} 님 환영합니다! |"></p>
                 고객님의 고객 등급은 
                 <th:block th:switch="${grade}">
@@ -158,7 +158,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="button" value="정보 수정" onclick="updateOne()" />
+                            <input type="button" value="수정" onclick="updateOne()" />
                         </td>
                         <td>
                             <td><button type="button" class="btn btn-primary" onclick="deleteOne()">회원 탈퇴</button></td>
@@ -186,7 +186,7 @@
                     <input type="text" name="extra_Address" id="sample6_extraAddress" placeholder="참고항목" readonly>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertAddressAction()">등록</button>
+                    <button type="button" id="insertaddbtn" class="btn btn-primary" onclick="insertAddressAction()">등록</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
@@ -292,9 +292,10 @@
                 address.value = main_address.value;
                 detailaddress.value = detail_Address.value;
                 extraaddress.value = extra_Address.value;
-
+                
                 $('#exampleModal').modal('hide');
             }
+            
         }
 
         function updateOne() {
@@ -302,14 +303,17 @@
             const name = document.getElementById("name");
             const phone = document.getElementById("phone");
             const email = document.getElementById("email");
+            const address = document.getElementById("address");
             const detailaddress = document.getElementById("detailaddress");
 
             // 유효성 검사
             // 1. 모든 항목이 입력되어 있어야함
-            if (password.value.length <= 0) {
-                alert('비밀번호를 입력하세요.');
-                password.focus();
-                return false; // 함수종료, 전송하지 않음
+            if ([[${user.username}]].startsWith('kakao') == false) {
+                if (password.value.length <= 0) {
+                    alert('비밀번호를 입력하세요.');
+                    password.focus();
+                    return false; // 함수종료, 전송하지 않음
+                }
             }
 
             if (name.value.length <= 0) {
@@ -330,10 +334,12 @@
                 return false; // 함수종료, 전송하지 않음
             }
 
-            if (detailaddress.value.length <= 0) {
-                alert('상세 주소를 입력하세요.');
-                detailaddress.focus();
-                return false; // 함수종료, 전송하지 않음
+            if (address.value.length > 0) {
+                if (detailaddress.value.length <= 0) {
+                    alert('상세 주소를 입력하세요.');
+                    detailaddress.focus();
+                    return false; // 함수종료, 전송하지 않음
+                }
             }
 
             document.getElementById("updateform").submit();

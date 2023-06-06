@@ -101,7 +101,7 @@ public class CustomerController {
 
             cService.insertCustomer(customer);
 
-            model.addAttribute("msg", "예약 서비스 이용시 연락처가 필요합니다. \n 마이페이지로 이동하여 입력 후 수정해주세요.");
+            model.addAttribute("msg", "예약 서비스 이용시 연락처가 필요합니다.\n마이페이지로 이동하여 입력 후 수정해주세요.");
             model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
 
             return "message";
@@ -308,8 +308,31 @@ public class CustomerController {
                 Customer customer = cService.selectCustomerOne(user.getUsername());
     
                 if (customer != null) {
-                    if (bcpe.matches(obj.getPassword(), customer.getPassword())) {
-                        // 2. 변경 항목을 바꿈 (이름, 전화번호, 이메일, 주소(주소, 상세주소, 참고항목))
+                     // 일반 계정인 경우
+                    if (user.getUsername().startsWith("kakao") == false){
+                        if (bcpe.matches(obj.getPassword(), customer.getPassword())) {
+                            // 2. 변경 항목을 바꿈 (이름, 전화번호, 이메일, 주소(주소, 상세주소, 참고항목))
+                            customer.setName(obj.getName());
+                            customer.setPhone(obj.getPhone());
+                            customer.setEmail(obj.getEmail());
+                            customer.setAddress(obj.getAddress());
+                            customer.setDetailaddress(obj.getDetailaddress());
+                            customer.setExtraaddress(obj.getExtraaddress());
+                
+                            // 3. 다시 저장
+                            cService.insertCustomer(customer);
+    
+                            model.addAttribute("msg", "정보 수정이 완료되었습니다.");
+                            model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
+    
+                            return "message";
+                        }
+                        model.addAttribute("msg", "비밀번호를 정확하게 입력해주세요.");
+                        model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
+    
+                        return "message";
+                    }
+                    else { // 카카오를 이용해서 회원가입된 계정인 경우
                         customer.setName(obj.getName());
                         customer.setPhone(obj.getPhone());
                         customer.setEmail(obj.getEmail());
@@ -325,10 +348,6 @@ public class CustomerController {
 
                         return "message";
                     }
-                    model.addAttribute("msg", "비밀번호를 정확하게 입력해주세요.");
-                    model.addAttribute("url", "/bubble_bumul/customer/mypage.bubble?menu=2");
-
-                    return "message";
                 }
             }
     
@@ -345,7 +364,7 @@ public class CustomerController {
     // 예약 내역 상세
     @GetMapping(value = "/reservedetail.bubble")
     public String reserveoneGET(Model model, @AuthenticationPrincipal User user,
-                                @RequestParam(name = "rvno") BigInteger rvno){
+                                @RequestParam(name = "rvno") String rvno){
         try {
             model.addAttribute("user", user);
 
@@ -363,7 +382,7 @@ public class CustomerController {
     // 예약 취소
     @PostMapping(value = "/reservecancel.bubble")
     public String reservecancelPOST(Model model, @AuthenticationPrincipal User user,
-                                    @RequestParam(name = "rvno") BigInteger rvno) {
+                                    @RequestParam(name = "rvno") String rvno) {
         try {
             int ret = rService.deleteReserveOne(rvno);
 

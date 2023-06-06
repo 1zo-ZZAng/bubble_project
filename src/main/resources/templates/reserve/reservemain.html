@@ -541,81 +541,93 @@
             
             // ----------------------------------------------------------
 
-            var result = '';
-            //가맹점 식별코드
-            IMP.request_pay({
-                pg: "html5_inicis",
-                pay_method: "card",
-                merchant_uid: rvno, // 주문번호(고유)
-                name: machine, // 상품명
-                amount: 100,
-                buyer_email: [[${customer.email}]], // 로그인한 고객의 이메일
-                buyer_name: [[${customer.name}]], // 로그인한 고객의 이름
-                buyer_tel: [[${customer.phone}]]
-            }, function(rsp) {
-                console.log(rsp);
-                if ( rsp.success ) {
-                    result = 1;
-                    var msg = '결제가 완료되었습니다.';
-                    msg += '고유ID : ' + rsp.imp_uid;
-                    msg += '상점 거래ID : ' + rsp.merchant_uid;
-                    msg += '결제 금액 : ' + rsp.paid_amount;
-                    msg += '카드 승인번호 : ' + rsp.apply_num;
-                } else {
-                    result = 0;
-                    var msg = '결제에 실패하였습니다.';
-                    msg += '에러내용 : ' + rsp.error_msg;
-                }
-                alert(msg);
+            if ([[${customer.phone}]] != null) {
+                var result = '';
+                //가맹점 식별코드
+                IMP.request_pay({
+                    pg: "html5_inicis",
+                    pay_method: "card",
+                    merchant_uid: rvno, // 주문번호(고유)
+                    name: machine, // 상품명
+                    amount: 100,
+                    buyer_email: [[${customer.email}]], // 로그인한 고객의 이메일
+                    buyer_name: [[${customer.name}]], // 로그인한 고객의 이름
+                    buyer_tel: [[${customer.phone}]]
+                }, function(rsp) {
+                    console.log(rsp);
+                    if ( rsp.success ) {
+                        result = 1;
+                        var msg = '결제가 완료되었습니다.';
+                        msg += '고유ID : ' + rsp.imp_uid;
+                        msg += '상점 거래ID : ' + rsp.merchant_uid;
+                        msg += '결제 금액 : ' + rsp.paid_amount;
+                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                    } else {
+                        result = 0;
+                        // var msg = '결제에 실패하였습니다.';
+                        // msg += '에러내용 : ' + rsp.error_msg;
+                    }
+                    alert(msg);
 
-                // 예약
-                if (result == 1) {
-                    const form = document.createElement("form");
-                    form.setAttribute("action", [[@{/reserve/letsgo.bubble}]]);
-                    form.setAttribute("method", "post");
-                    form.style.display="none";
+                    // 예약
+                    if (result == 1) {
+                        const form = document.createElement("form");
+                        form.setAttribute("action", [[@{/reserve/letsgo.bubble}]]);
+                        form.setAttribute("method", "post");
+                        form.style.display="none";
 
-                    const input1 = document.createElement("input");
-                    input1.setAttribute("type", "hidden");
-                    input1.setAttribute("name", "wnumber");
-                    input1.setAttribute("value", wnumber);
+                        const input1 = document.createElement("input");
+                        input1.setAttribute("type", "hidden");
+                        input1.setAttribute("name", "wnumber");
+                        input1.setAttribute("value", wnumber);
 
-                    const input2 = document.createElement("input");
-                    input2.setAttribute("type", "hidden");
-                    input2.setAttribute("name", "machine");
-                    input2.setAttribute("value", machine);
+                        const input2 = document.createElement("input");
+                        input2.setAttribute("type", "hidden");
+                        input2.setAttribute("name", "machine");
+                        input2.setAttribute("value", machine);
 
-                    const input3 = document.createElement("input");
-                    input3.setAttribute("type", "hidden");
-                    input3.setAttribute("name", "machineno");
-                    input3.setAttribute("value", machineno);
+                        const input3 = document.createElement("input");
+                        input3.setAttribute("type", "hidden");
+                        input3.setAttribute("name", "machineno");
+                        input3.setAttribute("value", machineno);
 
-                    const input4 = document.createElement("input");
-                    input4.setAttribute("type", "hidden");
-                    input4.setAttribute("name", "rvdate");
-                    input4.setAttribute("value", rvdate);
+                        const input4 = document.createElement("input");
+                        input4.setAttribute("type", "hidden");
+                        input4.setAttribute("name", "rvdate");
+                        input4.setAttribute("value", rvdate);
 
-                    const input5 = document.createElement("input");
-                    input5.setAttribute("type", "hidden");
-                    input5.setAttribute("name", "rvtime");
-                    input5.setAttribute("value", rvtime);
+                        const input5 = document.createElement("input");
+                        input5.setAttribute("type", "hidden");
+                        input5.setAttribute("name", "rvtime");
+                        input5.setAttribute("value", rvtime);
 
-                    const input6 = document.createElement("input");
-                    input6.setAttribute("type", "hidden");
-                    input6.setAttribute("name", "_csrf");
-                    input6.setAttribute("value", [[${_csrf.token}]]);
+                        const input6 = document.createElement("input");
+                        input6.setAttribute("type", "hidden");
+                        input6.setAttribute("name", "rvno");
+                        input6.setAttribute("value", rvno);
 
-                    form.appendChild(input1);
-                    form.appendChild(input2);
-                    form.appendChild(input3);
-                    form.appendChild(input4);
-                    form.appendChild(input5);
-                    form.appendChild(input6);
+                        const input7 = document.createElement("input");
+                        input7.setAttribute("type", "hidden");
+                        input7.setAttribute("name", "_csrf");
+                        input7.setAttribute("value", [[${_csrf.token}]]);
 
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
+                        form.appendChild(input1);
+                        form.appendChild(input2);
+                        form.appendChild(input3);
+                        form.appendChild(input4);
+                        form.appendChild(input5);
+                        form.appendChild(input6);
+                        form.appendChild(input7);
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            }
+            else {
+                alert('마이페이지로 이동 후 연락처를 먼저 입력해주세요.');
+                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/mypage.bubble?menu=2";
+            }
         }
     </script>
 </body>

@@ -54,9 +54,9 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
 
     // 예약하기
     @Override
-    public int insertReserve(String cid, Long mno, String rvdate, String rvtime) {
+    public int insertReserve(String no, String cid, Long mno, String rvdate, String rvtime) {
         try {
-            return rMapper.insertReserve(cid, mno, rvdate, rvtime);
+            return rMapper.insertReserve(no, cid, mno, rvdate, rvtime);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
 
     // 예약 내역 상세
     @Override
-    public Reserve selectReserveDetail(BigInteger rvno) {
+    public Reserve selectReserveDetail(String rvno) {
         try {
             return rMapper.selectReserveDetail(rvno);
         }
@@ -90,7 +90,7 @@ public class ReserveMybatisServiceImpl implements ReserveMybatisService {
 
     // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
     @Override
-    public int deleteReserveOne(BigInteger rvno) {
+    public int deleteReserveOne(String rvno) {
         try {
             return rMapper.deleteReserveOne(rvno);
         }

@@ -23,11 +23,11 @@ public interface ReserveMybatisService {
     public List<Reserve> selectReserveList(String id); 
 
     // 예약 내역 상세
-    public Reserve selectReserveDetail(BigInteger rvno);
+    public Reserve selectReserveDetail(String rvno);
 
     // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
-    public int deleteReserveOne(BigInteger rvno);
+    public int deleteReserveOne(String rvno);
 
     // 예약하기
-    public int insertReserve(String cid, Long mno, String rvdate, String rvtime);
+    public int insertReserve(String no, String cid, Long mno, String rvdate, String rvtime);
 }

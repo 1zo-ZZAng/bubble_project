@@ -64,56 +64,56 @@
             </div>
         </div>
     </header>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script th:inline="javascript" type="text/javascript">
-    // 여우정
-    // Kakao.init('f761a223ea6f6b6f19c7d7cb193bdc41');
-    // 신애린
-    Kakao.init('51de80643ee3e6de36c332711a96b13b');
-    // 탁승은
-    // ?
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+        // 여우정
+        // Kakao.init('f761a223ea6f6b6f19c7d7cb193bdc41');
+        // 신애린
+        Kakao.init('51de80643ee3e6de36c332711a96b13b');
+        // 탁승은
+        // ?
 
-    function logoutAction() {
-        if (confirm('로그아웃 하시겠습니까?')) {
-            const form = document.createElement("form");
-            form.setAttribute("action", [[@{/logout.bubble}]]);
-            form.setAttribute("method", "post");
-            form.style.display = "none";
+        function logoutAction() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                const form = document.createElement("form");
+                form.setAttribute("action", [[@{/logout.bubble}]]);
+                form.setAttribute("method", "post");
+                form.style.display = "none";
 
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "_csrf";
-            input.value = [[${ _csrf.token }]];
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "_csrf";
+                input.value = [[${ _csrf.token }]];
 
-            form.appendChild(input);
+                form.appendChild(input);
 
-            // 카카오로 소셜 로그인 한 경우
-            // console.log([[${user?.username}]]);
-            const userid = [[${user?.username}]]; // 로그인한 고객의 아이디
-            // console.log(userid.startsWith("kakao"));
-            if (userid.startsWith("kakao") == true) {
-                if (Kakao.Auth.getAccessToken()) {
+                // 카카오로 소셜 로그인 한 경우
+                // console.log([[${user?.username}]]);
+                const userid = [[${user?.username}]]; // 로그인한 고객의 아이디
+                // console.log(userid.startsWith("kakao"));
+                if (userid.startsWith("kakao") == true) {
+                    if (Kakao.Auth.getAccessToken()) {
 
-                    Kakao.API.request({
-                        url: '/v1/user/unlink',
-                        success: function (response) {
-                            // console.log(response)
-                        },
-                        fail: function (error) {
-                            console.log(error)
-                        },
-                    });
+                        Kakao.API.request({
+                            url: '/v1/user/unlink',
+                            success: function (response) {
+                                // console.log(response)
+                            },
+                            fail: function (error) {
+                                console.log(error)
+                            },
+                        });
 
-                    Kakao.Auth.setAccessToken(null);
+                        Kakao.Auth.setAccessToken(null);
+                    }
                 }
-            }
 
-            document.body.appendChild(form);
-            form.submit();
+                document.body.appendChild(form);
+                form.submit();
+            }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>
