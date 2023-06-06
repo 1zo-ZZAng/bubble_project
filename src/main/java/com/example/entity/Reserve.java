@@ -20,7 +20,7 @@ import lombok.Data;
 @Table(name = "RESERVE")
 public class Reserve {
     @Id
-    private BigInteger rvno;
+    private String rvno;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @CreationTimestamp

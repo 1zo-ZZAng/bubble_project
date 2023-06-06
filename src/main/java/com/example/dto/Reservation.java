@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Reservation {
-    private Long no;
+    private String no;
 
     private String cid;
 

@@ -36,20 +36,21 @@ public interface ReserveMapper {
 //                                             @Param("rvdate") String rvdate);
 
     // 예약 내역 조회 - 목록 (예약번호, 세탁소명, 세탁소 주소, 예약일, 예약시간, 현황)
-    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime, state FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rvno DESC"})
+    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime, state FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rdate DESC"})
     public List<Reserve> selectReserveList(@Param("id") String id); 
 
     // 예약 내역 상세
     @Select({"SELECT rvno, wname, waddress, wphone, rvdate, rvtime, mtype, mtypeno, mprice, mtime, state FROM reserve WHERE rvno=#{rvno}"})
-    public Reserve selectReserveDetail(@Param("rvno") BigInteger rvno);
+    public Reserve selectReserveDetail(@Param("rvno") String rvno);
 
     // 예약 취소 - reservation 테이블의 rvdate, rvtime 컬럼 null로 update
     @Update({"UPDATE RESERVATION SET state='예약 취소' WHERE no=#{rvno}"})
-    public int deleteReserveOne(@Param("rvno") BigInteger rvno);
+    public int deleteReserveOne(@Param("rvno") String rvno);
 
     // 예약하기
-    @Insert({"INSERT INTO reservation(cid, mno, rvdate, rvtime) VALUES(#{cid}, #{mno}, #{rvdate}, #{rvtime})"})
-    public int insertReserve(@Param("cid") String cid,
+    @Insert({"INSERT INTO reservation(no, cid, mno, rvdate, rvtime) VALUES(#{no}, #{cid}, #{mno}, #{rvdate}, #{rvtime})"})
+    public int insertReserve(@Param("no") String no,
+                                @Param("cid") String cid,
                                 @Param("mno") Long mno,
                                 @Param("rvdate") String rvdate,
                                 @Param("rvtime") String rvtime);

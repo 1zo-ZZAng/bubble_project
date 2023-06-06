@@ -50,19 +50,25 @@ public class ReserveController {
 
     @PostMapping(value = "/letsgo.bubble")
     public String letsgoPOST(@AuthenticationPrincipal User user,
+                             @RequestParam(name = "rvno") String rvno,
                              @RequestParam(name = "wnumber") String wnumber,
                              @RequestParam(name = "machine") String machine,
                              @RequestParam(name = "machineno") Long machineno,
                              @RequestParam(name = "rvdate") String rvdate,
                              @RequestParam(name = "rvtime") String rvtime) {
         try {
+            log.info(rvno);
             log.info(wnumber);
             log.info(machine);
             log.info(machineno.toString());
             log.info(rvdate);
             log.info(rvtime);
 
-            rService.insertReserve(user.getUsername(), machineno, rvdate, rvtime);
+            // 기기번호(시퀀스) => reservation 테이블의 mno
+            Long mno = wmService.selectWashingmachineNo(wnumber, machine, machineno);
+            log.info(String.valueOf(mno));
+
+            rService.insertReserve(rvno, user.getUsername(), mno, rvdate, rvtime);
 
             return "redirect:/reserve/reservecomplete.bubble";
         }
@@ -73,10 +79,7 @@ public class ReserveController {
     }
 
 
-    // 기기번호(시퀀스) => reservation 테이블의 mno
-    // Long mno = wmService.selectWashingmachineNo(wnumber, machine, machineno);
-    // log.info(String.valueOf(mno));
-
+    
     // 예약
     // int ret = rService.insertReserve(user.getUsername(), mno, rvdate, rvtime);
     // log.info(String.valueOf(ret));

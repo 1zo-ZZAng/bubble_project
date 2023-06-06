@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Reserve {
 
-    private long rvno;
+    private String rvno;
 
     private Date rdate;
 

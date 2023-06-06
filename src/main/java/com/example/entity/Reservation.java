@@ -1,16 +1,12 @@
 package com.example.entity;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,12 +14,10 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "RESERVATION")
-@SequenceGenerator(name = "SEQ_RESERVE_NO", sequenceName = "SEQ_RESERVE_NO", initialValue = 1, allocationSize = 1) 
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RESERVE_NO") //시퀀스
-    private BigInteger no; //예약 번호(시퀀스)
+    private String no; //예약 번호
 
     private Date rdate; //사용날짜
 
