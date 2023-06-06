@@ -47,26 +47,27 @@
             <p id="page">Reserve</p>
         </div>
 
-        <div>
+        <p id="reservetitle">세탁 예약</p>
+        <div id="reserve">
             <table style="margin-bottom: 20px;">
-                <tr>
+                <tr style="text-align: center;">
                     <th>지역(시/도)</th>
                     <th>지역(구/군)</th>
                 </tr>
                 <tr>    
                     <td>
-                        <select id="city" style="width: 200px; text-align: center;" onchange="selectedCity()">
+                        <select id="city" onchange="selectedCity()">
                             <option value="none">지역(시/도) 선택</option>
                             <option th:each="city : ${citynamelist}" th:value="${city}" th:text="${city}"></option>
                         </select>
                     </td>
                     <td>
-                        <select id="town" style="width: 200px; text-align: center;" onchange="selectedtown()">
+                        <select id="town"  onchange="selectedtown()">
                             <option value="none">지역(구/군) 선택</option>
                         </select>
                     </td>
-                    <td><button type="button" class="btn btn-primary" onclick="showMyAddress()">내 주소 불러오기</button></td>
-                    <td><button type="button" class="btn btn-primary" onclick="showWahsingList()">조회</button></td>
+                    <td><button type="button" id="myaddress" class="btn btn-secondary" onclick="showMyAddress()">내 주소 불러오기</button></td>
+                    <td><button type="button" id="searchaddress" class="btn btn-dark" onclick="showWahsingList()">조회</button></td>
                 </tr>    
             </table>
         </div>

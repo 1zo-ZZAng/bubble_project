@@ -60,24 +60,26 @@
             <p id="page">Mypage</p>
         </div>
         <div id="gradepart">
-            <div id="gradeimg">
-                <th:block th:switch="${grade}">
-                    <span th:case="'1'"><img th:src="@{/images/chobo.png}" style="width: 100px;" /></span>
-                    <span th:case="'2'"><img th:src="@{/images/yojung.png}" style="width: 100px;" /></span>
-                    <span th:case="'3'"><img th:src="@{/images/pro.png}" style="width: 100px;" /></span>
-                </th:block>
-                
-            </div>
-            <div id="grade">
-                <!-- <img id="gradeicon" th:src="@{/images/}"> -->
-                <p id="higrade" th:text="|${name} 님 환영합니다! |"></p>
-                고객님의 고객 등급은 
-                <th:block th:switch="${grade}" >
-                    <span th:case="'1'" style="font-weight: bold;">세탁 초보</span>
-                    <span th:case="'2'" style="font-weight: bold;">세탁 요정</span>
-                    <span th:case="'3'" style="font-weight: bold;">세탁 프로</span>
-                </th:block>
-                입니다.
+            <div id="gradebox">
+                <div id="gradeimg">
+                    <th:block th:switch="${grade}">
+                        <span th:case="'1'"><img th:src="@{/images/chobo.png}" style="width: 100px;" /></span>
+                        <span th:case="'2'"><img th:src="@{/images/yojung.png}" style="width: 100px;" /></span>
+                        <span th:case="'3'"><img th:src="@{/images/pro.png}" style="width: 100px;" /></span>
+                    </th:block>
+                    
+                </div>
+                <div id="grade">
+                    <!-- <img id="gradeicon" th:src="@{/images/}"> -->
+                    <p id="higrade" th:text="|${name} 님 환영합니다! |"></p>
+                    고객님의 고객 등급은 
+                    <th:block th:switch="${grade}" >
+                        <span th:case="'1'" style="font-weight: bold;">세탁 초보</span>
+                        <span th:case="'2'" style="font-weight: bold;">세탁 요정</span>
+                        <span th:case="'3'" style="font-weight: bold;">세탁 프로</span>
+                    </th:block>
+                    입니다.
+                </div>
             </div>
         </div>
 
@@ -129,7 +131,7 @@
                         <td><input type="password" th:field="${customer.password}" id="password" name="password" class="form-control"  autoComplete="off" /></td>
                         <td>
                             <span id="pwchange" style="display: none;">
-                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 80px;" >비밀번호 변경</a>
+                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 80px;" id="pwbtn" >비밀번호 변경</a>
                             </span>
                         </td>
                     </tr>
@@ -166,12 +168,10 @@
                     </tr>
                     <tr>
                         
-                        <td>
-                            <input type="button" value="수정" onclick="updateOne()" class="btn btn-dark" id="update" />
-                        </td>
-                        <td>
-                            <td><button type="button" class="btn btn-secondary" onclick="deleteOne()"  >회원 탈퇴</button></td>
-                        </td>
+                            <td><input type="button" value="수정" onclick="updateOne()" class="btn btn-dark" id="update" /></td>
+                        
+                            <td><button type="button" class="btn btn-secondary" onclick="deleteOne()" id="delete" >회원 탈퇴</button></td>
+
                     </tr>
                 </table>
             </form>

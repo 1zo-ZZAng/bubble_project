@@ -204,10 +204,19 @@
 
 #gradepart{
     height: 200px;  
-    background-color: rgb(209, 208, 208); 
     padding: 3%;
     display: flex;
     justify-content: center;
+    margin-bottom: 130px;
+}
+
+#gradebox{
+    border: 4px solid lightgrey;
+    display: flex;
+    width: 70%;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
 }
 
 #grade{
@@ -252,6 +261,9 @@
     margin-left: 80px;
 }
 
+#datatable-pagination{
+    margin-right: 80px;
+}
 
 /* 회원가입 */
 #jointitle{
@@ -325,6 +337,61 @@
 }
 
 #update{
-    margin-left: 40px;
-    width: 80%;
+    margin-left: 80px;
+    margin-right: 30px;
+    width: 100%;
+}
+
+#delete{
+    margin-left: 170px;
+    width: 70%;
+}
+
+
+#pwbtn{
+    width: 150px;
+}
+
+
+
+/* 예약페이지 */
+#reserve{
+    margin-top: 60px;
+    margin-left: 650px;
+    font-size: 20px;
+}
+
+#reservetitle{
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+
+}
+
+#city, #town{
+    margin-top: 20px;
+    padding: 5%;
+}
+#city{
+    margin-right: 30px;
+    width: 50px;
+    width: 200px; 
+    text-align: center;
+}
+#town{
+    margin-left: 20px;
+    margin-right: 30px;
+    width: 200px; 
+    text-align: center;
+}
+
+#myaddress , #searchaddress{
+    height: 50px;
+    margin-top: 20px;
+}
+
+#searchaddress{
+    margin-left: 15px;
+    width: 70px;
 }
