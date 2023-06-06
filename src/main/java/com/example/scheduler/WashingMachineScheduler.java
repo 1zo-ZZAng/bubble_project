@@ -1,6 +1,8 @@
 package com.example.scheduler;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,15 +27,23 @@ public class WashingMachineScheduler {
 
 
         LocalDateTime now = LocalDateTime.now();
-
-        
         
 
-        String year = now.toString().substring(0, 10);
-        String time = now.toString().substring(11, 16);
+        String year = now.toString().substring(0, 10); //연도
+        String time = now.toString().substring(11, 16); //시간
 
         log.info("{}" , year); //연도
         log.info("{}" , time); // 시분
+
+
+        // String str = "2019-09-02 08:10:55";
+        // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // Date date = format.parse(str);
+        // System.out.println(date);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
 
 
         // 1. reserve 테이블의 RVDATE, RVTIME 이걸 가져와
@@ -43,14 +53,14 @@ public class WashingMachineScheduler {
         for(Reserve obj : list ){
 
             // 2. if(RVDATE = 찍은거랑 같아 && RVTIME = 찍은거랑 같아)
-
+            // 세탁기 종류도 봐라 mytime = 세탁기, 건조기 ,일체형
             if(obj.getRvdate().equals(year) && obj.getRvtime().equals(time)){
 
                 log.info("떠라! => {}", 1);
 
                 // 3. 상태 업데이트 끝
 
-                
+
 
             }
 
