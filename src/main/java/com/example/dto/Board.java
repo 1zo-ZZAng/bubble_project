@@ -24,7 +24,7 @@ public class Board {
 
     /* ------- */
 
-    private Date date; // BoardMapper에서 쓰임
+    private Date redate; // BoardMapper에서 쓰임
 
     
 }
