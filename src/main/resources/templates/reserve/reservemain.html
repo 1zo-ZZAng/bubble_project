@@ -21,7 +21,7 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <style>
-        .washing {border: 1px solid black; word-break: break-all;}
+        /* .washing {border: 1px solid black; word-break: break-all;} */
 
         .time {border: 1px solid black;}
         .time:hover, .time:focus {
@@ -46,7 +46,9 @@
         </div>
 
         <p id="reservetitle">세탁 예약</p>
-        <div id="selectaddress">
+        <h4 style="margin-left: 350px;">지역 선택</h4>
+        <div class="reserveline"></div>
+        <div id="selectaddress" style="margin-bottom: 50px;">
             <table style="margin-bottom: 20px;">
                 <tr style="text-align: center;">
                     <th>지역(시/도)</th>
@@ -70,15 +72,16 @@
             </table>
         </div>
     
-        <div id="washinglisttable" style="display: none;">
-            <h2>세탁 업체 목록</h2>
-            <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;">
+        <div id="washinglisttable" style="display: none; margin-bottom: 50px;">
+            <h4>세탁 업체 목록</h4>
+            <table id="washingtable">
+            <!-- <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;"></table> -->
                 <thead style="background-color: lightgray;">
                     <tr>
-                        <th width="5%" class="washing">선택</th>
-                        <th width="15%" class="washing">세탁소</th>
-                        <th width="50%" class="washing">주소</th>
-                        <th width="15%" class="washing">전화번호</th>
+                        <th width="5%" >선택</th>
+                        <th width="15%" class="second">세탁소</th>
+                        <th width="50%" class="third">주소</th>
+                        <th width="15%" class="forth">전화번호</th>
                     </tr>
                 </thead>
                 <tbody id="washinglist">
@@ -88,29 +91,32 @@
     
         <br />
     
-        <div id="selectmachine" style="display: none; margin-bottom: 20px;">
-            <h2>기기 목록</h2>
-            <table>
-                <tr>
-                    <th>사용할 기기 종류</th>
-                    <th>기기번호</th>
-                </tr>
-                <tr>    
-                    <td>
-                        <select id="machine" style="width: 200px; text-align: center;" onchange="selectedMachine()">
-                            <option value="none">사용할 기기 선택</option>
-                            <option value="세탁기">세탁기</option>
-                            <option value="건조기">건조기</option>
-                            <option value="일체형">일체형</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="machineno" style="width: 200px; text-align: center;" onchange="selectedMachineNo()">
-                            <option value="none">기기번호 선택</option>
-                        </select>
-                    </td>
-                </tr>    
-            </table>
+        <div id="selectmachine" style="display: none; margin-bottom: 150px;">
+            <h4 style="margin-left: 350px;">기기 선택</h4>
+            <div class="reserveline"></div>
+            <div id="choosewashing">
+                <table>
+                    <tr  style="text-align: center;">
+                        <th style="padding-right: 20px;">사용할 기기 종류</th>
+                        <th style="padding-left: 90px;">사용할 기기 번호</th>
+                    </tr>
+                    <tr>    
+                        <td style="padding-left: 5px;">
+                            <select id="machine" style="width: 200px; text-align: center;" onchange="selectedMachine()">
+                                <option value="none">사용할 기기 선택</option>
+                                <option value="세탁기">세탁기</option>
+                                <option value="건조기">건조기</option>
+                                <option value="일체형">일체형</option>
+                            </select>
+                        </td>
+                        <td style="    padding-left: 50px;">
+                            <select id="machineno" style="width: 200px; text-align: center;" onchange="selectedMachineNo()">
+                                <option value="none">기기번호 선택</option>
+                            </select>
+                        </td>
+                    </tr>    
+                </table>
+            </div>
         </div>
     
         <br />
