@@ -99,6 +99,7 @@ public class SecurityConfig {
 
         // 권한 설정
         http.authorizeRequests()
+            .antMatchers("/customer/home.bubble").permitAll()
             .antMatchers("/customer/join.bubble").permitAll()
             .antMatchers("/customer/kakaojoin.bubble").permitAll()
             .antMatchers("/customer/login.bubble").permitAll()
