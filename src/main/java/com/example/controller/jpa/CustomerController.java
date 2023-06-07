@@ -25,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.Reserve;
 import com.example.dto.SendMail;
+import com.example.dto.Washing;
 import com.example.entity.Customer;
+import com.example.service.jpa.AdminService;
 import com.example.service.jpa.CustomerService;
 import com.example.service.jpa.MailService;
 import com.example.service.mybatis.ReserveMybatisService;
+import com.example.service.mybatis.WashingMybatisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +44,7 @@ public class CustomerController {
     final CustomerService cService;
     final MailService mService; // 비밀번호 찾기 - 이메일 전송
     final ReserveMybatisService rService;
+    final WashingMybatisService wService;
 
     // 암호화
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
@@ -517,7 +521,7 @@ public class CustomerController {
                         }
             
                         model.addAttribute("msg", "탈퇴가 완료되었습니다.");
-                        model.addAttribute("url", "/bubble_bumul/home.bubble");
+                        model.addAttribute("url", "/bubble_bumul/customer/home.bubble");
             
                         return "message";
                     }
@@ -541,7 +545,7 @@ public class CustomerController {
                     }
         
                     model.addAttribute("msg", "탈퇴가 완료되었습니다.");
-                    model.addAttribute("url", "/bubble_bumul/home.bubble");
+                    model.addAttribute("url", "/bubble_bumul/customer/home.bubble");
         
                     return "message";
                 }
@@ -555,4 +559,35 @@ public class CustomerController {
             return "redirect:/customer/home.bubble";
         }
     }
+
+    // --------------------------------------------------------------------------------------
+
+    // customer 메인 화면 - 내 주변 세탁방 찾기
+    @GetMapping(value = "/findwashing.bubble")
+    public String findwashingGET(Model model, @AuthenticationPrincipal User user) {
+        try {
+            model.addAttribute("user", user);
+
+            Customer customer = cService.selectCustomerOne(user.getUsername());
+            // log.info(customer.getAddress());
+            String[] caddress = customer.getAddress().split(" ");
+            // log.info(caddress[0]);
+            // log.info(caddress[1]);
+            model.addAttribute("address", customer.getAddress());
+
+            List<Washing> washingList = wService.selectWashingList(caddress[0], caddress[1]);
+            // for (int i=0; i<washingList.size(); i++) {
+            //     log.info(washingList.get(i).getAddress());
+            // }
+            model.addAttribute("washingList", washingList);
+
+            return "/customer/findwashing";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/customer/home.bubble";
+        }
+    }
+
+
 }
