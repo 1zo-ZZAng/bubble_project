@@ -306,7 +306,7 @@
             }
             else {
                 if (data.washinglist.length == 0) {
-                    alert('예약 가능한 세탁소가 존재하지 않습니다. 다른 지역을 선택해주세요.');
+                    alert('예약 가능한 세탁소가 존재하지 않습니다.\n다른 지역을 선택해주세요.');
                     $("#city").val("none").prop("selected", true);
                     $("#town").val("none").prop("selected", true);
                     // // washinglisttable.innerHTML = '';
@@ -365,14 +365,14 @@
 
             if (data.typeno.length <= 0) {
                 if (machine === "일체형"){
-                    alert('사용가능한 ' + machine + '이 없습니다. 다른 기기를 사용해주세요.');
+                    alert('사용가능한 ' + machine + '이 없습니다.\n다른 기기를 사용해주세요.');
                 }
                 else if (machine === "none") {
                     alert('기기를 선택해주세요.');
                     document.getElementById("machine").focus();
                 }
                 else {
-                    alert('사용가능한 ' + machine + '가 없습니다. 다른 기기를 사용해주세요.');
+                    alert('사용가능한 ' + machine + '가 없습니다.\n다른 기기를 사용해주세요.');
                 }
             }
             else {
