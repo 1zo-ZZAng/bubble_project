@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.Board;
 import com.example.dto.BoardType;
+import com.example.dto.BoardView;
 import com.example.dto.Reply;
 import com.example.dto.Washing;
 import com.example.service.mybatis.BoardMybatisService;
+import com.example.service.mybatis.BoardViewMybatisService;
 import com.example.service.mybatis.ReplyMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,8 @@ public class WBoardController {
     final BoardMybatisService bService; //게시판
 
     final ReplyMybatisService rService; // 댓글
+
+    final BoardViewMybatisService bvService; //게시판 + 카테고리 view
 
     
 /* =========================================================================================================== */
@@ -93,38 +97,41 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //전체 조회 
+    //전체 조회
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
         try {
 
             model.addAttribute("user", user);
 
-            List<Board> list = new ArrayList<>();
+            // List<Board> list = new ArrayList<>();
+            List<BoardView> list = new ArrayList<>();
 
             if(menu == 1){ //전체 게시판 조회
 
-                list = bService.selectlistBoard();
+                list = bvService.selectBoardView();
 
-                // log.info("조회 => {}", list.toString());
+                // log.info("카테고리 전체 조회 => {}", list1.toString());
+
 
                 model.addAttribute("list", list);
 
 
             } else if(menu == 2) { //공지사항 전체 조회
 
-                list = bService.selectlistBoardTypeNotice();
+                list = bvService.selectBoardViewNotice();
+
                 model.addAttribute("list", list);
 
 
             } else if(menu == 3) { //분실물 전체 조회
 
-                list = bService.selectlistBoardTypeLost();
+                list = bvService.selectBoardViewLost();
                 model.addAttribute("list", list);
 
-            } else if(menu == 4) { //유실물 전체 조회
+            } else if(menu == 4) { //습득물 전체 조회
 
-                list = bService.selectlistBoardTypeGet();
+                list = bvService.selectBoardViewGet();
                 model.addAttribute("list", list);
 
 
@@ -152,6 +159,8 @@ public class WBoardController {
 
             Board board = bService.selectOneBoard(no);
 
+            List<BoardType> boardType = bService.selectlistBType();
+
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
         
             log.info("글 1개 조회 => {}", board.toString());
@@ -166,6 +175,7 @@ public class WBoardController {
 
 
             model.addAttribute("board", board); //게시글 1개 조회 view로 넘기기
+            model.addAttribute("boardType", boardType); //카테고리
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
@@ -183,7 +193,7 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //수정 
+    //수정
     @GetMapping(value="/update.bubble")
     public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
         try {
@@ -244,9 +254,10 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //삭제 
+    //삭제
     @PostMapping(value="/delete.bubble")
-    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user, Model model) {
+    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no,
+                                @AuthenticationPrincipal User user, Model model) {
         try {
             
             log.info("삭제할 게시글 번호 => {}", no);
@@ -256,11 +267,13 @@ public class WBoardController {
             }
 
             //삭제
-            int ret = bService.deleteBoard(no);            
+            int ret = bService.deleteBoard(no);
 
             log.info("삭제되면 1 실패면 -1 => {}", ret);
 
             if(ret == 1) { //성공시
+
+                rService.deleteReply(no); //게시글 삭제시 게시글에 있는 댓글도 같이 삭제
 
                 model.addAttribute("msg", "삭제되었습니다");
                 model.addAttribute("url","/bubble_bumul/wboard/selectlist.bubble?menu=" + menu);

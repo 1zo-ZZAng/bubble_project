@@ -245,10 +245,19 @@
                         <!--본문 부분-->
                         <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px; border: 1px solid rgb(231, 231, 231); border-radius: 1%;">
 
-                            <!--게시글 이동 주소-->
-                            <div>
-                                <a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="text-decoration: none; font-size: small;">게시글 ></a>
+                            <!-- 작성된 게시글의 게시판 종류에 따라 게시판 이동-->
+                            <div th:if="${board.code == 1}">
+                                <a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="text-decoration: none; font-size: small;">공지사항 ></a>
                             </div>
+
+                            <div th:if="${board.code == 2}">
+                                <a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="text-decoration: none; font-size: small;">분실물 ></a>
+                            </div>
+
+                            <div th:if="${board.code == 3}">
+                                <a th:href="@{/wboard/selectlist.bubble(menu=4)}" style="text-decoration: none; font-size: small;">습득물 ></a>
+                            </div>
+
 
                             <!--제목-->
                             <div>
@@ -332,14 +341,14 @@
 
                                     <table>
                                         <tr th:each = "obj : ${list}" >
-
+                                            <td th:text="${obj.bno}" name="no" hidden></td>
                                             <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
-                                            <td th:text="${obj.content}" style="padding-right: 1rem;"></td>
+                                            <td th:text="${obj.content}"  style="padding-right: 1rem;"></td>
                                             <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
                                             
                                             <td th:if="${user != null}">
                                                 <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
-                                                <td th:if="${board.writer} == ${obj.writer}"> 
+                                                <td th:if="${board.writer} == ${obj.writer}">
                                                     <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem;">작성자</p>
                                                 </td>
                                             </td>

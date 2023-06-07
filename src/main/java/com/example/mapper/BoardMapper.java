@@ -67,7 +67,7 @@ public interface BoardMapper {
     public List<Board> selectlistBoardTypeGeneral();
 
     //최신글 5개 조회 (일단은 공지사항)
-    @Select({" SELECT NO, title, writer, hit, MAX(regdate) AS date, code FROM board WHERE code=1 GROUP BY regdate ORDER BY regdate DESC LIMIT 6 "})
+    @Select({" SELECT no, title, writer, hit, MAX(regdate) AS redate, code FROM board WHERE code=1 GROUP BY regdate ORDER BY regdate DESC LIMIT 6 "})
     public List<Board> selectListLimitBoard();
 
     //글 1개 조회
@@ -96,14 +96,6 @@ public interface BoardMapper {
     //페이징
     @Select({" SELECT b.* FROM( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
 	public List<Board> selectBoardListPage(@Param("start") int start, @Param("end") int end);
-
-    /* ====================검색======================= */
-
-    
-
-
-
-
 
     
 }
