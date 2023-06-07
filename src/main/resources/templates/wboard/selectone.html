@@ -271,9 +271,9 @@
                                 <!--작성자-->
                                     <p th:text="${board.writer}" style="font-size: 15px; font-weight: 200; display: inline-block; margin-right: 1rem;"></p>
 
-                                    <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm')}" style="display: inline-block; margin-right: 1rem;"></p>
-                                    <label for="hit" style="margin-right: 8px; display: inline-block;">조회수</label>
-                                    <p th:text="${board.hit}" style="display: inline-block;"></p>
+                                    <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm')}" style="display: inline-block; margin-right: 1rem; color: #888;"></p>
+                                    <label for="hit" style="margin-right: 8px; display: inline-block; color: #888;">조회수</label>
+                                    <p th:text="${board.hit}" style="display: inline-block; color: #888;"></p>
 
 
                                     <!--수정 삭제 신고 버튼-->
@@ -301,7 +301,7 @@
 
                                                         <!--삭제-->
                                                         <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
-                                                            <input type="text" name="no" th:value="${board.no}" readonly/>
+                                                            <input type="text" name="no" th:value="${board.no}" hidden readonly/>
                                                             <input type="submit" value="삭제" class="btn btn-primary dropdown-item"/>
                                                         </form>
                                                         
