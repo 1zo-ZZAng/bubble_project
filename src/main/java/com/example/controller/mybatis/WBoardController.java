@@ -155,9 +155,6 @@ public class WBoardController {
             log.info("글 1개 조회 => {}", board.toString());
 
 
-
-
-
             long next = bService.nextBoardOne(no);
             long pre = bService.preBoardOne(no);
 
