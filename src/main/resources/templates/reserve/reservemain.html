@@ -92,8 +92,8 @@
         <br />
     
         <div id="selectmachine" style="display: none; margin-bottom: 150px;">
-            <h4 style="margin-left: 350px;">기기 선택</h4>
-            <div class="reserveline"></div>
+            <h4 style="margin-left: 345px;">기기 선택</h4>
+            <div class="reserveline1"></div>
             <div id="choosewashing">
                 <table>
                     <tr  style="text-align: center;">
@@ -109,7 +109,7 @@
                                 <option value="일체형">일체형</option>
                             </select>
                         </td>
-                        <td style="    padding-left: 50px;">
+                        <td style=" padding-left: 50px;">
                             <select id="machineno" style="width: 200px; text-align: center;" onchange="selectedMachineNo()">
                                 <option value="none">기기번호 선택</option>
                             </select>
@@ -122,17 +122,20 @@
         <br />
     
         <div id="selectdate" style="display: none;" class="container">
-            <h2>예약 날짜 및 시간 선택</h2>
-            <input type="date" id="date" onchange="selectedDate()" style="margin-bottom: 5px;" />
-    
-            <br />
-    
-            <div class="row">
-                <div id="timetable" class="col col-4" style="width: 450px;"></div>
+            <h4>예약 날짜 및 시간 선택</h4>
+            <div class="reserveline2"></div>
+            <div class="rvdatetime">
+                <input type="date" id="date" onchange="selectedDate()"/>
+        
+                <br />
+        
+                <div class="row" style="width: 1000px;">
+                    <div id="timetable" class="col col-4" style="width: 800px; display: inline-block;"></div>
+                </div>
+
+                <br />
+
             </div>
-
-            <br />
-
             <div id="reserve" style="display: none;"></div>
         </div>
     </div>
@@ -422,7 +425,7 @@
                 if (data.useable.length > 0) {
                     timetable.innerHTML = '';
                     reserve.innerHTML = '';
-                    reserve.innerHTML += `<input type="button" value="결제하기" id="paybtn" class="btn btn-primary" onclick="reserveAction()" />`;
+                    reserve.innerHTML += `<input type="button" value="결제하기" id="paybtn" class="btn btn-dark" onclick="reserveAction()" />`;
 
                     for (let obj of data.useable) {
                         // if(){
@@ -431,7 +434,7 @@
                         // else{
                         //     timetable.innerHTML += `<button type="button">` + obj + `</button>`;
                         // }
-                        timetable.innerHTML += `<button type="button" name="time" onclick="selectedtime(this)" class="btn time" value="` + obj + `">` + obj + `</button>`;
+                        timetable.innerHTML += `<button type="button" name="time" onclick="selectedtime(this)" style="padding: 10px 20px; margin: 15px;" class="btn time" value="` + obj + `">` + obj + `</button>`;
                     }
 
                     timetable.style.display="inline-block";

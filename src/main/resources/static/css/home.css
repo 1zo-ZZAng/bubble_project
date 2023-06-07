@@ -278,57 +278,74 @@
 }
 
 /* 아이디 줄 */
-#lbl_check{
+.jointable #lbl_check{
     float: left;
 }
 
-#id{
+.jointable #id{
     margin-left: 40px;
 }
 
-#idbutton{
+.jointable #idbutton{
     margin-left: 80px;
 }
 
 
 /* 비밀번호줄 */
-#password{
+.jointable #password{
     margin-left: 40px;
 }
-#pwcheck{
+.jointable #pwcheck{
     margin-left: 40px;
 }
 
 /* 이름 */
-#name{
+.jointable #name{
     margin-left: 40px;
 }
 
 
- #phone{
+.jointable  #phone{
     margin-left: 40px;
     text-align: center;
 }
 
-#email{
+.jointable #email{
     margin-left: 40px;
 }
-#birth{
+.jointable #birth{
     margin-left: 40px;
 }
 
-#address{
+.jointable #address{
     margin-left: 40px;
 }
-#add_button{
+.jointable #add_button{
     margin-left: 80px;
 }
 
-#detailaddress{
+.jointable #detailaddress{
     margin-left: 40px;
 }
-#extraaddress{
+.jointable #extraaddress{
     margin-left: 80px;
+}
+
+
+
+
+/* 회원정보 수정 */
+.updatetable #phone, #email,#birth {
+    text-align: center;
+}
+
+.updatetable #add_button{
+    margin-left: 60px;
+}
+
+
+.updatetable #extraaddress{
+    margin-left: 60px;
 }
 
 #joinus{
@@ -336,20 +353,19 @@
     width: 100%;
 }
 
-#update{
-    margin-left: 80px;
-    margin-right: 30px;
-    width: 100%;
+.updatetable  #update{
+  
+    width: 180px;
 }
 
-#delete{
+.updatetable  #delete{
     margin-left: 170px;
     width: 70%;
 }
 
 
 #pwbtn{
-    width: 150px;
+    width: 120px;
 }
 
 
@@ -365,9 +381,9 @@
     /* margin-bottom: 30px; */
   }
 
-#selectaddress, #choosewashing{
+#selectaddress{
     margin-top: 20px;
-    margin-left: 650px;
+    margin-left: 635px;
     font-size: 20px;
 }
 
@@ -409,7 +425,7 @@
 /* 세탁업체 목록 */
 #washinglisttable{
     margin-top: 60px;
-    margin-left: 350px;
+    margin-left: 347px;
     font-size: 20px;
 }
 
@@ -438,7 +454,7 @@ tr{
 
 #washingtable thead th{
     height: 68px;
-    font-size: 14px;
+    font-size: 18px;
     padding: 0 14px;
     color: #000;
     text-align: center;
@@ -524,6 +540,11 @@ table tbody tr td.date{
 
 
 /* 기기선택 */
+#choosewashing{
+    margin-top: 80px;
+    margin-left: 700px;
+    font-size: 20px;
+}
 
 #machine{
     margin-top: 20px;
@@ -541,4 +562,49 @@ table tbody tr td.date{
     width: 200px; 
     text-align: center;
 
+}
+
+/* 날짜 선택 */
+#selectdate{
+    margin-left: 330px;
+}
+
+.reserveline1 {
+    border-top: 3px solid black;
+    width: 1245px;
+    margin-left: 345px;
+    margin-top: 10px;
+}
+
+.reserveline2 {
+    border-top: 3px solid black;
+    width: 1245px;
+    /* margin-left: 330px; */
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#date{
+    margin-bottom: 300px;
+    margin-left: 200px;
+    margin-top: 50px;
+    margin-right: 80px;
+    padding: 10px 20px;
+    width: 200px;
+}
+
+.rvdatetime{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+
+#reserve{
+    margin-top: 80px;
+    margin-left: 500px;
+    margin-bottom: 300px;
+}
+
+#paybtn{
+    padding: 10px 50px;
 }

@@ -122,7 +122,7 @@
         <div th:if="${#strings.equals(param.menu, '2')}">
             <!-- 회원정보 수정 -->
             <form th:action="@{/customer/mypage.bubble(menu=2)}" th:object="${customer}" method="post" id="updateform">
-                <table class="container" style="width: 500px; height: 580px;">
+                <table class="container updatetable" style="width: 500px; height: 580px;">
                     <tr>
                         <td><label for="id" id="lbl_check">아이디</label></td>
                         <td><input type="text" th:field="${customer.id}" name="id" id="id" readonly class="form-control"  /></td>
@@ -132,7 +132,7 @@
                         <td><input type="password" th:field="${customer.password}" id="password" name="password" class="form-control"  autoComplete="off" /></td>
                         <td>
                             <span id="pwchange" style="display: none;">
-                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 80px;" id="pwbtn" >비밀번호 변경</a>
+                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 60px;" id="pwbtn" >비밀번호 변경</a>
                             </span>
                         </td>
                     </tr>
