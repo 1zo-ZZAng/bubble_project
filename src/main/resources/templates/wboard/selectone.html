@@ -232,120 +232,168 @@
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">게시판</h1>
+                    <h1 class="mt-4"></h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">글조회</li>
+                        <li class="breadcrumb-item active"></li>
                     </ol>
 
+                    
+
                     <div class="container" >
-                        <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
+
+                        <!--이전글 & 다음글 버튼-->
+                        <div>
+                            <div th:if="${pre > 0}">
+                                <a href="#" class="btn btn-primary" th:onclick="ajaxUpdateHit([[${pre}]])">이전글</a>
+                            </div>
+    
+                            <div th:if="${next > 0}">
+                                <a href="#" class="btn btn-primary"  th:onclick="ajaxUpdateHit([[${next}]])">다음글</a>
+                            </div>
+                        </div>
+                        
+                        
+
+                        <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px; border: 1px solid rgb(231, 231, 231); border-radius: 1%;">
 
                             <div hidden>
                                 <label for="no">글번호</label>
                                 <p id="no" name="no" th:text="${board.no}"></p>
                             </div>
 
-                            <div class="board" style="float: left; margin-right: 3rem;" >
-                                <label for="writer">작성자</label>
-                                <p th:text="${board.writer}"></p>
+                            <!--게시글 이동 주소-->
+                            <div>
+                                <a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="text-decoration: none; font-size: small;">게시글 ></a>
                             </div>
 
-                            <!--작성일자-->
-                            <div>
-                                <label for="regdate">작성일</label>
-                                <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
-                            </div>
-                            
                             <!--제목-->
                             <div>
-                                <label for="title" style="float: left; margin-right: 3rem;">제목</label>
-                                <p th:text="${board.title}" ></p>
+                                <!-- <label for="title" style="float: left; margin-right: 3rem;">제목</label> -->
+                                <p th:text="${board.title}" style="font-size: 25px; font-weight: 500;" ></p>
                             </div>
 
+                            <!--작성자 & 작성일 & 조회수-->
+                            <div class="WriterInfo">
+
+                                <div style="font-size: small;">
+
+                                <!--작성자-->
+                                    <p th:text="${board.writer}" style="font-size: 15px; font-weight: 200; display: inline-block; margin-right: 1rem;"></p>
+
+                                    <p id="regdate" name="regdate" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm')}" style="display: inline-block; margin-right: 1rem;"></p>
+                                    <label for="hit" style="margin-right: 8px; display: inline-block;">조회수</label>
+                                    <p th:text="${board.hit}" style="display: inline-block;"></p>
+
+                                    <!--수정&삭제 버튼-->
+                                    <a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBtn" aria-expanded="false" aria-controls="collapseBtn" style="display: inline-block; float: right;">
+                                        <div class="sb--link-icon"><i class="bi bi-three-dots-vertical"></i></div> <!--아이콘 변경-->
+                                    </a>
+
+                                    <div class="collapse" id="collapseBtn" aria-labelledby="bodyOne" data-bs-parent="#sidenavAccordion" >
+                                        <nav class="sb-menu-nested">
+                                            <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
+                                            <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
+                                                <div th:if="${board.writer} == ${user.username}"> <!--작성자와 로그인된 아이디가 일치시-->
+                                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
+                                                    <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
+                                                        <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
+                                                        <input type="submit" value="삭제" class="btn btn-primary"/>
+                                                    </form>
+                                                </div>
+                                                <div th:if="${board.writer} != ${user.username}">
+                                                    <a href="#">신고하기</a>
+                                                </div>
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    <!--수정&삭제 버튼-->
+                        
+                                </div>
+                                
+                            </div>
+
+                            <hr style="color: #aaa;"> <!--경계선-->
+                            
                             <!--본문 내용 부분-->
-                            <div>
-                                <label for="content">내용</label>
+                            <div style="padding-bottom: 30px; padding-top: 20px;" >
+
                                 <p th:utext="${board.content}"></p> <!--utext로 해야 p태그 em안나옴-->
+
                             </div>
 
-                            <div>
-                                <label for="hit" style="float: left; margin-right: 3rem;">조회수</label>
-                                <p th:text="${board.hit}"></p>
-                            </div>
-
-                            <hr>
+                            <hr style="color: #aaa;"> <!--경계선-->
 
                             
                             <!--댓글 조회 부분-->
-                            <label> 댓글 </label>
-                            <table>
-                                <tr th:each = "obj : ${list}">
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${obj.content}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                </tr>
-                            </table>
+                            <div style="margin-bottom: 2rem;">
+                                <label style="margin-bottom: 1rem;"> 댓글 </label>
+                                <table>
+                                    <tr th:each = "obj : ${list}">
+                                        <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
+                                        <td th:text="${obj.content}"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
 
                         
-                            <hr>
 
                             <!--댓글 작성 부분-->
 
-                            <form th:action="@{/reply/insert.bubble}" method="post">
-                                
-                                <div>
-                                    <label>게시글 번호</label>
-                                    <input type="text" name="bno" th:value="${board.no}" readonly />
-                                </div>
+                            <div style=" border: 2px solid rgb(231, 231, 231); border-radius: 1%; position: relative;">
 
-                                <div>
-                                    <label for="replycontent">댓글 내용</label>
-                                    <input type="text" name="content" placeholder="댓글 내용" />
-                                </div>
+                                <form th:action="@{/reply/insert.bubble}" method="post">
+                                    
+                                    <div hidden>
+                                        <label>게시글 번호</label>
+                                        <input type="text" name="bno" th:value="${board.no}" readonly />
+                                    </div>
 
-                                <div>
-                                    <label for="replywriter">댓글 작성자</label>
-                                    <input type="text" name="writer" th:value="${user.username}" readonly />
-                                </div>
+                                    <!--작성자 & 댓글 내용 작성-->
+                                    <div>
+                                        <!--작성자-->
+                                        <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
+                                        
+                                        <!--댓글 내용-->
+                                        <input type="text" name="content" placeholder="  댓글을 남겨보세요" style="border: none; outline: none; width: 100%; height: 120px;" /> <!--outline: none;-->
+                                    </div>
+                                    
+                                    <div>
+                                        <div style="margin-bottom: 1rem; position: absolute; top: 70%; right: 0;">
+                                            <input type="submit" value="작성" class="btn" style="background-color: none; outline: none;"  />
+                                        </div>
+                                    </div>
+                                    
 
-                                <div>
-                                    <input type="submit" value="작성" class="btn btn-primary" />
-                                </div>
+                                </form>
 
-                            </form>
-
-
-                            <hr>
-
-                            <!--버튼 시작-->
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
-
-                            <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
-                            <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
-                                <div th:if="${board.writer} == ${user.username}"> <!--작성자와 로그인된 아이디가 일치시-->
-                                    <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
-                                    <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
-                                        <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
-                                        <input type="submit" value="삭제" class="btn btn-primary"/>
-                                    </form>
-                                </div>
                             </div>
-
                             
-
-                            <div style="margin-top: 10px;">
-                                <div th:if="${pre > 0}" style="float: left; margin-right: 10px;">
-                                    <a href="#" class="btn btn-primary" th:onclick="ajaxUpdateHit([[${pre}]])">이전글</a>
-                                </div>
-
-                                <div th:if="${next > 0}">
-                                    <a href="#" class="btn btn-primary"  th:onclick="ajaxUpdateHit([[${next}]])">다음글</a>
-                                </div>
-                            </div>
-
-                            <!--여기 까지 버튼-->
-
                         </div>
+
+                        <!--버튼 시작-->
+                        <a th:href="@{/wboard/write.bubble}" class="btn">글쓰기</a>
+                        <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn btn-primary">목록</a>
+
+                        <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
+                        <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
+                            <div th:if="${board.writer} == ${user.username}"> <!--작성자와 로그인된 아이디가 일치시-->
+                                <a th:href="@{/wboard/update.bubble(no=${board.no})}" style="float: left;" class="btn btn-primary">수정</a>
+                                <form th:action="@{/wboard/delete.bubble}" method="post" id="form">
+                                    <input type="text" name="no" th:value="${board.no}"  hidden readonly/>
+                                    <input type="submit" value="삭제" class="btn btn-primary"/>
+                                </form>
+                            </div>
+                        </div>
+
+                        
+
+                        
+
+                        <!--여기 까지 버튼-->
+
 
                     </div>
 
