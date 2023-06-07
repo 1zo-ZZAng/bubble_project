@@ -13,7 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReplyMybatisServiceImpl implements ReplyMybatisService {
 
+
     final ReplyMapper replyMapper;
+
+
+/* ========================================= */
+
 
     //댓글 작성
     @Override
@@ -27,6 +32,7 @@ public class ReplyMybatisServiceImpl implements ReplyMybatisService {
             return -1;
         }
     }
+
 
     //수정
     @Override
@@ -57,6 +63,7 @@ public class ReplyMybatisServiceImpl implements ReplyMybatisService {
         }
     }
 
+
     //전체 조회
     @Override
     public List<Reply> selectlistReply(long bno) {
@@ -68,6 +75,20 @@ public class ReplyMybatisServiceImpl implements ReplyMybatisService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    //댓글 개수
+    @Override
+    public int countReply(long bno) {
+        try {
+            
+            return replyMapper.countReply(bno);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
     

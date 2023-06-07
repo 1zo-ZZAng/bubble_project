@@ -31,5 +31,9 @@ public interface ReplyMapper {
     @Select({" SELECT * FROM REPLY WHERE bno=#{bno} ORDER BY no DESC "})
     public List<Reply> selectlistReply(@Param("bno") long bno);
 
+    //댓글 개수(해당 게시글)
+    @Select({" SELECT count(*)cnt FROM reply WHERE bno=#{bno} "})
+    public int countReply(@Param("bno") long bno);
+
     
 }

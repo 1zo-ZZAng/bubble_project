@@ -59,7 +59,7 @@ public class WashingMachineScheduler {
 
                 // log.info("성공 => {}", 1);
 
-                // 3. 상태 업데이트 끝
+                // 3. 상태 업데이트 끝 (1분마다 업데이트 됨)
                 sMyBatisServie.updateReserveState(obj.getRvno());
 
             }

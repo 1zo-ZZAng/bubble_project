@@ -22,4 +22,7 @@ public interface ReplyMybatisService {
     //댓글 전체 조회 (해당 게시글의)
     public List<Reply> selectlistReply(long bno);
 
+    //댓글 개수 (해당 게시글)
+    public int countReply(long bno);
+
 }
