@@ -151,7 +151,7 @@ public class WBoardController {
             Board board = bService.selectOneBoard(no);
 
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
-
+        
             log.info("글 1개 조회 => {}", board.toString());
 
 
@@ -254,7 +254,7 @@ public class WBoardController {
             }
 
             //삭제
-            int ret = bService.deleteBoard(no);
+            int ret = bService.deleteBoard(no);            
 
             log.info("삭제되면 1 아니면 0 => {}", ret);
 

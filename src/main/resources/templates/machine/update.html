@@ -55,15 +55,13 @@
 <body class="sb-nav-fixed">
 
     <!--내비게이션 영역-->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <i class="bi bi-tools"></i> 
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
-
         <!--Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" type="button">
             <i class="bi bi-list"></i>

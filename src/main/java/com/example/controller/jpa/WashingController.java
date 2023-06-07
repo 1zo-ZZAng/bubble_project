@@ -93,7 +93,7 @@ public class WashingController {
             
             
         
-            log.info("예약내역 조회 => {}", list.toString());
+            // log.info("예약내역 조회 => {}", list.toString());
 
             model.addAttribute("list", list); //예약 내역
             model.addAttribute("list1", list1); //최근 일주일 간 사용자 수
@@ -514,54 +514,6 @@ public class WashingController {
             return "redirect:/washing/login.bubble";
         }
     }
-
-
-    
-    
-    
-    
-    
-
-/* =================================================================================================================================================== */
-
-
-    //예약내역 조회
-    // @GetMapping(value="/reserve.bubble")
-    // public String reserveGET(@AuthenticationPrincipal User user,  Model model, @ModelAttribute Reserve reserve) {  //@RequestParam(name = "menu", required = false, defaultValue = "0") int menu
-    //     try {
-
-    //         model.addAttribute("user", user);
-    //         log.info("로그인한 아이디 => {}", user.getUsername());
-
-
-    //         List<Reserve> list = rService.selectReserve(user.getUsername());
-
-            
-
-    //         // log.info("예약내역 조회 => {}", list.toString());
-
-    //         model.addAttribute("list", list);
-    //         // model.addAttribute("user", user);
-
-    //         return "/washing/reserve";
-            
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return "redirect:/washing/home.bubble";
-    //     }
-    // }
-
-
-/* =================================================================================================================================================== */
-
-
-    
-    
-
-    
-    
-
-
 
     
 }

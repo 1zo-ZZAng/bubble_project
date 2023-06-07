@@ -83,9 +83,8 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <i class="bi bi-tools"></i> 
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -237,12 +236,12 @@
                     </ol>
 
 
-                    <table class="mb-3">
-                        <tr>
-                            <td><a th:href="@{/washingsales/reserve.bubble(menu=1)}" style="text-decoration: none; color: black;">전체</a></td> 
-                            <td><a th:href="@{/washingsales/reserve.bubble(menu=2)}" style="text-decoration: none; color: black;">이용 완료</a></td> 
-                            <td><a th:href="@{/washingsales/reserve.bubble(menu=3)}" style="text-decoration: none; color: black;">예약 완료</a></td> 
-                            <td><a th:href="@{/washingsales/reserve.bubble(menu=4)}" style="text-decoration: none; color: black;">예약 취소</a></td>
+                    <table class="mb-4">
+                        <tr style="font-weight: bold;">
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=1)}" style="text-decoration: none; color: black; margin-right: 1rem;">전체</a></td> 
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=2)}" style="text-decoration: none; color: black; margin-right: 1rem;">이용 완료</a></td> 
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=3)}" style="text-decoration: none; color: black; margin-right: 1rem;">예약 완료</a></td> 
+                            <td><a th:href="@{/washingsales/reserve.bubble(menu=4)}" style="text-decoration: none; color: black; margin-right: 1rem;">예약 취소</a></td>
                         </tr>
                     </table>
 
@@ -256,7 +255,6 @@
                                 <div th:if="${#strings.equals(param.menu, '1')}">
 
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
                                         전체 예약 내역
                                     </div>
                                     <div class="card-body">
@@ -309,7 +307,6 @@
                                 <div th:if="${#strings.equals(param.menu, '2')}">
 
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
                                         이용 완료 내역
                                     </div>
                                     <div class="card-body">
@@ -361,7 +358,6 @@
                                 <div th:if="${#strings.equals(param.menu, '3')}">
 
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
                                         예약 완료 내역
                                     </div>
                                     <div class="card-body">
@@ -413,7 +409,7 @@
                                 <div th:if="${#strings.equals(param.menu, '4')}">
 
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
+
                                         예약 취소 내역
                                     </div>
                                     <div class="card-body">

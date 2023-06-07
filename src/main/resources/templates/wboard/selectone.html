@@ -101,9 +101,8 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <i class="bi bi-tools"></i> 
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -232,22 +231,15 @@
                         <li class="breadcrumb-item active"></li>
                     </ol>
 
-                    
 
                     <div class="container" >
 
-                        <!--이전글 & 다음글 버튼-->
-                        <div >
-                            <div th:if="${pre > 0}" style="display: inline-block;">
-                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i class="bi bi-chevron-left"></i> 이전글</a>
-                            </div>
 
-                            <div th:if="${next > 0}" style="float: right;">
-                                <a href="#" class="btn"  th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i class="bi bi-chevron-right"></i></a>
-                            </div>
-
+                        <!--글쓰기 & 목록 버튼-->
+                        <div>
+                            <a th:href="@{/wboard/write.bubble}" class="btn"><i class="bi bi-pencil"></i> 글쓰기</a>
+                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn" style="float: right;" >목록</a>
                         </div>
-
                         
                         
                         <!--본문 부분-->
@@ -265,7 +257,7 @@
                             </div>
 
                             <!--작성자 & 작성일 & 조회수-->
-                            <div class="WriterInfo">
+                            <div>
 
                                 <div style="font-size: small;">
                                 <!--작성자-->
@@ -333,59 +325,94 @@
                             <hr style="color: #aaa;"> <!--경계선-->
 
                             
-                            <!--댓글 조회 부분-->
-                            <div style="margin-bottom: 2rem;">
-                                <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
-                                <table>
-                                    <tr th:each = "obj : ${list}" >
-                                        <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
-                                        <td th:text="${obj.content}" style="padding-right: 1rem;"></td>
-                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
-                                    </tr>
-                                </table>
+                            <!--공지사항 게시글은 댓글 못쓰게 막아둠-->
+                            <div th:if="${board.code != 1}">
+
+
+                                <!--댓글 조회 부분-->
+                                <div style="margin-bottom: 2rem;">
+                                    <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
+                                    <table>
+                                        <tr th:each = "obj : ${list}" >
+
+                                            <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
+                                            <td th:text="${obj.content}" style="padding-right: 1rem;"></td>
+                                            <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
+                                            
+                                            <td th:if="${user != null}">
+                                                <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
+                                                <td th:if="${board.writer} == ${obj.writer}"> 
+                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem;">작성자</p>
+                                                </td>
+                                            </td>
+
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                                
+
+                                <!--댓글 작성 부분-->
+
+                                <div style=" border: 2px solid rgb(231, 231, 231); border-radius: 1%; position: relative;">
+
+                                    <form th:action="@{/reply/insert.bubble}" method="post">
+
+                                        
+                                        <div hidden>
+                                            <label>게시글 번호</label>
+                                            <input type="text" name="bno" th:value="${board.no}" readonly />
+                                        </div>
+
+                                        <!--작성자 & 댓글 내용 작성-->
+                                        <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
+
+                                            <!--작성자와 로그인된 아이디가 일치시-->
+                                            <div th:if="${board.writer} == ${user.username}"> 
+                                                <!-- <label for="writer" style="color: red; float: left; margin-left: 1rem;">글쓴이</label> -->
+                                                <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
+                                            </div>
+
+                                            <div th:if="${board.writer} != ${user.username}" >
+                                                <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
+                                            </div>
+
+                                            <!--작성자-->
+                                            <!-- <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br> -->
+
+                                            <!--댓글 내용-->
+                                            <input type="text" name="content" placeholder="  댓글을 남겨보세요" style="border: none; outline: none; width: 100%; height: 120px;" /> 
+                                        </div>
+                                        
+                                        <div>
+                                            <div style="margin-bottom: 1rem; position: absolute; top: 70%; right: 0;">
+                                                <input type="submit" value="작성" class="btn" style="background-color: none; outline: none;"  />
+                                            </div>
+                                        </div>
+                                        
+
+                                    </form>
+
+                                </div>
+
                             </div>
                             
+                        </div>
+
+
+                        <!--이전글 & 다음글 버튼-->
+                        <div style="margin-top: 1rem;">
+                            <div th:if="${pre > 0}" style="display: inline-block;">
+                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i class="bi bi-chevron-left"></i> 이전글</a>
+                            </div>
+
+                            <div th:if="${next > 0}" style="float: right;">
+                                <a href="#" class="btn"  th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i class="bi bi-chevron-right"></i></a>
+                            </div>
+
+                        </div>
 
                         
-
-                            <!--댓글 작성 부분-->
-
-                            <div style=" border: 2px solid rgb(231, 231, 231); border-radius: 1%; position: relative;">
-
-                                <form th:action="@{/reply/insert.bubble}" method="post">
-                                    
-                                    <div hidden>
-                                        <label>게시글 번호</label>
-                                        <input type="text" name="bno" th:value="${board.no}" readonly />
-                                    </div>
-
-                                    <!--작성자 & 댓글 내용 작성-->
-                                    <div>
-                                        <!--작성자-->
-                                        <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
-                                        
-                                        <!--댓글 내용-->
-                                        <input type="text" name="content" placeholder="  댓글을 남겨보세요" style="border: none; outline: none; width: 100%; height: 120px;" /> 
-                                    </div>
-                                    
-                                    <div>
-                                        <div style="margin-bottom: 1rem; position: absolute; top: 70%; right: 0;">
-                                            <input type="submit" value="작성" class="btn" style="background-color: none; outline: none;"  />
-                                        </div>
-                                    </div>
-                                    
-
-                                </form>
-
-                            </div>
-                            
-                        </div>
-
-                        <!--버튼 시작-->
-                        <div style="margin: 1rem;">
-                            <a th:href="@{/wboard/write.bubble}" class="btn" ><i class="bi bi-pencil"></i> 글쓰기</a>
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn" style="float: right;">목록</a>
-                        </div>
 
 
 

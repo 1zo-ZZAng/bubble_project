@@ -60,9 +60,8 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <i class="bi bi-tools"></i> 
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -140,17 +139,6 @@
                             </nav>
                         </div>
 
-                        <!--예약-->
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
-                            예약
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
-                            </nav>
-                        </div> -->
 
                         <!--보유기기-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
