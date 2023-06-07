@@ -231,13 +231,11 @@ public class MachineController {
 
             log.info("삭제하려는 세탁기 번호 => {}", chk.toString());
 
-            //로그는 찍히는 상황
-            //삭제가 안되는 상황 어떻게 해야할지 고민 중..
+            //리스트라서 for문 돌렸음
+            for(BigInteger check : chk) {
 
-            // mRepository.deleteAllById(chk); => 이거는 안됐음 믜친
-
-            //해결 완료 => 사실 이게 무슨뜻인지 모름 근데 됐음..  for문 돌려서 내가 선택한 chk값 하나하나 삭제입니까? 맞습니까?
-            for(BigInteger check : chk) mRepository.deleteById(check);
+                mRepository.deleteById(check);
+            }
 
             return "redirect:/machine/selectlist.bubble?wid=" + user.getUsername();
             
