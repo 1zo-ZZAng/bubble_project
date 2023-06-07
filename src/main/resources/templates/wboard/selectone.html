@@ -334,10 +334,20 @@
                                     <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
                                     <table>
                                         <tr th:each = "obj : ${list}" >
+
                                             <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
                                             <td th:text="${obj.content}" style="padding-right: 1rem;"></td>
                                             <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
+                                            
+                                            <td th:if="${user != null}">
+                                                <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
+                                                <td th:if="${board.writer} == ${obj.writer}"> 
+                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem;">작성자</p>
+                                                </td>
+                                            </td>
+
                                         </tr>
+                                        
                                     </table>
                                 </div>
                                 
@@ -355,10 +365,21 @@
                                         </div>
 
                                         <!--작성자 & 댓글 내용 작성-->
-                                        <div>
+                                        <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
+
+                                            <!--작성자와 로그인된 아이디가 일치시-->
+                                            <div th:if="${board.writer} == ${user.username}"> 
+                                                <!-- <label for="writer" style="color: red; float: left; margin-left: 1rem;">글쓴이</label> -->
+                                                <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
+                                            </div>
+
+                                            <div th:if="${board.writer} != ${user.username}" >
+                                                <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
+                                            </div>
+
                                             <!--작성자-->
-                                            <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br>
-                                            
+                                            <!-- <input type="text" name="writer" th:value="${user.username}" style=" margin-left: 1rem; margin-top: 1rem; border: none; outline: none; font-size: 13px;" readonly /> <br> -->
+
                                             <!--댓글 내용-->
                                             <input type="text" name="content" placeholder="  댓글을 남겨보세요" style="border: none; outline: none; width: 100%; height: 120px;" /> 
                                         </div>
