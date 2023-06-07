@@ -267,13 +267,13 @@
                                     <!--게시판--> <!--선택된 값이 와야함--> <!--수정 수정 수정 수정 해야해-->
                                     <select name="code" id="code" onchange="codeChange()" style="float: left; margin-right: 4px;"> 
                                         <option value="">게시판 선택</option>
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}" ></option>
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"th:text="${CodeName.codename}" th:selected="${board.code} == ${CodeName.code}" ></option> <!--th:selected="${board.code} == ${CodeName.code}"-->
                                     </select>
 
                                     <!--말머리-->
                                     <select id="codedetail" disabled>
                                         <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
+                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.code}" th:text="${CodeDetail.codedetail}" th:selected="${board.code} == ${CodeDetail.code}" ></option> <!--th:selected="${board.code} == ${CodeDetail.code}"-->
                                     </select>
 
                                     <!-- 글쓰기 버튼 -->
