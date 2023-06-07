@@ -362,7 +362,7 @@
         function deleteOne() {
             // 소셜 로그인(카카오)한 계정이라면 비밀번호 확인 절차 없이 바로 탈퇴
             if ([[${user.username}]].startsWith('kakao') == true) { 
-                if (confirm('정말로 탈퇴하시겠습니까?')) {
+                if (confirm('정말로 탈퇴하시겠습니까?\n탈퇴 후 해당 아이디로 재가입하실 수 없습니다.')) {
                     const form = document.createElement("form");
                     form.setAttribute("action", [[@{/customer/delete.bubble}]]);
                     form.setAttribute("method", "post");
@@ -394,7 +394,7 @@
                 }
             }
             else { // 일반 계정인 경우
-                if (confirm('정말로 탈퇴하시겠습니까?')) {
+                if (confirm('정말로 탈퇴하시겠습니까?\n탈퇴 후 해당 아이디로 재가입하실 수 없습니다.')) {
                     window.location.href = 'http://127.0.0.1:8282/bubble_bumul/customer/delete.bubble';
                 }
             }
