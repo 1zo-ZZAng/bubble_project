@@ -529,7 +529,6 @@ public class CustomerController {
                 }
                 else { // 카카오를 이용해서 회원가입된 계정인 경우
                     customer.setName(null);
-                    customer.setEmail(null);
                     customer.setRegdate(null);
                     customer.setGrade(BigInteger.valueOf(0));
                     customer.setRole(null);
