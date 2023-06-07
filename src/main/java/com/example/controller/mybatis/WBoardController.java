@@ -152,6 +152,8 @@ public class WBoardController {
 
             Board board = bService.selectOneBoard(no);
 
+            List<BoardType> boardType = bService.selectlistBType();
+
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
         
             log.info("글 1개 조회 => {}", board.toString());
@@ -166,6 +168,7 @@ public class WBoardController {
 
 
             model.addAttribute("board", board); //게시글 1개 조회 view로 넘기기
+            model.addAttribute("boardType", boardType); //카테고리
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
