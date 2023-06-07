@@ -76,21 +76,33 @@
             box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
         }
 
-            select:hover {
-                border-color: #888;
-            }
+        select:hover {
+            border-color: #888;
+        }
 
-            select:focus {
-                border-color: #aaa;
-                box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-                box-shadow: 0 0 0 3px -moz-mac-focusring;
-                color: #222;
-                outline: none;
-            }
+        select:focus {
+            border-color: #aaa;
+            box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+            box-shadow: 0 0 0 3px -moz-mac-focusring;
+            color: #222;
+            outline: none;
+        }
 
-            select:disabled {
-                opacity: 0.5;
-            }
+        select:disabled {
+            opacity: 0.5;
+        }
+
+        /*글쓰기 제목 부분*/
+        .form-floating:not(.form-control:disabled)::before {
+            position: absolute;
+            top: var(--bs-border-width);
+            left: var(--bs-border-width);
+            width: auto;
+            height: 1.875em;
+            content: "";
+            background-color: var(--bs-body-bg);
+            border-radius: 0.375rem;
+        }
 
     </style>
 
@@ -98,12 +110,11 @@
 <body class="sb-nav-fixed">
     
     <!--내비게이션 영역-->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <i class="bi bi-tools"></i> 
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -251,7 +262,6 @@
 
                                 <!--분류-->
                                 <div class="mb-3">
-                                    <!-- <label for="type">게시판</label> -->
 
                                     <!--게시판-->
                                     <select name="code" id="code" onchange="codeChange()" style="float: left; margin-right: 4px;"> 
@@ -260,7 +270,7 @@
                                     </select>
 
                                     <!--말머리-->
-                                    <select id="codedetail">
+                                    <select id="codedetail" disabled>
                                         <option value="">말머리 선택</option>
                                         <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
                                     </select>
@@ -271,8 +281,6 @@
                                     </div>
                                     
                                 </div>
-
-                                
 
                                 <!-- 제목 -->
                                 <div class="form-floating mb-2">
@@ -378,15 +386,18 @@
 
         //말머리부분 자동 선택되게 해줌
         function codeChange(){
-            const code = document.getElementById('code');
+            const code = document.getElementById('code').value;
             const codedetail = document.getElementById('codedetail');
 
-            if(code.value == 2) {
-                add = codedetail.value= '찾아주세요';
-            }else if(code.value == 3) {
-                add = codedetail.value='찾아가세요';
+
+            
+
+            if(code == 2) {
+                codedetail.value= '찾아주세요';
+            }else if(code == 3) {
+                codedetail.value='찾아가세요';
             }else{
-                add = codedetail.value='';
+                codedetail.value = '';
             }
 
         

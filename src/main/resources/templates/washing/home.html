@@ -94,12 +94,11 @@
 <body class="sb-nav-fixed">
     
     <!--내비게이션 영역-->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow">
 
         <!--Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/washing/home.bubble}">
-            <!-- <i class="bi bi-tools"></i>  -->
-            <!-- <i class="fa-regular fa-washing-machine"></i> 이거는 왜 안돼? -->
+        <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -431,27 +430,27 @@
             console.log(salesData[i].WEEKLY);
         }
 
-        //매출액
-        var total = salesData.map(function(monthly) {
-            return monthly.USERCNT;
+        //이용자 수
+        var userCnt = salesData.map(function(weekly) {
+            return weekly.USERCNT;
         });
 
-        //년
-        var labels = salesData.map(function(monthly){
-            return monthly.WEEKLY;
+        //주
+        var labels = salesData.map(function(weekly){
+            return weekly.WEEKLY;
         });
 
 
         var ctx = document.getElementById("userWeekCntChart").getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line', //bar, line만 바꾸면 됨
+            type: 'line', 
             data: {
-                labels: labels, //["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                labels: labels, 
                 datasets: [{
                     label: '이용자 수',
-                    data: total,
-                    backgroundColor: 'rgba(000, 102, 255, 0.35)',
-                    // borderColor: 'rgba(000, 102, 255, 1)',
+                    data: userCnt,
+                    backgroundColor: 'transparent',
+                    borderColor: 'rgba(000, 102, 255, 1)',
                     borderWidth: 1
                 }]
             },
