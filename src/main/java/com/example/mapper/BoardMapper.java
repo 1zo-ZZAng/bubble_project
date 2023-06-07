@@ -97,13 +97,5 @@ public interface BoardMapper {
     @Select({" SELECT b.* FROM( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
 	public List<Board> selectBoardListPage(@Param("start") int start, @Param("end") int end);
 
-    /* ====================검색======================= */
-
-    
-
-
-
-
-
     
 }
