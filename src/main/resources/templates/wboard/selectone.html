@@ -232,22 +232,15 @@
                         <li class="breadcrumb-item active"></li>
                     </ol>
 
-                    
 
                     <div class="container" >
 
-                        <!--이전글 & 다음글 버튼-->
-                        <div >
-                            <div th:if="${pre > 0}" style="display: inline-block;">
-                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i class="bi bi-chevron-left"></i> 이전글</a>
-                            </div>
 
-                            <div th:if="${next > 0}" style="float: right;">
-                                <a href="#" class="btn"  th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i class="bi bi-chevron-right"></i></a>
-                            </div>
-
+                        <!--글쓰기 & 목록 버튼-->
+                        <div>
+                            <a th:href="@{/wboard/write.bubble}" class="btn"><i class="bi bi-pencil"></i> 글쓰기</a>
+                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn" style="float: right;" >목록</a>
                         </div>
-
                         
                         
                         <!--본문 부분-->
@@ -353,6 +346,7 @@
                             <div style=" border: 2px solid rgb(231, 231, 231); border-radius: 1%; position: relative;">
 
                                 <form th:action="@{/reply/insert.bubble}" method="post">
+
                                     
                                     <div hidden>
                                         <label>게시글 번호</label>
@@ -381,11 +375,20 @@
                             
                         </div>
 
-                        <!--버튼 시작-->
-                        <div style="margin: 1rem;">
-                            <a th:href="@{/wboard/write.bubble}" class="btn" ><i class="bi bi-pencil"></i> 글쓰기</a>
-                            <a th:href="@{/wboard/selectlist.bubble(menu=${menu})}" class="btn" style="float: right;">목록</a>
+
+                        <!--이전글 & 다음글 버튼-->
+                        <div style="margin-top: 1rem;">
+                            <div th:if="${pre > 0}" style="display: inline-block;">
+                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i class="bi bi-chevron-left"></i> 이전글</a>
+                            </div>
+
+                            <div th:if="${next > 0}" style="float: right;">
+                                <a href="#" class="btn"  th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i class="bi bi-chevron-right"></i></a>
+                            </div>
+
                         </div>
+
+                        
 
 
 

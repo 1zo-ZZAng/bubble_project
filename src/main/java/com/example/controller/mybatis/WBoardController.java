@@ -254,7 +254,7 @@ public class WBoardController {
             }
 
             //삭제
-            int ret = bService.deleteBoard(no);
+            int ret = bService.deleteBoard(no);            
 
             log.info("삭제되면 1 아니면 0 => {}", ret);
 
