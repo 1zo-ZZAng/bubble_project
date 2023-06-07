@@ -71,7 +71,7 @@
             padding: .6em 1.4em .5em .8em;
             margin: 0;
             
-            border: 1px solid #aaa;
+            border: 1px solid rgb(212, 212, 212);
             border-radius: .5em;
             box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
             }
@@ -260,11 +260,11 @@
                             <form th:action="@{/wboard/write.bubble}" method="post" id="form">
 
                                 <!--분류-->
-                                <div class="form-group mb-3">
+                                <div class="mb-3">
                                     <!-- <label for="type">게시판</label> -->
 
                                     <!--게시판-->
-                                    <select name="code" id="code" onchange="codeChange()" > 
+                                    <select name="code" id="code" onchange="codeChange()" style="float: left; margin-right: 4px;"> 
                                         <option value="">게시판 선택</option>
                                         <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
                                     </select>
@@ -274,7 +274,11 @@
                                         <option value="">말머리 선택</option>
                                         <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
                                     </select>
+
+                                    
                                 </div>
+
+                                
 
                                 <!-- 제목 -->
                                 <div class="form-floating mb-2">
@@ -396,6 +400,7 @@
 
         
         }
+    
 
 
         function writeAction(){
