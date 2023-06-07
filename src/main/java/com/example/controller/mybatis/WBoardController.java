@@ -105,10 +105,20 @@ public class WBoardController {
             if(menu == 1){ //전체 게시판 조회
 
                 list = bService.selectlistBoard();
+                List<BoardType> list1 = bService.selectlistBType(); //카테고리 조회
+
+                log.info("카테고리 전체 조회 => {}", list1.toString());
+
+                for(BoardType obj : list1){
+
+                    log.info("카테고리 이름 조회=> {}", obj.getCodename());
+
+                }
 
                 // log.info("조회 => {}", list.toString());
 
                 model.addAttribute("list", list);
+                model.addAttribute("list1", list1);
 
 
             } else if(menu == 2) { //공지사항 전체 조회
@@ -247,9 +257,10 @@ public class WBoardController {
 
     /* ------------------------------------------------------------- */
 
-    //삭제 
+    //삭제
     @PostMapping(value="/delete.bubble")
-    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no, @AuthenticationPrincipal User user, Model model) {
+    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no,
+                                @AuthenticationPrincipal User user, Model model) {
         try {
             
             log.info("삭제할 게시글 번호 => {}", no);
@@ -259,11 +270,13 @@ public class WBoardController {
             }
 
             //삭제
-            int ret = bService.deleteBoard(no);            
+            int ret = bService.deleteBoard(no);
 
             log.info("삭제되면 1 실패면 -1 => {}", ret);
 
             if(ret == 1) { //성공시
+
+                rService.deleteReply(no);
 
                 model.addAttribute("msg", "삭제되었습니다");
                 model.addAttribute("url","/bubble_bumul/wboard/selectlist.bubble?menu=" + menu);
