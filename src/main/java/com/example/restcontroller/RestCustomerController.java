@@ -1,15 +1,21 @@
 package com.example.restcontroller;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +59,9 @@ public class RestCustomerController {
     // view에서 받은 이메일이 기존 테이블에 있으면(ret=1) 회원가입 필요 X
     //                                      없으면(ret=0) 회원가입 필요 O
     @PostMapping(value = "/kakaologin.bubble")
-    public Map<String, Object> kakaologinPOST(@RequestBody Map<String, Object> map) {
+    public Map<String, Object> kakaologinPOST(@RequestBody Map<String, Object> map,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response) {
         Map<String, Object> retMap = new HashMap<>();
 
         try {
@@ -70,17 +78,27 @@ public class RestCustomerController {
                 // (1) 기존 자료 읽기
                 Customer customer = cService.selectCustomerEmail(map.get("email").toString());
 
-                // (2) 세션에 저장할 객체 생성하기 (저장할 객체, null)
-                User user = new User(customer.getId(), "", role);
-                UsernamePasswordAuthenticationToken authenticationToken 
-                    = new UsernamePasswordAuthenticationToken(user, null, role);
+                if (customer.getGrade() != BigInteger.valueOf(0)) { // 탈퇴하지 않은 회원인 경우
+                    // (2) 세션에 저장할 객체 생성하기 (저장할 객체, null)
+                    User user = new User(customer.getId(), "", role);
+                    UsernamePasswordAuthenticationToken authenticationToken 
+                        = new UsernamePasswordAuthenticationToken(user, null, role);
 
-                // (3) 수동으로 세션에 저장(로그인)
-                SecurityContext context = SecurityContextHolder.createEmptyContext();
-                context.setAuthentication(authenticationToken);
-                SecurityContextHolder.setContext(context); 
-
-                retMap.put("ret", emailchk);
+                    // (3) 수동으로 세션에 저장(로그인)
+                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+                    context.setAuthentication(authenticationToken);
+                    SecurityContextHolder.setContext(context);
+                    
+                    retMap.put("ret", emailchk);
+                }
+                else { // 이미 탈퇴한 회원인 경우
+                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                    if (auth != null) {
+                        new SecurityContextLogoutHandler().logout(request, response, auth);
+                    }
+                    
+                    retMap.put("ret", -1);
+                }
             }
             else { // 카카오 계정 이메일이 기존 테이블에 없는 경우
                 // (2) 세션에 저장할 객체 생성하기 (저장할 객체, null)

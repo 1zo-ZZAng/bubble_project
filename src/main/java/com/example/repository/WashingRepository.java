@@ -19,7 +19,4 @@ public interface WashingRepository extends JpaRepository<Washing, String> {
     //비밀번호 찾기
     public Washing findByIdAndEmail(String id, String email);
 
-
-
-    
 }
