@@ -25,8 +25,20 @@
 <body>
     <header th:replace="~{/fragments/header.html :: header}"></header>
     
-    <div class="maincontainer">
-        <p>예약 완료되었습니다. 늦지 않게 오삼 !! 늦으면 니 블랙리스트~</p>
+    <div class="container">
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page">Success ! </p>
+        </div>
+        <div id="success">
+            <div id="successbox">
+               <p>예약이 완료되었습니다</p>
+                <p>주문 번호 : 
+                    <a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a>
+                </p>
+            </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
