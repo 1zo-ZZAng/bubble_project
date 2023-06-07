@@ -72,6 +72,10 @@
             color: black;
         }
 
+        /*게시판 목록 하단 줄 생겨서 없앴음*/
+        .datatable-wrapper.no-footer .datatable-container {
+            border-bottom: none;
+        }
 
     </style>
 
@@ -224,19 +228,21 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">게시판</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">목록</li>  
+                        <li class="breadcrumb-item active"></li>  
                     </ol>
 
-                    <div style="width: 60%;">
-                        <table class="mb-3" style="border-collapse: collapse; width: 30%;">
-                            <tr>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}">전체게시판</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}">공지사항</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}">분실물</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}">유실물</a></td>
+                    <div>
+                        <table class="mb-3">
+                            <tr style="font-weight: bold;">
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="margin-right: 1rem;" >전체게시판</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="margin-right: 1rem;">공지사항</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="margin-right: 1rem;">분실물</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}" style="margin-right: 1rem;">유실물</a></td>
                             </tr>
                         </table>
                     </div>
+
+                    
                         
 
                     
@@ -244,14 +250,14 @@
                     <!--전체게시판-->
                     <div th:if="${#strings.equals(param.menu, '1')}">
 
-                        <h4>전체게시판</h4>
+                        <h4 style="float: left; margin-top: 1rem;">전체게시판</h4>
 
                         <table id="datatableSimple">
                             <thead>
                                 <tr>
                                     <th>번호</th>
                                     <th>제목</th>
-                                    <!-- <th>카테고리</th> -->
+                                    <th>카테고리</th>
                                     <th>작성자</th>
                                     <th>작성일</th>
                                     <th>조회수</th>
@@ -261,7 +267,10 @@
                                 <tr th:each="obj : ${list}">
                                     <td th:text="${obj.no}"></td>
                                     <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none;"></a></td>
-                                    <!-- <td th:text="${obj.code}"></td> 카테고리 -->
+                                    <td th:text="${obj.code}"></td>
+                                    <!-- <td th:if="${obj.code == 1}">
+                                        
+                                    </td> -->
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -273,7 +282,8 @@
 
                     <!--공지사항 게시판-->
                     <div th:if="${#strings.equals(param.menu, '2')}">
-                        <h4>공지사항</h4>
+
+                        <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
 
                         <table id="datatableSimple">
                             <thead>
@@ -300,7 +310,9 @@
 
                     <!--분실물 게시판-->
                     <div th:if="${#strings.equals(param.menu, '3')}">
-                        <h4>분실물</h4>
+
+                        <h4 style="float: left; margin-top: 1rem;">분실물</h4>
+
                         <table id="datatableSimple">
                             <thead>
                                 <tr>
@@ -325,7 +337,9 @@
 
                     <!--유실물 게시판-->
                     <div th:if="${#strings.equals(param.menu, '4')}">
-                        <h4>유실물</h4>
+
+                        <h4 style="float: left; margin-top: 1rem;">유실물</h4>
+
                         <table id="datatableSimple">
                             <thead>
                                 <tr>

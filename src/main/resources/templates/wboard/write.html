@@ -265,6 +265,10 @@
                                         <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
                                     </select>
 
+                                    <!-- 글쓰기 버튼 -->
+                                    <div style="float: right;">
+                                        <input type="button" value="등록" class="btn btn-primary mt-2" style="display: inline-block;" onclick="writeAction()" />
+                                    </div>
                                     
                                 </div>
 
@@ -292,10 +296,7 @@
                                     <label for="writer" class="form-label">작성자</label>
                                 </div>
             
-                                <!-- 글쓰기 버튼 -->
-                                <div>
-                                    <input type="button" value="등록" class="btn btn-primary mt-2" style="float:right" onclick="writeAction()" />
-                                </div>
+                                
 
                             </form>
 
