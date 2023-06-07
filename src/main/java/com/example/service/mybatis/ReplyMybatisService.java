@@ -25,4 +25,7 @@ public interface ReplyMybatisService {
     //댓글 개수 (해당 게시글)
     public int countReply(long bno);
 
+    //댓글 1개만 삭제
+    public int deleteOneReply(long no);
+
 }

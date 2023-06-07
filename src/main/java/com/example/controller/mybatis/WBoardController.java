@@ -76,7 +76,9 @@ public class WBoardController {
             int ret = bService.writeBoard(board);
 
             if(ret == 1){
+
                 return "redirect:/wboard/selectlist.bubble?menu="+menu;
+                
             }else{
                 return "redirect:/wboard/write.bubble?id="+user.getUsername();
             }
@@ -256,7 +258,7 @@ public class WBoardController {
             //삭제
             int ret = bService.deleteBoard(no);            
 
-            log.info("삭제되면 1 아니면 0 => {}", ret);
+            log.info("삭제되면 1 실패면 -1 => {}", ret);
 
             if(ret == 1) { //성공시
 
@@ -265,8 +267,8 @@ public class WBoardController {
 
                 return "message";
 
-                // return "/wboard/selectlist.bubble?menu=" + menu;
 
+                // return "/wboard/selectlist.bubble?menu=" + menu;
             }
 
             model.addAttribute("msg", "삭제 실패");

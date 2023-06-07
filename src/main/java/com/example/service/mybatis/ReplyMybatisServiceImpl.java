@@ -63,6 +63,20 @@ public class ReplyMybatisServiceImpl implements ReplyMybatisService {
         }
     }
 
+    //댓글 한개 삭제
+    @Override
+    public int deleteOneReply(long no) {
+        try {
+
+            return replyMapper.deleteOneReply(no);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     //전체 조회
     @Override
@@ -91,5 +105,8 @@ public class ReplyMybatisServiceImpl implements ReplyMybatisService {
             return -1;
         }
     }
+
+
+    
     
 }

@@ -98,7 +98,7 @@
 <body class="sb-nav-fixed">
     
     <!--내비게이션 영역-->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow">
 
         <!--Navbar Brand-->
         <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
@@ -277,11 +277,6 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="updatedeletebtn">
 
-                                                <div th:if="${user == null}">
-                                                    <a class="dropdown-item" th:href="@{/washing/login.bubble}"><button>로그인</button></a>
-                                                    <a class="dropdown-item" th:href="@{/washing/join.bubble}"><button>회원가입</button></a>
-                                                </div>
-
                                                 <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
                                                 <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
 
@@ -301,6 +296,7 @@
 
                                                     <!--작성자와 로그인된 아이디가 일치하지 않을 때-->
                                                     <div th:if="${board.writer} != ${user.username}">
+                                                        <!--신고하기만 뜸-->
                                                         <a href="#" class="dropdown-item">신고하기</a>
                                                     </div>
                                                     
@@ -330,8 +326,10 @@
 
 
                                 <!--댓글 조회 부분-->
+                                
                                 <div style="margin-bottom: 2rem;">
                                     <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
+
                                     <table>
                                         <tr th:each = "obj : ${list}" >
 
@@ -347,8 +345,8 @@
                                             </td>
 
                                         </tr>
-                                        
                                     </table>
+
                                 </div>
                                 
 
