@@ -355,8 +355,18 @@
 
 
 /* 예약페이지 */
-#selectaddress{
-    margin-top: 60px;
+/* 주소 불러오기 */
+
+.reserveline {
+    border-top: 3px solid black;
+    width: 1240px;
+    margin-left: 350px;
+    margin-top: 10px;
+    /* margin-bottom: 30px; */
+  }
+
+#selectaddress, #choosewashing{
+    margin-top: 20px;
     margin-left: 650px;
     font-size: 20px;
 }
@@ -394,4 +404,141 @@
 #searchaddress{
     margin-left: 15px;
     width: 70px;
+}
+
+/* 세탁업체 목록 */
+#washinglisttable{
+    margin-top: 60px;
+    margin-left: 350px;
+    font-size: 20px;
+}
+
+#washingtable{
+    border-top: 3px solid black;
+    border-bottom: 2.1px solid black;
+    table-layout: fixed;
+    margin-bottom: 60px;
+    width: 1240px;
+    border-collapse: separate;
+    display: table;
+    text-indent: initial;
+    /* border-color: gray; */
+}
+
+thead{
+    display: table-header-group;
+    vertical-align: middle;
+    /* border-color: #333; */
+}
+
+tr{
+    display: table-row;
+    vertical-align: inherit;
+}
+
+#washingtable thead th{
+    height: 68px;
+    font-size: 14px;
+    padding: 0 14px;
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid gray;
+
+}
+
+table thead th:first-child{
+    width: 180px;
+}
+
+table thead th.second{
+    width: 180px;
+}
+
+table thead th.forth{
+    width: 220px;
+}
+
+table thead th.fifth{
+    width: 210px;
+}
+
+tbody{
+    display: table-row-group;
+    vertical-align: middle;
+}
+
+tbody a {
+    text-decoration: none;
+}
+
+#washingtable tbody tr td{
+    height: 110px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 14px 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+table tbody tr td .img{
+    float: left;
+    padding-left: 20px;
+    width: 80px;
+    height: 100px;
+    vertical-align: middle;
+}
+
+table tbody tr td .text{
+    width: 300px;
+    height: 125px;
+    margin-left: 160px;
+}
+
+table tbody tr td .title{
+    font-size: 18px;
+    font-weight: bold;
+    float: left;
+    padding-top: 27px;
+    color: #333;
+}
+
+table tbody tr td .details{
+    width: 300;
+    float: left;
+    padding-top: 7px;
+}
+
+table tbody tr td .detail{
+    display: inline-block;
+    color: gray;
+}
+
+
+
+table tbody tr td.date{
+    counter-reset: #666;
+    font-size: 14px;
+    /* width: 150px; */
+}
+
+
+
+/* 기기선택 */
+
+#machine{
+    margin-top: 20px;
+    padding: 5.5%;
+    margin-right: 30px;
+    width: 50px;
+    width: 200px; 
+    text-align: center;
+}
+#machineno{
+    margin-top: 20px;
+    padding: 5%;
+    margin-left: 70px;
+    margin-right: 30px;
+    width: 200px; 
+    text-align: center;
+
 }
