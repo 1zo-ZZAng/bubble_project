@@ -264,10 +264,10 @@
                                 <!--분류-->
                                 <div class="mb-3">
 
-                                    <!--게시판-->
+                                    <!--게시판--> <!--선택된 값이 와야함--> <!--수정 수정 수정 수정 해야해-->
                                     <select name="code" id="code" onchange="codeChange()" style="float: left; margin-right: 4px;"> 
                                         <option value="">게시판 선택</option>
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}" ></option>
                                     </select>
 
                                     <!--말머리-->
