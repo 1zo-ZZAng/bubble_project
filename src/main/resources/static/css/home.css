@@ -679,6 +679,7 @@ table tbody tr td.date{
     margin-bottom: 20px;
 }
 
-/* .reservedetailbox h5{
-    margin-top: 30px;
-} */
+.reservedetailbox {
+    margin-left: 345px;
+    margin-top: 80px;
+}
