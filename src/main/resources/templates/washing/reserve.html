@@ -39,7 +39,10 @@
             font-family: 'NanumSquareLight';
         }
 
-
+        .btn:focus {
+            border : none;
+            outline: none;
+        }
 
         .datatable-sorter::before {
             display: none;
@@ -172,18 +175,6 @@
                                 <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
                             </nav>
                         </div>
-
-                        <!--예약-->
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReserve" aria-expanded="false" aria-controls="collapseReserve">
-                            <div class="sb-nav-link-icon"><i class="bi bi-check-lg"></i></div>
-                            예약
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReserve" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washing/reserve.bubble}">예약 내역</a>
-                            </nav>
-                        </div> -->
 
                         <!--보유기기-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
