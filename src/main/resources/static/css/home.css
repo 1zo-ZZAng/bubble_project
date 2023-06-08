@@ -610,7 +610,7 @@ table tbody tr td.date{
 }
 
 /* 예약 성공 페이지 */
-.rlist {
+.rvsuccess {
     text-decoration: none;
     color: white;
     background-color: #666;
