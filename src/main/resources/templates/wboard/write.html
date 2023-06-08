@@ -54,6 +54,11 @@
             font-family: 'NanumSquareLight';
         }
 
+        .btn:focus {
+            border : none;
+            outline: none;
+        }
+
         /*select 부분 디자인*/
         select {
             /* -moz-appearance: none;
@@ -389,9 +394,6 @@
             const code = document.getElementById('code').value;
             const codedetail = document.getElementById('codedetail');
 
-
-            
-
             if(code == 2) {
                 codedetail.value= '찾아주세요';
             }else if(code == 3) {
@@ -454,17 +456,17 @@
 
         
             //말머리 제목에 넣어버리기
-            if(code.value == 2) {
-                if(title.value.length > 0) {
-                    title.value = '[' + codedetail.value + ']' + ' ' + title.value;
-                }
-            }else if(code.value == 3) {
-                if(title.value.length > 0) {
-                    title.value = '[' + codedetail.value + ']' + ' ' + title.value;
-                }
-            }else{
-                title.value = title.value;
-            }
+            // if(code.value == 2) {
+            //     if(title.value.length > 0) {
+            //         title.value = '[' + codedetail.value + ']' + ' ' + title.value;
+            //     }
+            // }else if(code.value == 3) {
+            //     if(title.value.length > 0) {
+            //         title.value = '[' + codedetail.value + ']' + ' ' + title.value;
+            //     }
+            // }else{
+            //     title.value = title.value;
+            // }
 
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
 

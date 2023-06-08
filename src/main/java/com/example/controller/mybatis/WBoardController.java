@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.dto.Board;
 import com.example.dto.BoardType;
 import com.example.dto.BoardView;
+import com.example.dto.BoardWashing;
 import com.example.dto.Reply;
 import com.example.dto.Washing;
 import com.example.service.mybatis.BoardMybatisService;
 import com.example.service.mybatis.BoardViewMybatisService;
+import com.example.service.mybatis.BoardWashingMybatisService;
 import com.example.service.mybatis.ReplyMybatisService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,8 @@ public class WBoardController {
     final ReplyMybatisService rService; // 댓글
 
     final BoardViewMybatisService bvService; //게시판 + 카테고리 view
+
+    final BoardWashingMybatisService bwService; // boardview + washing view
 
     
 /* =========================================================================================================== */
@@ -105,33 +109,35 @@ public class WBoardController {
             model.addAttribute("user", user);
 
             // List<Board> list = new ArrayList<>();
-            List<BoardView> list = new ArrayList<>();
+            List<BoardWashing> list = new ArrayList<>();
+
 
             if(menu == 1){ //전체 게시판 조회
 
-                list = bvService.selectBoardView();
+                list = bwService.selectBoardWashing();
 
                 // log.info("카테고리 전체 조회 => {}", list1.toString());
-
 
                 model.addAttribute("list", list);
 
 
             } else if(menu == 2) { //공지사항 전체 조회
 
-                list = bvService.selectBoardViewNotice();
+                list = bwService.selectBoardWashingNotice();
 
                 model.addAttribute("list", list);
 
 
             } else if(menu == 3) { //분실물 전체 조회
 
-                list = bvService.selectBoardViewLost();
+                list = bwService.selectBoardWashingLost();
+
                 model.addAttribute("list", list);
 
             } else if(menu == 4) { //습득물 전체 조회
 
-                list = bvService.selectBoardViewGet();
+                list = bwService.selectBoardWashingGet();
+                
                 model.addAttribute("list", list);
 
 
@@ -163,7 +169,7 @@ public class WBoardController {
 
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
         
-            log.info("글 1개 조회 => {}", board.toString());
+            // log.info("글 1개 조회 => {}", board.toString());
 
 
             long next = bService.nextBoardOne(no);

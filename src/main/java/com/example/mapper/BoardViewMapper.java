@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.example.dto.BoardView;
 
+
 @Mapper
 public interface BoardViewMapper {
 

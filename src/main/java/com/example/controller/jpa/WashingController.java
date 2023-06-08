@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.dto.Board;
+import com.example.dto.BoardWashing;
 import com.example.dto.SendMail;
 import com.example.entity.Reserve;
 import com.example.entity.Washing;
@@ -30,6 +30,7 @@ import com.example.service.jpa.MailService;
 import com.example.service.jpa.ReserveService;
 import com.example.service.jpa.WashingService;
 import com.example.service.mybatis.BoardMybatisService;
+import com.example.service.mybatis.BoardWashingMybatisService;
 import com.example.service.mybatis.WashingMybatisService;
 import com.example.service.mybatis.WashingSalesMybatisService;
 
@@ -57,6 +58,7 @@ public class WashingController {
 
     //게시판
     final BoardMybatisService bMybatisService; 
+    final BoardWashingMybatisService bwMybatisService; //뷰
 
     final HttpSession httpSession;
 
@@ -75,8 +77,6 @@ public class WashingController {
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername()); //예약 내역
 
-            
-
             //최근 일주일간 사용자 수
             List<Map<String, Object>> list1 = wSalesMybatisService.selectWeekUserCnt(user.getUsername());
 
@@ -84,7 +84,8 @@ public class WashingController {
             List<Map<String, Object>> list2 = wSalesMybatisService.selectMonthSales(user.getUsername());
 
             //최신글 5개 조회
-            List<Board> list3 =bMybatisService.selectListLimitBoard();
+            // List<Board> list3 =bMybatisService.selectListLimitBoard();
+            List<BoardWashing> list3 =  bwMybatisService.selectListLimitBoardWashing();
 
 
             Washing washing = wRepository.findById(user.getUsername()).orElse(null);
@@ -98,7 +99,7 @@ public class WashingController {
             model.addAttribute("list", list); //예약 내역
             model.addAttribute("list1", list1); //최근 일주일 간 사용자 수
             model.addAttribute("list2", list2); //연매출
-            model.addAttribute("list3", list3); //연매출 //게시판
+            model.addAttribute("list3", list3); //게시판 (공지사항)
 
             model.addAttribute("user", user);
             model.addAttribute("washing", washing);
