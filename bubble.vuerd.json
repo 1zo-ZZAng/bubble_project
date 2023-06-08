@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -139,
-    "scrollLeft": -385,
-    "zoomLevel": 1,
+    "scrollTop": -996,
+    "scrollLeft": -690,
+    "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -1230,29 +1230,6 @@
         "comment": "댓글",
         "columns": [
           {
-            "name": "filesize",
-            "comment": "첨부파일 크기",
-            "dataType": "NUMBER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 84.5703125,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "6d28ae74-ec36-47ec-84ae-0462072c3122"
-          },
-          {
             "name": "no",
             "comment": "댓글 번호",
             "dataType": "NUMBER",
@@ -1435,13 +1412,36 @@
               "widthDefault": 60
             },
             "id": "f54d7446-b557-4628-8f22-92e6d6f3d3a1"
+          },
+          {
+            "name": "filesize",
+            "comment": "첨부파일 크기",
+            "dataType": "NUMBER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 84.5703125,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "6d28ae74-ec36-47ec-84ae-0462072c3122"
           }
         ],
         "ui": {
           "active": false,
           "left": 723.0915,
           "top": 1081.1429,
-          "zIndex": 12,
+          "zIndex": 28,
           "widthName": 60,
           "widthComment": 60,
           "color": "#607D8B"
@@ -1540,50 +1540,10 @@
         "comment": "지역 (시/도)",
         "columns": [
           {
-            "name": "cityname",
-            "comment": "지역명(시/도)",
-            "dataType": "VARCHAR2(15)",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": true,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": true,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 80.06982421875,
-              "widthDataType": 89.29296875,
-              "widthDefault": 60
-            },
-            "id": "da69ff17-340a-4763-b5c5-d3880b1cf7e5"
-          }
-        ],
-        "ui": {
-          "active": false,
-          "left": 695.3333,
-          "top": 1442.1665,
-          "zIndex": 2,
-          "widthName": 60,
-          "widthComment": 71.64013671875,
-          "color": "#9C27B0"
-        },
-        "visible": true,
-        "id": "0b6f0c95-ae9e-4d94-820c-1294a3afdafd"
-      },
-      {
-        "name": "town",
-        "comment": "지역 (구/군)",
-        "columns": [
-          {
             "name": "code",
-            "comment": "지역 코드(시퀀스)",
+            "comment": "지역 번호(시퀀스)",
             "dataType": "NUMBER",
-            "default": "SEQ_TOWN_CODE.NEXTVAL",
+            "default": "SEQ_CITY_CODE.NEXTVAL",
             "option": {
               "autoIncrement": false,
               "primaryKey": true,
@@ -1598,9 +1558,9 @@
               "widthName": 60,
               "widthComment": 105.4921875,
               "widthDataType": 60,
-              "widthDefault": 166.86767578125
+              "widthDefault": 154.3818359375
             },
-            "id": "52a86e04-7302-4ca7-a743-dae6f3be08c3"
+            "id": "c88861c0-85f4-4f7a-bd5d-e9c4e11303d4"
           },
           {
             "name": "cityname",
@@ -1616,14 +1576,14 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 80.06982421875,
               "widthDataType": 89.29296875,
               "widthDefault": 60
             },
-            "id": "20d46c5d-9f8d-40f5-9470-ea9884092874"
+            "id": "da69ff17-340a-4763-b5c5-d3880b1cf7e5"
           },
           {
             "name": "townname",
@@ -1646,20 +1606,20 @@
               "widthDataType": 89.29296875,
               "widthDefault": 60
             },
-            "id": "b8aecf20-ad2d-4075-a9e7-06bfd7697e03"
+            "id": "592e388f-50e5-4ac7-954e-878b880dfeb7"
           }
         ],
         "ui": {
           "active": false,
-          "left": 1247.5,
-          "top": 1423.5,
-          "zIndex": 3,
+          "left": 838.3333,
+          "top": 1466.1665,
+          "zIndex": 33,
           "widthName": 60,
           "widthComment": 71.64013671875,
-          "color": "#673AB7"
+          "color": "#9C27B0"
         },
         "visible": true,
-        "id": "ce9cd7a3-8981-40e1-a788-7d6da0a33527"
+        "id": "0b6f0c95-ae9e-4d94-820c-1294a3afdafd"
       },
       {
         "name": "washingcheck",
@@ -1989,32 +1949,6 @@
         "constraintName": "fk_boardtype_to_board",
         "visible": true,
         "id": "d95873f8-ef50-4f99-99c4-a57fc67d7cb3"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "0b6f0c95-ae9e-4d94-820c-1294a3afdafd",
-          "columnIds": [
-            "da69ff17-340a-4763-b5c5-d3880b1cf7e5"
-          ],
-          "x": 1091.69609296875,
-          "y": 1486.9165,
-          "direction": "right"
-        },
-        "end": {
-          "tableId": "ce9cd7a3-8981-40e1-a788-7d6da0a33527",
-          "columnIds": [
-            "20d46c5d-9f8d-40f5-9470-ea9884092874"
-          ],
-          "x": 1247.5,
-          "y": 1488.75,
-          "direction": "left"
-        },
-        "constraintName": "fk_city_to_town",
-        "visible": true,
-        "id": "089e0c49-4fa0-4a61-b00c-1abd6bcc7169"
       },
       {
         "identification": false,

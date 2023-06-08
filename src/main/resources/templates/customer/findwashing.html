@@ -126,7 +126,11 @@
                                             <strong>${position.name}</strong>
                                         </div>`;
 
-                        var washinginfo = `<div>${position.address}</div>`;
+                        var washinginfo = `<div>
+                                    세탁소명 : ${position.name} <br>
+                                    주소 : ${position.address} <br>
+                                    전화번호 : ${position.phone} <br>
+                                    </div>`;
 
                         // 인포윈도우를 생성합니다
                         var infowindow = new kakao.maps.InfoWindow({
