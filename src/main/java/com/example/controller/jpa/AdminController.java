@@ -129,8 +129,8 @@ public class AdminController {
             
             //예약 날짜 목록 최신순
             List<Reserve> RvdateList = aService.selectRvdateList();
-            //예약등록 날짜 목록 최신순
-            List<Reserve> RdateList = aService.selectRdateList();
+            // //예약등록 날짜 목록 최신순
+            // List<Reserve> RdateList = aService.selectRdateList();
             //이번달 예약 건 수
             int mcount = aService.thisMonthRVCount();
             //매출 top1
@@ -142,7 +142,7 @@ public class AdminController {
             model.addAttribute("top", top);
             model.addAttribute("mcount", mcount);
             model.addAttribute("RvdateList", RvdateList);
-            model.addAttribute("RdateList", RdateList);
+            // model.addAttribute("RdateList", RdateList);
             model.addAttribute("msaleslist", msaleslist);
 
 
