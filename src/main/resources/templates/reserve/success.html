@@ -25,16 +25,16 @@
 <body>
     <header th:replace="~{/fragments/header.html :: header}"></header>
     
+    <div id="pageheader" style="margin-top: 200px;">
+        <div id="pageline"></div>
+        <p id="page">Success ! </p>
+    </div>
     <div class="container">
-        <div id="pageheader">
-            <div id="pageline"></div>
-            <p id="page">Success ! </p>
-        </div>
         <div id="success">
             <div id="successbox">
-               <p>예약이 완료되었습니다</p>
+               <p class="reservesuccess">예약이 완료되었습니다 :) </p>
                 <p>주문 번호 : 
-                    <a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a>
+                    <a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${rvno})}" th:text="${rvno}"></a>
                 </p>
             </div>
             </div>

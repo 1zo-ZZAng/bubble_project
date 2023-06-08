@@ -29,66 +29,58 @@
     <header th:replace="~{/fragments/header.html :: header}"></header>
 
     <div class="maincontainer">
-        <h3>예약 상세 내역</h3>
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page">Reserve</p>
+        </div>
+        <p id="reservetitle">예약 상세 내역</p>
 
-        <div>
-            <table>
-                <tr th:each="one : ${reserveOne}">
-                    <td>예약 번호</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.rvno}"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>세탁소</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.wname}"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>세탁소 주소</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.waddress}"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>세탁소 연락처</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.wphone}"></td>
-                </tr>
-                <tr>
-                    <td>이용일</td>
-                    <td class="tdc"> : </td>
-                    <td id="rvdate"></td>
-                </tr>
-                <tr>
-                    <td>예약 시간</td>
-                    <td class="tdc"> : </td>
-                    <td id="rvtime"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>기기 종류</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.mtype}"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>기기 번호</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="|${one.mtypeno}번|"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>이용 요금</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="|${one.mprice}원|"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>작동 시간</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="|${one.mtime}분|"></td>
-                </tr>
-                <tr th:each="one : ${reserveOne}">
-                    <td>예약 현황</td>
-                    <td class="tdc"> : </td>
-                    <td th:text="${one.state}"></td>
-                </tr>
-            </table>
+            <div class="reservedetailbox">
+                <!-- <div th:each="one : ${reserveOne}">
+                    <h4 style="margin-left: 345px;">예약 번호</h4>
+                    <h5 style="text-align: center;" th:text="${rvno}"></h5>
+
+                    <h4 style="margin-left: 345px;">세탁소</h4>
+                    <h5 style  ="text-align: center;" th:text="${one.wname}"></h5>
+
+                    <h4 style="margin-left: 345px;">세탁소 주소</h4>
+
+                    <h5 style="text-align: center;" th:text="${one.waddress}"></h5>
+
+                    <h4 style="margin-left: 345px;">세탁소 연락처</h4>
+
+                    <h5 style="text-align: center;" th:text="${one.wphone}"></h5>
+ 
+                    <h4 style="margin-left: 345px;">이용일</h4>
+
+                    <h5 style="text-align: center;" id="rvdate"></h5>
+
+                    <h4 style="margin-left: 345px;">예약 시간</h4>
+
+                    <h5 style="text-align: center;" id="rvtime"></h5>
+
+                    <h4 style="margin-left: 345px;">기기 종류</h4>
+
+                    <h5 style="text-align: center;" th:text="${one.mtype}"></h5>
+
+                    <h4 style="margin-left: 345px;">기기 번호</h4>
+
+                    <h5 style="text-align: center;" th:text="|${one.mtypeno}번|"></h5>
+
+                    <h4 style="margin-left: 345px;">이용 요금</h4>
+
+                    <h5 style="text-align: center;" th:text="|${one.mprice}원|"></h5>
+
+                    <h4 style="margin-left: 345px;">작동 시간</h4>
+
+                    <h5 style="text-align: center;" th:text="|${one.mtime}분|"></h5>
+
+                    <h4 style="margin-left: 345px;">예약 현황</h4>
+
+                    <h5 style="text-align: center;" th:text="${one.state}"></h5>
+                </div> -->
+            </div>
+
         </div>
 
         <div th:if="${reserveOne.state == '예약 완료'}">
