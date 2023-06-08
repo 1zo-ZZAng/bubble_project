@@ -288,15 +288,15 @@
                                                 <th>제목</th>
                                                 <!-- <th>작성자</th> -->
                                                 <th>작성일</th>
-                                                <th>조회수</th>
+                                                <th>조회</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr th:each="obj : ${list3}">
                                                 <td th:text="${obj.no}"></td>
-                                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none;"></a></td>
+                                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}" style="text-decoration: none;"></a></td>
                                                 <!-- <td th:text="${obj.writer}"></td> -->
-                                                <td th:text="${#dates.format(obj.redate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                <td th:text="${#dates.format(obj.redate, 'yyyy-MM-dd')}"></td>
                                                 <td th:text="${obj.hit}"></td>
                                             </tr>
                                         </tbody>
