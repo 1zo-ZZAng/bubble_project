@@ -34,9 +34,7 @@
 <body>
     <header th:replace="~{/fragments/header.html :: header}"></header>
     <div class="maincontainer">
-        <h3>회원탈퇴</h3>
-    
-        <a th:href="@{/customer/mypage.bubble(menu=2)}"><button>이전으로</button></a>
+        <p id="page"><a th:href="@{/customer/mypage.bubble?menu=2}" style="text-decoration: none; color: black;">Mypage</a></p>
     
         <form th:action="@{/customer/delete.bubble}" method="post" id="deleteform">
             <table class="container" style="width: 500px;">
