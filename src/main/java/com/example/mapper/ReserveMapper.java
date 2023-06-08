@@ -36,7 +36,7 @@ public interface ReserveMapper {
 //                                             @Param("rvdate") String rvdate);
 
     // 예약 내역 조회 - 목록 (예약번호, 세탁소명, 세탁소 주소, 예약일, 예약시간, 현황)
-    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime, state FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rdate DESC"})
+    @Select({"SELECT rvno, wname, waddress, rvdate, rvtime, state FROM reserve WHERE id=#{id} AND rvdate IS NOT NULL AND rvtime IS NOT NULL ORDER BY rvno DESC"})
     public List<Reserve> selectReserveList(@Param("id") String id); 
 
     // 예약 내역 상세
