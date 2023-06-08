@@ -343,11 +343,11 @@
                                 
 
                                 <div style="margin-bottom: 2rem;">
-                                    <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
+                                    <label style="margin-bottom: 10px; font-weight: 600;"> 댓글 </label>
 
                                     <div>
                                         
-                                        <div th:each = "obj : ${list}" style="border: 1px solid black;  " >
+                                        <div th:each = "obj : ${list}" style="border-bottom: 1px solid rgb(240, 240, 240); margin-top: 1rem;" >
 
                                             <p th:text="${obj.bno}" name="bno" hidden></p> <!--게시글 번호-->
                                             <p th:text="${obj.writer}" style="display: inline-block; float: left; margin-left: 1rem;"></p>
