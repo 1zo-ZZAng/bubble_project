@@ -380,7 +380,7 @@
                 machineno.innerHTML = '<option value="none">기기번호 선택</option>';
 
                 for (let obj of data.typeno) {
-                    machineno.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
+                    machineno.innerHTML += "<option value=" + obj + ">" + obj + "번" + "</option>";
                 }
             }
         }
@@ -483,7 +483,7 @@
                 document.getElementById("modal_waddress").innerText = data.waddress;
                 document.getElementById("modal_wphone").innerText = data.wphone;
                 document.getElementById("modal_machine").innerText = machine;
-                document.getElementById("modal_machineno").innerText = machineno;
+                document.getElementById("modal_machineno").innerText = machineno + "번";
                 document.getElementById("modal_rvdate").innerText = rvdate;
                 document.getElementById("modal_rvtime").innerText = rvtime;
                 document.getElementById("modal_price").innerText = data.price;
