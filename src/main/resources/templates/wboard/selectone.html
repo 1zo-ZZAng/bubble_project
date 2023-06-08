@@ -259,6 +259,10 @@
                                 <a th:href="@{/wboard/selectlist.bubble(menu=4)}" style="text-decoration: none; font-size: small;">습득물 ></a>
                             </div>
 
+                            <div th:if="${board.code == 4}">
+                                <a href="#" style="text-decoration: none; font-size: small;">자유게시판 ></a>
+                            </div>
+
 
                             <!--제목-->
                             <div>
@@ -342,11 +346,12 @@
 
                                     <table>
                                         <tr th:each = "obj : ${list}" >
-                                            <td th:text="${obj.bno}" name="no" hidden></td>
+                                            <td th:text="${obj.bno}" name="bno" hidden></td> <!--게시글 번호-->
                                             <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
                                             <td th:text="${obj.content}"  style="padding-right: 1rem;"></td>
                                             <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
                                             
+
                                             <td th:if="${user != null}">
                                                 <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
                                                 <td th:if="${board.writer} == ${obj.writer}">
@@ -354,9 +359,21 @@
                                                 </td>
                                             </td>
 
+                                            <td>
+                                                <!--삭제-->
+                                                <form th:action="@{/reply/delete.bubble}" method="post">
+                                                    <input type="text" name="no" th:value="${obj.no}" hidden readonly/> <!--댓글번호-->
+                                                    <input type="text" name="bno" th:value="${obj.bno}" hidden readonly/> <!--게시글 번호-->
+                                                    <input type="submit" value="삭제" class="btn"/>
+                                                </form>
+                                            </td>
+
                                         </tr>
+
+                                        
                                     </table>
 
+                                    
                                 </div>
                                 
 
@@ -402,6 +419,9 @@
                                     </form>
 
                                 </div>
+
+
+                                <!--댓글 수정-->
 
                             </div>
                             
@@ -491,6 +511,7 @@
             }
 
         }
+
 
 
 
