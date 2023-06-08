@@ -169,7 +169,7 @@ public class WBoardController {
 
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
         
-            log.info("글 1개 조회 => {}", board.toString());
+            // log.info("글 1개 조회 => {}", board.toString());
 
 
             long next = bService.nextBoardOne(no);
