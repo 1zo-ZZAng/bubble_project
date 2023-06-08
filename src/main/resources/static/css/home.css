@@ -1,9 +1,12 @@
-#header{
+header{
     font-family: 'Geologica', sans-serif;
-    position:relative;
+    position:sticky;
     -webkit-font-smoothing: antialiased;
+    z-index: 2;
 
 }
+
+
 
 .maincontainer{
     font-family: 'NanumSquare';
@@ -680,6 +683,38 @@ table tbody tr td.date{
 }
 
 .reservedetailbox {
-    margin-left: 345px;
     margin-top: 80px;
+    display: flex;
+}
+
+#detailline {
+    border-top: 500px solid black;
+    width: 3px;
+    /* height: 1245px; */  
+    /* margin-top: 10px; */
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#map{
+    width: 400px; 
+    height: 400px; 
+    position: relative; 
+    z-index: 1;
+    margin-left: 400px;
+    margin-top: 40px;
+}
+
+#reservedetailbox1{
+    margin-right: 60px;
+    margin-top: 20px;
+}
+
+#reservedetailbox2{
+    margin-top: 20px;
+}
+
+#reservedetailbox1 span, #reservedetailbox2 span{
+    font-size: 24px;
 }
