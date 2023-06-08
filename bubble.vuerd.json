@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -247,
-    "scrollLeft": -4,
-    "zoomLevel": 1,
+    "scrollTop": -320,
+    "scrollLeft": -186,
+    "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -327,7 +327,7 @@
           "active": false,
           "left": 36.6111,
           "top": 471.8882,
-          "zIndex": 7,
+          "zIndex": 30,
           "widthName": 60,
           "widthComment": 60,
           "color": "#E91E63"

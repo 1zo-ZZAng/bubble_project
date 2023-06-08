@@ -398,7 +398,7 @@
             date.min = min.toISOString().slice(0, 10);
             
             // 현재 날짜 ~ 일주일 이내로만 예약 가능하게
-            var max = new Date(now.setDate(now.getDate() + 7));
+            var max = new Date(now.setDate(now.getDate() + 6));
             date.max = max.toISOString().slice(0, 10);
 
             selectdate.style.display="inline-block";
