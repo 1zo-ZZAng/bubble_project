@@ -64,6 +64,11 @@ public class ReplyController {
             return "rediret:/wboard/selectone.bubble?no=" + reply.getBno();
         }
     }
+
+    /* ------------------------------------------------------ */
+    
+    //댓글수정
+    
     
     
     
