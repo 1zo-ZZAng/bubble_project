@@ -36,6 +36,7 @@
         <p id="reservetitle">예약 상세 내역</p>
 
             <div class="reservedetailbox">
+                <div id="map" style="width: 400px; height: 400px;"></div>
                 <!-- <div th:each="one : ${reserveOne}">
                     <h4 style="margin-left: 345px;">예약 번호</h4>
                     <h5 style="text-align: center;" th:text="${rvno}"></h5>
@@ -91,6 +92,47 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f761a223ea6f6b6f19c7d7cb193bdc41&libraries=services,clusterer,drawing"></script> -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51de80643ee3e6de36c332711a96b13b&libraries=services,clusterer,drawing"></script>
+    <script th:inline="javascript" type="text/javascript">
+        // console.log([[${reserveOne.waddress}]]);
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+		
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch([[${reserveOne.waddress}]], function(result, status) {
+		
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+		
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+    </script>
     <script th:inline="javascript" type="text/javascript">
         // 예약일
         let rvdate = [[${reserveOne.rvdate}]];
