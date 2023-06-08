@@ -9,30 +9,66 @@
     <!--1. BootStrap용 CSS CDM 추가-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </head>
+<body class="my-login-page">
+    <section class="h-100" >
+        <div class="container h-100">
+            <div class="row justify-content-md-center h-100">
+                <div class="card-wrapper">
+                    <div class="brand">
+                        <a th:href="@{/customer/home.bubble}">
+                            <img th:src="@{/images/iconlog.png}" alt="logo"><!--버블버물 로고 올릴 것-->
+                        </a>
+                        </div>
+                    <div class="card fat">
+                        <div class="card-body">
 
-<body>
-    <h2>비밀번호 찾기</h2>
+                            <!--로그인-->
+                            <h4 class="card-title">비밀번호 찾기</h4>
 
-    <form th:action="@{/customer/findpw.bubble}" method="post" id="findpwform">
-        <table class="container" style="width: 500px;">
-            <tr>
-                <td><label for="id">아이디</label></td>
-                <td><input type="text" id="id" name="id" class="form-control" placeholder="회원가입한 아이디를 입력하세요." /></td>
-            </tr>
-            <tr>
-                <td><label for="email">이메일</label></td>
-                <td><input type="email" id="email" name="email" class="form-control" placeholder="회원가입한 이메일을 입력하세요." /></td>
-            </tr>
-            <tr>
-                <td><input type="button" id="checkEmail" value="찾기" onclick="findpwAction()" class="form-control"></td>
-            </tr>
-        </table>
-    </form>
+                            <form th:action="@{/customer/findpw.bubble}" method="post" id="findpwform">
+                                <div class="form-group">
+                                    <label for="id">아이디</label></td>
+                                    <input type="text" id="id" name="id" class="form-control" placeholder="회원가입한 아이디를 입력하세요." />
+                                </div>
 
+                                <div class="form-group" style="margin-top: 15px;">
+                                    <label for="email" style="margin-bottom: 10px;">이메일</label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="회원가입한 이메일을 입력하세요." />
+                                </div>
+                                <!--로그인 버튼-->
+                                <div class="form-group mt-4">
+                                    <input type="button" id="checkEmail" value="찾기" onclick="findpwAction()" class="btn btn-dark btn-block form-control">
+                                </div>
+                                
+                                <!--회원가입-->
+                                <div class="mt-4 text-center" id="joinpart">
+                                    Don't have an account? <a th:href="@{/customer/join.bubble}">Create One</a> <br>
+                                    <a th:href="@{/admin/login.bubble}">Admin?</a>
+                                    <a th:href="@{/washing/login.bubble}">Company?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        Copyright &copy; 2023 &mdash; Bubble Bumul
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <script th:inline="javascript" type="text/javascript">
         function findpwAction() {
             const id = document.getElementById("id");
@@ -54,6 +90,8 @@
             document.getElementById("findpwform").submit();
         }
     </script>
+
 </body>
+
 
 </html>

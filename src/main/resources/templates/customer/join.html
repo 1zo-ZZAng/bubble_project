@@ -79,9 +79,8 @@
                     <td></td>
                     <td><input type="button" value="회원가입" onclick="joinAction()" class="btn btn-dark" id="joinus" /></td>
                 </tr>
-
-            </table>
-        </div>
+            </table>  
+        </form>
     </div>
 
     <!-- 주소등록 버튼을 누르면 나오는 모달창 -->
@@ -96,13 +95,13 @@
                     <!-- <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly>  -->
                     <input type="text" name="main_address" id="sample6_address" placeholder="주소" readonly>
                     <input
-                        type="button" class="btn btn-sm btn-primary" onclick="sample6_execDaumPostcode()"
+                        type="button" class="btn btn-sm btn-dark" onclick="sample6_execDaumPostcode()"
                         value="주소 찾기"><br>
                     <input type="text" name="detail_Address" id="sample6_detailAddress" placeholder="상세주소"> 
                     <input type="text" name="extra_Address" id="sample6_extraAddress" placeholder="참고항목" readonly>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertAddressAction()">등록</button>
+                    <button type="button" class="btn btn-dark" onclick="insertAddressAction()">등록</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>

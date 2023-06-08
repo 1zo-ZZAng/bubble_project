@@ -642,6 +642,7 @@ table tbody tr td.date{
 }
 
 
+/* 예약 상세 내역 페이지 */
 #reservedetailtable{
     border-top: 3px solid black;
     border-bottom: 2.1px solid black;
@@ -717,4 +718,55 @@ table tbody tr td.date{
 
 #reservedetailbox1 span, #reservedetailbox2 span{
     font-size: 24px;
+}
+
+/* 비밀번호 변경 */
+#pwchangetitle{
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+
+}
+
+#pwchange2{
+    width: 800px;
+    height: 400px;
+    margin-left: 550px;
+    margin-top: 50px;
+    /* background-color: aliceblue; */
+    border: 4px solid lightgrey;
+
+} 
+
+#pwchangebox{
+    padding-top: 100px;
+    padding-right: 200px;
+    padding-left: 180px;
+    /* padding-bottom: 100px; */
+    /* text-align: center; */
+}
+
+#pwchangebtn2{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: 160px;
+}
+
+/* 로그인 */
+#login{
+    width: 800px;
+    margin-left: 550px;
+    margin-top: 50px;
+    /* background-color: aliceblue; */
+    border: 4px solid lightgrey;
+
+}
+
+#loginbox{
+    padding-top: 50px;
+    padding-right: 200px;
+    padding-left: 200px;
+    padding-bottom: 50px;
+    text-align: center;
 }

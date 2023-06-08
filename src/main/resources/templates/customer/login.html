@@ -1,87 +1,114 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUBBLE BUMUL</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
-
+    <title>회원가입</title>
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <!--jQuery 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <link rel='stylesheet' th:href="@{/css/home.css}" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 </head>
 
-<!--로그인 페이지-->
+<body>
+    <header th:replace="~{/fragments/header.html :: header}"></header>
+    
+    <div class="maincontainer">
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page">Login</p>
+        </div>
 
-<body class="my-login-page">
-    <section class="h-100">
-        <div class="container h-100">
-            <div class="row justify-content-md-center h-100">
-                <div class="card-wrapper">
-                    <div class="brand">
-                        <img th:src="@{/images/iconlog.png}" alt="logo"> <!--버블버물 로고 올릴 것-->
+        <div>
+        <p id="jointitle">로그인</p>
+        <div id="login">
+            <div id="loginbox">
+                <form th:action="@{/customer/loginaction.bubble}" method="post" id="form">
+                    <!-- <a th:href="@{/customer/findid.bubble}" class="float-right" style="margin-left: 200px;"> Forgot Id? </a> -->
+                    <div class="form-group" style="display: flex; margin-bottom: 50px;"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
+                        <label for="id" style="margin-right: 40px; margin-top: 10px; font-size: 17px; font-weight: bold;">아이디 </label>
+                        <!--아이디 찾기-->
+                        <input type="text" id="id" name="id" class="form-control" required autofocus style="width: 300px;"/>
                     </div>
-                    <div class="card fat">
-                        <div class="card-body">
+                    <!--비밀번호-->
+                    <div class="form-group" style="display: flex;"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
+                        <label for="password" style="margin-right: 25px; margin-top: 10px; font-size: 17px; font-weight: bold;">비밀번호 </label>
+                        <input type="password" id="password" name="password" class="form-control" autocomplete="off" required
+                        data-eye  style="width: 300px;"/>
+                    </div>
 
-                            <!--로그인-->
-                            <h4 class="card-title">Login</h4>
+                            <!-- <a th:href="@{/customer/findpw.bubble}" class="float-right"> Forgot
+                                Password? </a> 비밀번호 찾기 아직 안했음 -->
 
-                            <form th:action="@{/customer/loginaction.bubble}" method="post" id="form">
-                                <!--아이디-->
-                                <div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
-                                    <label for="id">Id
+                    <div class="form-group" th:if="${param.error}" style="margin-top: 30px;">
+                        <p th:text="'아이디 또는 비밀번호가 틀렸습니다'" style="color: red;"></p>
+                    </div>
+                    <div style="display: flex; margin-left: 80px; margin-top: 20px;"> 
+                        <a th:href="@{/customer/findid.bubble}" class="float-right" style="text-decoration: none; color: black;" > 아이디 찾기 </a>
+                        <pre>    ㅣ    </pre>
+                        <a th:href="@{/customer/findpw.bubble}" class="float-right" style="text-decoration: none; color: black;"> 비밀번호 찾기 </a>
+                    </div>
 
-                                        <!--아이디 찾기-->
-                                        <a th:href="@{/customer/findid.bubble}" class="float-right"> Forgot Id? </a>
-
-                                    </label>
-                                    <input type="text" id="id" name="id" class="form-control" required autofocus />
-                                </div>
-                                <!--비밀번호-->
-                                <div class="form-group">
-                                    <label for="password">Password
-                                        <a th:href="@{/customer/findpw.bubble}" class="float-right"> Forgot
-                                            Password? </a> <!--비밀번호 찾기 아직 안했음-->
-                                    </label>
-                                    <input type="password" id="password" name="password" class="form-control" autocomplete="off" required
-                                        data-eye />
-                                </div>
-
-                                <div class="form-group" th:if="${param.error}">
-                                    <p th:text="'아이디 또는 비밀번호가 틀렸습니다'" style="color: red;"></p>
-                                </div>
-
-                                <!--로그인 버튼-->
-                                <div class="form-group m-0">
-                                    <input type="button" value="Login" class="btn btn-primary btn-block"
-                                        onclick="loginAction()" />
-                                </div>
-                                <div class="mt-3 mb-3 text-center">
-                                    <span style="display:block;">Login with Social Account</span>
-                                </div>
-                                <div class="mt">
-                                    <a id="kakao-login-btn" href="javascript:loginWithKakao()">
-                                        <img th:src="@{/images/kakao-login.png}" alt="카카오 로그인 버튼" width="335" height="50">
-                                    </a>
-                                </div>
-
-                                <!--회원가입-->
-                                <div class="mt-4 text-center">
-                                    Don't have an account? <a th:href="@{/customer/join.bubble}">Create One</a> <br>
-                                    <a th:href="@{/admin/login.bubble}">Admin?</a>
-                                    <a th:href="@{/washing/login.bubble}">Company?</a>
-                                </div>
-                            </form>
+                    <!--로그인 버튼-->
+                    <div style="display: flex;">
+                        <div class="form-group m-0">
+                            <input type="button" value="Login" class="btn btn-dark btn-block"
+                                onclick="loginAction()" style="width: 200px; margin-right: 40px; margin-left: 30px;" />
+                        </div>
+                        <div class="mt">
+                            <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+                                <img th:src="@{/images/kakao_login_medium.png}" alt="카카오 로그인 버튼" width="90px" height="38px">
+                            </a>
                         </div>
                     </div>
-                    <div class="footer">
-                        Copyright &copy; 2023 &mdash; Bubble Bumul
+
+                    <!--회원가입-->
+                    <div class="mt-4 text-center">
+                        계정이 없으신가요 ?<a th:href="@{/customer/join.bubble}">회원가입</a> <br><br>
+                        <a th:href="@{/admin/login.bubble}">관리자신가요?</a>
+                        <a th:href="@{/washing/login.bubble}">제휴 업체이신가요?</a>
                     </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <!-- 주소등록 버튼을 누르면 나오는 모달창 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">주소 찾기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly>  -->
+                    <input type="text" name="main_address" id="sample6_address" placeholder="주소" readonly>
+                    <input
+                        type="button" class="btn btn-sm btn-dark" onclick="sample6_execDaumPostcode()"
+                        value="주소 찾기"><br>
+                    <input type="text" name="detail_Address" id="sample6_detailAddress" placeholder="상세주소"> 
+                    <input type="text" name="extra_Address" id="sample6_extraAddress" placeholder="참고항목" readonly>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" onclick="insertAddressAction()">등록</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
