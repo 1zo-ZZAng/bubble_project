@@ -71,7 +71,7 @@ public class ReserveController {
             int ret = rService.insertReserve(rvno, user.getUsername(), mno, rvdate, rvtime);
 
             if (ret == 1) {
-                return "redirect:/reserve/success.bubble";
+                return "redirect:/reserve/success.bubble?rvno=" + rvno;
             }
             else {
                 model.addAttribute("msg", "예약에 실패하셨습니다.\n다시 시도해주세요!");
@@ -87,9 +87,10 @@ public class ReserveController {
     }
 
     @GetMapping(value = "/success.bubble")
-    public String successGET(Model model, @AuthenticationPrincipal User user) {
+    public String successGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "rvno") String rvno) {
         try {
             model.addAttribute("user", user);
+            model.addAttribute("rvno", rvno);
 
             return "/reserve/success";
         }
