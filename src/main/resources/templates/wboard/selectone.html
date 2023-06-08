@@ -259,6 +259,10 @@
                                 <a th:href="@{/wboard/selectlist.bubble(menu=4)}" style="text-decoration: none; font-size: small;">습득물 ></a>
                             </div>
 
+                            <div th:if="${board.code == 4}">
+                                <a href="#" style="text-decoration: none; font-size: small;">자유게시판 ></a>
+                            </div>
+
 
                             <!--제목-->
                             <div>
@@ -337,27 +341,86 @@
 
                                 <!--댓글 조회 부분-->
                                 
+
                                 <div style="margin-bottom: 2rem;">
-                                    <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
+                                    <label style="margin-bottom: 10px; font-weight: 600;"> 댓글 </label>
 
-                                    <table>
-                                        <tr th:each = "obj : ${list}" >
-                                            <td th:text="${obj.bno}" name="no" hidden></td>
-                                            <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
-                                            <td th:text="${obj.content}"  style="padding-right: 1rem;"></td>
-                                            <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
-                                            
-                                            <td th:if="${user != null}">
+                                    <div>
+                                        
+                                        <div th:each = "obj : ${list}" style="border-bottom: 1px solid rgb(240, 240, 240); margin-top: 1rem;" >
+
+                                            <p th:text="${obj.bno}" name="bno" hidden></p> <!--게시글 번호-->
+                                            <p th:text="${obj.writer}" style="display: inline-block; float: left; margin-left: 1rem;"></p>
+
+                                            <!--수정&삭제 버튼-->
+                                            <div>
+                                                <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0" style="color: rgb(170, 170, 170); display: inline-block; float: right; padding-top: 3px;">
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link" id="updatedeletebtn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
+                                                            <i class="bi bi-three-dots-vertical"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="updatedeletebtn">
+            
+                                                            <!--현재 로그인된 사람과 작성자가 일치할 경우 수정, 삭제 버튼 나옴-->
+                                                            <div th:if="${user != null}"> <!--일단 로그인 되어있는지 확인-->
+            
+                                                                <!--작성자와 로그인된 아이디가 일치시-->
+                                                                <div th:if="${obj.writer} == ${user.username}"> 
+            
+                                                                    <!--수정-->
+                                                                    <a href="#" style="float: left;" class="btn btn-primary dropdown-item">수정</a>
+            
+                                                                    <!--삭제-->
+                                                                    <form th:action="@{/reply/delete.bubble}" method="post">
+                                                                        <input type="text" name="no" th:value="${obj.no}" hidden readonly/> <!--댓글번호-->
+                                                                        <input type="text" name="bno" th:value="${obj.bno}" hidden readonly/> <!--게시글 번호-->
+                                                                        <input type="submit" value="삭제" class="btn btn-primary dropdown-item"/>
+                                                                    </form>
+                                                                    
+                                                                </div>
+            
+                                                                <!--작성자와 로그인된 아이디가 일치하지 않을 때-->
+                                                                <div th:if="${obj.writer} != ${user.username}">
+                                                                    <!--신고하기만 뜸-->
+                                                                    <a href="#" class="dropdown-item">신고하기</a>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            <div th:if="${user != null}">
                                                 <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
-                                                <td th:if="${board.writer} == ${obj.writer}">
-                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem;">작성자</p>
-                                                </td>
-                                            </td>
+                                                <div th:if="${board.writer} == ${obj.writer}">
+                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem; margin-top: 14px;">작성자</p>
+                                                </div>
+                                                <div th:if="${board.writer} != ${obj.writer}">
+                                                    <p style="display: inline-block; font-size: small; margin-left:5px; margin-top: 14px;">님 </p>
+                                                </div>
+                                            </div>
 
-                                        </tr>
-                                    </table>
+                                            
+
+
+                                            <p th:text="${obj.content}"  style="margin-left: 1rem;"></p>
+                                            <div th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888; margin-left: 1rem; margin-bottom: 1rem;"></div>
+                                            
+
+                                            
+
+                                            
+                                        </div>
+
+
+                                        
+                                    </div>
+                                    
 
                                 </div>
+
                                 
 
                                 <!--댓글 작성 부분-->
@@ -402,6 +465,12 @@
                                     </form>
 
                                 </div>
+
+
+
+
+
+                                <!--댓글 수정-->
 
                             </div>
                             
@@ -491,6 +560,7 @@
             }
 
         }
+
 
 
 
