@@ -397,6 +397,9 @@
                                                 <div th:if="${board.writer} == ${obj.writer}">
                                                     <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem; margin-top: 14px;">작성자</p>
                                                 </div>
+                                                <div th:if="${board.writer} != ${obj.writer}">
+                                                    <p style="display: inline-block; font-size: small; margin-left:5px; margin-top: 14px;">님 </p>
+                                                </div>
                                             </div>
 
                                             
