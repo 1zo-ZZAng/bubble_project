@@ -270,7 +270,13 @@
                                     <td th:if="${obj.code == 1}"> 
                                         <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
                                     </td>
-                                    <td th:if="${obj.code != 1}">
+                                    <td th:if="${obj.code == 2}">
+                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
+                                    </td>
+                                    <td th:if="${obj.code == 3}">
+                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
+                                    </td>
+                                    <td th:if="${obj.code == 4}">
                                         <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none; color: black;"></a>
                                     </td>
 
@@ -337,7 +343,7 @@
                             <tbody>
                                 <tr th:each="obj : ${list}">
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none; color: black;"></a></td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -364,7 +370,7 @@
                             <tbody>
                                 <tr th:each="obj : ${list}">
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none; color: black;"></a></td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>

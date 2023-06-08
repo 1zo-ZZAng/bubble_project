@@ -428,20 +428,7 @@
             document.getElementById("content").value = divContent;
 
 
-            //말머리
-            if(code.value == 2) {
-                if(title.value.length > 0) {
-                    title.value = '[' + '찾아주세요' + ']' + ' ' + title.value;
-                }
-            }else if(code.value == 3) {
-                if(title.value.length > 0) {
-                    title.value = '[' + '찾아가세요' + ']' + ' ' + title.value;
-                }
-            }else{
-                title.value = title.value;
-            }
-
-
+            
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
 
         }

@@ -77,8 +77,6 @@ public class WashingController {
             //하단 표
             List<Reserve> list = rService.selectReserve(user.getUsername()); //예약 내역
 
-            
-
             //최근 일주일간 사용자 수
             List<Map<String, Object>> list1 = wSalesMybatisService.selectWeekUserCnt(user.getUsername());
 

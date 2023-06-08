@@ -324,7 +324,7 @@
                                         <thead>
                                             <tr>
                                                 <th>예약번호</th>
-                                                <th>예약날짜</th>
+                                                <th>세탁이용일</th>
                                                 <th>고객 아이디</th>
                                                 <th>고객이름</th>
                                                 <th>고객 전화번호</th>
@@ -338,7 +338,7 @@
                                         <tbody>
                                             <tr th:each="obj : ${list}">
                                                 <td th:text="${obj.rvno}"></td>
-                                                <td th:text="${#dates.format(obj.rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                <td th:text="${obj.rvdate} + ' ' + ${obj.rvtime}"></td>
                                                 <td th:text="${obj.id}"></td>
                                                 <td th:text="${obj.name}"></td>
                                                 <td th:text="${obj.phone}"></td>
