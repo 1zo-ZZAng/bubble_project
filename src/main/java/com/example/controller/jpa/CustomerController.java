@@ -355,7 +355,7 @@ public class CustomerController {
                 }
             }
     
-            return "redirect:/mypage.bubble";
+            return "redirect:/customer/mypage.bubble";
         }
         catch (Exception e) {
             e.printStackTrace();

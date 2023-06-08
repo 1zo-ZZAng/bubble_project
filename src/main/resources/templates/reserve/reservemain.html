@@ -52,7 +52,7 @@
             <table style="margin-bottom: 20px;">
                 <tr style="text-align: center;">
                     <th>지역(시/도)</th>
-                    <th>지역(구/군)</th>
+                    <th>지역(시/구/군)</th>
                 </tr>
                 <tr>    
                     <td>
@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <select id="town"  onchange="selectedtown()">
-                            <option value="none">지역(구/군) 선택</option>
+                            <option value="none">지역(시/구/군) 선택</option>
                         </select>
                     </td>
                     <td><button type="button" id="myaddress" class="btn btn-secondary" onclick="showMyAddress()">내 주소 불러오기</button></td>
@@ -231,7 +231,7 @@
             if (data.town.length > 0) {
                 const town = document.getElementById("town");
                 town.innerHTML = '';
-                town.innerHTML = '<option value="none">지역(구/군) 선택</option>';
+                town.innerHTML = '<option value="none">지역(시/구/군) 선택</option>';
 
                 for (let obj of data.town) {
                     town.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
@@ -270,7 +270,7 @@
 
                 const town = document.getElementById("town");
                 town.innerHTML = '';
-                town.innerHTML = '<option value="none">지역(구/군) 선택</option>';
+                town.innerHTML = '<option value="none">지역(시/구/군) 선택</option>';
 
                 for (let obj of data.townlist) {
                     town.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
@@ -301,7 +301,7 @@
                 document.getElementById("city").focus();
             }
             else if (town == "none"){
-                alert('지역(구/군)을 선택해주세요.');
+                alert('지역(시/구/군)을 선택해주세요.');
                 document.getElementById("town").focus();
             }
             else {
