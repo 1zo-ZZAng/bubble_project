@@ -341,27 +341,20 @@
 
                                 <!--댓글 조회 부분-->
                                 
+
                                 <div style="margin-bottom: 2rem;">
                                     <label style="margin-bottom: 1rem; font-weight: 600;"> 댓글 </label>
 
-                                    <table>
-                                        <tr th:each = "obj : ${list}" >
+                                    <div>
+                                        
+                                        <div th:each = "obj : ${list}" style="border: 1px solid black;  " >
 
-                                            <td th:text="${obj.bno}" name="bno" hidden></td> <!--게시글 번호-->
-                                            <td th:text="${obj.writer}" style="padding-right: 1rem;"></td>
-                                            <td th:text="${obj.content}"  style="padding-right: 1rem;"></td>
-                                            <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888;"></td>
-                                            
+                                            <p th:text="${obj.bno}" name="bno" hidden></p> <!--게시글 번호-->
+                                            <p th:text="${obj.writer}" style="display: inline-block; float: left; margin-left: 1rem;"></p>
 
-                                            <td th:if="${user != null}">
-                                                <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
-                                                <td th:if="${board.writer} == ${obj.writer}">
-                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem;">작성자</p>
-                                                </td>
-                                            </td>
-
-                                            <td style="float: right;">
-                                                <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0" style="color: rgb(170, 170, 170);">
+                                            <!--수정&삭제 버튼-->
+                                            <div>
+                                                <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0" style="color: rgb(170, 170, 170); display: inline-block; float: right; padding-top: 3px;">
                                                     <li class="nav-item dropdown">
                                                         <a class="nav-link" id="updatedeletebtn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
                                                             <i class="bi bi-three-dots-vertical"></i>
@@ -396,15 +389,35 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </td>
+                                            </div>
 
-                                        </tr>
+
+                                            <div th:if="${user != null}">
+                                                <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
+                                                <div th:if="${board.writer} == ${obj.writer}">
+                                                    <p style="display: inline-block; font-size: small; color: red; margin-left: 1rem; margin-top: 14px;">작성자</p>
+                                                </div>
+                                            </div>
+
+                                            
+
+
+                                            <p th:text="${obj.content}"  style="margin-left: 1rem;"></p>
+                                            <div th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm')}" style="font-size: small; color: #888; margin-left: 1rem; margin-bottom: 1rem;"></div>
+                                            
+
+                                            
+
+                                            
+                                        </div>
+
 
                                         
-                                    </table>
-
+                                    </div>
                                     
+
                                 </div>
+
                                 
 
                                 <!--댓글 작성 부분-->
