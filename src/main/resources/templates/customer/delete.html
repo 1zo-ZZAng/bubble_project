@@ -33,20 +33,26 @@
 </head>
 <body>
     <header th:replace="~{/fragments/header.html :: header}"></header>
-    <div class="maincontainer">
+
+    <div id="pageheader" style="margin-top: 200px;">
+        <div id="pageline"></div>
         <p id="page"><a th:href="@{/customer/mypage.bubble?menu=2}" style="text-decoration: none; color: black;">Mypage</a></p>
-    
-        <form th:action="@{/customer/delete.bubble}" method="post" id="deleteform">
-            <table class="container" style="width: 500px;">
-                <tr>
-                    <td><label for="password">현재 비밀번호</label></td>
-                    <td><input type="password" id="password" name="password" autocomplete="off" /></td>
-                </tr>
-                <tr>
-                    <td><input type="button" value="회원탈퇴" onclick="deleteone()"></td>
-                </tr>
-            </table>
-        </form>
+    </div>
+    <p id="deletetitle">회원 탈퇴</p>
+    <div id="delete2">
+        <div id="deletebox">
+            <form th:action="@{/customer/delete.bubble}" method="post" id="deleteform">
+                <table class="container" style="width: 500px; height: 250px; font-weight: bold;">
+                    <tr>
+                        <td><label for="password">현재 비밀번호</label></td>
+                        <td><input type="password" id="password" name="password" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" value="회원탈퇴" onclick="deleteone()" class="btn btn-dark" id="deletebtn2"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
