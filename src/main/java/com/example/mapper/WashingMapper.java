@@ -111,8 +111,12 @@ public interface WashingMapper {
 	public List<Map<String, Object>> selectUserCnt(@Param("wid") String wid);
 
 	//최근 일주일 사용자 수
-	@Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY rvdate "})
+	// @Select({" SELECT rvdate as weekly ,COUNT(*) usercnt FROM RESERVE WHERE  wid=#{wid} AND rvdate >= now()-7  AND CONCAT(rvdate, ' ', SUBSTRING(rvtime, 0, 5)) <= TO_CHAR(now(), 'YYYY-MM-DD HH:MI') AND rvdate IS NOT NULL AND STATE = '이용 완료'  GROUP BY rvdate "})
+	// public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
+
+	@Select({" SELECT rvdate AS weekly, count(*) usercnt FROM reserve WHERE wid=#{wid} AND state='이용 완료' AND rvdate >= now()-6 AND rvdate <= now() GROUP BY rvdate "})
 	public List<Map<String, Object>> selectWeekUserCnt(@Param("wid") String wid);
+
 
 	//오늘의 총매출 (오늘만 나옴)
 	@Select({"SELECT rvdate AS today, SUM(mprice) AS total  FROM RESERVE WHERE wid=#{wid} AND rvdate  = curdate() AND STATE='이용 완료' GROUP BY rvdate "})
