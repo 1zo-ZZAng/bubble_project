@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -320,
-    "scrollLeft": -186,
-    "zoomLevel": 0.8,
+    "scrollTop": -887,
+    "scrollLeft": -76,
+    "zoomLevel": 0.9,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -327,7 +327,7 @@
           "active": false,
           "left": 36.6111,
           "top": 471.8882,
-          "zIndex": 30,
+          "zIndex": 14,
           "widthName": 60,
           "widthComment": 60,
           "color": "#E91E63"
@@ -505,7 +505,7 @@
           "active": false,
           "left": 696.8317,
           "top": 524.0824,
-          "zIndex": 8,
+          "zIndex": 7,
           "widthName": 66.94287109375,
           "widthComment": 60,
           "color": "#E7A2EC"
@@ -775,7 +775,7 @@
           "active": false,
           "left": 1454.1891,
           "top": 803.1184,
-          "zIndex": 9,
+          "zIndex": 8,
           "widthName": 60,
           "widthComment": 60,
           "color": "#4CAF50"
@@ -1343,105 +1343,13 @@
               "widthDefault": 156.62890625
             },
             "id": "4652a51a-a1d5-4617-8066-d25896b77cba"
-          },
-          {
-            "name": "filename",
-            "comment": "첨부파일명",
-            "dataType": "VARCHAR2(200)",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 67,
-              "widthDataType": 96.453125,
-              "widthDefault": 60
-            },
-            "id": "599a8d6a-7dfc-46a6-9ca8-b3c00fa2a5b1"
-          },
-          {
-            "name": "filedata",
-            "comment": "첨부파일 데이터",
-            "dataType": "BLOB",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 97.5703125,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "04d0690c-fe4e-4466-b0aa-8465eb850cfb"
-          },
-          {
-            "name": "filetype",
-            "comment": "첨부파일 타입",
-            "dataType": "VARCHAR2(100)",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 84.5703125,
-              "widthDataType": 96.453125,
-              "widthDefault": 60
-            },
-            "id": "f54d7446-b557-4628-8f22-92e6d6f3d3a1"
-          },
-          {
-            "name": "filesize",
-            "comment": "첨부파일 크기",
-            "dataType": "NUMBER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 84.5703125,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "6d28ae74-ec36-47ec-84ae-0462072c3122"
           }
         ],
         "ui": {
           "active": false,
-          "left": 723.0915,
-          "top": 1081.1429,
-          "zIndex": 13,
+          "left": 733.0915,
+          "top": 1123.6429,
+          "zIndex": 20,
           "widthName": 60,
           "widthComment": 60,
           "color": "#607D8B"
@@ -1611,9 +1519,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 721.6667,
-          "top": 1412.8332,
-          "zIndex": 14,
+          "left": 615.4167,
+          "top": 1411.5832,
+          "zIndex": 36,
           "widthName": 60,
           "widthComment": 71.64013671875,
           "color": "#9C27B0"
@@ -1737,9 +1645,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1059.4447,
-          "top": 314.111,
-          "zIndex": 5,
+          "left": 1172.8375,
+          "top": 1411.6108,
+          "zIndex": 37,
           "widthName": 60,
           "widthComment": 119.7109375,
           "color": "#F773A0"
@@ -1779,7 +1687,7 @@
           "active": false,
           "left": 752.2224,
           "top": 848.1108,
-          "zIndex": 10,
+          "zIndex": 9,
           "widthName": 78.06396484375,
           "widthComment": 60,
           "color": "#8B2447"
@@ -1796,9 +1704,9 @@
         "value": "<세탁기, 건조기>\n작동시간 : 30분\n세탁물 넣고 빼고 + 여유 시간 : 10분\n=> 총 40분\n\n<일체형>\n작동시간 : 70분\n세탁물 넣고 빼고 + 여유 시간 : 10분\n=> 총 80분",
         "ui": {
           "active": false,
-          "left": 1627,
-          "top": 243,
-          "zIndex": 12,
+          "left": 1184.3214285714298,
+          "top": 1564.7857142857165,
+          "zIndex": 41,
           "width": 231,
           "height": 153
         },
@@ -1808,9 +1716,9 @@
         "value": "1. machine + washing + washingcheck => washingmachine\n\n2. washingmachine + runtime => wmtime\n\n3. wmtime + customer + reservation => reserve\n\n!!수정해야함!!",
         "ui": {
           "active": false,
-          "left": 1060,
-          "top": 129,
-          "zIndex": 11,
+          "left": 293.75,
+          "top": 65.25,
+          "zIndex": 22,
           "width": 527,
           "height": 122
         },
@@ -1916,8 +1824,8 @@
           "columnIds": [
             "4652a51a-a1d5-4617-8066-d25896b77cba"
           ],
-          "x": 723.0915,
-          "y": 1207.8929,
+          "x": 733.0915,
+          "y": 1209.3929,
           "direction": "left"
         },
         "constraintName": "fk_board_to_reply",

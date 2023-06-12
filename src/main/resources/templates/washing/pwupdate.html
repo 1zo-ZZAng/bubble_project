@@ -217,28 +217,30 @@
                     </ol>
 
                     <div class="row justify-content-center" > <!--d-flex-->
-                        <div class="  col-md-8 col-lg-8"> <!--이부분 수정바람--> <!-------------------------------------------->
+                        <div class="  col-md-4 col-lg-4"> <!--이부분 수정바람--> <!-------------------------------------------->
                             <div >
                                 <form th:action="@{/washing/pwupdate.bubble(id=${washing.id})}" method="post" id="form">
                             
-                                    <table class="container" width=" 400px">
+                                    <table class="container" >
                                         <tr>
                                             <td><label for="password"> 비밀번호 </label></td>
-                                            <td><input type="password" id="password" name="password" placeholder="현재 비밀번호를 입력해주세요" class="form-control"></td> <!--controller로 보내려면 name값이 필요함-->
+                                            <td><input type="password" id="password" name="password" placeholder="현재 비밀번호를 입력해주세요" class="form-control" style="width: 20rem;"></td> <!--controller로 보내려면 name값이 필요함-->
                                         </tr>
                                         <tr>
                                             <td><label for="newpassword"> 새 비밀번호 </label></td>
-                                            <td><input type="password" id="newpassword" name="newpassword"  placeholder="새 비밀번호를 입력해주세요" class="form-control" ></td> <!--controller로 보내려면 name값이 필요함-->
+                                            <td><input type="password" id="newpassword" name="newpassword"  placeholder="새 비밀번호를 입력해주세요" class="form-control" style="width: 20rem;"></td> <!--controller로 보내려면 name값이 필요함-->
                                         </tr>
                                         <tr>
                                             <td><label for="newpassword2"> 새 비밀번호 확인 </label></td>
-                                            <td><input type="password" id="newpassword2" placeholder="새 비밀번호를 한번 더 입력해주세요" class="form-control" ></td>
+                                            <td><input type="password" id="newpassword2" placeholder="새 비밀번호를 한번 더 입력해주세요" class="form-control" style="width: 20rem;" ></td>
                                         </tr>
                             
-                                        <tr>
-                                            <td><input type="button" value="변경" onclick="pwupdate()" class="btn btn-primary" ></td>
-                                        </tr>
+                                        
                                     </table>
+
+                                    <div>
+                                        <td><input type="button" value="변경" onclick="pwupdate()" class="btn btn-primary" style="margin-left: 27rem; margin-top: 1rem;" ></td>
+                                    </div>
                             
                                 </form>
                                 
