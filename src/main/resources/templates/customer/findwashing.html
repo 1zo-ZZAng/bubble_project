@@ -34,9 +34,16 @@
     <header th:replace="~{/fragments/header.html :: header}"></header>
 
     <div class="maincontainer">
-        <div id="map" style="width: 600px; height: 600px;"></div>
-
-        <div id="washinginfo"></div>
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page"><a th:href="@{/customer/home.bubble}" style="text-decoration: none; color: black;">Find Laundry</a></p>
+        </div>
+        <p id="reservetitle">내 주변 세탁방 찾기</p>
+        <div id="washingdetail">
+            <div id="map"></div>
+            <div id="detailline"></div>
+            <div id="washinginfo"></div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -126,10 +133,10 @@
                                             <strong>${position.name}</strong>
                                         </div>`;
 
-                        var washinginfo = `<div>
-                                    세탁소명 : ${position.name} <br>
-                                    주소 : ${position.address} <br>
-                                    전화번호 : ${position.phone} <br>
+                        var washinginfo = `<div id="washingbox">
+                                    <p><span id="washingname">세탁소명</span><br>${position.name} </p>
+                                    <p><span id="washingname">주소</span><br>${position.address} </p>
+                                    <p><span id="washingname">전화번호</span><br>${position.phone} </p>
                                     </div>`;
 
                         // 인포윈도우를 생성합니다

@@ -172,13 +172,42 @@ header{
 }
 
 .introduce{
-    margin-top: 50px;
+    margin-top: 200px;
+    width: 100%;
 }
 
 #info{
     display: flex;
+    margin-top: 150px;
+    
+    width: 100%;
+    justify-content: space-evenly;
 }
 
+#homeinfo1 , #homeinfo2, #homeinfo3{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+#homeinfotitle{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#homeline {
+    border-top: 130px solid black;
+    width: 3px;
+    /* height: 1245px; */  
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.find-washing{
+    margin-top: 200px;
+}
 
 
 /* 마이페이지 */
@@ -803,4 +832,18 @@ table tbody tr td.date{
     padding-left: 200px;
     padding-bottom: 50px;
     text-align: center;
+}
+
+#washingdetail {
+    margin-top: 40px;
+    display: flex;
+}
+
+#washinginfo{
+    margin-top: 140px;
+}
+
+#washingbox span{
+    font-size: 24px;
+    font-weight: bold;
 }
