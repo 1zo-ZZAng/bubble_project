@@ -178,7 +178,7 @@
             </div>
         </div>
         <!-- 매장 찾기 -->
-        <div class="find-washing text-center" style="width: 1800px; height: 300px;">
+        <div class="find-washing text-center" style="width: 1800px; height: auto;">
             <div class="card-body find-washing-title">
                 <h3>우리동네 코인빨래방을 찾아보세요!</h3>
             </div>
@@ -192,7 +192,7 @@
                             </select>
                         </td>
                         <td>
-                            <select id="town"  onchange="selectedtown()">
+                            <select id="town" onchange="selectedtown()">
                                 <option value="none">지역(시/구/군) 선택</option>
                             </select>
                         </td>
@@ -202,8 +202,23 @@
             </div>
         </div>
 
+        <div id="washinglisttable" style="display: none; margin-top: 0px;">
+            <table id="washingtable">
+            <!-- <table width="900" style="margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; text-align: center;"></table> -->
+                <thead style="background-color: lightgray;">
+                    <tr>
+                        <th width="15%" class="second">세탁소</th>
+                        <th width="50%" class="third">주소</th>
+                        <th width="15%" class="forth">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody id="washinglist">
+                </tbody>
+            </table>
+        </div>
+
         <!-- 예약 기능 소개 -->
-        <div class="reserve-info" id="section3">
+        <div class="reserve-info" id="section3" style="margin-top: 170px;">
             <div class="reserve-info-title">
                 <h3>예약은 이렇게 진행됩니다!</h3>
             </div>
@@ -238,9 +253,82 @@
         </div>
     </div>
 
+    <footer th:replace="~{/fragments/footer.html :: footer}"></footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+        const washinglisttable = document.getElementById("washinglisttable");
+
+        async function selectedCity() {
+            washinglisttable.style.display="none";
+
+            const city = $("#city option:selected").val();
+            
+            // rest api 호출
+            const url = [[@{/api/reserve/selectedcity.json}]] + `?city=${city}`;
+            const headers = {"Content-Type":"application/json"};
+            const {data} = await axios.get(url, {headers});
+
+            // console.log(data.town);
+
+            if (data.town.length > 0) {
+                const town = document.getElementById("town");
+                town.innerHTML = '';
+                town.innerHTML = '<option value="none">지역(시/구/군) 선택</option>';
+
+                for (let obj of data.town) {
+                    town.innerHTML += "<option value=" + obj + ">" + obj + "</option>";
+                }
+            }
+        }
+
+        async function showWahsingList() {
+            const city = $("#city option:selected").val();
+            const town = $("#town option:selected").val();
+
+            const url = [[@{/api/reserve/washinglist.json}]] + `?city=${city}&town=${town}`;
+            const headers = {"Content-Type":"application/json"};
+            const {data} = await axios.get(url, {headers});
+
+            if (city == "none") {
+                alert('지역(시/도)를 선택해주세요.');
+                document.getElementById("city").focus();
+            }
+            else if (town == "none"){
+                alert('지역(시/구/군)을 선택해주세요.');
+                document.getElementById("town").focus();
+            }
+            else {
+                if (data.washinglist.length == 0) {
+                    alert('해당 지역에 등록된 세탁소가 없습니다.');
+                    $("#city").val("none").prop("selected", true);
+                    $("#town").val("none").prop("selected", true);
+                    // // washinglisttable.innerHTML = '';
+                    // washinglisttable.style.display="none";
+                }
+                else {
+                    const washinglist = document.getElementById("washinglist");
+                    washinglist.innerHTML = '';
+
+                    for (let i=0; i<data.washinglist.length; i++){
+                        // console.log(data.washinglist[i].name);
+                        washinglist.innerHTML += `<tr>`
+                                                    + '<td class="washing">' + data.washinglist[i].name + '</td>'
+                                                    + '<td class="washing">' + data.washinglist[i].address + '</td>'
+                                                    + '<td class="washing">' + data.washinglist[i].phone + '</td>'
+                                                    + `</tr>`
+                                                    ;
+                    }
+
+                    washinglisttable.style.display="inline-block";
+                }
+            }
+        }
+
+        function selectedtown() {
+            washinglisttable.style.display="none";
+        }
+    </script>
 </body>
-
-<footer th:replace="~{/fragments/footer.html :: footer}"></footer>
 
 </html>

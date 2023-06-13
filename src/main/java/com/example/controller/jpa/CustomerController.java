@@ -30,6 +30,7 @@ import com.example.entity.Customer;
 import com.example.service.jpa.AdminService;
 import com.example.service.jpa.CustomerService;
 import com.example.service.jpa.MailService;
+import com.example.service.mybatis.CityMybatisService;
 import com.example.service.mybatis.ReserveMybatisService;
 import com.example.service.mybatis.WashingMybatisService;
 
@@ -45,7 +46,7 @@ public class CustomerController {
     final MailService mService; // 비밀번호 찾기 - 이메일 전송
     final ReserveMybatisService rService;
     final WashingMybatisService wService;
-
+    final CityMybatisService cityService;
     // 암호화
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 
@@ -57,6 +58,7 @@ public class CustomerController {
     @GetMapping(value = {"/home.bubble", "/"}) 
     public String homeGET(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", user);
+        model.addAttribute("citynamelist", cityService.selectCitynameList());
         return "/customer/home";
     }
     
