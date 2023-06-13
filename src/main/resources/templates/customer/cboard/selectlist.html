@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel='stylesheet' th:href="@{/css/home.css}" />
+    <!--탭 아이콘 변경-->
+    <!-- <link rel="icon" th:href="@{/images/iconlog.png}">    -->
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- 한글 font  -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+
+    <!--1. BootStrap용 CSS CDM 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!--jQuery 추가-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header th:replace="~{/fragments/header.html :: header}"></header>
+
+    <div class="maincontainer">
+        <div id="pageheader">
+            <div id="pageline"></div>
+            <p id="page"><a th:href="@{/customer/home.bubble}" style="text-decoration: none; color: black;">Board</a></p>
+        </div>
+    </div>
+    <div id="layoutContent">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">게시판</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"></li>
+                </ol>
+
+                <div>
+                    <table class="mb-3">
+                        <tr style="font-weight: bold;">
+                            <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="margin-right: 1rem;">전체게시판</a>
+                            </td>
+                            <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="margin-right: 1rem;">공지사항</a>
+                            </td>
+                            <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="margin-right: 1rem;">분실물</a>
+                            </td>
+                            <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}">습득물</a></td>
+
+                            <!-- <td><a th:href="@{/wboard/write.bubble(id=${user.username})}" style=" float:right;" >글쓰기</a></td> -->
+                            <!--위치 바뀌면 좋겠다-->
+
+                        </tr>
+                    </table>
+                </div>
+
+
+
+                <!--전체게시판-->
+                <div th:if="${#strings.equals(param.menu, '1')}">
+
+                    <h4 style="float: left; margin-top: 1rem;">전체게시판</h4>
+
+                    <table id="datatableSimple">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>카테고리</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="obj : ${list}">
+                                <td th:text="${obj.no}"></td>
+
+                                <!--제목-->
+                                <td th:if="${obj.code == 1}">
+                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a>
+                                </td>
+                                <td th:if="${obj.code == 2}">
+                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a>
+                                </td>
+                                <td th:if="${obj.code == 3}">
+                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a>
+                                </td>
+                                <td th:if="${obj.code == 4}">
+                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"
+                                        style="text-decoration: none; color: black;"></a>
+                                </td>
+
+                                <!--카테고리-->
+                                <td th:if="${obj.code == 1}">
+                                    <p th:text="${obj.codename}" style="color: red;"></p>
+                                </td>
+                                <td th:if="${obj.code != 1}">
+                                    <p th:text="${obj.codename}"></p>
+                                </td>
+
+                                <td th:text="${obj.writer}"></td>
+                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${obj.hit}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!--공지사항 게시판-->
+                <div th:if="${#strings.equals(param.menu, '2')}">
+
+                    <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
+
+                    <table id="datatableSimple">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="obj : ${list}">
+                                <td th:text="${obj.no}"></td>
+                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a></td>
+                                <td th:text="${obj.writer}"></td>
+                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${obj.hit}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!--분실물 게시판-->
+                <div th:if="${#strings.equals(param.menu, '3')}">
+
+                    <h4 style="float: left; margin-top: 1rem;">분실물</h4>
+
+                    <table id="datatableSimple">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="obj : ${list}">
+                                <td th:text="${obj.no}"></td>
+                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a></td>
+                                <td th:text="${obj.writer}"></td>
+                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${obj.hit}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--습득물 게시판-->
+                <div th:if="${#strings.equals(param.menu, '4')}">
+
+                    <h4 style="float: left; margin-top: 1rem;">습득물</h4>
+
+                    <table id="datatableSimple">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="obj : ${list}">
+                                <td th:text="${obj.no}"></td>
+                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
+                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
+                                        style="text-decoration: none; color: black;"></a></td>
+                                <td th:text="${obj.writer}"></td>
+                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${obj.hit}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid py-4">
+                <div class="d-flex justify-content-between align-items-center small">
+                    <div class="text-muted me-2">Copyright &copy; PKNU 2023.</div>
+                    <div>
+                        <a href="#"> Privacy Policy </a> &middot; <a href="#"> Terms &amp; Conditions </a>
+                        <!--&middot; 점이고 &amp; & 임-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+    </div>
+    </div>
+
+
+    <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Simple DataTable용 JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            new simpleDatatables.DataTable("#datatableSimple", {
+                searchable: true,
+                fixedHeight: true,
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+
+
+</body>
+
+</html>
