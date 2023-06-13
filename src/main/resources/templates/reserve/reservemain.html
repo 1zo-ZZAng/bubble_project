@@ -270,7 +270,7 @@
 
             if (data.cityname == null || data.townlist == null || data.townname == null) {
                 alert('회원정보에 주소가 없습니다.\n마이페이지에서 주소를 추가한 후 이용해주세요.');
-                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/mypage.bubble?menu=2";
+                location.href = [[@{/customer/mypage.bubble?menu=2}]];
             }
             else {
                 $("#city").val(data.cityname).prop("selected", true);
@@ -642,7 +642,7 @@
             }
             else {
                 alert('마이페이지로 이동 후 회원정보에 전화번호를 추가해주세요.');
-                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/mypage.bubble?menu=2";
+                location.href = [[@{/customer/mypage.bubble?menu=2}]];
             }
         }
     </script>

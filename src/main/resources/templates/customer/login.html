@@ -180,7 +180,7 @@
 
                             if (data.ret == 1) { // 기존 회원이 카카오로 로그인 => home 화면으로
                                 alert('로그인 성공');
-                                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/home.bubble";
+                                location.href = [[@{/customer/home.bubble}]];
                             }
                             else if (data.ret == -1) { // 카카오 계정 이메일이 기존 테이블에 있지만 이미 탈퇴한 회원인 경우
                                 alert('이미 탈퇴된 계정입니다.');
@@ -199,7 +199,7 @@
                                     Kakao.Auth.setAccessToken(null);
                                 }
 
-                                location.href = "http://127.0.0.1:8282/bubble_bumul/customer/login.bubble";
+                                location.href = [[@{/customer/login.bubble}]];
                             }
                             else if (data.ret == 0) { // 기존 회원이 아님 => 추가 데이터를 받아서 회원가입
                                 // console.log(id);
