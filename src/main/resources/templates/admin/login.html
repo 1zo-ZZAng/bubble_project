@@ -14,6 +14,8 @@
     
     <!-- 한글 font  -->
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <!--탭 아이콘 변경-->
+    <link rel="icon" th:href="@{/images/iconlog.png}">  
 
 </head>
 
@@ -28,7 +30,7 @@
 						<img  th:src="@{/images/iconlog.png}" alt="logo"> <!--버블버물 로고 올릴 것-->
 					</div>
                     <div style="text-align: center;">
-                       <h1> Bubble Bumul</h1> <br/>
+                       <h1 style=" font-family: 'Geologica', sans-serif;"> Bubble Bumul</h1> <br/>
                        <h3>관리자 로그인</h3>
                     </div>
 
@@ -36,15 +38,15 @@
 						<div class="card-body">
 
                             <!--로그인-->
-							<h4 class="card-title">Login</h4>
+							<h4 class="card-title" style=" font-family: 'Geologica', sans-serif;">Login</h4>
                             <div class="form-group"> <!--input group 쓰면 태그 내에 있는 것들이 합쳐짐 근데 이건 input group이 아님-->
                             <form th:action="@{/admin/loginaction.bubble}" method="post" id="form">
-                                <label for="id">Id </label><input type="text" name="id" id="id" value="bubble"  class="form-control" required autofocus/> <br/>
+                                <label for="id" style=" font-family: 'Geologica', sans-serif;">Id </label><input type="text" name="id" id="id" value="bubble"  class="form-control" required autofocus/> <br/>
                            </div>
 
                                 <!--비밀번호-->
 								<div class="form-group">
-									<label for="password">Password 
+									<label for="password"  style=" font-family: 'Geologica', sans-serif;">Password 
                                     </label>
                                     <input type="password" id="password" name="password" value="bumul"  class="form-control" required data-eye  /> <br/>
 
@@ -57,13 +59,13 @@
                                 </div>
 
                                 <!--로그인 버튼-->
-								<div class="form-group m-0">
+								<div class="form-group m-0"  style=" font-family: 'Geologica', sans-serif;">
                                     <input type="button" value="Login" class="btn btn-primary btn-block" onclick="loginAction()"  />
 								</div>
 							</form>
 						</div>
 					</div>
-					<div class="footer">
+					<div class="footer" style=" font-family: 'Geologica', sans-serif;">
 						Copyright &copy; 2023 &mdash; Bubble Bumul
 					</div>
 				</div>

@@ -56,6 +56,10 @@ p {
     justify-content: space-around;
 }
 
+#layoutLeftSide{
+    position: relative;
+}
+
 .sb-nav-fixed #layoutTotal #layoutLeftSide {
     width: 225px;
     height: 100vh;
