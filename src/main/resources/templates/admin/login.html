@@ -53,7 +53,7 @@
 
                                 <!--로그인 실패시 뜨는 문구-->
                                 <div class="form-group" th:if="${param.error}">
-                                    <p th:text="'아이디 또는 비밀번호를 확인해주세요'" class="alert alert-danger"></p> <!--th:text="${exception}"-->
+                                    <p th:text="'아이디 또는 비밀번호를 확인해주세요'" style="color: red;"></p> <!--th:text="${exception}"-->
                                 </div>
 
                                 <!--로그인 버튼-->

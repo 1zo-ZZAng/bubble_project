@@ -275,7 +275,12 @@
                                                     <td th:text="${obj.id}"></td>
                                                     <td th:text="${obj.name}"></td>
                                                     <td th:text="${obj.phone}"></td>
-                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
+                                                    <td th:if="${obj.address} == null">
+                                                        <span></span>
+                                                    </td>
+                                                    <td th:if="${obj.address} != null">
+                                                        <span th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></span>
+                                                    </td>
                                                     <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
                                                     <td th:text="${obj.mprice}"></td>
                                                     <td th:text="${obj.mtime}"></td>
@@ -322,10 +327,12 @@
                                                     <td th:text="${obj.id}"></td>
                                                     <td th:text="${obj.name}"></td>
                                                     <td th:text="${obj.phone}"></td>
-                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
-                                                    <!-- <td th:text="${obj.wname}"></td>
-                                                    <td th:text="${obj.waddress}"></td>
-                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:if="${obj.address} == null">
+                                                        <span></span>
+                                                    </td>
+                                                    <td th:if="${obj.address} != null">
+                                                        <span th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></span>
+                                                    </td>
                                                     <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
                                                     <td th:text="${obj.mprice}"></td>
                                                     <td th:text="${obj.mtime}"></td>
@@ -370,10 +377,12 @@
                                                     <td th:text="${obj.id}"></td>
                                                     <td th:text="${obj.name}"></td>
                                                     <td th:text="${obj.phone}"></td>
-                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
-                                                    <!-- <td th:text="${obj.wname}"></td>
-                                                    <td th:text="${obj.waddress}"></td>
-                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:if="${obj.address} == null">
+                                                        <span></span>
+                                                    </td>
+                                                    <td th:if="${obj.address} != null">
+                                                        <span th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></span>
+                                                    </td>
                                                     <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
                                                     <td th:text="${obj.mprice}"></td>
                                                     <td th:text="${obj.mtime}"></td>
@@ -419,10 +428,12 @@
                                                     <td th:text="${obj.id}"></td>
                                                     <td th:text="${obj.name}"></td>
                                                     <td th:text="${obj.phone}"></td>
-                                                    <td th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></td>
-                                                    <!-- <td th:text="${obj.wname}"></td>
-                                                    <td th:text="${obj.waddress}"></td>
-                                                    <td th:text="${obj.wphone}"></td> -->
+                                                    <td th:if="${obj.address} == null">
+                                                        <span></span>
+                                                    </td>
+                                                    <td th:if="${obj.address} != null">
+                                                        <span th:text="${obj.address}+' '+${obj.detailaddress}+${obj.extraaddress}"></span>
+                                                    </td>
                                                     <td th:text="${obj.mtype} + ' ' + ${obj.mtypeno} "></td>
                                                     <td th:text="${obj.mprice}"></td>
                                                     <td th:text="${obj.mtime}"></td>
