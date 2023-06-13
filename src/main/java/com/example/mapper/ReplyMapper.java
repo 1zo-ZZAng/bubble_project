@@ -31,7 +31,7 @@ public interface ReplyMapper {
     public int deleteOneReply(@Param("no") long no);
 
     //댓글 전체 조회 (해당 게시글만)
-    @Select({" SELECT * FROM REPLY WHERE bno=#{bno} ORDER BY no DESC "})
+    @Select({" SELECT * FROM REPLY WHERE bno=#{bno} "})
     public List<Reply> selectlistReply(@Param("bno") long bno);
 
     //댓글 개수(해당 게시글)
