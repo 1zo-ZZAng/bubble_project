@@ -241,9 +241,9 @@
                                 <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="margin-right: 1rem;" >전체게시판</a></td>
                                 <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="margin-right: 1rem;">공지사항</a></td>
                                 <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="margin-right: 1rem;">분실물</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}" >습득물</a></td>
+                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}"  style="margin-right: 1rem;">습득물</a></td>
 
-                                <!-- <td><a th:href="@{/wboard/write.bubble(id=${user.username})}" style=" float:right;" >글쓰기</a></td> --> <!--위치 바뀌면 좋겠다-->
+                                <td><a th:href="@{/wboard/write.bubble(id=${user.username})}" style="color: rgb(0, 0, 180);" >글쓰기</a></td>
                                 
                             </tr>
                         </table>
@@ -287,11 +287,12 @@
 
                                     <!--카테고리-->
                                     <td th:if="${obj.code == 1}">
-                                        <p th:text="${obj.codename}" style="color: red;"></p>
+                                        <span th:text="${obj.codename}" style="color: red;"></span>
                                     </td>
                                     <td th:if="${obj.code != 1}">
-                                        <p th:text="${obj.codename}"></p>
+                                        <span th:text="${obj.codename}"></span>
                                     </td>
+
 
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
