@@ -43,9 +43,10 @@
         <div id="pwchangebox">
             <form th:action="@{/customer/loginaction.bubble}" method="post" id="form">
                 <!--아이디-->
-                <p th:text="|${name} 님의 아이디는 ${id} 입니다.|" style="margin-left: 100px; margin-top: 100px; font-size: 20px; font-weight: bold;" ></p>
-
+                <p th:text="|${name} 님의 아이디는 ${id} 입니다.|" style="margin-left: 100px; margin-top: 60px; font-size: 20px; font-weight: bold;" ></p>
+                
             </form>
+            <a th:href="@{/customer/login.bubble}" style="text-decoration: none; color: black; margin-left: 200px;">로그인</a>
         </div>
     </div>
 
