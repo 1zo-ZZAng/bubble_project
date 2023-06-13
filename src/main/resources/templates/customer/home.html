@@ -155,23 +155,23 @@
             </div>
             <div id="info" >
                 <div id="homeinfo1"> <!-- 기능1 -->
-                    <p id="homeinfotitle">기능 1 </p> 
-                    amet consectetur adipisicing elit. <br/>
-                    Quibusdam repellendus, <br/>
+                    <p id="homeinfotitle">찾기 </p> 
+                    내 주변에도 세탁방이 있을까? <br/>
+                    버블버물이 찾아드립니다 ! <br/>
                    
                 </div>
                 <div id="homeline"></div>
                 <div id="homeinfo2">  <!-- 기능2 -->
-                    <p id="homeinfotitle">기능 2 </p> 
-                    amet consectetur adipisicing elit. <br/>
-                    Quibusdam repellendus, <br/>
+                    <p id="homeinfotitle"> 예약 </p> 
+                    원하는 시간, 원하는 장소에서 <br/>
+                    언제나 세탁 예약 가능 ! <br/>
                      
                 </div>
                 <div id="homeline"></div>
                 <div id="homeinfo3">  <!-- 기능3 -->
-                    <p id="homeinfotitle">기능 3 </p> 
-                    amet consectetur adipisicing elit. <br/>
-                    Quibusdam repellendus, <br/>
+                    <p id="homeinfotitle">커뮤니티 </p> 
+                    전국 세탁요정들의 커뮤니티  <br/>
+                    세탁 꿀팁을 주고 받아 보세요 ! <br/>
                     
                    
                 </div>
@@ -216,41 +216,32 @@
                 </tbody>
             </table>
         </div>
-
+        <div id="section3"></div>
         <!-- 예약 기능 소개 -->
-        <div class="reserve-info" id="section3" style="margin-top: 170px;">
+        <div class="reserve-info" style="margin-top: 300px; margin-bottom: 300px;">
             <div class="reserve-info-title">
-                <h3>예약은 이렇게 진행됩니다!</h3>
+                <h3><span id="bubblename">Bubble Bumul</span> 이용 방법</h3>
             </div>
             <div class="row step">
                 <div class="col-3 step-1">
-                    <h4>STEP 01</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, molestiae?</p>
-                    <div class="process"><span>></span></div>
+                    <div class="stepno"><h2>01</h2></div>
+                    <p id="step-1">내 주변 코인 세탁방을 <br/>찾아보세요</p>
                 </div>
                 <div class="col-3 step-2">
-                    <h4>STEP 02</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, molestiae?</p>
-                    <div class="process"><span>></span></div>
+                    <div class="stepno"><h2>02</h2></div>
+                    <p id="step-2">세탁방을 찾으셨다면,  <br/>사용하실 기기를  <br/>선택해주세요</p>
                 </div>
                 <div class="col-3 step-3">
-                    <h4>STEP 03</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, molestiae?</p>
-                    <div class="process"><span>></span></div>
+                    <div class="stepno"><h2>03</h2></div>
+                    <p id="step-3">원하시는 날짜와 시간을 <br/> 선택해주세요</p>
                 </div>
                 <div class="col-3 step-4">
-                    <h4>STEP 04</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, molestiae?</p>
+                    <div class="stepno"><h2>04</h2></div>
+                    <p id="step-4">예약이 완료되었습니다 :)</p>
                 </div>
             </div>
         </div>
 
-        <!-- 맨 밑 퀵버튼 -->
-        <div class="quick-button">
-            <button><a th:href="@{/reserve/letsgo.bubble}">빨래 먼저 하기</a></button>
-            
-            <button><a href="#">제휴 문의</a></button>
-        </div>
     </div>
 
     <footer th:replace="~{/fragments/footer.html :: footer}"></footer>
