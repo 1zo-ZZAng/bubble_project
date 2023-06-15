@@ -9,259 +9,395 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel='stylesheet' th:href="@{/css/home.css}" />
     <!--탭 아이콘 변경-->
-    <!-- <link rel="icon" th:href="@{/images/iconlog.png}">    -->
+    <link rel="icon" th:href="@{/images/iconlog.png}">   
 
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <!-- 한글 font  -->
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
-
+    
     <!--1. BootStrap용 CSS CDM 추가-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-
+        
     <!--jQuery 추가-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-</head>
 
+    <style>
+        .rlist {
+            text-decoration: none;
+            color: black;
+        }
+
+        .rlist:hover {
+            color: black;
+            font-weight: 900;
+        }
+
+        .blue-text {
+            font-weight: bold;
+            color: rgb(2, 2, 155);
+        }
+        .gray-text {
+            color: rgba(128, 128, 128, 0.801);
+        }
+        .red-text {
+            color: rgba(255, 0, 0, 0.815);
+        }
+    </style>
+</head>
 <body>
     <header th:replace="~{/fragments/header.html :: header}"></header>
 
     <div class="maincontainer">
         <div id="pageheader">
             <div id="pageline"></div>
-            <p id="page"><a th:href="@{/customer/home.bubble}" style="text-decoration: none; color: black;">Board</a></p>
+            <p id="page">Board</p>
+        </div>
+        <div id="gradepart">
+            <div id="gradebox">
+                <div id="gradeimg">
+                    <th:block th:switch="${grade}">
+                        <span th:case="'1'"><img th:src="@{/images/chobo.png}" style="width: 100px;" /></span>
+                        <span th:case="'2'"><img th:src="@{/images/yojung.png}" style="width: 100px;" /></span>
+                        <span th:case="'3'"><img th:src="@{/images/pro.png}" style="width: 100px;" /></span>
+                    </th:block>
+                    
+                </div>
+                <div id="grade">
+                    <p id="higrade" th:text="|${name} 님 환영합니다! |"></p>
+                    고객님의 고객 등급은 
+                    <th:block th:switch="${grade}" >
+                        <span th:case="'1'" style="font-weight: bold;">세탁 초보</span>
+                        <span th:case="'2'" style="font-weight: bold;">세탁 요정</span>
+                        <span th:case="'3'" style="font-weight: bold;">세탁 프로</span>
+                    </th:block>
+                    입니다.
+                </div>
+            </div>
+        </div>
+
+        <div id="mypagesection">
+            <a th:href="@{/customer/mypage.bubble(menu=1)}" id="searchrv">예약 내역 조회</a>
+            <p>ㅣ</p>
+            <a th:href="@{/customer/mypage.bubble(menu=2)}" id="changepw">회원 정보 수정</a>
+        </div>
+
+        <div th:if="${#strings.equals(param.menu, '1')}">
+            <!-- 예약 내역 조회 -->
+            <table id="datatableSimple">
+                <thead>
+                    <tr>
+                        <th>예약번호</th>
+                        <th>세탁소</th>
+                        <th>세탁소 주소</th>
+                        <th>이용일</th>
+                        <th>예약 시간</th>
+                        <th>예약 현황</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="list : ${reserveList}">
+                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a></td>
+                        <td th:text="${list.wname}"></td>
+                        <td th:text="${list.waddress}"></td>
+                        <td th:text="${list.rvdate}"></td>
+                        <td th:text="${list.rvtime}"></td>
+                        <!-- <td th:text="${list.state}"></td> -->
+                        <td>
+                            <span th:text="${list.state}" th:classappend="${list.state == '예약 완료' ? 'blue-text' : (list.state == '이용 완료' ? 'gray-text' : (list.state == '예약 취소' ? 'red-text' : ''))}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${#strings.equals(param.menu, '2')}">
+            <!-- 회원정보 수정 -->
+            <form th:action="@{/customer/mypage.bubble(menu=2)}" th:object="${customer}" method="post" id="updateform">
+                <table class="container updatetable" style="width: 500px; height: 580px;">
+                    <tr>
+                        <td><label for="id" id="lbl_check">아이디</label></td>
+                        <td><input type="text" th:field="${customer.id}" name="id" id="id" readonly class="form-control"  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">비밀번호</label></td>
+                        <td><input type="password" th:field="${customer.password}" id="password" name="password" class="form-control"  autoComplete="off" /></td>
+                        <td>
+                            <span id="pwchange" style="display: none;">
+                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 60px;" id="pwbtn" >비밀번호 변경</a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="name">이름</label></td>
+                        <td><input type="text" th:field="${customer.name}" id="name" name="name" class="form-control"  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="phone">전화번호</label></td>
+                        <td><input type="text" th:field="${customer.phone}" id="phone" name="phone" class="form-control" 
+                                placeholder="010-000-0000" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">이메일 </label></td>
+                        <td><input type="email" th:field="${customer.email}" id="email" name="email" class="form-control"  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="birth" >생년월일</label></td>
+                        <td><input type="date" th:field="${customer.birth}" id="birth" name="birth" readonly class="form-control"  /></td>
+                    </tr>
+                    <tr>
+                        <td><label id="t-caddl">주소</label></td>
+                        <td><input type="text" th:field="${customer.address}" id="address" name="address" readonly class="form-control"  /></td>
+                        <td><input type="button" value="주소 찾기" id="add_button" data-bs-toggle="modal" class="btn btn-dark" 
+                                data-bs-target="#exampleModal" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="text" th:field="${customer.detailaddress}" id="detailaddress" name="detailaddress"
+                                placeholder="상세 주소" class="form-control" /></td>
+                        <td><input type="text" th:field="${customer.extraaddress}" id="extraaddress" name="extraaddress"
+                                placeholder="참고 주소" readonly class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        
+                            <td><input type="button" value="수정" onclick="updateOne()" class="btn btn-dark" id="update" /></td>
+                        
+                            <td><button type="button" class="btn btn-secondary" onclick="deleteOne()" id="delete" >회원 탈퇴</button></td>
+
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
-    <div id="layoutContent">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">게시판</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active"></li>
-                </ol>
 
-                <div>
-                    <table class="mb-3">
-                        <tr style="font-weight: bold;">
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="margin-right: 1rem;">전체게시판</a>
-                            </td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="margin-right: 1rem;">공지사항</a>
-                            </td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="margin-right: 1rem;">분실물</a>
-                            </td>
-                            <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}">습득물</a></td>
-
-                            <!-- <td><a th:href="@{/wboard/write.bubble(id=${user.username})}" style=" float:right;" >글쓰기</a></td> -->
-                            <!--위치 바뀌면 좋겠다-->
-
-                        </tr>
-                    </table>
+    <!-- 주소등록 버튼을 누르면 나오는 모달창 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">주소 찾기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-
-
-                <!--전체게시판-->
-                <div th:if="${#strings.equals(param.menu, '1')}">
-
-                    <h4 style="float: left; margin-top: 1rem;">전체게시판</h4>
-
-                    <table id="datatableSimple">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>카테고리</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="obj : ${list}">
-                                <td th:text="${obj.no}"></td>
-
-                                <!--제목-->
-                                <td th:if="${obj.code == 1}">
-                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a>
-                                </td>
-                                <td th:if="${obj.code == 2}">
-                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a>
-                                </td>
-                                <td th:if="${obj.code == 3}">
-                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a>
-                                </td>
-                                <td th:if="${obj.code == 4}">
-                                    <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"
-                                        style="text-decoration: none; color: black;"></a>
-                                </td>
-
-                                <!--카테고리-->
-                                <td th:if="${obj.code == 1}">
-                                    <p th:text="${obj.codename}" style="color: red;"></p>
-                                </td>
-                                <td th:if="${obj.code != 1}">
-                                    <p th:text="${obj.codename}"></p>
-                                </td>
-
-                                <td th:text="${obj.writer}"></td>
-                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                <td th:text="${obj.hit}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                <div class="modal-body">
+                    <!-- <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly>  -->
+                    <input type="text" name="main_address" id="sample6_address" placeholder="주소" readonly>
+                    <input type="button" class="btn btn-sm btn-dark" onclick="sample6_execDaumPostcode()"
+                        value="주소 찾기"><br>
+                    <input type="text" name="detail_Address" id="sample6_detailAddress" placeholder="상세주소">
+                    <input type="text" name="extra_Address" id="sample6_extraAddress" placeholder="참고항목" readonly>
                 </div>
-
-                <!--공지사항 게시판-->
-                <div th:if="${#strings.equals(param.menu, '2')}">
-
-                    <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
-
-                    <table id="datatableSimple">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="obj : ${list}">
-                                <td th:text="${obj.no}"></td>
-                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a></td>
-                                <td th:text="${obj.writer}"></td>
-                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                <td th:text="${obj.hit}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <!--분실물 게시판-->
-                <div th:if="${#strings.equals(param.menu, '3')}">
-
-                    <h4 style="float: left; margin-top: 1rem;">분실물</h4>
-
-                    <table id="datatableSimple">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="obj : ${list}">
-                                <td th:text="${obj.no}"></td>
-                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a></td>
-                                <td th:text="${obj.writer}"></td>
-                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                <td th:text="${obj.hit}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!--습득물 게시판-->
-                <div th:if="${#strings.equals(param.menu, '4')}">
-
-                    <h4 style="float: left; margin-top: 1rem;">습득물</h4>
-
-                    <table id="datatableSimple">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="obj : ${list}">
-                                <td th:text="${obj.no}"></td>
-                                <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}"
-                                        th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                        style="text-decoration: none; color: black;"></a></td>
-                                <td th:text="${obj.writer}"></td>
-                                <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                <td th:text="${obj.hit}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-
-        </main>
-
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid py-4">
-                <div class="d-flex justify-content-between align-items-center small">
-                    <div class="text-muted me-2">Copyright &copy; PKNU 2023.</div>
-                    <div>
-                        <a href="#"> Privacy Policy </a> &middot; <a href="#"> Terms &amp; Conditions </a>
-                        <!--&middot; 점이고 &amp; & 임-->
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" id="insertaddbtn" class="btn btn-dark" onclick="insertAddressAction()">등록</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
-        </footer>
-
-
-    </div>
+        </div>
     </div>
 
+    <footer th:replace="~{/fragments/footer.html :: footer}"></footer>
 
-    <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
+    <!-- 2. BootStrap용 JS는 body태그 내 맨 아래에 위치해야 함
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"></script>
-
-
-    <!-- Simple DataTable용 JS CDN -->
+        crossorigin="anonymous"></script> -->
+     <!-- Simple DataTable용 JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            new simpleDatatables.DataTable("#datatableSimple", {
-                searchable: true,
-                fixedHeight: true,
-            });
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const menuParam = urlParams.get('menu');
+
+            if (menuParam === '1') {
+                document.getElementById("searchrv").style.textDecoration = "underline";
+                document.getElementById("searchrv").style.textDecorationSkipInk= "auto";
+                // document.getElementById("searchrv").style.textDecorationSkipInk= "auto";
+                new simpleDatatables.DataTable("#datatableSimple", {
+                    searchable: true,
+                    fixedHeight: true,
+                });
+            }
+            else if (menuParam === '2') {
+                document.getElementById("changepw").style.textDecoration = "underline";
+                document.getElementById("changepw").style.textDecorationSkipInk= "auto";
+                if ([[${user.username}]].startsWith('kakao') == false) {
+                    document.getElementById("pwchange").style.display="inline-block";
+                }
+            }
         });
+
+        // daum 우편번호
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if (data.userSelectedType === 'R') {
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        // 조합된 참고항목을 해당 필드에 넣는다.
+                        document.getElementById("sample6_extraAddress").value = extraAddr;
+
+                    } else {
+                        document.getElementById("sample6_extraAddress").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    // document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("sample6_detailAddress").focus();
+
+                }
+            }).open();
+        }
+
+        // 주소 등록하기
+        function insertAddressAction() {
+            const main_address = document.getElementById('sample6_address');
+            const detail_Address = document.getElementById('sample6_detailAddress');
+            const extra_Address = document.getElementById('sample6_extraAddress');
+
+            const address = document.getElementById("address");
+            const detailaddress = document.getElementById("detailaddress");
+            const extraaddress = document.getElementById("extraaddress");
+
+            if (detail_Address.value.length <= 0) {
+                alert('상세주소를 입력하세요.');
+                detail_Address.focus();
+                return false;
+            }
+
+            if (detail_Address.value.length > 0) {
+                address.value = main_address.value;
+                detailaddress.value = detail_Address.value;
+                extraaddress.value = extra_Address.value;
+                
+                $('#exampleModal').modal('hide');
+            }
+            
+        }
+
+        function updateOne() {
+            const password = document.getElementById("password");
+            const name = document.getElementById("name");
+            const phone = document.getElementById("phone");
+            const email = document.getElementById("email");
+            const address = document.getElementById("address");
+            const detailaddress = document.getElementById("detailaddress");
+
+            // 유효성 검사
+            // 1. 모든 항목이 입력되어 있어야함
+            if ([[${user.username}]].startsWith('kakao') == false) {
+                if (password.value.length <= 0) {
+                    alert('비밀번호를 입력하세요.');
+                    password.focus();
+                    return false; // 함수종료, 전송하지 않음
+                }
+            }
+
+            if (name.value.length <= 0) {
+                alert('이름을 입력하세요.');
+                name.focus();
+                return false; // 함수종료, 전송하지 않음
+            }
+
+            if (phone.value.length <= 0) {
+                alert('전화번호를 입력하세요.');
+                phone.focus();
+                return false; // 함수종료, 전송하지 않음
+            }
+
+            if (email.value.length <= 0) {
+                alert('이메일을 입력하세요.');
+                email.focus();
+                return false; // 함수종료, 전송하지 않음
+            }
+
+            if (address.value.length > 0) {
+                if (detailaddress.value.length <= 0) {
+                    alert('상세 주소를 입력하세요.');
+                    detailaddress.focus();
+                    return false; // 함수종료, 전송하지 않음
+                }
+            }
+
+            document.getElementById("updateform").submit();
+        }
+
+        function deleteOne() {
+            // 소셜 로그인(카카오)한 계정이라면 비밀번호 확인 절차 없이 바로 탈퇴
+            if ([[${user.username}]].startsWith('kakao') == true) { 
+                if (confirm('정말로 탈퇴하시겠습니까?\n탈퇴 후 해당 아이디로 재가입하실 수 없습니다.')) {
+                    const form = document.createElement("form");
+                    form.setAttribute("action", [[@{/customer/delete.bubble}]]);
+                    form.setAttribute("method", "post");
+                    form.style.display="none";
+    
+                    const input1 = document.createElement("input");
+                    input1.setAttribute("type", "hidden");
+                    input1.setAttribute("name", "_csrf");
+                    input1.setAttribute("value", [[${_csrf.token}]]);
+    
+                    form.appendChild(input1);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+
+                    if (Kakao.Auth.getAccessToken()) {
+                        Kakao.API.request({
+                            url: '/v1/user/unlink',
+                            success: function (response) {
+                                // console.log(response)
+                            },
+                            fail: function (error) {
+                                console.log(error)
+                            },
+                        });
+
+                        Kakao.Auth.setAccessToken(null);
+                        }
+                }
+            }
+            else { // 일반 계정인 경우
+                if (confirm('정말로 탈퇴하시겠습니까?\n탈퇴 후 해당 아이디로 재가입하실 수 없습니다.')) {
+                    window.location.href = [[@{/customer/delete.bubble}]];
+                }
+            }
+        }
     </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
-
-
 </body>
 
 </html>
