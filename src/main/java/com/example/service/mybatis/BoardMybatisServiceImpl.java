@@ -266,6 +266,18 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+    @Override
+    public BoardType selectlistBTypeAdmin() {
+         try {
+            
+            return bMapper.selectlistBTypeAdmin();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     
 
     

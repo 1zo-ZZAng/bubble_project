@@ -20,6 +20,8 @@ public interface BoardMybatisService {
     //말머리 분류 - 중복 제거
     public List<BoardType> selectlistBTypeCodeDetail();
 
+    //말머리 - 관리자용(공지사항)
+    public BoardType selectlistBTypeAdmin();
 
     /* ===================================== */
     

@@ -27,6 +27,10 @@ public interface BoardMapper {
     @Select({" SELECT * FROM BOARDTYPE WHERE codedetail IS NOT null "})
     public List<BoardType> selectlistBTypeCodeDetail();
 
+    //말머리 분류 - 관리자 작성용(공지사항만 가능)
+    @Select({" SELECT * FROM BOARDTYPE WHERE code=1 "})
+    public BoardType selectlistBTypeAdmin();
+
     //공지사항 날짜기준 최신 3개 조회
     @Select({" SELECT * FROM (SELECT * FROM board WHERE code=1 ORDER BY regdate DESC) WHERE ROWNUM <= 3 "})
     public List<Board> selectlistBoardTopNotice();

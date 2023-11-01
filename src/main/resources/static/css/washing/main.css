@@ -128,12 +128,13 @@ p{
 .sb-topnav{
     padding-left: 0;
     height: 56px;
-    z-index: 1001; /*제일 위에 나오게 하기 위함*/
+    z-index: 9999; /*제일 위에 나오게 하기 위함*/
 }
 
 .sb-topnav .navbar-brand{
     width: 225px;
     margin: 0;
+    font-weight: bolder;
 }   
 
 .sb-topnav.navbar-dark #sidebarToggle{
