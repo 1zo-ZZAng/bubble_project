@@ -103,47 +103,81 @@ public class WBoardController {
 
     //전체 조회
     @GetMapping(value="/selectlist.bubble")
-    public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
+    public String selectlistGET(Model model, @AuthenticationPrincipal User user, 
+                                @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
+                                @RequestParam(name = "menu", required = false, defaultValue = "admin") String menu) {
         try {
 
             model.addAttribute("user", user);
 
             // List<Board> list = new ArrayList<>();
-            List<BoardWashing> list = new ArrayList<>();
+            List<BoardView> list = new ArrayList<>();
+            // List<BoardWashing> list = new ArrayList<>();
 
-
-            if(menu == 1){ //전체 게시판 조회
-
-                list = bwService.selectBoardWashing();
+            if(type.equals("notice")){ // 공지사항 조회
+                if (menu.equals("admin")) { // 관리자 공지사항
+                    list = bwService.selectBoardAdminNotice();
+                }
+                else { // 세탁업체 공지사항
+                    list = bwService.selectBoardWashingNotice();
+                }
 
                 // log.info("카테고리 전체 조회 => {}", list1.toString());
 
                 model.addAttribute("list", list);
-
-
-            } else if(menu == 2) { //공지사항 전체 조회
-
-                list = bwService.selectBoardWashingNotice();
+            } 
+            else if (type.equals("getlost")) { // 분실물/습득물
+                if (menu.equals("get")) { // 분실물
+                    list = bwService.selectBoardWashingLost();
+                }
+                else { // 습득물
+                    list = bwService.selectBoardWashingGet();
+                }
 
                 model.addAttribute("list", list);
-
-
-            } else if(menu == 3) { //분실물 전체 조회
+            } 
+            else if (type.equals("community")) { // 자유게시판
 
                 list = bwService.selectBoardWashingLost();
 
                 model.addAttribute("list", list);
-
-            } else if(menu == 4) { //습득물 전체 조회
-
-                list = bwService.selectBoardWashingGet();
-                
-                model.addAttribute("list", list);
-
-
-            }else { //menu값 없을 때 menu=1로 자동이동
-                return "redirect:/wboard/selectlist.bubble?menu=1";
             }
+            else { //type값 없을 때 type=notice, menu=admin으로 자동이동
+                return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin";
+            }
+
+            // if(menu == 1){ //전체 게시판 조회
+
+            //     list = bwService.selectBoardWashing();
+
+            //     // log.info("카테고리 전체 조회 => {}", list1.toString());
+
+            //     model.addAttribute("list", list);
+
+
+            // } else if(menu == 2) { //공지사항 전체 조회
+
+            //     list = bwService.selectBoardWashingNotice();
+
+            //     model.addAttribute("list", list);
+
+
+            // } else if(menu == 3) { //분실물 전체 조회
+
+            //     list = bwService.selectBoardWashingLost();
+
+            //     model.addAttribute("list", list);
+
+            // } else if(menu == 4) { //습득물 전체 조회
+
+            //     list = bwService.selectBoardWashingGet();
+                
+            //     model.addAttribute("list", list);
+
+
+            // }else { //menu값 없을 때 menu=1로 자동이동
+            //     return "redirect:/wboard/selectlist.bubble?menu=1";
+            // }
 
             return "/wboard/selectlist";
             
