@@ -28,7 +28,7 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
     }
 
     @Override
-    public List<BoardView> selectBoardWashingNotice() {
+    public List<BoardWashing> selectBoardWashingNotice() {
         try {
             return bwMapper.selectBoardWashingNotice();
             

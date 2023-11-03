@@ -22,9 +22,6 @@
     <!--아이콘 모양 돋보기라던가 그런거던데-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-    <!--Simple DataTable용 CSS CDN--> <!--표 부분임-->
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
-
     <!--현재 페이지용 CSS 외부 링크-->
     <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/washing/main.css}'>
 
@@ -86,6 +83,53 @@
         /*게시판 목록 하단 줄 생겨서 없앴음*/
         .datatable-wrapper.no-footer .datatable-container {
             border-bottom: none;
+        }
+
+        /* 게시판 테이블 */
+        #noticetable {
+            width: 97%;
+            margin: 0 auto;
+        }
+        
+        .line1 {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+        
+        #noticetable thead tr {
+            border-bottom: 1px solid black;
+        }
+
+        #noticetable thead tr td {
+            padding: 15px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        #noticetable tbody tr td {
+            font-size: 14px;
+            padding: 15px 0;
+        }
+        
+        #noticetable tbody tr:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+
+        #noticetable tbody tr td:not(:nth-child(2)) {
+            text-align: center;
+        }
+
+        #noticetable tbody tr td:nth-child(2) {
+            padding-left: 10px;
+        }
+
+        #noticetable tbody tr td a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .code1 {
+            font-weight: bold;
         }
     </style>
 
@@ -244,7 +288,6 @@
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">게시판</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"></li>
                     </ol>
@@ -282,30 +325,37 @@
                     <!-- 테이블 -->
                     <!-- (1) 공지사항 (관리자 or 세탁업체) -->
                     <div th:if="${#strings.equals(param.type, 'notice')}">
-                        <p id="noticemenu" style="font-weight: bold; font-size: 20px; text-align: center; margin-bottom: 0px;"></p>
-
-                        <table id="noticetable">
+                        <p id="noticemenu" style="font-weight: bold; font-size: 25px; text-align: center;"></p>
+                        
+                        <table id="noticetable" class="line1">
                             <thead>
                                 <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>카테고리</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>작성일</td>
+                                    <td>조회</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
-                                    <td th:text="${obj.no}"></td>
-                                    <td th:text="${obj.title}"></td>
-                                    <td th:text="${obj.codename}"></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <tr th:each="obj : ${list}" th:class="${obj.code == 1} ? 'code1' : ''">
+                                    <td>
+                                        <span th:if="${obj.code == 1}">공지</span>
+                                        <span th:if="${obj.code == 2 || obj.code == 3}" th:text="${obj.no}"></span>
+                                    </td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"></a></td>
+                                    <td>
+                                        <span th:if="${#strings.equals(param.menu, 'admin')}" th:text="${obj.writer}"></span>
+                                        <span th:if="${#strings.equals(param.menu, 'washing')}" th:text="${obj.name}"></span>
+                                    </td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy년 MM월 dd일')}"></td>
                                     <td th:text="${obj.hit}"></td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
+                        <button style="display: none;" id="writebtn">글쓰기</button>
                     </div>
 
                     <!-- (2) 분실물/습득물 (분실물 or 습득물) -->
@@ -317,7 +367,6 @@
                                 <tr>
                                     <th>번호</th>
                                     <th>제목</th>
-                                    <th>카테고리</th>
                                     <th>작성자</th>
                                     <th>작성일</th>
                                     <th>조회</th>
@@ -327,7 +376,6 @@
                                 <tr th:each="obj : ${list}">
                                     <td th:text="${obj.no}"></td>
                                     <td th:text="${obj.title}"></td>
-                                    <td th:text="${obj.codename}"></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -364,11 +412,9 @@
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
 
-
-    <!-- Simple DataTable용 JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
     <script th:inline="javascript" type="text/javascript">
         window.addEventListener('load', function () {
+            const user_role = /*[[${user.authorities[0].authority}]]*/'';
             const urlParams = new URLSearchParams(window.location.search);
             const typeParam = urlParams.get('type');
             const menuParam = urlParams.get('menu');
@@ -378,17 +424,22 @@
                 window.location.replace(changeUrl);
             }
             else if (typeParam === 'notice') {
+                document.getElementById('noticebtn').style.fontWeight = 'bold';
+
                 if (menuParam === 'admin') {
                     document.getElementById('noticemenu').textContent = '관리자';
+
+                    if (user_role === 'ROLE_ADMIN') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
                 }
                 else if (menuParam === 'washing') {
                     document.getElementById('noticemenu').textContent = '세탁 업체';
-                }
 
-                new simpleDatatables.DataTable("#noticetable", {
-                    searchable: true,
-                    fixedHeight: true
-                });
+                    if (user_role === 'ROLE_WASHING') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
+                }
 
                 // // 테이블의 각 행을 클릭할 때 이벤트 핸들러 등록
                 // $("#prtable tbody tr").on("click", function() {
@@ -405,17 +456,14 @@
                 // });
             }
             else if (typeParam === 'getlost') {
+                document.getElementById('getlostbtn').style.fontWeight = 'bold';
+
                 if (menuParam === 'get') {
                     document.getElementById('getlostmenu').textContent = '분실물';
                 }
                 else if (menuParam === 'lost') {
                     document.getElementById('getlostmenu').textContent = '습득물';
                 }
-
-                new simpleDatatables.DataTable("#getlosttable", {
-                    searchable: true,
-                    fixedHeight: true
-                });
 
                 // // 테이블의 각 행을 클릭할 때 이벤트 핸들러 등록
                 // $("#prtable tbody tr").on("click", function() {

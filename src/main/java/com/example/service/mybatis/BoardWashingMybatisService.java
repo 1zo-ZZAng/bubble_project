@@ -38,7 +38,7 @@ public interface BoardWashingMybatisService {
     public List<BoardView> selectBoardAdminNotice();
 
     // 공지사항 (세탁업체)
-    public List<BoardView> selectBoardWashingNotice();
+    public List<BoardWashing> selectBoardWashingNotice();
 
     // 분실물
     public List<BoardView> selectBoardWashingLost();
