@@ -1,5 +1,6 @@
 package com.example.controller.mybatis;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.dto.AdminBoardView;
 import com.example.dto.Board;
 import com.example.dto.BoardType;
 import com.example.dto.BoardView;
@@ -105,30 +107,36 @@ public class WBoardController {
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, 
                                 @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
-                                @RequestParam(name = "menu", required = false, defaultValue = "admin") String menu) {
+                                @RequestParam(name = "menu", required = false, defaultValue = "admin") String menu,
+                                @RequestParam(name = "page", required = false, defaultValue = "1") int page) {
         try {
 
             model.addAttribute("user", user);
 
-            // List<Board> list = new ArrayList<>();
+            // 총 게시글 개수
+            int listcount = 0;
+
             List<BoardView> list = new ArrayList<>();
+            List<AdminBoardView> adlist = new ArrayList<>();
             List<BoardWashing> bwlist = new ArrayList<>();
-            // List<BoardWashing> list = new ArrayList<>();
+
+            if (page == 0) {
+                return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin&page=1";
+            }
 
             if(type.equals("notice")){ // 공지사항 조회
                 if (menu.equals("admin")) { // 관리자 공지사항
-                    list = bwService.selectBoardAdminNotice();
+                    adlist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
+                    listcount = bwService.selectBoardAdminNoticeCount();
 
-                    model.addAttribute("list", list);
+                    model.addAttribute("list", adlist);
                 }
                 else { // 세탁업체 공지사항
-                    bwlist = bwService.selectBoardWashingNotice();
+                    bwlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
+                    listcount = bwService.selectBoardWashingNoticeCount();
 
                     model.addAttribute("list", bwlist);
                 }
-
-                // log.info("카테고리 전체 조회 => {}", list1.toString());
-
             } 
             else if (type.equals("getlost")) { // 분실물/습득물
                 if (menu.equals("get")) { // 분실물
@@ -147,7 +155,25 @@ public class WBoardController {
                 model.addAttribute("list", list);
             }
             else { //type값 없을 때 type=notice, menu=admin으로 자동이동
-                return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin";
+                return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin&page=1";
+            }
+
+            // 페이지네이션 정보 계산
+            int perPage = 10; // 페이지당 표시할 항목 수
+            int totalPageCount = (int) Math.ceil((double) listcount / perPage); // 총 페이지 개수  
+
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPageCount", totalPageCount);
+            
+            // 페이지네이션 인덱스
+            int startPageIndex = ((page-1)/10)*10 + 1; // 페이지네이션 그룹 시작
+            int endPageIndex = (((page-1)/10)+1)*10; // 페이지네이션 그룹 끝
+            model.addAttribute("startPageIndex", startPageIndex); 
+            if (totalPageCount < endPageIndex) {
+                model.addAttribute("endPageIndex", totalPageCount);
+            }
+            else {
+                model.addAttribute("endPageIndex", endPageIndex); 
             }
 
             return "/wboard/selectlist";

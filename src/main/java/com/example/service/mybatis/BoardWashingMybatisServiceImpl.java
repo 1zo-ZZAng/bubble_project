@@ -1,9 +1,11 @@
 package com.example.service.mybatis;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.AdminBoardView;
 import com.example.dto.BoardView;
 import com.example.dto.BoardWashing;
 import com.example.mapper.BoardWashingMapper;
@@ -17,9 +19,9 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
     final BoardWashingMapper bwMapper;
 
     @Override
-    public List<BoardView> selectBoardAdminNotice() {
+    public List<AdminBoardView> selectBoardAdminNotice(int start, int end) {
         try {
-            return bwMapper.selectBoardAdminNotice();
+            return bwMapper.selectBoardAdminNotice(start, end);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,9 +30,9 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
     }
 
     @Override
-    public List<BoardWashing> selectBoardWashingNotice() {
+    public List<BoardWashing> selectBoardWashingNotice(int start, int end) {
         try {
-            return bwMapper.selectBoardWashingNotice();
+            return bwMapper.selectBoardWashingNotice(start, end);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,6 +144,30 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
             return null;
         }
     }
+
+    @Override
+    public int selectBoardWashingNoticeCount() {
+        try {
+            return bwMapper.selectBoardWashingNoticeCount();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public int selectBoardAdminNoticeCount() {
+        try {
+            return bwMapper.selectBoardAdminNoticeCount();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    
 
 
     

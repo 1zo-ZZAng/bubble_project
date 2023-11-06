@@ -86,6 +86,28 @@
         }
 
         /* 게시판 테이블 */
+        #noticemenu::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 100%;
+            background-color: #000;
+            margin-right: 10px;
+        }
+
+        #noticemenu {
+            font-weight: bold; 
+            font-size: 25px;
+            width: 97%;
+            height: 37px;
+            margin: 0 auto;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            vertical-align: middle;
+            display: flex; 
+            align-items: center; 
+        }
+
         #noticetable {
             width: 97%;
             margin: 0 auto;
@@ -300,9 +322,9 @@
                                         공지사항
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="noticebtn">
-                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=admin)}">관리자</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=admin, page=1)}">관리자</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=washing)}">세탁업체</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=washing, page=1)}">세탁업체</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -310,13 +332,13 @@
                                         분실물/습득물
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="getlostbtn">
-                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=get)}">분실물</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=get, page=1)}">분실물</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=lost)}">습득물</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=lost, page=1)}">습득물</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" th:href="@{/wboard/selectlist.bubble(type=community)}" tabindex="-1" aria-disabled="true">자유게시판</a>
+                                    <a class="nav-link" th:href="@{/wboard/selectlist.bubble(type=community, page=1)}" tabindex="-1" aria-disabled="true">자유게시판</a>
                                 </li>
                             </ul>
                         </div>
@@ -324,8 +346,8 @@
 
                     <!-- 테이블 -->
                     <!-- (1) 공지사항 (관리자 or 세탁업체) -->
-                    <div th:if="${#strings.equals(param.type, 'notice')}">
-                        <p id="noticemenu" style="font-weight: bold; font-size: 25px; text-align: center;"></p>
+                    <div th:if="${#strings.equals(param.type, 'notice')}" style="position: relative;">
+                        <p id="noticemenu"></p>
                         
                         <table id="noticetable" class="line1">
                             <thead>
@@ -355,7 +377,9 @@
                         </table>
 
                         <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
-                        <button style="display: none;" id="writebtn">글쓰기</button>
+                        <div style="display: none; position: relative; width: 97%; left: 50%; transform: translateX(-50%); margin-top: 10px;" id="writebtn">
+                            <button style="float: right;" class="btn btn-outline-dark">글쓰기</button>
+                        </div>
                     </div>
 
                     <!-- (2) 분실물/습득물 (분실물 or 습득물) -->
@@ -385,6 +409,28 @@
                     </div>
 
                     <!-- (3) 자유게시판 -->
+
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" th:if="${totalPageCount > 1}" style="width: 97%; margin: 15px 0 auto; display: flex; justify-content: center;">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item" th:if="${currentPage > 1}">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${currentPage - 1})}" aria-label="Previous">
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(startPageIndex, endPageIndex)}" th:class="${pageNumber == currentPage} ? 'active' : ''">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < totalPageCount}">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${currentPage + 1})}" aria-label="Next">
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    
             </main>
 
             <!--하단영역-->
@@ -434,7 +480,7 @@
                     }
                 }
                 else if (menuParam === 'washing') {
-                    document.getElementById('noticemenu').textContent = '세탁 업체';
+                    document.getElementById('noticemenu').textContent = '세탁업체';
 
                     if (user_role === 'ROLE_WASHING') {
                         document.getElementById('writebtn').style.display = 'inline-block';
