@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.dto.AdminBoardView;
+import com.example.dto.BoardAdmin;
+import com.example.dto.BoardGetLost;
 import com.example.dto.Board;
 import com.example.dto.BoardType;
 import com.example.dto.BoardView;
@@ -116,9 +117,9 @@ public class WBoardController {
             // 총 게시글 개수
             int listcount = 0;
 
-            List<BoardView> list = new ArrayList<>();
-            List<AdminBoardView> adlist = new ArrayList<>();
-            List<BoardWashing> bwlist = new ArrayList<>();
+            List<BoardAdmin> alist = new ArrayList<>();
+            List<BoardWashing> wlist = new ArrayList<>();
+            List<BoardGetLost> gllist = new ArrayList<>();
 
             if (page == 0) {
                 return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin&page=1";
@@ -126,33 +127,36 @@ public class WBoardController {
 
             if(type.equals("notice")){ // 공지사항 조회
                 if (menu.equals("admin")) { // 관리자 공지사항
-                    adlist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
+                    alist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
                     listcount = bwService.selectBoardAdminNoticeCount();
 
-                    model.addAttribute("list", adlist);
+                    model.addAttribute("list", alist);
                 }
                 else { // 세탁업체 공지사항
-                    bwlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
+                    wlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
                     listcount = bwService.selectBoardWashingNoticeCount();
 
-                    model.addAttribute("list", bwlist);
+                    model.addAttribute("list", wlist);
                 }
             } 
             else if (type.equals("getlost")) { // 분실물/습득물
                 if (menu.equals("get")) { // 분실물
-                    list = bwService.selectBoardWashingLost();
+                    gllist = bwService.selectBoardGetLost(4, 10*page-9, 10*page);
+
+                    listcount = bwService.selectBoardGetLostCount(4);
+
+                    model.addAttribute("list", gllist);
                 }
                 else { // 습득물
-                    list = bwService.selectBoardWashingGet();
-                }
+                    gllist = bwService.selectBoardGetLost(5, 10*page-9, 10*page);
+                    listcount = bwService.selectBoardGetLostCount(5);
 
-                model.addAttribute("list", list);
+                    model.addAttribute("list", gllist);
+                }
             } 
             else if (type.equals("community")) { // 자유게시판
 
-                list = bwService.selectBoardWashingLost();
-
-                model.addAttribute("list", list);
+                
             }
             else { //type값 없을 때 type=notice, menu=admin으로 자동이동
                 return "redirect:/wboard/selectlist.bubble?type=notice&menu=admin&page=1";

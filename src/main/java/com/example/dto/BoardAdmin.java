@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class AdminBoardView {
+public class BoardAdmin {
 
     private long no;
 
@@ -19,6 +19,8 @@ public class AdminBoardView {
     private long hit;
 
     private Date regdate;
+
+    private String role;
 
     private long code;
 

@@ -54,6 +54,8 @@ public class Board {
     @JoinColumn(name = "code", referencedColumnName = "code")
     private BoardType boardType;
 
+    private String role;
+
     // 외래키 (board : reply = 1 : N)
     @ToString.Exclude
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

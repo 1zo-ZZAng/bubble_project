@@ -86,7 +86,7 @@
         }
 
         /* 게시판 테이블 */
-        #noticemenu::before {
+        .tablemenu::before {
             content: "";
             display: inline-block;
             width: 4px;
@@ -95,7 +95,7 @@
             margin-right: 10px;
         }
 
-        #noticemenu {
+        .tablemenu {
             font-weight: bold; 
             font-size: 25px;
             width: 97%;
@@ -108,7 +108,7 @@
             align-items: center; 
         }
 
-        #noticetable {
+        .boardtable {
             width: 97%;
             margin: 0 auto;
         }
@@ -118,34 +118,34 @@
             border-bottom: 1px solid black;
         }
         
-        #noticetable thead tr {
+        .boardtable thead tr {
             border-bottom: 1px solid black;
         }
 
-        #noticetable thead tr td {
+        .boardtable thead tr td {
             padding: 15px 0;
             font-size: 16px;
             text-align: center;
         }
         
-        #noticetable tbody tr td {
+        .boardtable tbody tr td {
             font-size: 14px;
             padding: 15px 0;
         }
         
-        #noticetable tbody tr:not(:last-child) {
+        .boardtable tbody tr:not(:last-child) {
             border-bottom: 1px solid #eee;
         }
 
-        #noticetable tbody tr td:not(:nth-child(2)) {
+        .boardtable tbody tr td:not(:nth-child(2)) {
             text-align: center;
         }
 
-        #noticetable tbody tr td:nth-child(2) {
+        .boardtable tbody tr td:nth-child(2) {
             padding-left: 10px;
         }
 
-        #noticetable tbody tr td a {
+        .boardtable tbody tr td a {
             text-decoration: none;
             color: black;
         }
@@ -347,9 +347,9 @@
                     <!-- 테이블 -->
                     <!-- (1) 공지사항 (관리자 or 세탁업체) -->
                     <div th:if="${#strings.equals(param.type, 'notice')}" style="position: relative;">
-                        <p id="noticemenu"></p>
+                        <p class="tablemenu" id="noticemenu"></p>
                         
-                        <table id="noticetable" class="line1">
+                        <table class="boardtable line1">
                             <thead>
                                 <tr>
                                     <td>번호</td>
@@ -375,33 +375,32 @@
                                 </tr>
                             </tbody>
                         </table>
-
-                        <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
-                        <div style="display: none; position: relative; width: 97%; left: 50%; transform: translateX(-50%); margin-top: 10px;" id="writebtn">
-                            <button style="float: right;" class="btn btn-outline-dark">글쓰기</button>
-                        </div>
                     </div>
 
                     <!-- (2) 분실물/습득물 (분실물 or 습득물) -->
-                    <div th:if="${#strings.equals(param.type, 'getlost')}">
-                        <p id="getlostmenu" style="font-weight: bold; font-size: 20px; text-align: center; margin-bottom: 0px;"></p>
+                    <div th:if="${#strings.equals(param.type, 'getlost')}" style="position: relative;">
+                        <p class="tablemenu" id="getlostmenu"></p>
 
-                        <table id="getlosttable">
+                        <table class="boardtable line1">
                             <thead>
                                 <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>작성일</td>
+                                    <td>조회</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
+                                <tr th:each="obj : ${list}" th:class="${obj.code == 1} ? 'code1' : ''">
                                     <td th:text="${obj.no}"></td>
-                                    <td th:text="${obj.title}"></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"></a></td>
+                                    <td>
+                                        <span th:if="${obj.name != null && obj.role == 'WASHING'}" th:text="${obj.name}"></span>
+                                        <span th:if="${obj.name != null && obj.role == 'CUSTOMER'}" th:text="${#strings.concat(obj.name[0], '****')}"></span>
+                                        <span th:if="${obj.name == null}" style="color: lightgray;"> 탈퇴한 회원</span>
+                                    </td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy년 MM월 dd일')}"></td>
                                     <td th:text="${obj.hit}"></td>
                                 </tr>
                             </tbody>
@@ -409,6 +408,11 @@
                     </div>
 
                     <!-- (3) 자유게시판 -->
+
+                    <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
+                    <div style="display: none; position: relative; width: 97%; left: 50%; transform: translateX(-50%); margin-top: 10px;" id="writebtn">
+                        <button style="float: right;" class="btn btn-outline-dark">글쓰기</button>
+                    </div>
 
                     <!-- 페이지네이션 -->
                     <div class="pagination" th:if="${totalPageCount > 1}" style="width: 97%; margin: 15px 0 auto; display: flex; justify-content: center;">
@@ -486,44 +490,24 @@
                         document.getElementById('writebtn').style.display = 'inline-block';
                     }
                 }
-
-                // // 테이블의 각 행을 클릭할 때 이벤트 핸들러 등록
-                // $("#prtable tbody tr").on("click", function() {
-                //     // 선택한 행에서 글번호 가져오기
-                //     const postno = $(this).find("td:first-child").text();
-
-                //     // 글번호가 없을 경우 이벤트를 작동하지 않도록 처리
-                //     if (postno === 'No entries found') {
-                //         return; // 이벤트 핸들러 실행 중지
-                //     }
-                    
-                //     // 글번호에 맞는 상세 페이지로 이동
-                //     window.location.href = contextPath + "/postreport.do" + `?menu=${menuParam}&no=${postno}`;
-                // });
             }
             else if (typeParam === 'getlost') {
                 document.getElementById('getlostbtn').style.fontWeight = 'bold';
 
                 if (menuParam === 'get') {
                     document.getElementById('getlostmenu').textContent = '분실물';
+
+                    if (user_role === 'ROLE_CUSTOMER') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
                 }
                 else if (menuParam === 'lost') {
                     document.getElementById('getlostmenu').textContent = '습득물';
+
+                    if (user_role === 'ROLE_CUSTOMER' || user_role === 'ROLE_WASHING') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
                 }
-
-                // // 테이블의 각 행을 클릭할 때 이벤트 핸들러 등록
-                // $("#prtable tbody tr").on("click", function() {
-                //     // 선택한 행에서 글번호 가져오기
-                //     const postno = $(this).find("td:first-child").text();
-
-                //     // 글번호가 없을 경우 이벤트를 작동하지 않도록 처리
-                //     if (postno === 'No entries found') {
-                //         return; // 이벤트 핸들러 실행 중지
-                //     }
-                    
-                //     // 글번호에 맞는 상세 페이지로 이동
-                //     window.location.href = contextPath + "/postreport.do" + `?menu=${menuParam}&no=${postno}`;
-                // });
             }
         });
 

@@ -22,6 +22,8 @@ public class Board {
 
     private long code; // 분류코드 - 외래키 BoardType
 
+    private String role;
+
     /* ------- */
 
     private Date redate; // BoardMapper에서 쓰임
