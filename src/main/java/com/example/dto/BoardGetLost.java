@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class BoardView {
+public class BoardGetLost {
 
     private long no;
 
@@ -28,4 +28,7 @@ public class BoardView {
 
     private String codedetail;
 
+    private String name;
+
+    private long rown;
 }

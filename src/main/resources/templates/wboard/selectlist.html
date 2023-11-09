@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,26 +22,25 @@
     <!--아이콘 모양 돋보기라던가 그런거던데-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-    <!--Simple DataTable용 CSS CDN--> <!--표 부분임-->
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
-
     <!--현재 페이지용 CSS 외부 링크-->
     <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/washing/main.css}'>
 
     <!-- jquery 추가 -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <!-- font awesome용 스크립트 CDN-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+        integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
-
-        *{
+        * {
             font-family: 'NanumSquareLight';
         }
 
         .btn:focus {
-            border : none;
+            border: none;
             outline: none;
         }
 
@@ -48,7 +48,7 @@
             display: none;
         }
 
-        .datatable-dropdown > label {
+        .datatable-dropdown>label {
             display: none;
         }
 
@@ -56,24 +56,27 @@
             display: none;
         }
 
-        .datatable-sorter::before{
+        .datatable-sorter::before {
             display: none;
         }
 
-        .datatable-sorter::after{
+        .datatable-sorter::after {
             display: none;
         }
 
-        #datatableSimple thead{
+        #adminNotice thead {
+            pointer-events: none;
+        }
+        #washingNotice thead {
             pointer-events: none;
         }
 
-        a{
+        a {
             text-decoration: none;
         }
 
 
-        #layoutTotal #layoutContent .container-fluid .mb-3 a  {
+        #layoutTotal #layoutContent .container-fluid .mb-3 a {
             color: black;
         }
 
@@ -82,13 +85,81 @@
             border-bottom: none;
         }
 
+        /* 게시판 테이블 */
+        .tablemenu::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 100%;
+            background-color: #000;
+            margin-right: 10px;
+        }
+
+        .tablemenu {
+            font-weight: bold; 
+            font-size: 25px;
+            width: 97%;
+            height: 37px;
+            margin: 0 auto;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            vertical-align: middle;
+            display: flex; 
+            align-items: center; 
+        }
+
+        .boardtable {
+            width: 97%;
+            margin: 0 auto;
+        }
+        
+        .line1 {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+        
+        .boardtable thead tr {
+            border-bottom: 1px solid black;
+        }
+
+        .boardtable thead tr td {
+            padding: 15px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .boardtable tbody tr td {
+            font-size: 14px;
+            padding: 15px 0;
+        }
+        
+        .boardtable tbody tr:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+
+        .boardtable tbody tr td:not(:nth-child(2)) {
+            text-align: center;
+        }
+
+        .boardtable tbody tr td:nth-child(2) {
+            padding-left: 10px;
+        }
+
+        .boardtable tbody tr td a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .code1 {
+            font-weight: bold;
+        }
     </style>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             const sidebarToggle = $('#sidebarToggle');
-            if(sidebarToggle) {
-                sidebarToggle.click(function() {
+            if (sidebarToggle) {
+                sidebarToggle.click(function () {
                     console.log('숨기기');
                     event.preventDefault(); /*아래쪽 요소로 이벤트가 전파안되도록*/
                     document.body.classList.toggle('sb-sidenav-toggled');
@@ -101,13 +172,13 @@
 </head>
 
 <body class="sb-nav-fixed">
-    
+
     <!--내비게이션 영역-->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow">
 
         <!--Navbar Brand-->
         <a class="navbar-brand ps-3 " th:href="@{/washing/home.bubble}">
-            <img th:src="@{/images/Blogo.png}" width="24px" height="25px" >
+            <img th:src="@{/images/Blogo.png}" width="24px" height="25px">
             <strong>BUBBLE BUMUL</strong>
         </a>
 
@@ -119,7 +190,8 @@
         <!--Profile-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="profile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
+                <a class="nav-link dropdown-toggle" id="profile" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"> <!--dropdown-toggle이게 클래스에 있어서 아이콘으로 역삼각형 모양이 뜸-->
                     <i class="bi bi-person-lines-fill"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profile">
@@ -135,13 +207,14 @@
                     <!------------------------------------------------------------------------->
 
                     <!-- 로그인상태 -->
-                    <div th:if="${user != null}"> 
-        
-                        <li><a class="dropdown-item" th:href="@{/washing/mypage.bubble(id=${user.username})}">마이페이지</a></li>
+                    <div th:if="${user != null}">
+
+                        <li><a class="dropdown-item" th:href="@{/washing/mypage.bubble(id=${user.username})}">마이페이지</a>
+                        </li>
 
                         <li>
                             <hr class="dropdown-divider"> <!--경계선-->
-                        </li> 
+                        </li>
 
                         <li>
                             <form th:action="@{/logout.bubble}" method="post">
@@ -163,55 +236,62 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        
-                        <div class="sb-sidenav-menu-heading">업체</div> 
+
+                        <div class="sb-sidenav-menu-heading">업체</div>
 
                         <!--메인-->
-                        <a class="nav-link collapsed" th:href="@{/washing/home.bubble}" >
+                        <a class="nav-link collapsed" th:href="@{/washing/home.bubble}">
                             <div class="sb-nav-link-icon"><i class="bi bi-house"></i></div>
                             메인
                         </a>
 
                         <!--매출 & 예약 내역 조회-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales"
+                            aria-expanded="false" aria-controls="collapseSales">
                             <div class="sb-nav-link-icon"><i class="bi bi-graph-down"></i></div> <!--아이콘 변경-->
                             조회
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseSales" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/washingsales/sales.bubble}">매출</a> 
+                                <a class="nav-link" th:href="@{/washingsales/sales.bubble}">매출</a>
                                 <a class="nav-link" th:href="@{/washingsales/reserve.bubble}">예약 내역</a>
                             </nav>
                         </div>
 
                         <!--보유기기-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMachines" aria-expanded="false" aria-controls="collapseMachines">
                             <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
                             보유기기
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseMachines" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
-                                    <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기 조회</a>
+                                <a class="nav-link" th:href="@{/machine/insert.bubble(wid=${user.username})}">기기 등록</a>
+                                <a class="nav-link" th:href="@{/machine/selectlist.bubble(wid=${user.username})}">기기
+                                    조회</a>
                             </nav>
                         </div>
 
                         <!--게시판-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
                             <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
                             게시판
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link"  th:href="@{/wboard/selectlist.bubble}">목록</a>
-                                <a class="nav-link"  th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
+                                <a class="nav-link" th:href="@{/wboard/selectlist.bubble}">목록</a>
+                                <a class="nav-link" th:href="@{/wboard/write.bubble(id=${user.username})}">글쓰기</a>
                             </nav>
                         </div>
 
-                    
+
                     </div>
                 </div>
 
@@ -230,164 +310,131 @@
         <div id="layoutContent">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">게시판</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active"></li>  
+                        <li class="breadcrumb-item active"></li>
                     </ol>
 
-                    <div>
-                        <table class="mb-3">
-                            <tr style="font-weight: bold;">
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=1)}" style="margin-right: 1rem;" >전체게시판</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=2)}" style="margin-right: 1rem;">공지사항</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=3)}" style="margin-right: 1rem;">분실물</a></td>
-                                <td><a th:href="@{/wboard/selectlist.bubble(menu=4)}"  style="margin-right: 1rem;">습득물</a></td>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="noticebtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        공지사항
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="noticebtn">
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=admin, page=1)}">관리자</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=notice, menu=washing, page=1)}">세탁업체</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="getlostbtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        분실물/습득물
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="getlostbtn">
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=get, page=1)}">분실물</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" th:href="@{/wboard/selectlist.bubble(type=getlost, menu=lost, page=1)}">습득물</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/wboard/selectlist.bubble(type=community, page=1)}" tabindex="-1" aria-disabled="true">자유게시판</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
-                                <td><a th:href="@{/wboard/write.bubble(id=${user.username})}" style="color: rgb(0, 0, 180);" >글쓰기</a></td>
-                                
-                            </tr>
-                        </table>
-                    </div>
-
-                    
-
-                    <!--전체게시판-->
-                    <div th:if="${#strings.equals(param.menu, '1')}">
-
-                        <h4 style="float: left; margin-top: 1rem;">전체게시판</h4>
-
-                        <table id="datatableSimple">
-                            <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>카테고리</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="obj : ${list}">
-                                    <td th:text="${obj.no}"></td>
-
-                                    <!--제목-->
-                                    <td th:if="${obj.code == 1}"> 
-                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 2}">
-                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 3}">
-                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 4}">
-                                        <a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}" style="text-decoration: none; color: black;"></a>
-                                    </td>
-
-                                    <!--카테고리-->
-                                    <td th:if="${obj.code == 1}">
-                                        <span th:text="${obj.codename}" style="color: red;"></span>
-                                    </td>
-                                    <td th:if="${obj.code != 1}">
-                                        <span th:text="${obj.codename}"></span>
-                                    </td>
-
-
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${obj.hit}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- 테이블 -->
+                    <!-- (1) 공지사항 (관리자 or 세탁업체) -->
+                    <div th:if="${#strings.equals(param.type, 'notice')}" style="position: relative;">
+                        <p class="tablemenu" id="noticemenu"></p>
                         
-                    </div>
-
-                    <!--공지사항 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '2')}">
-
-                        <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
-
-                        <table id="datatableSimple">
+                        <table class="boardtable line1">
                             <thead>
                                 <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>작성일</td>
+                                    <td>조회</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
-                                    <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${obj.hit}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                    </div>
-
-                    <!--분실물 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '3')}">
-
-                        <h4 style="float: left; margin-top: 1rem;">분실물</h4>
-
-                        <table id="datatableSimple">
-                            <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="obj : ${list}">
-                                    <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <tr th:each="obj : ${list}" th:class="${obj.code == 1} ? 'code1' : ''">
+                                    <td>
+                                        <span th:if="${obj.code == 1}">공지</span>
+                                        <span th:if="${obj.code == 2 || obj.code == 3}" th:text="${obj.no}"></span>
+                                    </td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"></a></td>
+                                    <td>
+                                        <span th:if="${#strings.equals(param.menu, 'admin')}" th:text="${obj.writer}"></span>
+                                        <span th:if="${#strings.equals(param.menu, 'washing')}" th:text="${obj.name}"></span>
+                                    </td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy년 MM월 dd일')}"></td>
                                     <td th:text="${obj.hit}"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!--습득물 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '4')}">
+                    <!-- (2) 분실물/습득물 (분실물 or 습득물) -->
+                    <div th:if="${#strings.equals(param.type, 'getlost')}" style="position: relative;">
+                        <p class="tablemenu" id="getlostmenu"></p>
 
-                        <h4 style="float: left; margin-top: 1rem;">습득물</h4>
-
-                        <table id="datatableSimple">
+                        <table class="boardtable line1">
                             <thead>
                                 <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>작성일</td>
+                                    <td>조회</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
+                                <tr th:each="obj : ${list}" th:class="${obj.code == 1} ? 'code1' : ''">
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}" style="text-decoration: none; color: black;"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td><a th:href="@{/wboard/selectone.bubble(no=${obj.no})}" th:text="${obj.title}"></a></td>
+                                    <td>
+                                        <span th:if="${obj.name != null && obj.role == 'WASHING'}" th:text="${obj.name}"></span>
+                                        <span th:if="${obj.name != null && obj.role == 'CUSTOMER'}" th:text="${#strings.concat(obj.name[0], '****')}"></span>
+                                        <span th:if="${obj.name == null}" style="color: lightgray;"> 탈퇴한 회원</span>
+                                    </td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy년 MM월 dd일')}"></td>
                                     <td th:text="${obj.hit}"></td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- (3) 자유게시판 -->
+
+                    <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
+                    <div style="display: none; position: relative; width: 97%; left: 50%; transform: translateX(-50%); margin-top: 10px;" id="writebtn">
+                        <button style="float: right;" class="btn btn-outline-dark">글쓰기</button>
+                    </div>
+
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" th:if="${totalPageCount > 1}" style="width: 97%; margin: 15px 0 auto; display: flex; justify-content: center;">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item" th:if="${currentPage > 1}">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${currentPage - 1})}" aria-label="Previous">
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(startPageIndex, endPageIndex)}" th:class="${pageNumber == currentPage} ? 'active' : ''">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < totalPageCount}">
+                                    <a class="page-link" th:href="@{/wboard/selectlist.bubble(type=${param.type}, menu=${param.menu}, page=${currentPage + 1})}" aria-label="Next">
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     
-
-                </div>
-
             </main>
 
             <!--하단영역-->
@@ -395,7 +442,7 @@
                 <div class="container-fluid py-4">
                     <div class="d-flex justify-content-between align-items-center small">
                         <div class="text-muted me-2">Copyright &copy; 2023 BUBBLE BUMUL. All Rights Reserved. <br>
-                            <br> 사업자등록번호 : 123-45-67890 <br> (주) BUBBLE BUMUL 
+                            <br> 사업자등록번호 : 123-45-67890 <br> (주) BUBBLE BUMUL
                             <br> 주소 : 부산광역시 남구 신선로 365 (48548) <br> 대표이사 : 신애린 여우정 탁승은
                         </div>
                         <div>
@@ -411,21 +458,63 @@
 
 
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
 
+    <script th:inline="javascript" type="text/javascript">
+        window.addEventListener('load', function () {
+            const user_role = /*[[${user.authorities[0].authority}]]*/'';
+            const urlParams = new URLSearchParams(window.location.search);
+            const typeParam = urlParams.get('type');
+            const menuParam = urlParams.get('menu');
 
-    <!-- Simple DataTable용 JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script th:inline="javascript">
-        $(document).ready(function() {
-            new simpleDatatables.DataTable("#datatableSimple", {
-                searchable: true,
-                fixedHeight: true,
-            });
+            if (!typeParam) {
+                const changeUrl = urlParams + '?type=notice&menu=admin';
+                window.location.replace(changeUrl);
+            }
+            else if (typeParam === 'notice') {
+                document.getElementById('noticebtn').style.fontWeight = 'bold';
+
+                if (menuParam === 'admin') {
+                    document.getElementById('noticemenu').textContent = '관리자';
+
+                    if (user_role === 'ROLE_ADMIN') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
+                }
+                else if (menuParam === 'washing') {
+                    document.getElementById('noticemenu').textContent = '세탁업체';
+
+                    if (user_role === 'ROLE_WASHING') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
+                }
+            }
+            else if (typeParam === 'getlost') {
+                document.getElementById('getlostbtn').style.fontWeight = 'bold';
+
+                if (menuParam === 'get') {
+                    document.getElementById('getlostmenu').textContent = '분실물';
+
+                    if (user_role === 'ROLE_CUSTOMER') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
+                }
+                else if (menuParam === 'lost') {
+                    document.getElementById('getlostmenu').textContent = '습득물';
+
+                    if (user_role === 'ROLE_CUSTOMER' || user_role === 'ROLE_WASHING') {
+                        document.getElementById('writebtn').style.display = 'inline-block';
+                    }
+                }
+            }
         });
+
     </script>
 
 
 
 </body>
+
 </html>
