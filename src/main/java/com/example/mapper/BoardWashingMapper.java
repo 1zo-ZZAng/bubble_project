@@ -21,7 +21,7 @@ public interface BoardWashingMapper {
         /* 카테고리 별 조회 */
 
         //공지사항
-        @Select({" SELECT * FROM boardwashing WHERE code=1 ORDER BY no DESC "})
+        @Select({" SELECT * FROM boardwashing WHERE code=3 ORDER BY no DESC "})
         public List<BoardWashing> selectBoardWashingNotice();
 
         //분실물

@@ -84,6 +84,18 @@
         .datatable-wrapper.no-footer .datatable-container {
             border-bottom: none;
         }
+
+        /* 테이블  */
+        table {
+            width: 100%;
+            border-top: 2px solid #444444;
+            border-collapse: collapse;
+            border-bottom: 2px solid #444444;
+        }
+        th, td {
+            border-bottom: 1px solid #444444;
+            padding: 10px;
+        }
     </style>
 
     <script>
@@ -228,77 +240,75 @@
                         <li class="breadcrumb-item active"></li>
                     </ol>
 
-                    <div>
-                        <table class="mb-3">
-                            <tr style="font-weight: bold;">
-                                <td><a th:href="@{/aboard/selectlist.bubble(menu=1)}"
-                                        style="margin-right: 1rem;">전체게시판</a></td>
-                                <td><a th:href="@{/aboard/selectlist.bubble(menu=2)}"
-                                        style="margin-right: 1rem;">공지사항</a></td>
-                                <td><a th:href="@{/aboard/selectlist.bubble(menu=3)}"
-                                        style="margin-right: 1rem;">분실물</a></td>
-                                <td><a th:href="@{/aboard/selectlist.bubble(menu=4)}"
-                                        style="margin-right: 1rem;">습득물</a></td>
+                    <!-- 카테고리 navigation -->
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="noticebtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        공지사항
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="noticebtn">
+                                        <li><a class="dropdown-item" th:href="@{/aboard/selectlist.bubble(type=notice, menu=admin)}">관리자</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" th:href="@{/aboard/selectlist.bubble(type=notice, menu=washing)}">세탁업체</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="getlostbtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        분실물/습득물
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="getlostbtn">
+                                        <li><a class="dropdown-item" th:href="@{/aboard/selectlist.bubble(type=getlost, menu=get)}">분실물</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" th:href="@{/aboard/selectlist.bubble(type=getlost, menu=lost)}">습득물</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/aboard/selectlist.bubble(type=community)}" tabindex="-1" aria-disabled="true">자유게시판</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/aboard/write.bubble(id=${user.username})}"
+                                    style="color: rgb(0, 0, 180);">글쓰기</a></li>
+                            </ul>
+                        </div>
+                    </nav>
 
-                                <td><a th:href="@{/aboard/write.bubble(id=${user.username})}"
-                                        style="color: rgb(0, 0, 180);">글쓰기</a></td>
-
-                            </tr>
-                        </table>
-                    </div>
 
 
+                    <!-- 공지사항(전체) 게시판 -->
+                     <div th:if="${#strings.equals(param.type, null)}">
+                        <div style="display: flex; margin-top: 15px;">
+                            <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                            <h3 style="float: left; margin-left: 5px; font-weight: bold;">공지사항</h3>
+                        </div>
 
-                    <!--전체게시판-->
-                    <div th:if="${#strings.equals(param.menu, '1')}">
-
-                        <h4 style="float: left; margin-top: 1rem;">전체게시판</h4>
-
-                        <table id="datatableSimple">
-                            <thead>
+                        <table style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
+                            <thead style="border: 2px;">
                                 <tr>
                                     <th>번호</th>
                                     <th>제목</th>
-                                    <th>카테고리</th>
                                     <th>작성자</th>
                                     <th>작성일</th>
                                     <th>조회</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
+                                <tr th:each="obj : ${list}" th:if="${obj.code == 1}"  >
                                     <td th:text="${obj.no}"></td>
+                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                            th:text=" '[' + 중요 +']' + ' ' + ${obj.title}"
+                                            style="text-decoration: none; color: black;"></a></td>
+                                    <td th:text="${obj.writer}"></td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${obj.hit}"></td>
+                                </tr>
 
-                                    <!--제목-->
-                                    <td th:if="${obj.code == 1}">
-                                        <a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
-                                            th:text=" '[' + ${obj.codename} +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 2}">
-                                        <a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
-                                            th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 3}">
-                                        <a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
-                                            th:text=" '[' + ${obj.codedetail} +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a>
-                                    </td>
-                                    <td th:if="${obj.code == 4}">
-                                        <a th:href="@{/aboard/selectone.bubble(no=${obj.no})}" th:text=" '[' + ${obj.codename} +']' + ' ' +${obj.title}"
-                                            style="text-decoration: none; color: black;"></a>
-                                    </td>
-
-                                    <!--카테고리-->
-                                    <td th:if="${obj.code == 1}">
-                                        <span th:text="${obj.codename}" style="color: red;"></span>
-                                    </td>
-                                    <td th:if="${obj.code != 1}">
-                                        <span th:text="${obj.codename}"></span>
-                                    </td>
-
-
+                                <tr th:each="obj : ${list}"th:if="${obj.code == 2} or ${obj.code ==3}">
+                                    <td th:text="${obj.no}"></td>
+                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                            th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
+                                            style="text-decoration: none; color: black;"></a></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -308,8 +318,50 @@
 
                     </div>
 
-                    <!--공지사항 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '2')}">
+
+
+                    <!--공지사항(관리자) 게시판-->
+                    <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'admin')}">
+
+                        <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
+
+                        <table id="noticeTable">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                    <th>조회</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="obj : ${list}" th:if="${obj.code == 1}"  >
+                                    <td th:text="${obj.no}"></td>
+                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                            th:text=" '[' + 중요 +']' + ' ' + ${obj.title}"
+                                            style="text-decoration: none; color: black;"></a></td>
+                                    <td th:text="${obj.writer}"></td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${obj.hit}"></td>
+                                </tr>
+
+                                <tr th:each="obj : ${list}"th:if="${obj.code == 2}">
+                                    <td th:text="${obj.no}"></td>
+                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                            th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
+                                            style="text-decoration: none; color: black;"></a></td>
+                                    <td th:text="${obj.writer}"></td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${obj.hit}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                     <!--공지사항(업체) 게시판-->
+                     <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'washing')}">
 
                         <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
 
@@ -324,7 +376,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}">
+                                <tr th:each="obj : ${list}" th:if="${obj.code == 3}">
                                     <td th:text="${obj.no}"></td>
                                     <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
                                             th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
@@ -339,7 +391,7 @@
                     </div>
 
                     <!--분실물 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '3')}">
+                    <!-- <div th:if="${#strings.equals(param.menu, '3')}">
 
                         <h4 style="float: left; margin-top: 1rem;">분실물</h4>
 
@@ -365,10 +417,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
 
                     <!--습득물 게시판-->
-                    <div th:if="${#strings.equals(param.menu, '4')}">
+                    <!-- <div th:if="${#strings.equals(param.menu, '4')}">
 
                         <h4 style="float: left; margin-top: 1rem;">습득물</h4>
 
@@ -394,7 +446,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
 
 
                 </div>
@@ -434,10 +486,11 @@
             new simpleDatatables.DataTable("#datatableSimple", {
                 searchable: true,
                 fixedHeight: true,
+
             });
         });
+    
     </script>
-    <script src="/src/main/resources/static/js/admin.js"></script>
 
 
 

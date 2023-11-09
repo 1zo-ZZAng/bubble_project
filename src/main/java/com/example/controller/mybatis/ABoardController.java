@@ -104,18 +104,21 @@ public class ABoardController {
 
     //전체 조회
     @GetMapping(value="/selectlist.bubble")
-    public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu) {
+    public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
+                                             @RequestParam(name = "menu", required = false, defaultValue = "null") String menu) {
         try {
 
             model.addAttribute("user", user);
 
             // List<Board> list = new ArrayList<>();
-            List<BoardView> list = new ArrayList<>();
+            List<BoardView> list = new ArrayList<>();            
+            List<BoardWashing> list2 = new ArrayList<>();
 
 
-            if(menu == 1){ //전체 게시판 조회
 
-                list = bvService.selectBoardView();
+            if(type.equals("notice")){ //공지사항 조회
+
+                list = bvService.selectBoardViewNotice();
 
                 // log.info("제발 좀 나와 => {}",list.toString());
                 // log.info("카테고리 전체 조회 => {}", list1.toString());
@@ -123,36 +126,60 @@ public class ABoardController {
                 model.addAttribute("list", list);
 
 
-            } else if(menu == 2) { //공지사항 전체 조회
+            } else if(type.equals("notice") && menu.equals("admin")) { //공지사항(관리자)조회
 
-                list = bvService.selectBoardViewNotice();
+                list = bvService.selectBoardViewNoticeAdmin();
 
                 model.addAttribute("list", list);
 
 
-            } else if(menu == 3) { //분실물 전체 조회
+            } else if(type.equals("notice") && menu.equals("washing")) { //공지사항(업체)조회
+
+                // list2 = bwService.selectBoardWashingNotice(); 수정해야함
+                model.addAttribute("list", list2);
+                log.info("dldldld{}=>",list2.toString());                
+
+            } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
+
+                list = bvService.selectBoardViewGetLost();
+                
+                model.addAttribute("list", list);
+
+
+            } else if(type.equals("getlost") && menu.equals("lost")) { //분실물 전체 조회
 
                 list = bvService.selectBoardViewLost();
-
+                
                 model.addAttribute("list", list);
 
-            } else if(menu == 4) { //습득물 전체 조회
+
+            } else if(type.equals("getlost") && menu.equals("get")) { //습득물 전체 조회
 
                 list = bvService.selectBoardViewGet();
                 
                 model.addAttribute("list", list);
 
 
-            }else { //menu값 없을 때 menu=1로 자동이동
-                return "redirect:/aboard/selectlist.bubble?menu=1";
-            }
+            } else if(type.equals("community")) { //자유게시판
 
+                list = bvService.selectBoardViewGeneral();
+                
+                model.addAttribute("list", list);
+
+
+            }
+            else {
+                // 기본적으로 공지사항으로 설정
+                list = bvService.selectBoardViewNotice();
+            }
+    
             return "/aboard/selectlist";
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/admin/home.bubble";
         }
+
 
     }
 

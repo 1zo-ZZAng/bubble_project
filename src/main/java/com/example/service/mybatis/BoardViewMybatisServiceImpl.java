@@ -15,8 +15,7 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
 
     final BoardViewMapper bvMapper;
 
-
-    //전체조회
+    //전체 조회
     @Override
     public List<BoardView> selectBoardView() {
         try {
@@ -26,31 +25,68 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
+        }    
     }
 
-    /* 카테고리 조회 */
-
-    //공지사항
+    //공지사항(전체)
     @Override
     public List<BoardView> selectBoardViewNotice() {
         try {
 
             return bvMapper.selectBoardViewNotice();
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    //분실물
+    //공지사항(관리자)
     @Override
-    public List<BoardView> selectBoardViewLost() {
+    public List<BoardView> selectBoardViewNoticeAdmin() {
         try {
 
-            return bvMapper.selectBoardViewLost();
+            return bvMapper.selectBoardViewNoticeAdmin();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    //공지사항(업체)
+    @Override
+    public List<BoardView> selectBoardViewNoticeWashing() {
+        try {
+
+            return bvMapper.selectBoardViewNoticeWashing();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //분실물 습득물
+    @Override
+    public List<BoardView> selectBoardViewGetLost() {
+        try {
+
+            return bvMapper.selectBoardViewGetLost();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //분실뮬
+    @Override
+    public List<BoardView> selectBoardViewLost() {
+       try {
+
+            return bvMapper.selectBoardViewLost();
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -60,16 +96,17 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
     //습득물
     @Override
     public List<BoardView> selectBoardViewGet() {
-        try {
+       try {
 
             return bvMapper.selectBoardViewGet();
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    
     //자유게시판
     @Override
     public List<BoardView> selectBoardViewGeneral() {
@@ -82,5 +119,6 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
             return null;
         }
     }
+
     
 }
