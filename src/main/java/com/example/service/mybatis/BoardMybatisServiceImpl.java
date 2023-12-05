@@ -52,6 +52,16 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         }
     }
 
+    //말머리 분류 - 중복 제거 null값 제외
+    @Override
+    public List<BoardType> selectlistBTypeCodeDetailTest(String codename) {
+        try {
+            return bMapper.selectlistBTypeCodeDetailTest(codename);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /* =============================메인=============================== */
 
@@ -265,21 +275,6 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return null;
         }
     }
-
-    @Override
-    public BoardType selectlistBTypeAdmin() {
-         try {
-            
-            return bMapper.selectlistBTypeAdmin();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    
-
     
 
 

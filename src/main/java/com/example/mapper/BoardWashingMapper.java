@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.security.config.web.servlet.SecurityMarker;
 
 import com.example.dto.BoardAdmin;
 import com.example.dto.BoardGetLost;
@@ -41,6 +42,10 @@ public interface BoardWashingMapper {
         // ------------------------------------------------------------------------------------------
         // 페이지네이션
         // 전체 글 개수
+        //공지사항( 전체 )
+        @Select({" SELECT COUNT(*) FROM BoardView "})
+        public int selectBoardAllNoticeCount();
+
         // (1) 공지사항 (관리자)
         @Select({" SELECT COUNT(*) FROM BoardAdmin "})
         public int selectBoardAdminNoticeCount();

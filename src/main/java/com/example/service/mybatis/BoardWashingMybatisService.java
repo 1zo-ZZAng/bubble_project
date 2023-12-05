@@ -30,6 +30,8 @@ public interface BoardWashingMybatisService {
     // ------------------------------------------------------------------------------------------
     // 페이지네이션
     // 전체 글 개수
+    public int selectBoardAllNoticeCount();
+
     // (1) 공지사항 (관리자)
     public int selectBoardAdminNoticeCount();
 

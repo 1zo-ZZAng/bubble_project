@@ -2,6 +2,7 @@ package com.example.service.mybatis;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.BoardAdmin;
@@ -72,6 +73,19 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
     // ------------------------------------------------------------------------------------------
     // 페이지네이션
     // 전체 글 개수
+
+    //공지사항( 전체 )
+    @Override
+    public int selectBoardAllNoticeCount() {
+         try {
+            return bwMapper.selectBoardAllNoticeCount();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     // (1) 공지사항 (관리자)
     @Override
     public int selectBoardAdminNoticeCount() {
@@ -107,4 +121,5 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
             return -1;
         }
     }
-}
+
+    }

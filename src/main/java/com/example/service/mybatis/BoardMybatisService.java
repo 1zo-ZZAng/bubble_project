@@ -2,6 +2,8 @@ package com.example.service.mybatis;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Board;
@@ -14,14 +16,16 @@ public interface BoardMybatisService {
     //게시판 분류
     public List<BoardType> selectlistBType();
 
-    //게시판 분류 -  중복 제거
+    //게시판 분류 조회
     public List<BoardType> selectlistBTypeCodeName();
 
-    //말머리 분류 - 중복 제거
+     //게시판 분류값에 따른 말머리 
     public List<BoardType> selectlistBTypeCodeDetail();
 
-    //말머리 - 관리자용(공지사항)
-    public BoardType selectlistBTypeAdmin();
+    //말머리 분류 - 테스트
+    public List<BoardType> selectlistBTypeCodeDetailTest(@Param("codename") String codename);
+
+
 
     /* ===================================== */
     

@@ -3,8 +3,10 @@ package com.example.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.example.dto.BoardAdmin;
 import com.example.dto.BoardView;
 
 
@@ -13,17 +15,16 @@ public interface BoardViewMapper {
 
 
     //전체 조회
-    @Select({" SELECT * FROM boardview ORDER BY no DESC "})
-    public List<BoardView> selectBoardView();
+    @Select({" SELECT * FROM boardview WHERE code IN (1,2,3) BETWEEN #{start} AND #{end} ORDER BY code ASC, regdate desc "})
+    public List<BoardView> selectBoardView(@Param("start") int start, @Param("end") int end);
 
     /* 카테고리 별 조회 */
 
-    //공지사항(전체)
-    @Select({" SELECT * FROM boardview WHERE code IN (1,2,3) ORDER BY code ASC, regdate desc; "})
-    public List<BoardView> selectBoardViewNotice();
+
+    // 게시글 조회
 
     //공지사항(관리자)
-    @Select({" SELECT * FROM boardview WHERE code IN (1,2) ORDER BY code ASC, regdate desc; "})
+    @Select({" SELECT * FROM boardview WHERE code IN (1,2) ORDER BY code ASC, regdate desc "})
     public List<BoardView> selectBoardViewNoticeAdmin();
 
     //공지사항(업체)
@@ -45,5 +46,7 @@ public interface BoardViewMapper {
     //자유게시판
     @Select({" SELECT * FROM boardview WHERE code=6 ORDER BY no DESC "})
     public List<BoardView> selectBoardViewGeneral();
+    
+
     
 }

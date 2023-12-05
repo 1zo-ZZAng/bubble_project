@@ -2,6 +2,7 @@ package com.example.service.mybatis;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.BoardView;
@@ -15,12 +16,14 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
 
     final BoardViewMapper bvMapper;
 
-    //전체 조회
-    @Override
-    public List<BoardView> selectBoardView() {
-        try {
 
-            return bvMapper.selectBoardView();
+    //공지사항(전체)
+    @Override
+    public List<BoardView> selectBoardView(int start, int end) {
+       
+    try {
+
+            return bvMapper.selectBoardView(start,end);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,18 +31,6 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
         }    
     }
 
-    //공지사항(전체)
-    @Override
-    public List<BoardView> selectBoardViewNotice() {
-        try {
-
-            return bvMapper.selectBoardViewNotice();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     //공지사항(관리자)
     @Override
@@ -119,6 +110,9 @@ public class BoardViewMybatisServiceImpl implements BoardViewMybatisService{
             return null;
         }
     }
+
+
+
 
     
 }

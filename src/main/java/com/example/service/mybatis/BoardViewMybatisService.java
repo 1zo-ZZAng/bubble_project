@@ -2,6 +2,7 @@ package com.example.service.mybatis;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,10 @@ public interface BoardViewMybatisService {
 
 
     //전체 조회
-    public List<BoardView> selectBoardView();
+    public List<BoardView> selectBoardView(@Param("start") int start, @Param("end") int end);
 
 
     /* 카테고리 별 조회 */
-
-    //공지사항(전체)
-    public List<BoardView> selectBoardViewNotice();
 
     //공지사항(관리자)
     public List<BoardView> selectBoardViewNoticeAdmin();

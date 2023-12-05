@@ -285,7 +285,7 @@
 
                         <table style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
                             <thead style="border: 2px;">
-                                <tr>
+                                <tr style="border-bottom: 1px solid black;">
                                     <th>번호</th>
                                     <th>제목</th>
                                     <th>작성자</th>
@@ -322,8 +322,10 @@
 
                     <!--공지사항(관리자) 게시판-->
                     <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'admin')}">
-
-                        <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">관리자 공지사항</h3>
+                            </div>
 
                         <table id="noticeTable">
                             <thead>
@@ -362,31 +364,12 @@
 
                      <!--공지사항(업체) 게시판-->
                      <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'washing')}">
+                        <div style="display: flex; margin-top: 15px;">
+                            <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                            <h3 style="float: left; margin-left: 5px; font-weight: bold;">업체 공지사항</h3>
+                        </div>
 
-                        <h4 style="float: left; margin-top: 1rem;">공지사항</h4>
-
-                        <table id="datatableSimple">
-                            <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="obj : ${list}" th:if="${obj.code == 3}">
-                                    <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
-                                            th:text=" '[' + ${obj.name} +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${obj.hit}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        
 
                     </div>
 

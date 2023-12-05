@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.dto.Board;
+import com.example.dto.BoardAdmin;
+import com.example.dto.BoardGetLost;
 import com.example.dto.BoardType;
 import com.example.dto.BoardView;
 import com.example.dto.BoardWashing;
@@ -43,7 +45,6 @@ public class ABoardController {
     final BoardViewMybatisService bvService; //게시판 + 카테고리 view
 
     final BoardWashingMybatisService bwService; // boardview + washing view
-
     
 /* =========================================================================================================== */
 
@@ -52,17 +53,19 @@ public class ABoardController {
     public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
         try {
 
+            //해야할 일 : 말머리에 맞는 codedetail 나오게 하기 (code 활용해보기)
             // BoardType bType = bService.selectlistBTypeAdmin(); 
-            List<BoardType> bType = bService.selectlistBTypeCodeName();// 게시판 종류
-            List<BoardType> list2 = bService.selectlistBTypeCodeDetail(); //말머리
+            List<BoardType> list1 = bService.selectlistBType();// 게시판 종류
+            // List<BoardType> list2 = bService.selectlistBTypeCodeDetailTest(bType.); //말머리
 
-            log.info("게시판 종류=>{}",bType.toString());
-            log.info("말머리 종류=>{}",list2.toString());
+            // log.info("말머리 종류=>{}",list2.toString());
 
-            model.addAttribute("CodeName", bType);
-            model.addAttribute("CodeDetail", list2);
+            model.addAttribute("CodeName", list1);
+            // model.addAttribute("CodeDetail", list2);
 
             model.addAttribute("user", user);
+
+            log.info("게시판 종류=>{}",list1.toString());
 
             return "/aboard/write";
             
@@ -105,73 +108,66 @@ public class ABoardController {
     //전체 조회
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
-                                             @RequestParam(name = "menu", required = false, defaultValue = "null") String menu) {
+                                             @RequestParam(name = "menu", required = false, defaultValue = "null") String menu,
+                                             @RequestParam(name = "page", required = false, defaultValue = "1") int page) {
         try {
 
             model.addAttribute("user", user);
 
-            // List<Board> list = new ArrayList<>();
-            List<BoardView> list = new ArrayList<>();            
-            List<BoardWashing> list2 = new ArrayList<>();
+            
+            List<BoardAdmin> list = new ArrayList<>();            
+            List<BoardView> list2 = new ArrayList<>();            
+            List<BoardGetLost> gllist = new ArrayList<>();
 
 
+            //총 게시글 개수
+            int totalPageCount= 0;
 
-            if(type.equals("notice")){ //공지사항 조회
+            //공지사항 조회할 때 관리자입장에서는
+            //1.관리자 전체 페이지 2.관리자 중요 페이지 가 필요할거같음
+            if (page == 0) {
+                return "redirect:/wboard/selectlist.bubble?type=notice&page=1";
+            }
+            if(type.equals("notice")){ //공지사항 조회(관리자)
 
-                list = bvService.selectBoardViewNotice();
+                list2 = bvService.selectBoardView(page*10-9, page*10);
+                totalPageCount = bwService.selectBoardAllNoticeCount();
 
-                // log.info("제발 좀 나와 => {}",list.toString());
+
                 // log.info("카테고리 전체 조회 => {}", list1.toString());
 
-                model.addAttribute("list", list);
-
-
-            } else if(type.equals("notice") && menu.equals("admin")) { //공지사항(관리자)조회
-
-                list = bvService.selectBoardViewNoticeAdmin();
-
-                model.addAttribute("list", list);
-
-
-            } else if(type.equals("notice") && menu.equals("washing")) { //공지사항(업체)조회
-
-                // list2 = bwService.selectBoardWashingNotice(); 수정해야함
                 model.addAttribute("list", list2);
-                log.info("dldldld{}=>",list2.toString());                
 
             } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
 
-                list = bvService.selectBoardViewGetLost();
+                list2 = bvService.selectBoardViewGetLost();
                 
                 model.addAttribute("list", list);
 
 
             } else if(type.equals("getlost") && menu.equals("lost")) { //분실물 전체 조회
 
-                list = bvService.selectBoardViewLost();
+                list2 = bvService.selectBoardViewLost();
                 
                 model.addAttribute("list", list);
 
 
             } else if(type.equals("getlost") && menu.equals("get")) { //습득물 전체 조회
 
-                list = bvService.selectBoardViewGet();
+                list2 = bvService.selectBoardViewGet();
                 
                 model.addAttribute("list", list);
 
 
             } else if(type.equals("community")) { //자유게시판
 
-                list = bvService.selectBoardViewGeneral();
+                list2 = bvService.selectBoardViewGeneral();
                 
                 model.addAttribute("list", list);
 
 
             }
-            else {
-                // 기본적으로 공지사항으로 설정
-                list = bvService.selectBoardViewNotice();
-            }
+            
     
             return "/aboard/selectlist";
 
