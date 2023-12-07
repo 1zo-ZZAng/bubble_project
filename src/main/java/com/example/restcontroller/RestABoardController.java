@@ -22,6 +22,78 @@ public class RestABoardController {
 
     final BoardMybatisService bService;
 
+    @GetMapping(value = "/selectoption.bubble")
+    public Map<String, Object> selectoptionGET(@RequestParam(name = "code") int code) {
+        Map<String, Object> retMap = new HashMap<>();
+
+        if(code == 1){
+            try {
+            retMap.put("status", 200);
+            retMap.put("codedetail", bService.selectlistBTypeCodeDetailTest("공지사항"));
+
+            log.info(retMap.get("codedetail").toString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                retMap.put("status", -1);
+                retMap.put("error", e.getMessage());
+            }
+            return retMap;
+        }
+        if(code == 4){
+            try {
+                retMap.put("status", 200);
+                retMap.put("codedetail", bService.selectlistBTypeCodeDetailTest("분실물/습득물"));
+
+                log.info(retMap.get("codedetail").toString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                retMap.put("status", -1);
+                retMap.put("error", e.getMessage());
+            }
+            return retMap;
+        }
+        else{
+            try {
+                retMap.put("status", 200);
+                retMap.put("codedetail", bService.selectlistBTypeCodeDetailTest("자유게시판"));
+
+                log.info(retMap.get("codedetail").toString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                retMap.put("status", -1);
+                retMap.put("error", e.getMessage());
+            }
+            return retMap;
+        }
+        
+    }
+
+    //code 추출
+    @GetMapping(value = "/findcode.bubble")
+    public Map<String, Object> findcodeGET(@RequestParam(name = "codedetail") String codedetail) {
+        Map<String, Object> retMap = new HashMap<>();
+
+    
+            try {
+                retMap.put("status", 200);
+                retMap.put("code", bService.selectlistBTypeFindCodeDetail(codedetail));
+
+                log.info(retMap.get("code").toString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                retMap.put("status", -1);
+                retMap.put("error", e.getMessage());
+            }
+            return retMap;
+
+        
+    }
+
+
     //조회수 증가
     //127.0.0.1:8282/bubble_bumul/api/aboard/updatehit.bubble?no=
     @GetMapping(value="/updatehit.bubble")

@@ -2,6 +2,7 @@ package com.example.controller.mybatis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +23,7 @@ import com.example.dto.BoardView;
 import com.example.dto.BoardWashing;
 import com.example.dto.Reply;
 import com.example.dto.Washing;
+import com.example.entity.Admin;
 import com.example.service.mybatis.BoardMybatisService;
 import com.example.service.mybatis.BoardViewMybatisService;
 import com.example.service.mybatis.BoardWashingMybatisService;
@@ -50,18 +53,14 @@ public class ABoardController {
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
+    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Admin admin ){
         try {
 
             //해야할 일 : 말머리에 맞는 codedetail 나오게 하기 (code 활용해보기)
             // BoardType bType = bService.selectlistBTypeAdmin(); 
             List<BoardType> list1 = bService.selectlistBType();// 게시판 종류
-            // List<BoardType> list2 = bService.selectlistBTypeCodeDetailTest(bType.); //말머리
 
-            // log.info("말머리 종류=>{}",list2.toString());
-
-            model.addAttribute("CodeName", list1);
-            // model.addAttribute("CodeDetail", list2);
+            model.addAttribute("CodeName", list1);            
 
             model.addAttribute("user", user);
 
@@ -77,11 +76,15 @@ public class ABoardController {
 
     @PostMapping(value = "/write.bubble")
     public String writePOST(@AuthenticationPrincipal User user, 
-                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu,
+                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+                            @RequestBody Map<String, String> requestData,
                             @ModelAttribute Board board){
 
+                                //레스트컨으롤러에서 받은 코드값 넣기
         try {
-
+            String codedetail = requestData.get("codedetail");
+            board.setRole(user.getAuthorities().toString());
+            board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
             log.info("내용만 => {}", board.getContent());
             log.info("작성한 내용 => {}", board.toString());
             

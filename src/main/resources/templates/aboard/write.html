@@ -213,17 +213,12 @@
                                     <!--게시판-->
                                     <select name="code" id="code" onchange="codeChange()"
                                         style="float: left; margin-right: 4px;">
-                                        <!-- <option value="">게시판 선택</option> -->
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"
-                                            th:text="${CodeName.codename}"></option>
+                                        <option value="">게시판 선택</option>
+                                        <option th:each="CodeName : ${CodeName}"  th:value="${CodeName.code}" th:text="${CodeName.codename}"></option>
                                     </select>
 
-                                    <!--말머리-->
-                                    <select id="codedetail" disabled>
-                                        <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"
-                                            th:text="${CodeDetail.codedetail}"></option>
-                                    </select>
+                                    <!--분류-->
+                                    <select id="codedetail"></select>
 
                                     <!-- 글쓰기 버튼 -->
                                     <div style="float: right;">
@@ -304,6 +299,11 @@
 
     <script src="/src/main/resources/static/js/admin.js"></script>
 
+    
+    <!-- HTML 파일에서 스크립트 태그로 axios 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
     <script th:inline="javascript" type="text/javascript">
 
         const toolbarOptions = [
@@ -342,65 +342,60 @@
             theme: 'snow'
         });
 
+        //게시판 유형 중복 제거
+        $(document).ready(function () {
+        var seen = {};
+        $('select option').each(function () {
+            var txt = $(this).text();
+            if (seen[txt]) $(this).remove();
+            else seen[txt] = true;
+        });
+         });
 
-        //말머리부분 자동 선택되게 해줌
-        function codeChange() {
-            const code = document.getElementById('code').value;
-            const codedetail = document.getElementById('codedetail');
 
-            if (code == 2) {
-                codedetail.value = '찾아주세요';
-            } else if (code == 3) {
-                codedetail.value = '찾아가세요';
-            } else {
-                codedetail.value = '';
+         //분류선택 값 보내기
+         async function codeChange() {
+            const code = $("#code option:selected").val();
+            console.log("Selected Code:", code);
+            // rest api 호출
+            const url = [[@{/api/aboard/selectoption.bubble}]] + `?code=${code}`;
+            const headers = {"Content-Type":"application/json"};
+            try {
+                const response = await axios.get(url, { headers });
+                const data = response.data;
+
+                const codedetail = document.getElementById("codedetail");
+                codedetail.innerHTML = '<option value="">분류 선택</option>';
+
+                if (Array.isArray(data.codedetail) && data.codedetail.length > 0) {
+                    data.codedetail.forEach(obj => {
+                        codedetail.innerHTML += `<option value="${obj.code}">${obj.codedetail}</option>`;
+                    });
+                }
+                } catch (error) {
+                console.error("API 호출 중 오류 발생:", error);
+                // 오류 처리 로직 추가: 사용자에게 메시지 표시 또는 기타 조치
             }
-
+            
 
         }
 
+
+        
 
 
         function writeAction() {
             const title = document.getElementById('title');
             const content = quill.root.innerHTML;
             const writer = document.getElementById('writer');
-            const code = document.getElementById('code');
-            const codedetail = document.getElementById('codedetail');
+            // const code = $("#code option:selected").val();
+            const codedetail = $("#codedetail option:selected").val();
             const a = document.getElementsByName("content");
+            
 
-            console.log(content); //여기서는 작성 된게 뜸 그렇겠지
-
-            if (code.value.length <= 0) {
-                alert('게시판을 선택해주세요');
-                return false;
-            }
-
-            if (code.value == 2) {
-                if (codedetail.value <= 0) {
-                    alert('말머리를 선택해주세요');
-                    return false;
-                }
-            }
-
-            if (code.value == 3) {
-                if (codedetail.value <= 0) {
-                    alert('말머리를 선택해주세요');
-                    return false;
-                }
-            }
-
-            if (title.value.length <= 0) {
-                alert('제목을 작성해주세요');
-                title.focus();
-                return false;
-            }
-
-            if (content <= 0) {
-                alert('내용을 작성해주세요');
-                return false;
-            }
-
+            console.log("sisisi:",codedetail);
+            // console.log(codedetail);
+            console.log(content); //여기서는 작성 된게 뜸 그렇겠
 
 
             //div태그 내용을 textarea로 복사 (div태그의 내용을 전송할 수 잇게 변경했음 )
@@ -408,19 +403,6 @@
             document.getElementById("content").value = divContent;
 
 
-
-            //말머리 제목에 넣어버리기
-            // if(code.value == 2) {
-            //     if(title.value.length > 0) {
-            //         title.value = '[' + codedetail.value + ']' + ' ' + title.value;
-            //     }
-            // }else if(code.value == 3) {
-            //     if(title.value.length > 0) {
-            //         title.value = '[' + codedetail.value + ']' + ' ' + title.value;
-            //     }
-            // }else{
-            //     title.value = title.value;
-            // }
 
             document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
 

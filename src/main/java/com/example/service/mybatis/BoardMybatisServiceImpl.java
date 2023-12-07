@@ -1,5 +1,6 @@
 package com.example.service.mybatis;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -62,6 +63,20 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return null;
         }
     }
+
+
+
+    //말머리 분류 - 중복 제거 null값 제외
+    @Override
+    public long selectlistBTypeFindCodeDetail(String codedetail) {
+        try {
+            return bMapper.selectlistBTypeFindCodeDetail(codedetail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     /* =============================메인=============================== */
 

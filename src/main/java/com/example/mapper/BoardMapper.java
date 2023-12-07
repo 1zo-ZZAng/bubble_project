@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -29,8 +30,11 @@ public interface BoardMapper {
     public List<BoardType> selectlistBTypeCodeDetail();
 
     //말머리 분류 - 테스트
-    @Select({" SELECT codedetail FROM BOARDTYPE WHERE codename=#{codename}; "})
+    @Select({" SELECT * FROM BOARDTYPE WHERE codename=#{codename}; "})
     public List<BoardType> selectlistBTypeCodeDetailTest(@Param("codename") String codename);
+
+    @Select({" SELECT code FROM BOARDTYPE WHERE codedetail=#{codedetail}; "})
+    public long selectlistBTypeFindCodeDetail(@Param("codedetail") String codedetail);
 
 
     //공지사항 날짜기준 최신 3개 조회

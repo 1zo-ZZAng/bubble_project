@@ -1,5 +1,6 @@
 package com.example.service.mybatis;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +26,7 @@ public interface BoardMybatisService {
     //말머리 분류 - 테스트
     public List<BoardType> selectlistBTypeCodeDetailTest(@Param("codename") String codename);
 
-
+    public long selectlistBTypeFindCodeDetail(@Param("codedetail") String codedetail);
 
     /* ===================================== */
     
