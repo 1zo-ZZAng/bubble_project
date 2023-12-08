@@ -81,7 +81,7 @@ public class RestABoardController {
                 retMap.put("status", 200);
                 retMap.put("code", bService.selectlistBTypeFindCodeDetail(codedetail));
 
-                log.info(retMap.get("code").toString());
+                // log.info(retMap.get("code").toString()); //확인
             }
             catch (Exception e) {
                 e.printStackTrace();

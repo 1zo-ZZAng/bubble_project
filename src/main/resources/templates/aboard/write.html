@@ -369,7 +369,7 @@
 
                 if (Array.isArray(data.codedetail) && data.codedetail.length > 0) {
                     data.codedetail.forEach(obj => {
-                        codedetail.innerHTML += `<option value="${obj.code}">${obj.codedetail}</option>`;
+                        codedetail.innerHTML += `<option value="${obj.codedetail}">${obj.codedetail}</option>`;
                     });
                 }
                 } catch (error) {
@@ -381,10 +381,38 @@
         }
 
 
+        document.getElementById('codedetail').addEventListener('change', function() {
+        // const codedetailValue = encodeURIComponent( $("#codedetail option:selected").val());
+        const codedetailValue = $("#codedetail option:selected").val();
+
+        // const codedetailValue = encodeURIComponent(codedetail1);
+        console.log(codedetailValue);
+        console.log(encodeURIComponent(codedetailValue));
+
+
+            //encoding오류남. . .ㅅㅂ
+        fetch(`findcode.bubble?codedetail=${codedetailValue}`)
+            .then(response => response.json())
+            .then(data => {
+                // 서버 응답 처리
+                if (data.status === 200) {
+                    const codeValue = data.code;
+                    console.log('Received code:', codeValue);
+
+                } else {
+                    console.error('Error from server:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error during fetch operation:', error);
+            });
+        });
         
 
 
         function writeAction() {
+
+
             const title = document.getElementById('title');
             const content = quill.root.innerHTML;
             const writer = document.getElementById('writer');

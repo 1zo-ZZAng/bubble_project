@@ -82,7 +82,9 @@ public class ABoardController {
 
                                 //레스트컨으롤러에서 받은 코드값 넣기
         try {
+            log.info("menu=>{}",menu);
             String codedetail = requestData.get("codedetail");
+            log.info("coddde=>{}",codedetail.toString());
             board.setRole(user.getAuthorities().toString());
             board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
             log.info("내용만 => {}", board.getContent());
