@@ -52,23 +52,72 @@ public class ABoardController {
 /* =========================================================================================================== */
 
     //글작성
-    @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Admin admin ){
-        try {
+    // @GetMapping(value = "/write.bubble")
+    // public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Admin admin ){
+    //     try {
 
-            //해야할 일 : 말머리에 맞는 codedetail 나오게 하기 (code 활용해보기)
-            // BoardType bType = bService.selectlistBTypeAdmin(); 
-            List<BoardType> list1 = bService.selectlistBType();// 게시판 종류
+    //         //해야할 일 : 말머리에 맞는 codedetail 나오게 하기 (code 활용해보기)
+    //         // BoardType bType = bService.selectlistBTypeAdmin(); 
+    //         List<BoardType> list1 = bService.selectlistBType();// 게시판 종류
 
-            model.addAttribute("CodeName", list1);            
+    //         model.addAttribute("CodeName", list1);            
 
-            model.addAttribute("user", user);
+    //         model.addAttribute("user", user);
 
-            log.info("게시판 종류=>{}",list1.toString());
+    //         log.info("게시판 종류=>{}",list1.toString());
 
-            return "/aboard/write";
+    //         return "/aboard/write";
             
-        } catch (Exception e) {
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return "redirect:/washing/home.bubble";
+    //     }
+    // }
+
+    // @PostMapping(value = "/write.bubble")
+    // public String writePOST(@AuthenticationPrincipal User user, 
+    //                         @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+    //                         @RequestBody Map<String, String> requestData,
+    //                         @ModelAttribute Board board){
+
+    //                             //레스트컨으롤러에서 받은 코드값 넣기
+    //     try {
+    //         log.info("menu=>{}",menu);
+    //         String codedetail = requestData.get("codedetail");
+    //         log.info("coddde=>{}",codedetail.toString());
+    //         board.setRole(user.getAuthorities().toString());
+    //         board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
+    //         log.info("내용만 => {}", board.getContent());
+    //         log.info("작성한 내용 => {}", board.toString());
+            
+    //         int ret = bService.writeBoard(board);
+
+    //         if(ret == 1){
+
+    //             return "redirect:/aboard/selectlist.bubble?menu="+menu;
+                
+    //         }else{
+    //             return "redirect:/aboard/write.bubble?id="+user.getUsername();
+    //         }
+            
+
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return "redirect:/aboard/write.bubble?id="+user.getUsername();
+    //     }
+        
+    // }
+
+
+    @GetMapping(value = "/write.bubble")
+    public String writeGET(@AuthenticationPrincipal User user, Model model){
+    try {
+        List<BoardType> list1 = bService.selectlistBType();
+        model.addAttribute("CodeName", list1);
+        model.addAttribute("user", user);
+        log.info("게시판 종류=>{}", list1.toString());
+        return "/aboard/write";
+    } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/washing/home.bubble";
         }
@@ -76,36 +125,28 @@ public class ABoardController {
 
     @PostMapping(value = "/write.bubble")
     public String writePOST(@AuthenticationPrincipal User user, 
-                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
-                            @RequestBody Map<String, String> requestData,
-                            @ModelAttribute Board board){
-
-                                //레스트컨으롤러에서 받은 코드값 넣기
-        try {
-            log.info("menu=>{}",menu);
-            String codedetail = requestData.get("codedetail");
-            log.info("coddde=>{}",codedetail.toString());
-            board.setRole(user.getAuthorities().toString());
-            board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
-            log.info("내용만 => {}", board.getContent());
-            log.info("작성한 내용 => {}", board.toString());
-            
-            int ret = bService.writeBoard(board);
-
-            if(ret == 1){
-
-                return "redirect:/aboard/selectlist.bubble?menu="+menu;
-                
-            }else{
-                return "redirect:/aboard/write.bubble?id="+user.getUsername();
-            }
-            
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/aboard/write.bubble?id="+user.getUsername();
-        }
+                        @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+                        @RequestParam(name = "codedetail") String codedetail,
+                        @ModelAttribute Board board){
+    try {
+        log.info("menu=>{}", menu);
+        log.info("coddde=>{}", codedetail);
+        board.setRole(user.getAuthorities().toString());
+        board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
+        log.info("내용만 => {}", board.getContent());
+        log.info("작성한 내용 => {}", board.toString());
         
+        int ret = bService.writeBoard(board);
+
+        if (ret == 1) {
+            return "redirect:/aboard/selectlist.bubble?menu=" + menu;
+        } else {
+            return "redirect:/aboard/write.bubble?id=" + user.getUsername();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "redirect:/aboard/write.bubble?id=" + user.getUsername();
+        }
     }
 
     /* ------------------------------------------------------------- */

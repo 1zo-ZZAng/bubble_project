@@ -375,10 +375,10 @@
                 } catch (error) {
                 console.error("API 호출 중 오류 발생:", error);
                 // 오류 처리 로직 추가: 사용자에게 메시지 표시 또는 기타 조치
-            }
+                }
             
 
-        }
+            }
 
 
         document.getElementById('codedetail').addEventListener('change', function() {
@@ -391,33 +391,64 @@
 
 
             //encoding오류남. . .ㅅㅂ
-        fetch(`findcode.bubble?codedetail=${codedetailValue}`)
-            .then(response => response.json())
-            .then(data => {
-                // 서버 응답 처리
-                if (data.status === 200) {
-                    const codeValue = data.code;
-                    console.log('Received code:', codeValue);
+        // fetch(`findcode.bubble?codedetail=${encodeURIComponent(codedetailValue)}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 서버 응답 처리
+        //         if (data.status === 200) {
+        //             const codeValue = data.code;
+        //             console.log('Received code:', codeValue);
 
-                } else {
-                    console.error('Error from server:', data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error during fetch operation:', error);
-            });
-        });
+        //         } else {
+        //             console.error('Error from server:', data.error);
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error during fetch operation:', error);
+        //     });
+        // });
+
+        fetch(`findcode.bubble?codedetail=${codedetailValue}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        // 서버 응답 처리
+        if (data && data.status === 200) {
+            const codeValue = data.code;
+            console.log('Received code:', codeValue);
+        } else {
+            throw new Error('Invalid JSON format in server response');
+        }
+    })
+    .catch(error => {
+        console.error('Error during fetch operation:', error);
+    });
+        
+});
+
         
 
 
-        function writeAction() {
 
+        // document.getElementById('form').addEventListener('submit', function (event) {
+        //     event.preventDefault(); // 양식 제출을 중지하고 콘솔에 양식 데이터를 로깅합니다.
+        //     console.log("Form data:", new FormData(event.target));
+        //     // 이후 서버에 양식을 제출하는 코드를 추가합니다.
+        // });
+
+
+        function writeAction() {
+            
 
             const title = document.getElementById('title');
             const content = quill.root.innerHTML;
             const writer = document.getElementById('writer');
             // const code = $("#code option:selected").val();
-            const codedetail = $("#codedetail option:selected").val();
+            const codedetail =$("#codedetail option:selected").val();
             const a = document.getElementsByName("content");
             
 
