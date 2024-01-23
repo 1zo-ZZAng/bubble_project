@@ -6,7 +6,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,42 +76,19 @@ public class RestABoardController {
         
     }
 
-    //code 추출
-    // @GetMapping(value = "/findcode.bubble")
-    // public Map<String, Object> findcodeGET(@RequestParam(name = "codedetail") String codedetail) {
-    //     Map<String, Object> retMap = new HashMap<>();
-    //         log.info("이거=>{}",codedetail);
-
-    //         // String codedetailurlencode =  URLEncoder.encode(codedetail, StandardCharsets.UTF_8) ;
-    //         // log.info("냐냥=>{}",codedetailurlencode);
-    //         try {
-    //             retMap.put("status", 200);
-    //             retMap.put("code", codedetail);
-
-    //             // log.info(retMap.get("code").toString()); //확인
-    //         }
-    //         catch (Exception e) {
-    //             e.printStackTrace();
-    //             retMap.put("status", -1);
-    //             retMap.put("error", e.getMessage());
-    //         }
-    //         return retMap;
-
-        
-    // }
-
-
+    @CrossOrigin
     @GetMapping(value = "/findcode.bubble")
     public Map<String, Object> findcodeGET(@RequestParam(name = "codedetail") String codedetail) {
     Map<String, Object> retMap = new HashMap<>();
 
     try {
         // 클라이언트에서 받은 codedetail을 URL로 인코딩
-        String encodedCodedetail = URLEncoder.encode(codedetail, StandardCharsets.UTF_8.toString());
+        // String encodedCodedetail = URLEncoder.encode(codedetail, StandardCharsets.UTF_8.toString());
 
         retMap.put("status", 200);
-        retMap.put("encodedCode", encodedCodedetail);
-    } catch (UnsupportedEncodingException e) {
+        retMap.put("codedetail",codedetail);
+        // retMap.put("encodedCode", encodedCodedetail);
+    } catch (Exception e) {
         e.printStackTrace();
         retMap.put("status", -1);
         retMap.put("error", e.getMessage());
@@ -122,8 +101,8 @@ public class RestABoardController {
 
     //조회수 증가
     //127.0.0.1:8282/bubble_bumul/api/aboard/updatehit.bubble?no=
-    @GetMapping(value="/updatehit.bubble")
-    public Map<String, Integer> updatehitGET( @RequestParam(name = "no") long no) {
+    @PostMapping(value="/updatehit.bubble")
+    public Map<String, Integer> updatehitPOST( @RequestParam(name = "no") long no) {
 
         Map<String, Integer> retMap = new HashMap<>();
 
@@ -133,8 +112,6 @@ public class RestABoardController {
 
             retMap.put("status", 200);
             retMap.put("result", ret);
-
-            log.info("값은? => {}", ret);
 
             
         } catch (Exception e) {

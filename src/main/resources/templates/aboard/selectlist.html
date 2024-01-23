@@ -296,9 +296,9 @@
                             <tbody>
                                 <tr th:each="obj : ${list}" th:if="${obj.code == 1}"  >
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                    <td><a href="#"
                                             th:text=" '[' + 중요 +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a></td>
+                                            style="text-decoration: none; color: black;" onclick="updateHit()" id="myLink"></a></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -321,7 +321,7 @@
 
 
                     <!--공지사항(관리자) 게시판-->
-                    <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'admin')}">
+                    <!-- <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'admin')}">
                             <div style="display: flex; margin-top: 15px;">
                                 <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
                                 <h3 style="float: left; margin-left: 5px; font-weight: bold;">관리자 공지사항</h3>
@@ -340,7 +340,7 @@
                             <tbody>
                                 <tr th:each="obj : ${list}" th:if="${obj.code == 1}"  >
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                    <td><a href="#"
                                             th:text=" '[' + 중요 +']' + ' ' + ${obj.title}"
                                             style="text-decoration: none; color: black;"></a></td>
                                     <td th:text="${obj.writer}"></td>
@@ -350,7 +350,7 @@
 
                                 <tr th:each="obj : ${list}"th:if="${obj.code == 2}">
                                     <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                    <td><a href="#"
                                             th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
                                             style="text-decoration: none; color: black;"></a></td>
                                     <td th:text="${obj.writer}"></td>
@@ -362,7 +362,7 @@
 
                     </div>
 
-                     <!--공지사항(업체) 게시판-->
+                     공지사항(업체) 게시판
                      <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'washing')}">
                         <div style="display: flex; margin-top: 15px;">
                             <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
@@ -371,7 +371,7 @@
 
                         
 
-                    </div>
+                    </div> -->
 
                     <!--분실물 게시판-->
                     <!-- <div th:if="${#strings.equals(param.menu, '3')}">
@@ -457,24 +457,33 @@
 
 
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"></script>
-
-
-    <!-- Simple DataTable용 JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            new simpleDatatables.DataTable("#datatableSimple", {
-                searchable: true,
-                fixedHeight: true,
-
-            });
-        });
     
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+
+        async function updateHit(no){
+            const no = $("#no").val();
+
+            //rest api
+            const url = [[@{/api/aboard/updatehit.bubble}]] + `?no=${no}`;
+            const headers = {"Content-Type": "application/json"};
+            const {data} = await axios.get(url,{headers});
+
+            console.log(no);
+            console.log(url);
+            console.log("값->" ,data.result);
+
+            if(data.result === 1) {
+                location.href = 'http://127.0.0.1:8282/bubble_bumul/aboard/selectone.bubble?no=' + no;
+
+            }
+
+        }
+    </script>
 
 
 </body>

@@ -205,7 +205,7 @@
                     <div class="container">
                         <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
 
-                            <form th:action="@{/aboard/write.bubble}" method="post" id="form">
+                            <form th:action="@{/aboard/write.bubble}" method="post" id="writeform">
 
                                 <!--분류-->
                                 <div class="mb-3">
@@ -218,7 +218,7 @@
                                     </select>
 
                                     <!--분류-->
-                                    <select id="codedetail"></select>
+                                    <select id="codedetail" name="codedetail"></select>
 
                                     <!-- 글쓰기 버튼 -->
                                     <div style="float: right;">
@@ -381,56 +381,61 @@
             }
 
 
-        document.getElementById('codedetail').addEventListener('change', function() {
-        // const codedetailValue = encodeURIComponent( $("#codedetail option:selected").val());
-        const codedetailValue = $("#codedetail option:selected").val();
+    //     document.getElementById('codedetail').addEventListener('change', function() {
+    //     const codedetailValue = $("#codedetail option:selected").val();
 
-        // const codedetailValue = encodeURIComponent(codedetail1);
-        console.log(codedetailValue);
-        console.log(encodeURIComponent(codedetailValue));
+    //     fetch(`findcode.bubble?codedetail=${encodeURIComponent(codedetailValue)}`)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error(`Network response was not ok: ${response.statusText}`);
+    //             }
+    //             return response.json(); // JSON 형식으로 응답을 파싱
+    //         })
+    //         .then(data => {
+    //             // 서버 응답 처리
+    //             if (data && data.status === 200) {
+    //                 const codeValue = data.codedetail; // 수정된 부분
+    //                 console.log('Received code:', codeValue);
+    //             } else {
+    //                 throw new Error('Invalid JSON format in server response');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error during fetch operation:', error);
+    //         });
+    // });
 
 
-            //encoding오류남. . .ㅅㅂ
-        // fetch(`findcode.bubble?codedetail=${encodeURIComponent(codedetailValue)}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // 서버 응답 처리
-        //         if (data.status === 200) {
-        //             const codeValue = data.code;
-        //             console.log('Received code:', codeValue);
+    document.getElementById('codedetail').addEventListener('change', function() {
+    const codedetailValue = encodeURIComponent($("#codedetail option:selected").val());
 
-        //         } else {
-        //             console.error('Error from server:', data.error);
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('Error during fetch operation:', error);
-        //     });
-        // });
-
-        fetch(`findcode.bubble?codedetail=${codedetailValue}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        // 서버 응답 처리
-        if (data && data.status === 200) {
-            const codeValue = data.code;
-            console.log('Received code:', codeValue);
-        } else {
-            throw new Error('Invalid JSON format in server response');
-        }
-    })
-    .catch(error => {
-        console.error('Error during fetch operation:', error);
+        fetch(`/bubble_bumul/api/aboard/findcode.bubble?codedetail=${codedetailValue}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.status === 200) {
+                const codeValue = data.codedetail;
+                console.log('Received code:', codeValue);
+            } else {
+                throw new Error('Invalid JSON format in server response');
+            }
+        })
+        .catch(error => {
+            console.error('Error during fetch operation:', error);
+        });
     });
-        
-});
 
-        
+
+            
 
 
 
@@ -448,7 +453,7 @@
             const content = quill.root.innerHTML;
             const writer = document.getElementById('writer');
             // const code = $("#code option:selected").val();
-            const codedetail =$("#codedetail option:selected").val();
+            const codedetail = $("#codedetail option:selected").val();
             const a = document.getElementsByName("content");
             
 
@@ -463,7 +468,7 @@
 
 
 
-            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+            document.getElementById('writeform').submit(); 
 
         }
 

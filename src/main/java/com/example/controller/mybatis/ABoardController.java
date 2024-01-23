@@ -51,64 +51,8 @@ public class ABoardController {
     
 /* =========================================================================================================== */
 
+
     //글작성
-    // @GetMapping(value = "/write.bubble")
-    // public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Admin admin ){
-    //     try {
-
-    //         //해야할 일 : 말머리에 맞는 codedetail 나오게 하기 (code 활용해보기)
-    //         // BoardType bType = bService.selectlistBTypeAdmin(); 
-    //         List<BoardType> list1 = bService.selectlistBType();// 게시판 종류
-
-    //         model.addAttribute("CodeName", list1);            
-
-    //         model.addAttribute("user", user);
-
-    //         log.info("게시판 종류=>{}",list1.toString());
-
-    //         return "/aboard/write";
-            
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return "redirect:/washing/home.bubble";
-    //     }
-    // }
-
-    // @PostMapping(value = "/write.bubble")
-    // public String writePOST(@AuthenticationPrincipal User user, 
-    //                         @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
-    //                         @RequestBody Map<String, String> requestData,
-    //                         @ModelAttribute Board board){
-
-    //                             //레스트컨으롤러에서 받은 코드값 넣기
-    //     try {
-    //         log.info("menu=>{}",menu);
-    //         String codedetail = requestData.get("codedetail");
-    //         log.info("coddde=>{}",codedetail.toString());
-    //         board.setRole(user.getAuthorities().toString());
-    //         board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
-    //         log.info("내용만 => {}", board.getContent());
-    //         log.info("작성한 내용 => {}", board.toString());
-            
-    //         int ret = bService.writeBoard(board);
-
-    //         if(ret == 1){
-
-    //             return "redirect:/aboard/selectlist.bubble?menu="+menu;
-                
-    //         }else{
-    //             return "redirect:/aboard/write.bubble?id="+user.getUsername();
-    //         }
-            
-
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return "redirect:/aboard/write.bubble?id="+user.getUsername();
-    //     }
-        
-    // }
-
-
     @GetMapping(value = "/write.bubble")
     public String writeGET(@AuthenticationPrincipal User user, Model model){
     try {
@@ -129,9 +73,9 @@ public class ABoardController {
                         @RequestParam(name = "codedetail") String codedetail,
                         @ModelAttribute Board board){
     try {
-        log.info("menu=>{}", menu);
+        // log.info("menu=>{}", menu);
         log.info("coddde=>{}", codedetail);
-        board.setRole(user.getAuthorities().toString());
+        board.setRole("ADMIN");
         board.setCode(bService.selectlistBTypeFindCodeDetail(codedetail));
         log.info("내용만 => {}", board.getContent());
         log.info("작성한 내용 => {}", board.toString());
@@ -159,9 +103,9 @@ public class ABoardController {
         try {
 
             model.addAttribute("user", user);
-
             
-            List<BoardAdmin> list = new ArrayList<>();            
+            List<BoardAdmin> alist = new ArrayList<>();  
+            List<BoardWashing> wlist = new ArrayList<>();
             List<BoardView> list2 = new ArrayList<>();            
             List<BoardGetLost> gllist = new ArrayList<>();
 
@@ -169,47 +113,52 @@ public class ABoardController {
             //총 게시글 개수
             int totalPageCount= 0;
 
-            //공지사항 조회할 때 관리자입장에서는
-            //1.관리자 전체 페이지 2.관리자 중요 페이지 가 필요할거같음
-            if (page == 0) {
-                return "redirect:/wboard/selectlist.bubble?type=notice&page=1";
+            if (type.isEmpty()) {
+                return "redirect:/aboard/selectlist.bubble?type=notice&page=1";
             }
-            if(type.equals("notice")){ //공지사항 조회(관리자)
+            if(page == 0){
+                return "redirect:/aboard/selectlist.bubble?type=notice&page=1";
+            }
+            if(type.equals("notice")){ //공지사항 조회
+                    if (menu.equals("admin")) { // 관리자 공지사항
+                        alist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
+                        totalPageCount = bwService.selectBoardAdminNoticeCount();
 
-                list2 = bvService.selectBoardView(page*10-9, page*10);
-                totalPageCount = bwService.selectBoardAllNoticeCount();
+                        model.addAttribute("list", alist);
+                    }
+                    else { // 세탁업체 공지사항
+                        wlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
+                        totalPageCount = bwService.selectBoardWashingNoticeCount();
 
-
-                // log.info("카테고리 전체 조회 => {}", list1.toString());
-
-                model.addAttribute("list", list2);
+                        model.addAttribute("list", wlist);
+                    }
 
             } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
 
                 list2 = bvService.selectBoardViewGetLost();
                 
-                model.addAttribute("list", list);
+                model.addAttribute("list", list2);
 
 
             } else if(type.equals("getlost") && menu.equals("lost")) { //분실물 전체 조회
 
                 list2 = bvService.selectBoardViewLost();
                 
-                model.addAttribute("list", list);
+                model.addAttribute("list", list2);
 
 
             } else if(type.equals("getlost") && menu.equals("get")) { //습득물 전체 조회
 
                 list2 = bvService.selectBoardViewGet();
                 
-                model.addAttribute("list", list);
+                model.addAttribute("list", list2);
 
 
             } else if(type.equals("community")) { //자유게시판
 
                 list2 = bvService.selectBoardViewGeneral();
                 
-                model.addAttribute("list", list);
+                model.addAttribute("list", list2);
 
 
             }
@@ -241,13 +190,15 @@ public class ABoardController {
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
         
             // log.info("글 1개 조회 => {}", board.toString());
-
+            board.getHit();
 
             long next = bService.nextBoardOne(no);
             long pre = bService.preBoardOne(no);
 
             log.info("이전페이지 번호 => {}", pre);
             log.info("다음페이지 번호 => {}", next);
+            log.info("조회수 => {}",  board.getHit());
+
 
 
 
@@ -255,6 +206,7 @@ public class ABoardController {
             model.addAttribute("boardType", boardType); //카테고리
             model.addAttribute("next", next);   //다음 페이지
             model.addAttribute("pre", pre); // 이전 페이지
+            // model.addAttribute("hit", hit); //조회수
             model.addAttribute("user", user); //로그인 관련
             model.addAttribute("list", list); //해당게시글의 댓글 전체 조회
 
