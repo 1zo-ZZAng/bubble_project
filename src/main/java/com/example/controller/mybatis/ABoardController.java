@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -104,7 +108,8 @@ public class ABoardController {
 
             model.addAttribute("user", user);
             
-            List<BoardAdmin> alist = new ArrayList<>();  
+            List<BoardAdmin> alist = new ArrayList<>();
+            List<Board> blist = new ArrayList<>();   
             List<BoardWashing> wlist = new ArrayList<>();
             List<BoardView> list2 = new ArrayList<>();            
             List<BoardGetLost> gllist = new ArrayList<>();
@@ -122,15 +127,27 @@ public class ABoardController {
             if(type.equals("notice")){ //공지사항 조회
                     if (menu.equals("admin")) { // 관리자 공지사항
                         alist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
+                        blist = bService.selectListLimitBoard();
                         totalPageCount = bwService.selectBoardAdminNoticeCount();
 
+                        model.addAttribute("blist", blist);
+                        log.info(blist.toString());
                         model.addAttribute("list", alist);
                     }
-                    else { // 세탁업체 공지사항
+                    else if(menu.equals("washing")) { // 세탁업체 공지사항
                         wlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
                         totalPageCount = bwService.selectBoardWashingNoticeCount();
 
                         model.addAttribute("list", wlist);
+                    }
+                    else{
+                        blist = bService.selectListLimitBoard();
+                        list2 = bvService.selectBoardView(10*page-9, 10*page);
+                        totalPageCount=bwService.selectBoardAllNoticeCount();
+                        // log.info(list2.toString());
+                        model.addAttribute("list", blist);
+                        model.addAttribute("list2", list2);
+
                     }
 
             } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
@@ -180,7 +197,7 @@ public class ABoardController {
     @GetMapping(value="/selectone.bubble")
     public String selectOne(Model model, @AuthenticationPrincipal User user,
                             @RequestParam(name = "menu", required = false, defaultValue = "0") int menu,
-                            @RequestParam(name = "no") long no) {
+                            @RequestParam(name = "no") long no, HttpServletRequest request, HttpServletResponse response) {
         try {
 
             Board board = bService.selectOneBoard(no);
@@ -188,6 +205,33 @@ public class ABoardController {
             List<BoardType> boardType = bService.selectlistBType();
 
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
+
+            /* 조회수 로직 */
+            Cookie oldCookie = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("postView")) {
+                        oldCookie = cookie;
+                    }
+                }
+            }
+
+            if (oldCookie != null) {
+                if (!oldCookie.getValue().contains("["+ no +"]")) {
+                    this.bService.updateHit(no);
+                    oldCookie.setValue(oldCookie.getValue() + "_[" + no + "]");
+                    oldCookie.setPath("/");
+                    oldCookie.setMaxAge(60 * 60 * 24); 							// 쿠키 시간
+                    response.addCookie(oldCookie);
+                }
+            } else {
+                this.bService.updateHit(no);
+                Cookie newCookie = new Cookie("postView", "[" + no + "]");
+                newCookie.setPath("/");
+                newCookie.setMaxAge(60 * 60 * 24); 								// 쿠키 시간
+                response.addCookie(newCookie);
+            }
         
             // log.info("글 1개 조회 => {}", board.toString());
             board.getHit();

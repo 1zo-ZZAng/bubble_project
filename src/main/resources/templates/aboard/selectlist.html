@@ -47,30 +47,6 @@
             outline: none;
         }
 
-        .datatable-selector {
-            display: none;
-        }
-
-        .datatable-dropdown>label {
-            display: none;
-        }
-
-        .datatable-bottom .datatable-info {
-            display: none;
-        }
-
-        .datatable-sorter::before {
-            display: none;
-        }
-
-        .datatable-sorter::after {
-            display: none;
-        }
-
-        #datatableSimple thead {
-            pointer-events: none;
-        }
-
         a {
             text-decoration: none;
         }
@@ -80,17 +56,13 @@
             color: black;
         }
 
-        /*게시판 목록 하단 줄 생겨서 없앴음*/
-        .datatable-wrapper.no-footer .datatable-container {
-            border-bottom: none;
-        }
 
         /* 테이블  */
         table {
             width: 100%;
-            border-top: 2px solid #444444;
+            /* border-top: 2px solid #444444; */
             border-collapse: collapse;
-            border-bottom: 2px solid #444444;
+            /* border-bottom: 2px solid #444444; */
         }
         th, td {
             border-bottom: 1px solid #444444;
@@ -277,13 +249,37 @@
 
 
                     <!-- 공지사항(전체) 게시판 -->
-                     <div th:if="${#strings.equals(param.type, null)}">
+                     <div th:if="${#strings.equals(param.type, notice)}">
                         <div style="display: flex; margin-top: 15px;">
                             <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
                             <h3 style="float: left; margin-left: 5px; font-weight: bold;">공지사항</h3>
                         </div>
 
-                        <table style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
+                        <table style="margin-top: 15px; text-align: center; position: sticky; top: 0px;">
+                            <thead style="border: 2px;">
+                                <tr style="border-bottom: 1px solid black;">
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                    <th>조회</th>
+                                </tr>
+                            </thead>
+                            <!-- 공지사항 중요 부분 테이블 -->
+                            <tbody> 
+                                <tr th:each="notice : ${list}" >
+                                    <td th:text="${notice.no}"></td>
+                                    <td><a href="#"
+                                            th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                            style="text-decoration: none; color: black;" id="myLink"></a></td>
+                                    <td th:text="${notice.writer}"></td>
+                                    <td th:text="${#dates.format(notice.redate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${notice.hit}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- 기본 공지사항 -->
+                        <table style="margin-bottom: 30px; text-align: center; ">
                             <thead style="border: 2px;">
                                 <tr style="border-bottom: 1px solid black;">
                                     <th>번호</th>
@@ -294,21 +290,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="obj : ${list}" th:if="${obj.code == 1}"  >
+                                <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}"  >
                                     <td th:text="${obj.no}"></td>
                                     <td><a href="#"
-                                            th:text=" '[' + 중요 +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;" onclick="updateHit()" id="myLink"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${obj.hit}"></td>
-                                </tr>
-
-                                <tr th:each="obj : ${list}"th:if="${obj.code == 2} or ${obj.code ==3}">
-                                    <td th:text="${obj.no}"></td>
-                                    <td><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
                                             th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
-                                            style="text-decoration: none; color: black;"></a></td>
+                                            style="text-decoration: none; color: black;" id="myLink"></a></td>
                                     <td th:text="${obj.writer}"></td>
                                     <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${obj.hit}"></td>
@@ -463,27 +449,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
-    <script th:inline="javascript" type="text/javascript">
-
-        async function updateHit(no){
-            const no = $("#no").val();
-
-            //rest api
-            const url = [[@{/api/aboard/updatehit.bubble}]] + `?no=${no}`;
-            const headers = {"Content-Type": "application/json"};
-            const {data} = await axios.get(url,{headers});
-
-            console.log(no);
-            console.log(url);
-            console.log("값->" ,data.result);
-
-            if(data.result === 1) {
-                location.href = 'http://127.0.0.1:8282/bubble_bumul/aboard/selectone.bubble?no=' + no;
-
-            }
-
-        }
-    </script>
 
 
 </body>
