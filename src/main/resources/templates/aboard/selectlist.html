@@ -255,9 +255,9 @@
                             <h3 style="float: left; margin-left: 5px; font-weight: bold;">공지사항</h3>
                         </div>
 
-                        <table style="margin-top: 15px; text-align: center; position: sticky; top: 0px;">
-                            <thead style="border: 2px;">
-                                <tr style="border-bottom: 1px solid black;">
+                        <table style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: lightgray ;" >
+                            <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                <tr style="border-bottom: 2px solid black; ">
                                     <th>번호</th>
                                     <th>제목</th>
                                     <th>작성자</th>
@@ -266,38 +266,29 @@
                                 </tr>
                             </thead>
                             <!-- 공지사항 중요 부분 테이블 -->
-                            <tbody> 
+                            <tbody style="color:white; "> 
                                 <tr th:each="notice : ${list}" >
-                                    <td th:text="${notice.no}"></td>
-                                    <td><a href="#"
+                                    <td style="width: 10%; font-weight: bold;">공지</td>
+                                    <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
                                             th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
-                                            style="text-decoration: none; color: black;" id="myLink"></a></td>
-                                    <td th:text="${notice.writer}"></td>
-                                    <td th:text="${#dates.format(notice.redate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${notice.hit}"></td>
+                                            style="text-decoration: none; color: white; font-weight: bold; font-size: 16.5px;" id="myLink"></a></td>
+                                    <td th:text="${notice.writer}" style="width: 10%;"></td>
+                                    <td th:text="${#dates.format(notice.redate, 'yyyy-MM-dd HH:mm:ss')}" style="width: 20%;"></td>
+                                    <td th:text="${notice.hit}" style="width: 10%;"></td>
                                 </tr>
                             </tbody>
                         </table>
                         <!-- 기본 공지사항 -->
                         <table style="margin-bottom: 30px; text-align: center; ">
-                            <thead style="border: 2px;">
-                                <tr style="border-bottom: 1px solid black;">
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>조회</th>
-                                </tr>
-                            </thead>
                             <tbody>
                                 <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}"  >
-                                    <td th:text="${obj.no}"></td>
-                                    <td><a href="#"
+                                    <td th:text="${obj.no}" style="width: 10%;"></td>
+                                    <td style="width: 50%;"><a href="#"
                                             th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
                                             style="text-decoration: none; color: black;" id="myLink"></a></td>
-                                    <td th:text="${obj.writer}"></td>
-                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${obj.hit}"></td>
+                                    <td th:text="${obj.writer}"  style="width: 10%;"></td>
+                                    <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}" style="width: 20%;"></td>
+                                    <td th:text="${obj.hit}" style="width: 10%;"></td>
                                 </tr>
                             </tbody>
                         </table>
