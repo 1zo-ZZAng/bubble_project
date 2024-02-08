@@ -205,7 +205,8 @@ public class ABoardController {
             List<BoardType> boardType = bService.selectlistBType();
 
             List<Reply> list = rService.selectlistReply(no); //해당 게시글의 댓글 전체 조회
-
+            log.info(board.toString());
+            
             /* 조회수 로직 */
             Cookie oldCookie = null;
             Cookie[] cookies = request.getCookies();

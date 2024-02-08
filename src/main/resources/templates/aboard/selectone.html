@@ -232,10 +232,23 @@
 
 
                         <!--글쓰기 & 목록 버튼-->
-                        <div>
+                        <div style="display: flex; justify-content: space-between;">
                             <a th:href="@{/aboard/write.bubble}" class="btn"><i class="bi bi-pencil"></i> 글쓰기</a>
-                            <a th:href="@{/aboard/selectlist.bubble(menu=${menu})}" class="btn"
-                                style="float: right;">목록</a>
+                            <div th:if="${board.code == 1}"> <!--기본페이지(공지사항 전체)-->
+                                <a th:href="@{/aboard/selectlist.bubble}" class="btn" style="float: right;">목록</a>
+                            </div>
+                            <div th:if="${board.code == 2}"> <!--관리자공지사항-->
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice&menu=admin)}" class="btn" style="float: right;">목록</a>
+                            </div>
+                            <div th:if="${board.code == 3}"> <!--업체공지사항-->
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice&menu=washing)}" class="btn" style="float: right;">목록</a>
+                            </div>
+                            <div th:if="${board.code == 4}"> <!--분실물-->
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost&menu=lost)}" class="btn" style="float: right;">목록</a>
+                            </div>
+                            <div th:if="${board.code == 5}"> <!--습득물-->
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost&menu=get)}" class="btn" style="float: right;">목록</a>
+                            </div>
                         </div>
 
 

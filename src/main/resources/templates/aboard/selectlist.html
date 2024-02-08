@@ -283,7 +283,7 @@
                             <tbody>
                                 <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}"  >
                                     <td th:text="${obj.no}" style="width: 10%;"></td>
-                                    <td style="width: 50%;"><a href="#"
+                                    <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
                                             th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
                                             style="text-decoration: none; color: black;" id="myLink"></a></td>
                                     <td th:text="${obj.writer}"  style="width: 10%;"></td>
