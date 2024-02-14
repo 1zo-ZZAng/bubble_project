@@ -238,16 +238,16 @@
                                 <a th:href="@{/aboard/selectlist.bubble}" class="btn" style="float: right;">목록</a>
                             </div>
                             <div th:if="${board.code == 2}"> <!--관리자공지사항-->
-                                <a th:href="@{/aboard/selectlist.bubble(type=notice&menu=admin)}" class="btn" style="float: right;">목록</a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=admin)}" class="btn" style="float: right;">목록</a>
                             </div>
                             <div th:if="${board.code == 3}"> <!--업체공지사항-->
-                                <a th:href="@{/aboard/selectlist.bubble(type=notice&menu=washing)}" class="btn" style="float: right;">목록</a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=washing)}" class="btn" style="float: right;">목록</a>
                             </div>
                             <div th:if="${board.code == 4}"> <!--분실물-->
-                                <a th:href="@{/aboard/selectlist.bubble(type=getlost&menu=lost)}" class="btn" style="float: right;">목록</a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=lost)}" class="btn" style="float: right;">목록</a>
                             </div>
                             <div th:if="${board.code == 5}"> <!--습득물-->
-                                <a th:href="@{/aboard/selectlist.bubble(type=getlost&menu=get)}" class="btn" style="float: right;">목록</a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=get)}" class="btn" style="float: right;">목록</a>
                             </div>
                         </div>
 
@@ -258,22 +258,27 @@
 
                             <!-- 작성된 게시글의 게시판 종류에 따라 게시판 이동 -->
                             <div th:if="${board.code == 1}">
-                                <a th:href="@{/aboard/selectlist.bubble(menu=2)}"
+                                <a th:href="@{/aboard/selectlist.bubble}"
                                     style="text-decoration: none; font-size: small;">공지사항 ></a>
-                            </div>
+                            </div> 
 
                             <div th:if="${board.code == 2}">
-                                <a th:href="@{/aboard/selectlist.bubble(menu=3)}"
-                                    style="text-decoration: none; font-size: small;">분실물 ></a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=admin)}"
+                                    style="text-decoration: none; font-size: small;">공지사항(중요) ></a>
                             </div>
 
                             <div th:if="${board.code == 3}">
-                                <a th:href="@{/aboard/selectlist.bubble(menu=4)}"
-                                    style="text-decoration: none; font-size: small;">습득물 ></a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=washing)}"
+                                    style="text-decoration: none; font-size: small;">공지사항(업체) ></a>
                             </div>
 
                             <div th:if="${board.code == 4}">
-                                <a href="#" style="text-decoration: none; font-size: small;">자유게시판 ></a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=lost)}"
+                                    style="text-decoration: none; font-size: small;">분실물 ></a>
+                            </div>
+                            <div th:if="${board.code == 5}">
+                                <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=get)}" 
+                                    style="text-decoration: none; font-size: small;">습득물 ></a>
                             </div>
 
 
@@ -532,12 +537,12 @@
                         <!--이전글 & 다음글 버튼-->
                         <div style="margin-top: 1rem; margin-bottom: 1rem;">
                             <div th:if="${pre > 0}" style="display: inline-block;">
-                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i
+                                <a th:href="@{/aboard/selectone.bubble(no=${pre})}" class="btn" th:onclick="ajaxUpdateHit([[${pre}]])"> <i
                                         class="bi bi-chevron-left"></i> 이전글</a>
                             </div>
 
                             <div th:if="${next > 0}" style="float: right;">
-                                <a href="#" class="btn" th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i
+                                <a th:href="@{/aboard/selectone.bubble(no=${next})}" class="btn" th:onclick="ajaxUpdateHit([[${next}]])">다음글 <i
                                         class="bi bi-chevron-right"></i></a>
                             </div>
 

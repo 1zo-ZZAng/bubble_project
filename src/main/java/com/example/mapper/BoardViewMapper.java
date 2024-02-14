@@ -15,7 +15,7 @@ public interface BoardViewMapper {
 
 
     //전체 조회
-    @Select({" SELECT * FROM boardview WHERE code IN (1,2,3) BETWEEN #{start} AND #{end} ORDER BY code ASC, regdate desc "})
+    @Select({" SELECT * FROM ( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM boardview b )b WHERE code IN (1,2,3) AND rown >= #{start} AND rown <= #{end} ORDER BY NO DESC; "})
     public List<BoardView> selectBoardView(@Param("start") int start, @Param("end") int end);
 
     /* 카테고리 별 조회 */
