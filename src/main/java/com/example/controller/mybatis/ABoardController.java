@@ -113,8 +113,7 @@ public class ABoardController {
             List<BoardWashing> wlist = new ArrayList<>();
             List<BoardView> list2 = new ArrayList<>();            
             List<BoardGetLost> gllist = new ArrayList<>();
-
-
+            List<BoardView> bvlist = new ArrayList<>();           
             //총 게시글 개수
             int totalPageCount= 0;
 
@@ -130,15 +129,17 @@ public class ABoardController {
                         blist = bService.selectListLimitBoard();
                         totalPageCount = bwService.selectBoardAdminNoticeCount();
 
-                        model.addAttribute("blist", blist);
+                        model.addAttribute("list", blist);
                         log.info(blist.toString());
-                        model.addAttribute("list", alist);
+                        model.addAttribute("list2", alist);
                     }
                     else if(menu.equals("washing")) { // 세탁업체 공지사항
+                        blist = bService.selectListLimitBoard();
                         wlist = bwService.selectBoardWashingNotice(10*page-9, 10*page);
                         totalPageCount = bwService.selectBoardWashingNoticeCount();
 
-                        model.addAttribute("list", wlist);
+                        model.addAttribute("list", blist);
+                        model.addAttribute("list2", wlist);
                     }
                     else{
                         blist = bService.selectListLimitBoard();
@@ -152,30 +153,35 @@ public class ABoardController {
 
             } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
 
-                list2 = bvService.selectBoardViewGetLost();
+               
+                if (menu.equals("get")) { // 분실물 code= 4
+                    blist = bService.selectListLimitBoard();
+                    gllist = bwService.selectBoardGetLost(4,10*page-9, 10*page);
+                    totalPageCount = bwService.selectBoardAdminNoticeCount();
                 
-                model.addAttribute("list", list2);
+                    model.addAttribute("list2", gllist);
+                    model.addAttribute("list", blist);
 
-
-            } else if(type.equals("getlost") && menu.equals("lost")) { //분실물 전체 조회
-
-                list2 = bvService.selectBoardViewLost();
+                }
+                else if(menu.equals("lost")) { // 습득물 code=5
+                    blist = bService.selectListLimitBoard();
+                    gllist = bwService.selectBoardGetLost(5,10*page-9, 10*page);
+                    totalPageCount = bwService.selectBoardAdminNoticeCount();
                 
-                model.addAttribute("list", list2);
+                    model.addAttribute("list2", gllist);
+                    model.addAttribute("list", blist);
 
-
-            } else if(type.equals("getlost") && menu.equals("get")) { //습득물 전체 조회
-
-                list2 = bvService.selectBoardViewGet();
-                
-                model.addAttribute("list", list2);
-
+                }
 
             } else if(type.equals("community")) { //자유게시판
-
-                list2 = bvService.selectBoardViewGeneral();
+                blist = bService.selectListLimitBoard();
+                bvlist = bwService. selectBoardViewCommunity(10*page-9, 10*page);
+                totalPageCount = bwService.selectBoardAdminNoticeCount();
                 
-                model.addAttribute("list", list2);
+                model.addAttribute("list2", bvlist);
+                model.addAttribute("list", blist);
+                log.info(blist.toString());
+                log.info(bvlist.toString());
 
 
             }

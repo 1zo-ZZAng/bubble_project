@@ -39,6 +39,16 @@ public interface BoardWashingMapper {
                 + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
         public List<BoardGetLost> selectBoardGetLost(@Param("code") int code, @Param("start") int start, @Param("end") int end);
 
+        //분실물 습득물 전체
+        @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDGETLOST) " 
+        + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+        public List<BoardView> selectBoardViewGetLostAll( @Param("start") int start, @Param("end") int end);
+
+        //자유게시판
+        @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDVIEW WHERE code=6) " 
+         + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+        public List<BoardView> selectBoardViewCommunity ( @Param("start") int start, @Param("end") int end);
+
         // ------------------------------------------------------------------------------------------
         // 페이지네이션
         // 전체 글 개수

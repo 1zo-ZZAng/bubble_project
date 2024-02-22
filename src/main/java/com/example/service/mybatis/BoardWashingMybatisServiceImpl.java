@@ -2,6 +2,7 @@ package com.example.service.mybatis;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,30 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
             return null;
         }
     }
+
+      // (4) 분실물/습득물
+      @Override
+      public List<BoardView>  selectBoardViewGetLostAll(int start, int end) {
+          try {
+              return bwMapper.selectBoardViewGetLostAll(start, end);
+          }
+          catch (Exception e) {
+              e.printStackTrace();
+              return null;
+          }
+      }
+
+      // (5) 자유게시판
+      @Override
+      public List<BoardView>  selectBoardViewCommunity( int start,  int end){
+          try {
+              return bwMapper. selectBoardViewCommunity(start, end);
+          }
+          catch (Exception e) {
+              e.printStackTrace();
+              return null;
+          }
+      }
 
     // ------------------------------------------------------------------------------------------
     // 페이지네이션

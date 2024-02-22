@@ -249,6 +249,9 @@
                             <div th:if="${board.code == 5}"> <!--습득물-->
                                 <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=get)}" class="btn" style="float: right;">목록</a>
                             </div>
+                            <div th:if="${board.code == 6}"> <!--자유게시판-->
+                                <a th:href="@{/aboard/selectlist.bubble(type=community)}" class="btn" style="float: right;">목록</a>
+                            </div>
                         </div>
 
 
@@ -279,6 +282,10 @@
                             <div th:if="${board.code == 5}">
                                 <a th:href="@{/aboard/selectlist.bubble(type=getlost,menu=get)}" 
                                     style="text-decoration: none; font-size: small;">습득물 ></a>
+                            </div>
+                            <div th:if="${board.code == 6}">
+                                <a th:href="@{/aboard/selectlist.bubble(type=community)}" 
+                                    style="text-decoration: none; font-size: small;"> ></a>
                             </div>
 
 
@@ -383,8 +390,7 @@
                                             style="border-bottom: 1px solid rgb(240, 240, 240); margin-top: 1rem;">
 
                                             <p th:text="${obj.bno}" name="bno" hidden></p> <!--게시글 번호-->
-                                            <p th:text="${obj.writer}"
-                                                style="display: inline-block; float: left; margin-left: 1rem;"></p>
+                                           
 
                                             <!--수정&삭제 버튼-->
                                             <div>
@@ -404,7 +410,8 @@
 
                                                                 <!--작성자와 로그인된 아이디가 일치시-->
                                                                 <div th:if="${obj.writer} == ${user.username}">
-
+                                                                    <p th:text="${obj.writer}"
+                                                                    style="display: inline-block; float: left; margin-left: 1rem;"></p>
                                                                     <!--수정-->
                                                                     <!-- <a href="#" style="float: left;" class="btn btn-primary dropdown-item">수정</a> -->
 
@@ -436,16 +443,18 @@
                                             </div>
 
 
-                                            <div th:if="${user != null}">
+                                            <div th:if="${user != null}" style=" display: flex; align-content: space-between; align-items: center;">
                                                 <!--게시글 작성자와 댓글 작성자의 아이디가 일치했을 때만 '작성자'가 붙음-->
                                                 <div th:if="${board.writer} == ${obj.writer}">
+                                                    <p th:text="${obj.writer}"
+                                                    style="display: inline-block; float: left; margin-left: 1rem;"></p>
                                                     <p
-                                                        style="display: inline-block; font-size: small; color: red; margin-left: 1rem; margin-top: 14px;">
+                                                        style="display: inline-block; font-size: small; color: red; margin-left: 1rem; ">
                                                         작성자</p>
                                                 </div>
                                                 <div th:if="${board.writer} != ${obj.writer}">
                                                     <p
-                                                        style="display: inline-block; font-size: small; margin-left:5px; margin-top: 14px;">
+                                                        style="display: inline-block; font-size: small; margin-left:5px; ">
                                                         님 </p>
                                                 </div>
                                             </div>

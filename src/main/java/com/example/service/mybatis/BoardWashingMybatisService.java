@@ -26,6 +26,12 @@ public interface BoardWashingMybatisService {
 
     // (3) 분실물/습득물
     public List<BoardGetLost> selectBoardGetLost(@Param("code") int code, @Param("start") int start, @Param("end") int end);
+   
+    // (4) 분실물 습득물 all    
+    public List<BoardView> selectBoardViewGetLostAll( @Param("start") int start, @Param("end") int end);
+
+    // (5) 자유게시판
+    public List<BoardView> selectBoardViewCommunity ( @Param("start") int start, @Param("end") int end);
 
     // ------------------------------------------------------------------------------------------
     // 페이지네이션
