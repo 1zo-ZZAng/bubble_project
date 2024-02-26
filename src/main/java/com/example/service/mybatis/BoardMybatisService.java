@@ -72,10 +72,10 @@ public interface BoardMybatisService {
     public int countBoard();
 
     //다음글로 넘기기
-    public int nextBoardOne(long no);
+    public int nextBoardOne(long no, long code);
 
     //이전글로 넘기기
-    public int preBoardOne(long no);
+    public int preBoardOne(long no, long code);
 
     //페이징
     public List<Board> selectBoardListPage(int start, int end);

@@ -125,12 +125,14 @@ public class ABoardController {
             }
             if(type.equals("notice")){ //공지사항 조회
                     if (menu.equals("admin")) { // 관리자 공지사항
-                        alist = bwService.selectBoardAdminNotice(10*page-9, 10*page);
+                        alist = bwService.selectBoardAdminNotice(10*page-9, 10*page); //페이지네이션
                         blist = bService.selectListLimitBoard();
                         totalPageCount = bwService.selectBoardAdminNoticeCount();
+                        
 
                         model.addAttribute("list", blist);
-                        log.info(blist.toString());
+                        log.info("a=>{}",alist.toString());
+                        log.info(totalPageCount+"");
                         model.addAttribute("list2", alist);
                     }
                     else if(menu.equals("washing")) { // 세탁업체 공지사항
@@ -243,8 +245,8 @@ public class ABoardController {
             // log.info("글 1개 조회 => {}", board.toString());
             board.getHit();
 
-            long next = bService.nextBoardOne(no);
-            long pre = bService.preBoardOne(no);
+            long next = bService.nextBoardOne(no,board.getCode());
+            long pre = bService.preBoardOne(no,board.getCode());
 
             log.info("이전페이지 번호 => {}", pre);
             log.info("다음페이지 번호 => {}", next);

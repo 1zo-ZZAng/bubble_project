@@ -238,10 +238,10 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
 
     //다음글
     @Override
-    public int nextBoardOne(long no) {
+    public int nextBoardOne(long no, long code) {
         try {
 
-            return bMapper.nextBoardOne(no);
+            return bMapper.nextBoardOne(no,code);
 
             
         } catch (Exception e) {
@@ -252,10 +252,10 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
 
     //이전글
     @Override
-    public int preBoardOne(long no) {
+    public int preBoardOne(long no, long code) {
         try {
 
-            return bMapper.preBoardOne(no);
+            return bMapper.preBoardOne(no,code);
 
             
         } catch (Exception e) {

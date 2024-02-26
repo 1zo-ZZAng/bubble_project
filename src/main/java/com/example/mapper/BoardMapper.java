@@ -45,7 +45,7 @@ public interface BoardMapper {
     /* =====================메인======================== */
 
     //글 작성
-    @Insert({" INSERT INTO BOARD(title, content, writer, hit, code) VALUES(#{obj.title}, #{obj.content}, #{obj.writer}, #{obj.hit}, #{obj.code}) "})
+    @Insert({" INSERT INTO BOARD(title, content, writer, hit, code, role) VALUES(#{obj.title}, #{obj.content}, #{obj.writer}, #{obj.hit}, #{obj.code}, #{obj.role}) "})
     public int writeBoard(@Param("obj") Board obj);
 
     //글 수정
@@ -96,12 +96,12 @@ public interface BoardMapper {
     public int countBoard();
 
     //다음글로 넘기기
-    @Select({" SELECT NVL(MIN(no),0) FROM BOARD WHERE no > #{no} "})
-    public int nextBoardOne(@Param("no") long no);
+    @Select({" SELECT NVL(MIN(no),0) FROM BOARD WHERE no > #{no} AND code =#{code} "})
+    public int nextBoardOne(@Param("no") long no, @Param("code") long code);
 
     //이전글로 넘기기
-    @Select({" SELECT NVL(MAX(no),0) FROM BOARD WHERE no < #{no} "})
-    public int preBoardOne(@Param("no") long no);
+    @Select({" SELECT NVL(MAX(no),0) FROM BOARD WHERE no < #{no} AND code =#{code} "})
+    public int preBoardOne(@Param("no") long no, @Param("code") long code);
     
     //페이징
     @Select({" SELECT b.* FROM( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
