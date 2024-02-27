@@ -81,99 +81,322 @@
             </div>
         </div>
 
-        <div id="mypagesection">
-            <a th:href="@{/customer/mypage.bubble(menu=1)}" id="searchrv">예약 내역 조회</a>
-            <p>ㅣ</p>
-            <a th:href="@{/customer/mypage.bubble(menu=2)}" id="changepw">회원 정보 수정</a>
-        </div>
 
-        <div th:if="${#strings.equals(param.menu, '1')}">
-            <!-- 예약 내역 조회 -->
-            <table id="datatableSimple">
-                <thead>
-                    <tr>
-                        <th>예약번호</th>
-                        <th>세탁소</th>
-                        <th>세탁소 주소</th>
-                        <th>이용일</th>
-                        <th>예약 시간</th>
-                        <th>예약 현황</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="list : ${reserveList}">
-                        <td><a class="rlist" th:href="@{/customer/reservedetail.bubble(rvno=${list.rvno})}" th:text="${list.rvno}"></a></td>
-                        <td th:text="${list.wname}"></td>
-                        <td th:text="${list.waddress}"></td>
-                        <td th:text="${list.rvdate}"></td>
-                        <td th:text="${list.rvtime}"></td>
-                        <!-- <td th:text="${list.state}"></td> -->
-                        <td>
-                            <span th:text="${list.state}" th:classappend="${list.state == '예약 완료' ? 'blue-text' : (list.state == '이용 완료' ? 'gray-text' : (list.state == '예약 취소' ? 'red-text' : ''))}"></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+           <!-- 카테고리 navigation -->
+           <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" th:href="@{/cboard/selectlist.bubble}"
+                            id="noticebtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            공지사항
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="noticebtn">
+                            <li><a class="dropdown-item"
+                                    th:href="@{/cboard/selectlist.bubble(type=notice, menu=admin)}">관리자</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item"
+                                    th:href="@{/cboard/selectlist.bubble(type=notice, menu=washing)}">세탁업체</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                            th:href="@{/cboard/selectlist.bubble(type=getlost, menu=lost)}" id="getlostbtn"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            분실물/습득물
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="getlostbtn">
+                            <li><a class="dropdown-item"
+                                    th:href="@{/cboard/selectlist.bubble(type=getlost, menu=lost)}">분실물</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item"
+                                    th:href="@{/cboard/selectlist.bubble(type=getlost, menu=get)}">습득물</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cboard/selectlist.bubble(type=community)}"
+                            tabindex="-1" aria-disabled="true">자유게시판</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cboard/write.bubble(id=${user.username})}"
+                            style="color: rgb(0, 0, 180);">글쓰기</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-        <div th:if="${#strings.equals(param.menu, '2')}">
-            <!-- 회원정보 수정 -->
-            <form th:action="@{/customer/mypage.bubble(menu=2)}" th:object="${customer}" method="post" id="updateform">
-                <table class="container updatetable" style="width: 500px; height: 580px;">
-                    <tr>
-                        <td><label for="id" id="lbl_check">아이디</label></td>
-                        <td><input type="text" th:field="${customer.id}" name="id" id="id" readonly class="form-control"  /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="password">비밀번호</label></td>
-                        <td><input type="password" th:field="${customer.password}" id="password" name="password" class="form-control"  autoComplete="off" /></td>
-                        <td>
-                            <span id="pwchange" style="display: none;">
-                                <a th:href="@{/customer/updatepw.bubble}" class="btn btn-dark" style="margin-left: 60px;" id="pwbtn" >비밀번호 변경</a>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">이름</label></td>
-                        <td><input type="text" th:field="${customer.name}" id="name" name="name" class="form-control"  /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="phone">전화번호</label></td>
-                        <td><input type="text" th:field="${customer.phone}" id="phone" name="phone" class="form-control" 
-                                placeholder="010-000-0000" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="email">이메일 </label></td>
-                        <td><input type="email" th:field="${customer.email}" id="email" name="email" class="form-control"  /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="birth" >생년월일</label></td>
-                        <td><input type="date" th:field="${customer.birth}" id="birth" name="birth" readonly class="form-control"  /></td>
-                    </tr>
-                    <tr>
-                        <td><label id="t-caddl">주소</label></td>
-                        <td><input type="text" th:field="${customer.address}" id="address" name="address" readonly class="form-control"  /></td>
-                        <td><input type="button" value="주소 찾기" id="add_button" data-bs-toggle="modal" class="btn btn-dark" 
-                                data-bs-target="#exampleModal" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="text" th:field="${customer.detailaddress}" id="detailaddress" name="detailaddress"
-                                placeholder="상세 주소" class="form-control" /></td>
-                        <td><input type="text" th:field="${customer.extraaddress}" id="extraaddress" name="extraaddress"
-                                placeholder="참고 주소" readonly class="form-control" /></td>
-                    </tr>
-                    <tr>
-                        
-                            <td><input type="button" value="수정" onclick="updateOne()" class="btn btn-dark" id="update" /></td>
-                        
-                            <td><button type="button" class="btn btn-secondary" onclick="deleteOne()" id="delete" >회원 탈퇴</button></td>
 
-                    </tr>
-                </table>
-            </form>
-        </div>
+
+                          <!-- 공지사항(전체) 게시판 -->
+                          <div th:if="${#strings.equals(param.type, notice)}">
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">공지사항</h3>
+                            </div>
+    
+                            <table
+                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
+                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                    <tr style="border-bottom: 2px solid black; ">
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                    </tr>
+                                </thead>
+                                <!-- 공지사항 중요 부분 테이블 -->
+                                <tbody style="color:black; ">
+                                    <tr th:each="notice : ${list}">
+                                        <td style="width: 10%; font-weight: bold;">공지</td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
+                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
+                                        <td th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;  font-weight: bold;"></td>
+                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- 기본 공지사항 -->
+                            <table style="margin-bottom: 30px; text-align: center; ">
+                                <tbody>
+                                    <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}">
+                                        <td th:text="${obj.no}" style="width: 10%;"></td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                                th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
+                                                style="text-decoration: none; color: black;" id="myLink"></a></td>
+                                        <td th:text="${obj.writer}" style="width: 10%;"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;"></td>
+                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
+
+    
+                        <!-- 공지사항(업체) 게시판 -->
+                        <div th:if="${#strings.equals(param.type, 'notice')} and ${#strings.equals(param.menu, 'washing')}">
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">업체 공지사항</h3>
+                            </div>
+    
+                            <table
+                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
+                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                    <tr style="border-bottom: 2px solid black; ">
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                    </tr>
+                                </thead>
+                                <!-- 공지사항 중요 부분 테이블 -->
+                                <tbody style="color:black; ">
+                                    <tr th:each="notice : ${list}">
+                                        <td style="width: 10%; font-weight: bold;">공지</td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
+                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
+                                        <td th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;  font-weight: bold;"></td>
+                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- 기본 공지사항 -->
+                            <table style="margin-bottom: 30px; text-align: center; ">
+                                <tbody>
+                                    <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}">
+                                        <td th:text="${obj.no}" style="width: 10%;"></td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                                th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
+                                                style="text-decoration: none; color: black;" id="myLink"></a></td>
+                                        <td th:text="${obj.name}" style="width: 10%;"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;"></td>
+                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
+    
+                        <!--분실물 게시판-->
+                        <div th:if="${#strings.equals(param.type, 'getlost')} and ${#strings.equals(param.menu, 'lost')}">
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">분실물</h3>
+                            </div>
+    
+                            <table
+                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
+                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                    <tr style="border-bottom: 2px solid black; ">
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                    </tr>
+                                </thead>
+                                <!-- 공지사항 중요 부분 테이블 -->
+                                <tbody style="color:black; ">
+                                    <tr th:each="notice : ${list}">
+                                        <td style="width: 10%; font-weight: bold;">공지</td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
+                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
+                                        <td th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;  font-weight: bold;"></td>
+                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--분실물 -->
+                            <table style="margin-bottom: 30px; text-align: center; ">
+                                <tbody>
+                                    <tr th:each="obj : ${list2}">
+                                        <td th:text="${obj.no}" style="width: 10%;"></td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                                th:text=" '[' + 분실물 +']' + ' ' + ${obj.title}"
+                                                style="text-decoration: none; color: black;" id="myLink"></a></td>
+                                        <td th:text="${obj.name}" style="width: 10%;"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;"></td>
+                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <!--습득물 게시판-->
+                        <div th:if="${#strings.equals(param.type, 'getlost')} and ${#strings.equals(param.menu, 'get')}">
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">습득물</h3>
+                            </div>
+    
+                            <table
+                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
+                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                    <tr style="border-bottom: 2px solid black; ">
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                    </tr>
+                                </thead>
+                                <!-- 공지사항 중요 부분 테이블 -->
+                                <tbody style="color:black; ">
+                                    <tr th:each="notice : ${list}">
+                                        <td style="width: 10%; font-weight: bold;">공지</td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
+                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
+                                        <td th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;  font-weight: bold;"></td>
+                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--습득물  -->
+                            <table style="margin-bottom: 30px; text-align: center; ">
+                                <tbody>
+                                    <tr th:each="obj : ${list2}">
+                                        <td th:text="${obj.no}" style="width: 10%;"></td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                                th:text=" '[' + 습득물 +']' + ' ' + ${obj.title}"
+                                                style="text-decoration: none; color: black;" id="myLink"></a></td>
+                                        <td th:text="${obj.name}" style="width: 10%;"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;"></td>
+                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
+    
+    
+                        <!-- 자유게시판 -->
+                        <div th:if="${#strings.equals(param.type, 'community')}">
+                            <div style="display: flex; margin-top: 15px;">
+                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
+                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">자유게시판</h3>
+                            </div>
+    
+                            <table
+                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
+                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
+                                    <tr style="border-bottom: 2px solid black; ">
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                    </tr>
+                                </thead>
+                                <!-- 공지사항 중요 부분 테이블 -->
+                                <tbody style="color:black; ">
+                                    <tr th:each="notice : ${list}">
+                                        <td style="width: 10%; font-weight: bold;">공지</td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
+                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
+                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
+                                        <td th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;  font-weight: bold;"></td>
+                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--자유게시판글 -->
+                            <table style="margin-bottom: 30px; text-align: center; ">
+                                <tbody>
+                                    <tr th:each="obj : ${list2}">
+                                        <td th:text="${obj.no}" style="width: 10%;"></td>
+                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
+                                                th:text=" ${obj.title}" style="text-decoration: none; color: black;"
+                                                id="myLink"></a></td>
+                                        <td th:text="${obj.writer}" style="width: 10%;"></td>
+                                        <td th:text="${#dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
+                                            style="width: 20%;"></td>
+                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
+    
+    
+    
+    
+    
+                    </div>
+        
     </div>
 
     <!-- 주소등록 버튼을 누르면 나오는 모달창 -->

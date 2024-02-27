@@ -147,4 +147,15 @@ public class BoardWashingMybatisServiceImpl implements BoardWashingMybatisServic
         }
     }
 
+    @Override
+    public int selectBoardCommunityCount(int code) {
+        try {
+            return bwMapper.selectBoardCommunityCount(code);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     }

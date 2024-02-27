@@ -147,7 +147,7 @@ public class ABoardController {
                         blist = bService.selectListLimitBoard();
                         list2 = bvService.selectBoardView(10*page-9, 10*page);
                         totalPageCount=bwService.selectBoardAllNoticeCount();
-                        // log.info(list2.toString());
+                        log.info(list2.toString());
                         model.addAttribute("list", blist);
                         model.addAttribute("list2", list2);
 
@@ -159,7 +159,7 @@ public class ABoardController {
                 if (menu.equals("get")) { // 분실물 code= 4
                     blist = bService.selectListLimitBoard();
                     gllist = bwService.selectBoardGetLost(4,10*page-9, 10*page);
-                    totalPageCount = bwService.selectBoardAdminNoticeCount();
+                    totalPageCount = bwService.selectBoardGetLostCount(4);
                 
                     model.addAttribute("list2", gllist);
                     model.addAttribute("list", blist);
@@ -168,7 +168,7 @@ public class ABoardController {
                 else if(menu.equals("lost")) { // 습득물 code=5
                     blist = bService.selectListLimitBoard();
                     gllist = bwService.selectBoardGetLost(5,10*page-9, 10*page);
-                    totalPageCount = bwService.selectBoardAdminNoticeCount();
+                    totalPageCount = bwService.selectBoardGetLostCount(5);
                 
                     model.addAttribute("list2", gllist);
                     model.addAttribute("list", blist);
@@ -178,7 +178,7 @@ public class ABoardController {
             } else if(type.equals("community")) { //자유게시판
                 blist = bService.selectListLimitBoard();
                 bvlist = bwService. selectBoardViewCommunity(10*page-9, 10*page);
-                totalPageCount = bwService.selectBoardAdminNoticeCount();
+                totalPageCount = bwService.selectBoardCommunityCount(6);
                 
                 model.addAttribute("list2", bvlist);
                 model.addAttribute("list", blist);

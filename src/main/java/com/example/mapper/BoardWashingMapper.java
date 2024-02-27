@@ -56,15 +56,20 @@ public interface BoardWashingMapper {
         @Select({" SELECT COUNT(*) FROM BoardView "})
         public int selectBoardAllNoticeCount();
 
-        // (1) 공지사항 (관리자)
+        //  공지사항 (관리자)
         @Select({" SELECT COUNT(*) FROM BoardAdmin "})
         public int selectBoardAdminNoticeCount();
 
-        // (2) 공지사항 (세탁업체)
+        //  공지사항 (세탁업체)
         @Select({" SELECT COUNT(*) FROM BOARDWASHING "})
         public int selectBoardWashingNoticeCount();
 
-        // (3) 분실물/습득물
+        //  분실물/습득물
         @Select({" SELECT COUNT(*) FROM BOARDGETLOST WHERE code=#{code} "})
         public int selectBoardGetLostCount(@Param("code") int code);
+
+        //  자유게시판
+        @Select({" SELECT COUNT(*) FROM BOARDVIEW b WHERE code=#{code} "})
+        public int selectBoardCommunityCount(@Param("code") int code);
+
 }

@@ -46,4 +46,8 @@ public interface BoardWashingMybatisService {
 
     // (3) 분실물/습득물
     public int selectBoardGetLostCount(@Param("code") int code);
+
+    // 자유게시판
+    public int selectBoardCommunityCount(@Param("code") int code);
 }
+
