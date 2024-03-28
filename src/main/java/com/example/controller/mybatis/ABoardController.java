@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -103,7 +104,8 @@ public class ABoardController {
     @GetMapping(value="/selectlist.bubble")
     public String selectlistGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
                                              @RequestParam(name = "menu", required = false, defaultValue = "null") String menu,
-                                             @RequestParam(name = "page", required = false, defaultValue = "1") int page) {
+                                             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                             Pageable pageable) {
         try {
 
             model.addAttribute("user", user);

@@ -355,6 +355,7 @@
 
 
     <script type="text/javascript">
+        
         const contents = document.querySelector(".content");
         const buttons = document.querySelector(".pagesbuttons");
 
@@ -369,11 +370,21 @@
 
         if (type === "notice") {
             if (menu === "admin") {
-                totalPageCount = bwService.selectBoardAdminNoticeCount();
+                // bwService.selectBoardAdminNoticeCount().then(result => {
+                //     totalPageCount = result;
+                //     // 여기서 totalPageCount 값을 사용할 수 있습니다.
+                //     console.log("Total Page Count:", totalPageCount);
+                // });
             } else if (menu === "washing") {
-                totalPageCount = bwService.selectBoardWashingNoticeCount();
+                bwService.selectBoardWashingNoticeCount().then(result => {
+                    totalPageCount = result;
+                    console.log("Total Page Count:", totalPageCount);
+                });
             } else {
-                totalPageCount = bwService.selectBoardAllNoticeCount();
+                bwService.selectBoardAllNoticeCount().then(result => {
+                    totalPageCount = result;
+                    console.log("Total Page Count:", totalPageCount);
+                });
             }
         } else if (type === "getlost") {
             if (menu === "get") {
@@ -385,7 +396,7 @@
             totalPageCount = bwService.selectBoardCommunityCount(6);
         }
 
-        console.log(totalPageCount);
+        // console.log(totalPageCount);
         const showContent = 5;
         const showButton = 5;
         const maxContent = showContent;
@@ -393,60 +404,10 @@
         let page = 1;
 
         const makeContent = (id) => {
-            const content = document.createElement("div");
-            contents.classList.add("content");
+            // const content = document.createElement("div");
+            // contents.classList.add("content");
             contents.innerHTML += `
-                <!-- 공지사항(전체) 게시판 -->
-                        <div th:if="${strings.equals(param.type, notice)}" >
-                            <div style="display: flex; margin-top: 15px;">
-                                <span style="width: 3px; height: 34px ;border: 2px solid #444444;"></span>
-                                <h3 style="float: left; margin-left: 5px; font-weight: bold;">공지사항</h3>
-                            </div>
-
-                            <table
-                                style="margin-top: 15px; text-align: center; position: sticky; top: 0px; background-color: rgb(234, 234, 234) ;">
-                                <thead style="border: 2px; border-top: 2px solid black; background-color: white; ">
-                                    <tr style="border-bottom: 2px solid black; ">
-                                        <th>번호</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>작성일</th>
-                                        <th>조회</th>
-                                    </tr>
-                                </thead>
-                                <!-- 공지사항 중요 부분 테이블 -->
-                                <tbody style="color:black; ">
-                                    <tr th:each="notice : ${list}">
-                                        <td style="width: 10%; font-weight: bold;">공지</td>
-                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${notice.no})}"
-                                                th:text=" '[' + 중요 +']' + ' ' + ${notice.title}"
-                                                style="text-decoration: none; color: black; font-weight: bold; font-size: 16.5px;"
-                                                id="myLink"></a></td>
-                                        <td th:text="${notice.writer}" style="width: 10%;  font-weight: bold;"></td>
-                                        <td th:text="${dates.format(notice.regdate, 'yyyy-MM-dd HH:mm:ss')}"
-                                            style="width: 20%;  font-weight: bold;"></td>
-                                        <td th:text="${notice.hit}" style="width: 10%;  font-weight: bold;"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- 기본 공지사항 -->
-                            <table style="margin-bottom: 30px; text-align: center; ">
-                                <tbody>
-                                    <tr th:each="obj : ${list2}" th:if="${obj.codename.equals('공지사항')}">
-                                        <td th:text="${obj.no}" style="width: 10%;"></td>
-                                        <td style="width: 50%;"><a th:href="@{/aboard/selectone.bubble(no=${obj.no})}"
-                                                th:text=" '[' + 공지 +']' + ' ' + ${obj.title}"
-                                                style="text-decoration: none; color: black;" id="myLink"></a></td>
-                                        <td th:text="${obj.writer}" style="width: 10%;"></td>
-                                        <td th:text="${dates.format(obj.regdate, 'yyyy-MM-dd HH:mm:ss')}"
-                                            style="width: 20%;"></td>
-                                        <td th:text="${obj.hit}" style="width: 10%;"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-
+               11111111
 
                 `;
             return contents;

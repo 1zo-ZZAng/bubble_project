@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <td><label for="phone">전화번호</label></td>
-                    <td><input type="text" id="phone" name="phone" placeholder="010-000-0000" class="form-control" /></td>
+                    <td><input type="text" maxlength="13" id="phone" name="phone" placeholder="010-000-0000" class="form-control" /></td>
                 </tr>
                 <tr>
                     <td><label for="email">이메일 </label></td>
@@ -148,6 +148,43 @@
                 alert('아이디를 입력하세요.');
                 e.focus();
             }
+        }
+
+
+        //전화번호 자동 하이픈 처리
+        var autoHypenPhone = function (str) {
+            str = str.replace(/[^0-9]/g, '');
+            var tmp = '';
+            if (str.length < 4) {
+                return str;
+            } else if (str.length < 7) {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3);
+                return tmp;
+            } else if (str.length < 11) {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 3);
+                tmp += '-';
+                tmp += str.substr(6);
+                return tmp;
+            } else {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 4);
+                tmp += '-';
+                tmp += str.substr(7);
+                return tmp;
+            }
+
+            return str;
+        }
+        const phone = document.getElementById('phone');
+
+        phone.onkeyup = function () {
+            console.log(this.value);
+            this.value = autoHypenPhone(this.value);
         }
 
         // daum 우편번호
