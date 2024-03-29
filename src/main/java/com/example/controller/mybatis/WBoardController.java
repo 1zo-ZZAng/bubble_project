@@ -52,17 +52,29 @@ public class WBoardController {
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model, @ModelAttribute Washing washing){
+    public String writeGET(@AuthenticationPrincipal User user, Model model, 
+                            @RequestParam(name = "type", required = false, defaultValue = "notice") String type,
+                            @RequestParam(name = "menu", required = false, defaultValue = "admin") String menu,
+                            @ModelAttribute Washing washing){
         try {
+            List<String> list1 = bService.selectCodeNameDistinct(); // 게시판 종류
 
-            List<BoardType> list1 = bService.selectlistBType(); // 게시판 종류
-            List<BoardType> list2 = bService.selectlistBTypeCodeDetail(); //말머리
+            List<String> list2 = new ArrayList<>();
+            if (type.equals("notice")) {
+                list2 = bService.selectCodeDetail("공지사항");
+            }
+            else if (type.equals("getlost")) {
+                list2 = bService.selectCodeDetail("분실물/습득물");
+            }
+            else if (type.equals("community")) {
+                list2 = bService.selectCodeDetail("자유게시판");
+            }
 
-            log.info("게시판 종류=>{}",list1.toString());
-            log.info("말머리 종류=>{}",list2.toString());
+            // log.info("게시판 종류=>{}",list1.toString());
+            // log.info("말머리 종류=>{}",list2.toString());
 
-            model.addAttribute("CodeName", list1);
-            model.addAttribute("CodeDetail", list2);
+            model.addAttribute("CodeNameList", list1);
+            model.addAttribute("CodeDetailList", list2);
 
             model.addAttribute("user", user);
 
@@ -207,8 +219,8 @@ public class WBoardController {
             // log.info("글 1개 조회 => {}", board.toString());
 
 
-            long next = bService.nextBoardOne(no);
-            long pre = bService.preBoardOne(no);
+            long next = bService.nextBoardOne(no, board.getCode());
+            long pre = bService.preBoardOne(no, board.getCode());
 
             log.info("이전페이지 번호 => {}", pre);
             log.info("다음페이지 번호 => {}", next);

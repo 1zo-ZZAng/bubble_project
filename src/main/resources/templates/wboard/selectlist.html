@@ -411,7 +411,7 @@
 
                     <!-- 로그인한 유저 권한 구분 필요 -> 스크립트에서 처리 -->
                     <div style="display: none; position: relative; width: 97%; left: 50%; transform: translateX(-50%); margin-top: 10px;" id="writebtn">
-                        <button style="float: right;" class="btn btn-outline-dark">글쓰기</button>
+                        <a th:href="@{/wboard/write.bubble(type=${param.type}, menu=${param.menu})}"><button style="float: right;" class="btn btn-outline-dark">글쓰기</button></a>
                     </div>
 
                     <!-- 페이지네이션 -->

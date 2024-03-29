@@ -290,6 +290,33 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return null;
         }
     }
+
+    // ------------------------------------------------------------
+
+    // 글쓰기
+    // (1) codename
+    @Override
+    public List<String> selectCodeNameDistinct() {
+        try {
+            return bMapper.selectCodeNameDistinct();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // (2) codedetail
+    @Override
+    public List<String> selectCodeDetail(String codename) {
+        try {   
+            return bMapper.selectCodeDetail(codename);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
 
 

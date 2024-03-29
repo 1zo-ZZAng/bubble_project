@@ -81,6 +81,13 @@ public interface BoardMybatisService {
     public List<Board> selectBoardListPage(int start, int end);
 
 
+    // ------------------------------------------------------------
 
+    // 글쓰기
+    // (1) codename
+    public List<String> selectCodeNameDistinct();
+
+    // (2) codedetail
+    public List<String> selectCodeDetail(String codename);
     
 }

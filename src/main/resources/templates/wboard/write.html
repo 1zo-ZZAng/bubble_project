@@ -269,15 +269,15 @@
                                 <div class="mb-3">
 
                                     <!--게시판-->
-                                    <select name="code" id="code" onchange="codeChange()" style="float: left; margin-right: 4px;"> 
+                                    <select name="code" id="code" onchange="changeCodeName()" style="float: left; margin-right: 4px;"> 
                                         <option value="">게시판 선택</option>
-                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"  th:text="${CodeName.codename}"></option>
+                                        <option th:each="CodeName : ${CodeNameList}" th:value="${CodeName}"  th:text="${CodeName}"></option>
                                     </select>
 
                                     <!--말머리-->
-                                    <select id="codedetail" disabled>
+                                    <select id="codedetail">
                                         <option value="">말머리 선택</option>
-                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.codedetail}"  th:text="${CodeDetail.codedetail}"></option>
+                                        <option th:each="CodeDetail : ${CodeDetailList}" th:value="${CodeDetail}"  th:text="${CodeDetail}"></option>
                                     </select>
 
                                     <!-- 글쓰기 버튼 -->
@@ -344,15 +344,48 @@
     <!-- Include the Quill library  글작성할 때 필요함-->
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 
     <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
-
-
     <script th:inline="javascript" type="text/javascript">
+        window.addEventListener('load', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const typeParam = urlParams.get('type');
+            const menuParam = urlParams.get('menu');
+
+            const codeList = document.getElementById('code');
+            const codedetailList = document.getElementById('codedetail');
+
+            if (typeParam === 'notice') {
+                $("#code").val("공지사항").prop("selected", true);
+                
+                if (menuParam === 'admin') {
+                    $("#codedetail").val("중요").prop("selected", true);
+                }
+                else if (menuParam === 'washing') {
+                    $("#codedetail").val("세탁업체").prop("selected", true);
+                }
+            }
+            else if (typeParam === 'getlost') {
+                $("#code").val("분실물/습득물").prop("selected", true);
+                
+                if (menuParam === 'get') {
+                    $("#codedetail").val("분실물").prop("selected", true);
+                }
+                else if (menuParam === 'lost') {
+                    $("#codedetail").val("습득물").prop("selected", true);
+                }
+            }
+            // else if (typeParam === 'community') {
+            //     $("#code").val("자유게시판").prop("selected", true);
+            // }
+        });
 
         const toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -377,6 +410,87 @@
 
             ['clean']                                         // remove formatting button
         ];
+
+        // 카테고리(type) 변경 이벤트
+        async function changeCodeName() {
+            let button = document.getElementById('code');
+
+            if (button.value === '공지사항') {
+                // rest api 호출
+                const url = contextPath + "/api/wboard/writecodechange.bubble" + '?type=notice';
+                const headers = { "Content-Type": "application/json" };
+                const { data } = await axios.get(url, { headers });
+
+                if (data.status === 200) {
+                    // 받아온 새로운 코드 디테일 리스트
+                    const codeDetailList = data.codeDetailList;
+
+                    // 기존의 codedetail select 요소를 가져옴
+                    const codedetail = document.getElementById('codedetail');
+
+                    // 기존의 codedetail select 요소의 내용을 초기화
+                    codedetail.innerHTML = '';
+
+                    // 새로운 코드 디테일 리스트를 기반으로 옵션들을 추가
+                    codeDetailList.forEach(codeDetailOne => {
+                        const option = document.createElement('option');
+                        option.value = codeDetailOne;
+                        option.textContent = codeDetailOne;
+                        codedetail.appendChild(option);
+                    });
+                }
+            }
+            else if (button.value === '분실물/습득물') {
+                // rest api 호출
+                const url = contextPath + "/api/wboard/writecodechange.json" + '?type=getlost';
+                const headers = { "Content-Type": "application/json" };
+                const { data } = await axios.get(url, { headers });
+
+                if (data.status === 200) {
+                    // 받아온 새로운 코드 디테일 리스트
+                    const codeDetailList = data.codeDetailList;
+
+                    // 기존의 codedetail select 요소를 가져옴
+                    const codedetail = document.getElementById('codedetail');
+
+                    // 기존의 codedetail select 요소의 내용을 초기화
+                    codedetail.innerHTML = '';
+
+                    // 새로운 코드 디테일 리스트를 기반으로 옵션들을 추가
+                    codeDetailList.forEach(codeDetailOne => {
+                        const option = document.createElement('option');
+                        option.value = codeDetailOne;
+                        option.textContent = codeDetailOne;
+                        codedetail.appendChild(option);
+                    });
+                }
+            }
+            else if (button.value === '자유게시판') {
+                // rest api 호출
+                const url = contextPath + "/api/wboard/writecodechange.json" + '?type=community';
+                const headers = { "Content-Type": "application/json" };
+                const { data } = await axios.get(url, { headers });
+
+                if (data.status === 200) {
+                    // 받아온 새로운 코드 디테일 리스트
+                    const codeDetailList = data.codeDetailList;
+
+                    // 기존의 codedetail select 요소를 가져옴
+                    const codedetail = document.getElementById('codedetail');
+
+                    // 기존의 codedetail select 요소의 내용을 초기화
+                    codedetail.innerHTML = '';
+
+                    // 새로운 코드 디테일 리스트를 기반으로 옵션들을 추가
+                    codeDetailList.forEach(codeDetailOne => {
+                        const option = document.createElement('option');
+                        option.value = codeDetailOne;
+                        option.textContent = codeDetailOne;
+                        codedetail.appendChild(option);
+                    });
+                }
+            }
+        }
         
 
         // 위쪽에 있는 태그중에서 id가 content인 것을 찾아서 toolbar는 toolbarOptions의 값으로 대체하고 테마를 snow로 해서 변경
@@ -389,25 +503,6 @@
             placeholder: '내용을 입력해주세요.',
             theme: 'snow'
         });
-
-
-        //말머리부분 자동 선택되게 해줌
-        function codeChange(){
-            const code = document.getElementById('code').value;
-            const codedetail = document.getElementById('codedetail');
-
-            if(code == 2) {
-                codedetail.value= '찾아주세요';
-            }else if(code == 3) {
-                codedetail.value='찾아가세요';
-            }else{
-                codedetail.value = '';
-            }
-
-        
-        }
-    
-
 
         function writeAction(){
             const title = document.getElementById('title');

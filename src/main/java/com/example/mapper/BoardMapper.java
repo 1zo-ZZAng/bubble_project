@@ -107,5 +107,14 @@ public interface BoardMapper {
     @Select({" SELECT b.* FROM( SELECT b.*, ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM BOARD b )b WHERE rown >= #{start} AND rown <= #{end} ORDER BY no DESC "})
 	public List<Board> selectBoardListPage(@Param("start") int start, @Param("end") int end);
 
-    
+    // ------------------------------------------------------------
+
+    // 글쓰기
+    // (1) codename
+    @Select({" SELECT DISTINCT(CODENAME) FROM BOARDTYPE "})
+    public List<String> selectCodeNameDistinct();
+
+    // (2) codedetail
+    @Select({" SELECT codedetail FROM BOARDTYPE WHERE CODENAME = #{codename} "})
+    public List<String> selectCodeDetail(@Param("codename") String codename);
 }
