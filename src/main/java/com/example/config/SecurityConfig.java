@@ -136,7 +136,7 @@ public class SecurityConfig {
         // (2) 로그아웃 처리 (get은 안됨. 반드시 post로 호출해야 됨)
         http.logout()
             .logoutUrl("/logout.bubble") // 로그아웃하는 주소
-            // .logoutSuccessUrl("/home.bubble") // 로그아웃 성공시 이동할 페이지
+            .logoutSuccessUrl("/customer/home.bubble") // 로그아웃 성공시 이동할 페이지
             .logoutSuccessHandler(new CustomLogoutSuccessHandler())
             .invalidateHttpSession(true)
             .clearAuthentication(true)

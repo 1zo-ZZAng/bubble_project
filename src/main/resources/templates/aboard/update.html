@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUBBLE BUMUL</title>
+
+    <!-- 1. Bootstrap용 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!-- font Awesome 아이콘 CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!--아이콘 모양 돋보기라던가 그런거던데-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!--Simple DataTable용 CSS CDN--> <!--표 부분임-->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+
+    <!--현재 페이지용 CSS 외부 링크-->
+    <link rel='stylesheet' th:href="@{/css/main.css}" />
+
+    <!-- jquery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- font awesome용 스크립트 CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+        integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!--quill-->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+
+    <script>
+        $(document).ready(function () {
+            const sidebarToggle = $('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.click(function () {
+                    console.log('숨기기');
+                    event.preventDefault(); /*아래쪽 요소로 이벤트가 전파안되도록*/
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+        });
+    </script>
+
+    <style>
+        * {
+            font-family: 'NanumSquareLight';
+        }
+
+        .btn:focus {
+            border: none;
+            outline: none;
+        }
+
+        /*select 부분 디자인임*/
+        select {
+            /* -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none; */
+
+            font-family: 'NanumSquareLight';
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+
+            color: #444;
+            background-color: #fff;
+
+            padding: .6em 1.4em .5em .8em;
+            margin: 0;
+
+            border: 1px solid #aaa;
+            border-radius: .5em;
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+        }
+
+        select:hover {
+            border-color: #888;
+        }
+
+        select:focus {
+            border-color: #aaa;
+            box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+            box-shadow: 0 0 0 3px -moz-mac-focusring;
+            color: #222;
+            outline: none;
+        }
+
+        select:disabled {
+            opacity: 0.5;
+        }
+
+        /*글쓰기 제목 부분*/
+        .form-floating:not(.form-control:disabled)::before {
+            position: absolute;
+            top: var(--bs-border-width);
+            left: var(--bs-border-width);
+            width: auto;
+            height: 1.875em;
+            content: "";
+            background-color: var(--bs-body-bg);
+            border-radius: 0.375rem;
+        }
+    </style>
+
+</head>
+
+<body class="sb-nav-fixed">
+    <!-- top nav -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand -->
+        <!-- ps : padding space (여백) -->
+        <a class="navbar-brand ps-3" th:href="@{/admin/home.bubble}">
+            <!-- <i class="bi bi-tools"></i> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tools"
+                viewBox="0 0 16 16">
+                <path
+                    d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z" />
+            </svg>
+            <strong>BUBBLE BUMUL 관리자 화면</strong></a>
+
+        <!-- Sidebar Toggle -->
+        <!-- <button class="btn btn-link btn-sm order-1 order-lg-0 me-5 me-lg-0" id="sidebarToggle" type="button">
+            <i class="bi bi-caret-left-fill"></i>
+        </button> -->
+        <!-- Searchbar -->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <div class="sb-sidenav-footer" style="color: white; margin-top: 20px; font-size: 18px;">
+                    <div th:if="${user != null}" class="small">
+                        <p th:text="${user.username} + ' 님이 로그인 하셨습니다' "></p>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Profile -->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="profile" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="bi bi-person-lines-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profile">
+
+                    <li>
+                        <form th:action="@{/logout.bubble}" method="post"> <input type="submit" value="로그아웃"
+                                class="btn" /></form>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <!--전체화면 영역-->
+    <div id="layoutTotal">
+        <!--전체화면 > 왼쪽 메뉴 영역-->
+        <!-- side menu -->
+        <div id="layoutLeftSide">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">메인</div>
+                        <a class="nav-link" th:href="@{/admin/home.bubble}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            HOME
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            제휴업체
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/admin/washinglist.bubble}">업체 목록</a>
+                                <a class="nav-link" th:href="@{/admin/confirm.bubble}">업체 승인 대기</a>
+
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                            aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            회원
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/admin/customerlist.bubble}">회원 목록</a>
+
+                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#pageCollapseError"
+                                    aria-expanded="false" aria-controls="pageCollapseError"
+                                    th:href="@{/admin/coupon.bubble}">
+                                    쿠폰 발급
+
+                                </a>
+
+                        </div>
+
+                        <!--게시판-->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseWBoard" aria-expanded="false" aria-controls="collapseWBoard">
+                            <div class="sb-nav-link-icon"><i class="bi bi-pencil-square"></i></div>
+                            게시판
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/aboard/selectlist.bubble}">목록</a>
+                                <a class="nav-link" th:href="@{/aboard/write.bubble(id=${user.username})}">글쓰기</a>
+                            </nav>
+
+                        </div>
+                    </div>
+
+
+
+            </nav>
+        </div>
+
+        <!--여기에 작성해야함-->
+        <!--전체화면 > 오른쪽 메인 화면 영역-->
+        <div id="layoutContent">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">게시판</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">글수정</li>
+                    </ol>
+
+
+                    <div class="container">
+                        <div class="container pt-4 mt-4" style="margin: 0 auto; padding: 50px;">
+
+                            <form th:action="@{/aboard/update.bubble}" method="post" id="form">
+
+                                <!--분류-->
+                                <div class="mb-3">
+
+                                    <!--게시판-->
+                                    <select name="code" id="code" onchange="codeChange()"
+                                        style="float: left; margin-right: 4px;">
+                                        <option value="">게시판 선택</option>
+                                        <option th:each="CodeName : ${CodeName}" th:value="${CodeName.code}"
+                                            th:text="${CodeName.codename}"
+                                            th:selected="${board.code} == ${CodeName.code}"></option>
+                                        <!--th:selected="${board.code} == ${CodeName.code}"-->
+                                    </select>
+
+                                    <!--말머리-->
+                                    <select id="codedetail" disabled>
+                                        <option value="">말머리 선택</option>
+                                        <option th:each="CodeDetail : ${CodeDetail}" th:value="${CodeDetail.code}"
+                                            th:text="${CodeDetail.codedetail}"
+                                            th:selected="${board.code} == ${CodeDetail.code}"></option>
+                                        <!--th:selected="${board.code} == ${CodeDetail.code}"-->
+                                    </select>
+
+                                    <!-- 글쓰기 버튼 -->
+                                    <div style="float: right;">
+                                        <input type="button" value="등록" class="btn btn-primary mt-2"
+                                            style="display: inline-block;" onclick="updateAction()" />
+                                    </div>
+
+                                </div>
+
+                                <!-- 글번호 -->
+                                <div class="form-floating mb-2" hidden>
+                                    <input type="text" th:field="${board.no}" class="form-control" readonly />
+                                    <label for="no" class="form-label">글번호</label>
+                                </div>
+
+
+                                <!-- 제목 -->
+                                <div class="form-floating mb-2">
+                                    <input type="text" th:field="${board.title}" class="form-control" autofocus
+                                        required />
+                                    <label for="title" class="form-label">제목</label>
+                                </div>
+
+                                <!-- 글작성-->
+                                <div style="margin-bottom:5px">
+                                    <div id="editor" th:utext="${board.content}" style="height:300px">
+                                    </div>
+                                </div>
+                                <textarea name="content" id="content" style="display: none;"> <!--이거를 div로 복사할거임-->
+                                </textarea>
+
+                                <!-- 작성자 -->
+                                <div class="form-floating mb-2" hidden>
+                                    <input type="text" id="writer" name="writer" th:value="${user.username}"
+                                        class="form-control" readonly />
+                                    <label for="writer" class="form-label">작성자</label>
+                                </div>
+
+
+
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </main>
+
+            <!--하단영역-->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center small">
+                        <div class="text-muted me-2">Copyright &copy; 2023 BUBBLE BUMUL. All Rights Reserved. <br>
+                            <br> 사업자등록번호 : 123-45-67890 <br> (주) BUBBLE BUMUL
+                            <br> 주소 : 부산광역시 남구 신선로 365 (48548) <br> 대표이사 : 신애린 여우정 탁승은
+                        </div>
+
+                        <a href="#"> Privacy Policy </a> &middot; <a href="#"> Terms &amp; Conditions </a>
+                        <!--&middot; 점이고 &amp; & 임-->
+                    </div>
+                </div>
+        </div>
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- Include the Quill library  글작성할 때 필요함-->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script src="/src/main/resources/static/js/admin.js"></script>
+
+    <!-- 2. Bootstrap용 js는 body에 위치해야 함! --> <!--이거 없으면 이벤트 실행이 안됨 그 버튼 눌렀을 때 하단 영역 보여지는 부분말하는거임-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+
+
+
+    <script th:inline="javascript" type="text/javascript">
+
+        const toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+
+
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['link', 'image', 'video'], //이미지, 비디오 
+
+            ['clean']                                         // remove formatting button
+        ];
+
+
+        // 위쪽에 있는 태그중에서 id가 content인 것을 찾아서 toolbar는 toolbarOptions의 값으로 대체하고 테마를 snow로 해서 변경
+        // Initialize Quill editor
+        // 
+        var quill = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
+            theme: 'snow'
+        });
+
+
+        //말머리부분 자동 선택되게 해줌
+        function codeChange() {
+            const code = document.getElementById('code');
+            const codedetail = document.getElementById('codedetail');
+
+            if (code.value == 2) {
+                add = codedetail.value = '찾아주세요';
+            } else if (code.value == 3) {
+                add = codedetail.value = '찾아가세요';
+            } else {
+                add = codedetail.value = '';
+            }
+
+
+        }
+
+
+        //업데이트 버튼 눌렀을 때
+        function updateAction() {
+            const title = document.getElementById('title');
+            const content = quill.root.innerHTML;
+            const writer = document.getElementById('writer');
+            const code = document.getElementById('code');
+            const codedetail = document.getElementById('codedetail');
+
+            if (title.value.length <= 0) {
+                alert('제목을 작성해주세요');
+                title.focus();
+                return false;
+            }
+
+            if (code.value.length <= 0) {
+                alert('게시판을 선택해주세요');
+                return false;
+            }
+
+
+            //div태그 내용을 textarea로 복사 (div태그의 내용을 전송할 수 잇게 변경했음 div는 값을 전송할 수 없기때문에 어딘가 복사해서 보내야함 )
+            const divContent = quill.root.innerHTML;
+            document.getElementById("content").value = divContent;
+
+
+
+            document.getElementById('form').submit(); //유효성 검사 통과하면 제출됨
+
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

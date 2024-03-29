@@ -39,6 +39,7 @@ public class Customer {
     private String extraaddress; // 고객 참고 주소 (건물이름)
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth", columnDefinition = "DATE")
     private Date birth; // 고객 생년월일
 
     // 등록일

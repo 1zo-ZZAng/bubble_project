@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.security.config.web.servlet.SecurityMarker;
 
 import com.example.dto.BoardAdmin;
 import com.example.dto.BoardGetLost;
@@ -38,18 +39,37 @@ public interface BoardWashingMapper {
                 + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
         public List<BoardGetLost> selectBoardGetLost(@Param("code") int code, @Param("start") int start, @Param("end") int end);
 
+        //분실물 습득물 전체
+        @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDGETLOST) " 
+        + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+        public List<BoardView> selectBoardViewGetLostAll( @Param("start") int start, @Param("end") int end);
+
+        //자유게시판
+        @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDVIEW WHERE code=6) " 
+         + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+        public List<BoardView> selectBoardViewCommunity ( @Param("start") int start, @Param("end") int end);
+
         // ------------------------------------------------------------------------------------------
         // 페이지네이션
         // 전체 글 개수
-        // (1) 공지사항 (관리자)
+        //공지사항( 전체 )
+        @Select({" SELECT COUNT(*) FROM BoardView "})
+        public int selectBoardAllNoticeCount();
+
+        //  공지사항 (관리자)
         @Select({" SELECT COUNT(*) FROM BoardAdmin "})
         public int selectBoardAdminNoticeCount();
 
-        // (2) 공지사항 (세탁업체)
+        //  공지사항 (세탁업체)
         @Select({" SELECT COUNT(*) FROM BOARDWASHING "})
         public int selectBoardWashingNoticeCount();
 
-        // (3) 분실물/습득물
+        //  분실물/습득물
         @Select({" SELECT COUNT(*) FROM BOARDGETLOST WHERE code=#{code} "})
         public int selectBoardGetLostCount(@Param("code") int code);
+
+        //  자유게시판
+        @Select({" SELECT COUNT(*) FROM BOARDVIEW b WHERE code=#{code} "})
+        public int selectBoardCommunityCount(@Param("code") int code);
+
 }

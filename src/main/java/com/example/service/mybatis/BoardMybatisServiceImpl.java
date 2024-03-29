@@ -1,5 +1,6 @@
 package com.example.service.mybatis;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -49,6 +50,30 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //말머리 분류 - 중복 제거 null값 제외
+    @Override
+    public List<BoardType> selectlistBTypeCodeDetailTest(String codename) {
+        try {
+            return bMapper.selectlistBTypeCodeDetailTest(codename);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    //말머리 분류 - 중복 제거 null값 제외
+    @Override
+    public long selectlistBTypeFindCodeDetail(String codedetail) {
+        try {
+            return bMapper.selectlistBTypeFindCodeDetail(codedetail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 
@@ -213,10 +238,10 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
 
     //다음글
     @Override
-    public int nextBoardOne(long no) {
+    public int nextBoardOne(long no, long code) {
         try {
 
-            return bMapper.nextBoardOne(no);
+            return bMapper.nextBoardOne(no,code);
 
             
         } catch (Exception e) {
@@ -227,10 +252,10 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
 
     //이전글
     @Override
-    public int preBoardOne(long no) {
+    public int preBoardOne(long no, long code) {
         try {
 
-            return bMapper.preBoardOne(no);
+            return bMapper.preBoardOne(no,code);
 
             
         } catch (Exception e) {
@@ -265,9 +290,6 @@ public class BoardMybatisServiceImpl implements BoardMybatisService {
             return null;
         }
     }
-
-    
-
     
 
 

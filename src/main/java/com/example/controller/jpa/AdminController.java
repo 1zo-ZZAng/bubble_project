@@ -165,12 +165,15 @@ public class AdminController {
 
     //업체목록 전체 조회
     @GetMapping(value = "/washinglist.bubble")
-    public String wlistGET(@ModelAttribute Washing washing,Model model){
+    public String wlistGET(@ModelAttribute Washing washing,Model model,@AuthenticationPrincipal User user){
         try {            
                 List<Washing> list = aService.selectWList();
                 // log.info("{}", list.toString());
                 model.addAttribute("list", list);
-                // log.info("{}",model.toString());             
+                // log.info("{}",model.toString());  
+                //게시판 글쓰기 때문에 필요함
+                model.addAttribute("user", user);
+           
        
             return "/admin/wlist";
         } catch (Exception e) {
@@ -184,7 +187,7 @@ public class AdminController {
     //업체별 보유기기목록 조회 // 나중에 모달로 되면 좋겟당
     //업체 차트
     @GetMapping(value = "/wmlist.bubble")
-    public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber){
+    public String wmlistGET(Model model, @RequestParam(name = "wnumber") String wnumber,@AuthenticationPrincipal User user){
         try {
             //보유기기 표 list
             List<MachineCount> list = aService.selectMCount(wnumber);
@@ -204,6 +207,10 @@ public class AdminController {
             model.addAttribute("mdlist", mdlist);
             model.addAttribute("mlist", mlist);
             model.addAttribute("topMachine", topMachine);
+
+            //게시판 글쓰기 때문에 필요함
+            model.addAttribute("user", user);
+
             log.info("업체별매출2 => {}",mlist.toString());
             log.info("업체별매출 => {}",mdlist.toString());
             log.info("보유기기 => {}",list.toString());
@@ -220,8 +227,11 @@ public class AdminController {
 
     //업체 목록
     @GetMapping(value = "/confirm.bubble")
-    public String confirmGET(Model model){
+    public String confirmGET(Model model, @AuthenticationPrincipal User user){
             try {
+
+                //게시판 글쓰기 때문에 필요함
+                model.addAttribute("user", user);
 
                 model.addAttribute("category", aService2.selectBoxList());      
                 return "/admin/confirm";
@@ -254,11 +264,13 @@ public class AdminController {
     
     //회원목록 
     @GetMapping(value = "/customerlist.bubble")
-    public String selectCustomerListGET(Model model){
+    public String selectCustomerListGET(Model model,@AuthenticationPrincipal User user){
         try {
             List<Customer> list = aService.selectCustomer();
             log.info("{}",list.toString());
             model.addAttribute("list", list);
+            //게시판 글쓰기 때문에 필요함
+            model.addAttribute("user", user);
 
             return "/admin/customerlist";
         } catch (Exception e) {

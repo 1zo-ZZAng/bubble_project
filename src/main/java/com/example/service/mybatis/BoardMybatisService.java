@@ -1,7 +1,10 @@
 package com.example.service.mybatis;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.Board;
@@ -14,12 +17,16 @@ public interface BoardMybatisService {
     //게시판 분류
     public List<BoardType> selectlistBType();
 
-    //게시판 분류 -  중복 제거
+    //게시판 분류 조회
     public List<BoardType> selectlistBTypeCodeName();
 
-    //말머리 분류 - 중복 제거
+     //게시판 분류값에 따른 말머리 
     public List<BoardType> selectlistBTypeCodeDetail();
 
+    //말머리 분류 - 테스트
+    public List<BoardType> selectlistBTypeCodeDetailTest(@Param("codename") String codename);
+
+    public long selectlistBTypeFindCodeDetail(@Param("codedetail") String codedetail);
 
     /* ===================================== */
     
@@ -65,10 +72,10 @@ public interface BoardMybatisService {
     public int countBoard();
 
     //다음글로 넘기기
-    public int nextBoardOne(long no);
+    public int nextBoardOne(long no, long code);
 
     //이전글로 넘기기
-    public int preBoardOne(long no);
+    public int preBoardOne(long no, long code);
 
     //페이징
     public List<Board> selectBoardListPage(int start, int end);
