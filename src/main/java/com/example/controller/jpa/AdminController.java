@@ -168,7 +168,7 @@ public class AdminController {
     public String wlistGET(@ModelAttribute Washing washing,Model model,@AuthenticationPrincipal User user){
         try {            
                 List<Washing> list = aService.selectWList();
-                // log.info("{}", list.toString());
+                log.info("{}", list.toString());
                 model.addAttribute("list", list);
                 // log.info("{}",model.toString());  
                 //게시판 글쓰기 때문에 필요함
