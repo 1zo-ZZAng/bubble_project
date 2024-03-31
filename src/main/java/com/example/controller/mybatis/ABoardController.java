@@ -74,7 +74,8 @@ public class ABoardController {
 
     @PostMapping(value = "/write.bubble")
     public String writePOST(@AuthenticationPrincipal User user, 
-                        @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, 
+                        @RequestParam(name = "menu", required = false) String menu, 
+                        @RequestParam(name = "type", required = false) String type, 
                         @RequestParam(name = "codedetail") String codedetail,
                         @ModelAttribute Board board){
     try {
@@ -90,7 +91,7 @@ public class ABoardController {
         if (ret == 1) {
             return "redirect:/aboard/selectlist.bubble?menu=" + menu;
         } else {
-            return "redirect:/aboard/write.bubble?id=" + user.getUsername();
+            return "redirect:/aboard/write.bubble?id=" + user.getUsername() + "type=" + type + "menu=" + menu;
         }
     } catch (Exception e) {
         e.printStackTrace();

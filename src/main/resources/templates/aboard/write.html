@@ -306,6 +306,39 @@
 
     <script th:inline="javascript" type="text/javascript">
 
+window.addEventListener('load', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const typeParam = urlParams.get('type');
+            const menuParam = urlParams.get('menu');
+
+            const codeList = document.getElementById('code');
+            const codedetailList = document.getElementById('codedetail');
+
+            if (typeParam === 'notice') {
+                $("#code").val("공지사항").prop("selected", true);
+                
+                if (menuParam === 'admin') {
+                    $("#codedetail").val("중요").prop("selected", true);
+                }
+                else if (menuParam === 'washing') {
+                    $("#codedetail").val("세탁업체").prop("selected", true);
+                }
+            }
+            else if (typeParam === 'getlost') {
+                $("#code").val("분실물/습득물").prop("selected", true);
+                
+                if (menuParam === 'get') {
+                    $("#codedetail").val("분실물").prop("selected", true);
+                }
+                else if (menuParam === 'lost') {
+                    $("#codedetail").val("습득물").prop("selected", true);
+                }
+            }
+            // else if (typeParam === 'community') {
+            //     $("#code").val("자유게시판").prop("selected", true);
+            // }
+        });
+        
         const toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             ['blockquote', 'code-block'],
