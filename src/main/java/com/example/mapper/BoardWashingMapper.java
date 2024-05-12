@@ -26,27 +26,27 @@ public interface BoardWashingMapper {
         // 게시글 조회
         // (1) 공지사항 (관리자)
         @Select({" SELECT * FROM (SELECT ba.*, ROW_NUMBER() OVER (ORDER BY code ASC, regdate DESC) rown FROM boardadmin ba) "
-                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown DESC "})
         public List<BoardAdmin> selectBoardAdminNotice(@Param("start") int start, @Param("end") int end);
 
         // (2) 공지사항 (세탁업체)
         @Select({" SELECT * FROM (SELECT bw.*, ROW_NUMBER() OVER (ORDER BY bw.regdate DESC) rown FROM BOARDWASHING bw) "
-                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown DESC "})
         public List<BoardWashing> selectBoardWashingNotice(@Param("start") int start, @Param("end") int end);
 
         // (3) 분실물/습득물
         @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDGETLOST WHERE code=#{code}) " 
-                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+                + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown DESC "})
         public List<BoardGetLost> selectBoardGetLost(@Param("code") int code, @Param("start") int start, @Param("end") int end);
 
         //분실물 습득물 전체
         @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDGETLOST) " 
-        + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+        + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown DESC "})
         public List<BoardView> selectBoardViewGetLostAll( @Param("start") int start, @Param("end") int end);
 
         //자유게시판
         @Select({" SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY regdate DESC) rown FROM BOARDVIEW WHERE code=6) " 
-         + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown ASC "})
+         + " WHERE rown BETWEEN #{start} AND #{end} ORDER BY rown DESC "})
         public List<BoardView> selectBoardViewCommunity ( @Param("start") int start, @Param("end") int end);
 
         // ------------------------------------------------------------------------------------------

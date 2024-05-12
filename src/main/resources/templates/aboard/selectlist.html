@@ -232,7 +232,7 @@
                         <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/aboard/selectlist.bubble(type=notice)}">목록</a>
+                                <a class="nav-link" th:href="@{/aboard/selectlist.bubble}">목록</a>
                                 <!--수정봐야하는 부분 param 불러오기-->
                                 <a class="nav-link" th:href="@{/aboard/write.bubble(id=${user.username},type=${param.type},menu=${param.menu})}">글쓰기</a>
                             </nav>

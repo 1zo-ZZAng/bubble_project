@@ -59,7 +59,10 @@ public class ABoardController {
 
     //글작성
     @GetMapping(value = "/write.bubble")
-    public String writeGET(@AuthenticationPrincipal User user, Model model){
+    public String writeGET(@AuthenticationPrincipal User user,
+                            @RequestParam(name = "menu", required = false) String menu, 
+                            @RequestParam(name = "type", required = false) String type, 
+                            Model model){
     try {
         List<BoardType> list1 = bService.selectlistBType();
         model.addAttribute("CodeName", list1);
@@ -120,12 +123,7 @@ public class ABoardController {
             //총 게시글 개수
             int totalPageCount= 0;
 
-            if (type.isEmpty()) {
-                return "redirect:/aboard/selectlist.bubble?type=notice&page=1";
-            }
-            if(page == 0){
-                return "redirect:/aboard/selectlist.bubble?type=notice&page=1";
-            }
+
             if(type.equals("notice")){ //공지사항 조회
                     if (menu.equals("admin")) { // 관리자 공지사항
                         alist = bwService.selectBoardAdminNotice(10*page-9, 10*page); //페이지네이션
@@ -146,15 +144,19 @@ public class ABoardController {
                         model.addAttribute("list", blist);
                         model.addAttribute("list2", wlist);
                     }
-                    else{
-                        blist = bService.selectListLimitBoard();
-                        list2 = bvService.selectBoardView(10*page-9, 10*page);
-                        totalPageCount=bwService.selectBoardAllNoticeCount();
-                        log.info(list2.toString());
-                        model.addAttribute("list", blist);
-                        model.addAttribute("list2", list2);
-
+                    else { //sidemenu 게시판 목록 누르면 바로 가지는 페이지
+                        return "redirect:/aboard/selectlist.bubble?type=notice&menu=admin";
                     }
+                    
+                    // else{
+                    //     blist = bService.selectListLimitBoard();
+                    //     list2 = bvService.selectBoardView(10*page-9, 10*page);
+                    //     totalPageCount=bwService.selectBoardAllNoticeCount();
+                    //     // log.info(list2.toString());
+                    //     model.addAttribute("list", blist);
+                    //     model.addAttribute("list2", list2);
+
+                    // }
 
             } else if(type.equals("getlost")) { //분실물 / 습득물 전체 조회
 
@@ -207,7 +209,8 @@ public class ABoardController {
     //1개 조회
     @GetMapping(value="/selectone.bubble")
     public String selectOne(Model model, @AuthenticationPrincipal User user,
-                            @RequestParam(name = "menu", required = false, defaultValue = "0") int menu,
+                            @RequestParam(name = "menu", required = false) String menu, 
+                            @RequestParam(name = "type", required = false) String type, 
                             @RequestParam(name = "no") long no, HttpServletRequest request, HttpServletResponse response) {
         try {
 
@@ -280,7 +283,10 @@ public class ABoardController {
 
     //수정
     @GetMapping(value="/update.bubble")
-    public String updateGET(Model model, @AuthenticationPrincipal User user, @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no) {
+    public String updateGET(Model model, @AuthenticationPrincipal User user, 
+                                            @RequestParam(name = "menu", required = false) String menu, 
+                                            @RequestParam(name = "type", required = false) String type, 
+                                            @RequestParam(name = "no") long no) {
         try {
 
 
@@ -311,7 +317,10 @@ public class ABoardController {
     }
 
     @PostMapping(value="/update.bubble")
-    public String updatePOST(@ModelAttribute Board board, @RequestParam(name = "no") long no ) {
+    public String updatePOST(@ModelAttribute Board board, 
+    @RequestParam(name = "menu", required = false) String menu, 
+    @RequestParam(name = "type", required = false) String type, 
+    @RequestParam(name = "no") long no ) {
         try {
 
             Board obj = bService.selectOneBoard(no);
@@ -341,7 +350,8 @@ public class ABoardController {
 
     //삭제
     @PostMapping(value="/delete.bubble")
-    public String deletePOST( @RequestParam(name = "menu", required = false, defaultValue = "0") int menu, @RequestParam(name = "no") long no,
+    public String deletePOST(                         @RequestParam(name = "menu", required = false) String menu, 
+    @RequestParam(name = "type", required = false) String type,  @RequestParam(name = "no") long no,
                                 @AuthenticationPrincipal User user, Model model) {
         try {
             

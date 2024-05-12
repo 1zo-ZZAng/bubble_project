@@ -207,18 +207,18 @@ public class WBoardController {
             // log.info("글 1개 조회 => {}", board.toString());
 
 
-            long next = bService.nextBoardOne(no);
-            long pre = bService.preBoardOne(no);
+            // long next = bService.nextBoardOne(no,code);
+            // long pre = bService.preBoardOne(no);
 
-            log.info("이전페이지 번호 => {}", pre);
-            log.info("다음페이지 번호 => {}", next);
+            // log.info("이전페이지 번호 => {}", pre);
+            // log.info("다음페이지 번호 => {}", next);
 
 
 
             model.addAttribute("board", board); //게시글 1개 조회 view로 넘기기
             model.addAttribute("boardType", boardType); //카테고리
-            model.addAttribute("next", next);   //다음 페이지
-            model.addAttribute("pre", pre); // 이전 페이지
+            // model.addAttribute("next", next);   //다음 페이지
+            // model.addAttribute("pre", pre); // 이전 페이지
             model.addAttribute("user", user); //로그인 관련
             model.addAttribute("list", list); //해당게시글의 댓글 전체 조회
 

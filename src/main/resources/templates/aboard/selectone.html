@@ -205,7 +205,7 @@
                         <div class="collapse" id="collapseWBoard" aria-labelledby="headingThree"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/aboard/selectlist.bubble}">목록</a>
+                                <a class="nav-link" th:href="@{/aboard/selectlist.bubble(type=notice&menu=admin)}">목록</a>
                                 <a class="nav-link" th:href="@{/aboard/write.bubble(id=${user.username})}">글쓰기</a>
                             </nav>
 
@@ -261,13 +261,13 @@
 
                             <!-- 작성된 게시글의 게시판 종류에 따라 게시판 이동 -->
                             <div th:if="${board.code == 1}">
-                                <a th:href="@{/aboard/selectlist.bubble}"
-                                    style="text-decoration: none; font-size: small;">공지사항(중요) ></a>
+                                <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=admin)}"
+                                    style="text-decoration: none; font-size: small;">공지사항(관리자) ></a>
                             </div> 
 
                             <div th:if="${board.code == 2}">
                                 <a th:href="@{/aboard/selectlist.bubble(type=notice,menu=admin)}"
-                                    style="text-decoration: none; font-size: small;">공지사항(일반) ></a>
+                                    style="text-decoration: none; font-size: small;">공지사항(관리자) ></a>
                             </div>
 
                             <div th:if="${board.code == 3}">

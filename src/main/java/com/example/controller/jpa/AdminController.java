@@ -115,7 +115,7 @@ public class AdminController {
     //관리자 홈
     //127.0.0.1:8282/bubble_bumul/admin/home.bubble
      @GetMapping(value = "/home.bubble")
-    public String homeGET(@AuthenticationPrincipal User user, Model model) {
+    public String homeGET(@AuthenticationPrincipal User user,  Model model) {
         try {
             
            int wc =  aService.washingCount();
